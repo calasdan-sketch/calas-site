@@ -1,0 +1,1825 @@
+<!doctype html><html><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+
+
+
+
+<title>On File — White-Label Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
+<style>
+:root{
+  --paper:#FFFFFF;--surface:#FFFFFF;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--ink-3:#6B7883;
+  --rule:#D9E3EA;--rule-2:#E9F0F5;
+  --ok:#17794A;--ok-soft:#E9F5EE;--warm:#8A5A12;--warm-soft:#FBF1DF;
+  --accent:#155F87;--accent-2:#0F4A6B;--accent-soft:#E6F0F6;--on-accent:#FFFFFF;
+  --night:#0B2A3D;--night-accent:#8FC4DE;--crescent-fill:#155F87;--brandblue:#155F87;
+  --gold:#B9812E;--gold-line:#F0C171;
+  --shadow:0 1px 2px rgba(18,33,44,.05),0 12px 40px -12px rgba(21,95,135,.24);
+  --shadow-2:0 2px 6px rgba(18,33,44,.08);
+  --nav:rgba(255,255,255,.84);
+  --crescent:url(data:image/png;base64,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);
+  --logohex:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cG9seWdvbiBwb2ludHM9IjUwLjAsNC4wIDg5LjgsMjcuMCA4OS44LDczLjAgNTAuMCw5Ni4wIDEwLjIsNzMuMCAxMC4yLDI3LjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSI3IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHRleHQgeD0iNTAiIHk9IjQ2IiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjgwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNyIgbGV0dGVyLXNwYWNpbmc9IjAuNSI+WU9VUjwvdGV4dD48dGV4dCB4PSI1MCIgeT0iNjQiIGZvbnQtZmFtaWx5PSJBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iODAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE3IiBsZXR0ZXItc3BhY2luZz0iMC41Ij5MT0dPPC90ZXh0Pjwvc3ZnPg==);
+  --logocirc:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjciLz48dGV4dCB4PSI1MCIgeT0iNDYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iODAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE3IiBsZXR0ZXItc3BhY2luZz0iMC41Ij5ZT1VSPC90ZXh0Pjx0ZXh0IHg9IjUwIiB5PSI2NCIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTciIGxldHRlci1zcGFjaW5nPSIwLjUiPkxPR088L3RleHQ+PC9zdmc+);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0B1A26;--surface:#102434;--sunk:#0E2130;--ink:#EEF4F8;--ink-2:#B4C4CF;--ink-3:#8FA1AE;
+  --rule:#1F3A4D;--rule-2:#183041;
+  --ok:#6FD9A2;--ok-soft:#1B3229;--warm:#F0C171;--warm-soft:#3A2F1B;
+  --accent:#7FB8DA;--accent-2:#A9D3E8;--accent-soft:#12303F;--on-accent:#0B2A3D;
+  --night:#0B2A3D;--night-accent:#8FC4DE;--crescent-fill:#7FB8DA;
+  --gold:#F0C171;--gold-line:#F0C171;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 40px -12px rgba(0,0,0,.6);
+  --shadow-2:0 2px 6px rgba(0,0,0,.35);
+  --nav:rgba(11,26,38,.84);
+}}
+:root[data-theme="dark"]{
+  --paper:#0B1A26;--surface:#102434;--sunk:#0E2130;--ink:#EEF4F8;--ink-2:#B4C4CF;--ink-3:#8FA1AE;
+  --rule:#1F3A4D;--rule-2:#183041;
+  --ok:#6FD9A2;--ok-soft:#1B3229;--warm:#F0C171;--warm-soft:#3A2F1B;
+  --accent:#7FB8DA;--accent-2:#A9D3E8;--accent-soft:#12303F;--on-accent:#0B2A3D;
+  --night:#0B2A3D;--night-accent:#8FC4DE;--crescent-fill:#7FB8DA;
+  --gold:#F0C171;--gold-line:#F0C171;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 40px -12px rgba(0,0,0,.6);
+  --shadow-2:0 2px 6px rgba(0,0,0,.35);
+  --nav:rgba(11,26,38,.84);
+}
+
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif;font-weight:700;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.wrap{max-width:1300px;margin:0 auto;padding:0 28px}
+
+.banner{background:var(--sunk);color:var(--ink-2);font-size:13.5px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.banner .wrap{display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.banner b{color:var(--ink);font-weight:600}
+
+/* ---------- app bar + crest ---------- */
+.appbar{background:var(--surface);border-bottom:2px solid var(--gold-line);position:sticky;top:0;z-index:30;box-shadow:0 2px 14px rgba(11,46,69,.08)}
+.appbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 28px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:13px;perspective:700px;text-decoration:none;color:inherit}
+.crest{width:44px;height:44px;flex:none;position:relative;color:var(--ink);transform-style:preserve-3d;animation:coin 8s linear infinite;backface-visibility:visible;overflow:visible;cursor:pointer}
+.crest .cres{position:absolute;left:50%;top:50%;width:30%;height:42%;transform:translate(-50%,-50%);background:var(--brandblue);transition:background .2s;
+  -webkit-mask:var(--crescent) center/contain no-repeat;mask:var(--crescent) center/contain no-repeat}
+.brand:hover .crest{animation-play-state:paused}
+.crest:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:50%}
+@keyframes coin{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
+.crest.sm{width:34px;height:34px}
+.crest .spark{position:absolute;left:50%;top:50%;font-size:12px;line-height:1;color:var(--gold);pointer-events:none;transform:translate(-50%,-50%) scale(0);opacity:0;animation:sparkFly .8s ease-out forwards;z-index:5}
+@keyframes sparkFly{0%{transform:translate(-50%,-50%) scale(0) rotate(0deg);opacity:1}55%{opacity:1}100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.1) rotate(90deg);opacity:0}}
+.crest .orbit{position:absolute;left:50%;top:50%;width:0;height:0;pointer-events:none;z-index:8}
+.crest .orbit .wandhand{position:absolute;left:0;top:0;transform:translate(-50%,-260%) rotate(-15deg);font-size:19px;line-height:1;opacity:0;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+.crest .orbit.go{animation:orbitSpin .95s cubic-bezier(.4,0,.2,1) forwards}
+.crest .orbit.go .wandhand{animation:orbitFade .95s ease-in-out forwards}
+@keyframes orbitSpin{0%{transform:translate(-50%,-50%) rotate(-40deg)}100%{transform:translate(-50%,-50%) rotate(320deg)}}
+@keyframes orbitFade{0%{opacity:0}12%{opacity:1}82%{opacity:1}100%{opacity:0}}
+.crest .puff{position:absolute;left:50%;top:50%;width:11px;height:11px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,200,205,.95) 0%,rgba(200,200,205,.55) 45%,rgba(200,200,205,0) 76%);
+  transform:translate(-50%,-50%) scale(.3);opacity:0;pointer-events:none;z-index:6;filter:blur(1.5px)}
+.crest .puff.go{animation:puffOut .6s ease-out forwards}
+@keyframes puffOut{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}28%{opacity:.95}100%{transform:translate(-50%,-50%) scale(3.1);opacity:0}}
+.crest .wlabel{position:absolute;left:50%;top:-24px;transform:translateX(-50%) translateY(5px);font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;background:var(--night);color:#fff;padding:4px 9px;border-radius:20px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9}
+.crest .wlabel.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.t1{font-family:"Libre Baskerville",Georgia,serif;font-size:18px;line-height:1.1}
+.t1 .r{color:var(--accent)}
+.t2{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.22em;color:var(--ink-3)}
+.who{padding-left:18px;border-left:1px solid var(--rule);font-size:14.5px;color:var(--ink-2)}
+.who b{display:block;color:var(--ink);font-weight:600}
+.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+button{font-family:inherit;font-size:15px;cursor:pointer;border-radius:4px;transition:opacity .2s,border-color .2s,color .2s,background .2s}
+.run{background:linear-gradient(180deg,var(--accent) 0%,var(--accent-2) 100%);color:var(--on-accent);border:1px solid var(--accent);padding:12px 26px;font-weight:500;box-shadow:0 2px 10px rgba(11,46,69,.22);transition:transform .12s,box-shadow .12s,background .2s,border-color .2s}
+.run:hover{background:var(--accent-2);border-color:var(--accent-2);transform:translateY(-1px);box-shadow:0 4px 14px rgba(11,46,69,.3)} .run[disabled]{opacity:.45;cursor:default;transform:none;box-shadow:none}
+.run.approve{background:var(--ok);border-color:var(--ok);color:#fff}
+.ghost{background:transparent;color:var(--ink-2);border:1px solid var(--rule);padding:11px 16px}
+.ghost:hover{border-color:var(--accent);color:var(--ink)}
+.spd{display:flex;border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.spd button{border:0;background:transparent;color:var(--ink-3);padding:11px 13px;font-size:13.5px}
+.spd button.on{background:var(--accent);color:var(--on-accent)}
+.mode{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-3)}
+.seg{display:flex;border:1px solid var(--rule);border-radius:22px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;color:var(--ink-3);padding:9px 16px;font-size:14px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.seg button.on{background:var(--accent);color:var(--on-accent)}
+.seg button svg{width:14px;height:14px}
+
+/* schedule bar */
+.sched{background:var(--sunk);border-bottom:1px solid var(--rule)}
+.sched summary{list-style:none;cursor:pointer;display:flex;gap:14px;align-items:center;padding:11px 28px;font-size:14px;color:var(--ink-2)}
+.sched summary::-webkit-details-marker{display:none}
+.sched summary .chev{margin-left:auto;font-size:18px;color:var(--ink-3);transition:transform .2s}
+.sched[open] summary .chev{transform:rotate(90deg)}
+.sched .body{display:flex;gap:16px 22px;align-items:center;flex-wrap:wrap;padding:6px 28px 16px}
+.getlink{font-size:14px;color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;margin-right:6px}
+.getlink:hover{border-bottom-color:var(--accent)}
+.sched .lab{font-size:14px;color:var(--ink-2)}
+.addons{display:flex;gap:10px;flex-wrap:wrap}
+.tog{display:inline-flex;align-items:center;gap:9px;font-size:14px;color:var(--ink-2);cursor:pointer;padding:7px 12px 7px 8px;border:1px solid var(--rule);border-radius:22px;background:var(--surface);user-select:none}
+.tog input{position:absolute;opacity:0;width:0;height:0}
+.tog .sw{width:32px;height:18px;border-radius:10px;background:var(--rule);position:relative;transition:background .2s;flex:none}
+.tog .sw::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.tog input:checked+.sw{background:var(--accent)}
+.tog input:checked+.sw::after{transform:translateX(14px)}
+.tog input:focus-visible+.sw{outline:2px solid var(--accent);outline-offset:2px}
+.tog em{font-style:normal;font-size:11.5px;color:var(--ink-3);margin-left:2px}
+.sched .note{font-size:13.5px;color:var(--ink-3);margin-left:auto}
+
+.hello{background:var(--surface);border-bottom:1px solid var(--rule);padding:24px 0}
+.startcard{display:grid;grid-template-columns:5fr 7fr;gap:40px;align-items:center}
+.startcard h1{font-size:34px;margin-top:8px}
+.startcard>div>p{color:var(--ink-2);font-size:16px;margin-top:10px;max-width:52ch}
+.run.big{margin-top:18px;font-size:16.5px;padding:14px 30px}
+.cmp.start{margin:0;padding:22px 24px;border:1px solid var(--rule);border-radius:6px;background:var(--sunk)}
+.cmp.start.one{grid-template-columns:1fr}
+body.pre .why,body.pre .status,body.pre .stopbar,body.pre #main,body.pre .foot{display:none}
+body.pre .sitefoot{border-top:0}
+@media(max-width:900px){.startcard{grid-template-columns:1fr;gap:24px}}
+.outcome{margin-bottom:22px}
+.liverow{display:flex;gap:26px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.hello h1{font-size:27px}
+.hello p{color:var(--ink-2);font-size:16.5px;margin-top:6px;max-width:62ch}
+.tally{display:flex;gap:28px;flex-wrap:wrap}
+.kpi .v{font-family:"Libre Baskerville",Georgia,serif;font-size:31px;font-variant-numeric:tabular-nums;display:block;line-height:1.1}
+.kpi .v.ok{color:var(--ok)} .kpi .v.red{color:var(--accent)} .kpi .v.tl{color:var(--night)}
+.kpi .k{font-size:13.5px;color:var(--ink-3)}
+.kpi .k small{display:block;font-size:11.5px;color:var(--ink-3);opacity:.85}
+
+/* pillars — the four approved icons */
+.why{border-bottom:1px solid var(--rule);background:var(--surface)}
+.why .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;padding:0 28px}
+.pil{padding:22px 24px 22px 0;display:flex;gap:14px;align-items:flex-start}
+.pil+.pil{padding-left:24px;border-left:1px solid var(--rule-2)}
+.pil .ico{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;flex:none}
+.pil .ico svg{width:20px;height:20px}
+.pil b{display:block;font-size:16px;font-weight:600}
+.pil > span:last-child > span{display:block;font-size:14px;color:var(--ink-2);margin-top:3px;line-height:1.5}
+.pil.p1 .ico,.pil.p2 .ico{background:var(--accent-soft);color:var(--accent)}
+.pil.p3 .ico{background:var(--ok-soft);color:var(--ok)}
+.pil.p4 .ico{background:var(--warm-soft);color:var(--warm)}
+
+/* status + stop banner */
+.status{border-bottom:1px solid var(--rule);background:var(--surface)}
+.status .wrap{display:flex;align-items:center;gap:11px;padding:13px 28px;font-size:15.5px;color:var(--ink-2);flex-wrap:wrap}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--ink-3);flex:none}
+.pulse.live{background:var(--ok);animation:pl 1.2s infinite}
+@keyframes pl{0%,100%{opacity:1}50%{opacity:.3}}
+.status .day{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:13.5px;color:var(--ink-3)}
+.status .approve{margin-left:auto;display:none;align-items:center;gap:10px}
+.status .approve.on{display:flex}
+.status .approve button{background:var(--ok);color:#fff;border:1px solid var(--ok);padding:9px 16px;font-size:14px;font-weight:500}
+.status .approve .skip{background:transparent;color:var(--ink-2);border-color:var(--rule)}
+.stopbar{display:none;background:var(--ok-soft);border-bottom:1px solid var(--ok)}
+.stopbar.on{display:block;animation:slide .4s ease}
+.stopbar .wrap{display:flex;align-items:center;gap:14px;padding:14px 28px;flex-wrap:wrap}
+.stopbar svg{width:24px;height:24px;color:var(--ok);flex:none}
+.stopbar b{font-size:16px;color:var(--ink)}
+.stopbar span{font-size:14.5px;color:var(--ink-2)}
+.stopbar .mono{margin-left:auto;font-size:12.5px;color:var(--ok)}
+
+.grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;padding:24px 0 40px;align-items:start}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
+.card{border:1px solid var(--rule);background:var(--surface);border-radius:5px;overflow:hidden;box-shadow:0 6px 24px rgba(11,46,69,.08)}
+.card .hd{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:16px 20px;border-bottom:1px solid var(--rule)}
+.stack{display:flex;flex-direction:column;gap:24px}
+
+/* ---------- client rows ---------- */
+.rows{max-height:760px;overflow-y:auto}
+.rw{border-bottom:1px solid var(--rule-2)}
+.rw:last-child{border-bottom:0}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:16px 20px;position:relative;transition:background .18s;cursor:pointer}
+.row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent);transition:width .18s}
+.rw:hover .row{background:var(--sunk)}
+.rw.open .row{background:var(--accent-soft)}
+.rw.open .row::before{width:4px}
+.rw.hit .row{background:var(--accent-soft)}
+.rw.good .row{background:var(--ok-soft)}
+.rw.stopped .row::before{width:4px;background:var(--ok)}
+.nm{font-weight:600;font-size:17px}
+.sub2{font-size:13.5px;color:var(--ink-3);margin-top:2px}
+.dl{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+.doc{font-size:13px;padding:4px 11px;border:1px solid var(--rule);color:var(--ink-2);border-radius:5px;background:var(--surface);transition:all .3s;font-weight:450}
+.doc.in{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)}
+.doc.gated{border-style:dashed;color:var(--ink-3);background:transparent}
+.doc.gated em{font-style:normal;font-size:11px;opacity:.85}
+.doc.req{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.pill{font-size:13px;padding:6px 14px;border-radius:20px;white-space:nowrap;transition:all .3s;font-weight:450}
+.p-wait{background:var(--rule-2);color:var(--ink-3)}
+.p-note{background:var(--accent-soft);color:var(--accent)}
+.p-done{background:var(--ok-soft);color:var(--ok)}
+.p-call{background:var(--warm-soft);color:var(--warm)}
+.caret{font-size:15px;color:var(--ink-3);transition:transform .22s}
+.rw.open .caret{transform:rotate(90deg)}
+
+/* drawer */
+.drawer{display:none;padding:20px 22px 22px;background:var(--sunk);border-top:1px solid var(--rule)}
+.rw.open .drawer{display:block;animation:slide .3s ease}
+@keyframes slide{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+.dstop{display:none;margin:0 0 16px;padding:12px 14px;background:var(--ok-soft);border:1px solid var(--ok);border-radius:5px;font-size:14.5px;color:var(--ink);align-items:center;gap:10px}
+.dstop.on{display:flex}
+.dstop svg{width:18px;height:18px;color:var(--ok);flex:none}
+.dstop b{font-weight:600}
+.dgrid{display:grid;grid-template-columns:1.25fr 1fr;gap:22px}
+@media(max-width:760px){.dgrid{grid-template-columns:1fr}}
+.dh{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);font-weight:600;font-family:"IBM Plex Mono",monospace}
+.dlist{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+.dlist li{display:flex;align-items:center;gap:11px;font-size:15px;color:var(--ink-2);background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:10px 13px}
+.dlist li.in{border-color:var(--ok);color:var(--ok)}
+.dlist li.gated{border-style:dashed;color:var(--ink-3)}
+.dlist .st{font-size:12.5px;margin-left:auto;color:var(--ink-3)}
+.dlist .rej{font-size:11.5px;padding:3px 8px;border:1px solid var(--rule);background:transparent;color:var(--ink-3);border-radius:4px}
+.dlist .rej:hover{border-color:var(--warm);color:var(--warm)}
+.dlist li.in .st{color:var(--ok)}
+.dplan{margin:16px 0 0;padding:0;list-style:none;display:flex;gap:6px;flex-wrap:wrap}
+.dplan li{font-size:12.5px;padding:5px 10px;border:1px solid var(--rule);border-radius:20px;background:var(--surface);color:var(--ink-2);font-family:"IBM Plex Mono",monospace}
+.dplan li.done{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)}
+.dplan li.cut{text-decoration:line-through;opacity:.5}
+.dplan li.now{border-color:var(--accent);color:var(--accent)}
+.meta{margin:10px 0 0;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:14.5px}
+.meta dt{color:var(--ink-3);font-size:13px;padding-top:2px}
+.meta dd{margin:0;color:var(--ink-2)}
+.meta .due{color:var(--accent);font-weight:500}
+.acts{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.act{border:1px solid var(--accent);background:var(--surface);color:var(--accent);padding:9px 15px;border-radius:5px;font-size:14px;font-weight:500}
+.act:hover{background:var(--accent);color:var(--on-accent)}
+.act.done{background:var(--ok);border-color:var(--ok);color:#fff}
+.act[disabled]{opacity:.45;cursor:default}
+select{font-family:inherit;font-size:14px;padding:9px 12px;border:1px solid var(--rule);border-radius:5px;background:var(--surface);color:var(--ink)}
+.assigned{margin-top:11px;font-size:14px;color:var(--ok)}
+
+/* message card */
+.mtabs{display:flex;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.mtab{flex:1;min-width:100px;appearance:none;background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit;font-size:14px;color:var(--ink-3);padding:13px 8px;cursor:pointer}
+.mtab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--gold-line);box-shadow:inset 0 -8px 12px -10px var(--gold-line)}
+.mtab:hover{color:var(--ink)}
+.mpanel{display:none}.mpanel.on{display:block;animation:slide .35s ease}
+.pickers{display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.pick{border:1px solid var(--rule);background:var(--surface);color:var(--ink-2);padding:8px 13px;border-radius:20px;font-size:13.5px}
+.pick.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.pick.addon{border-style:dashed}
+.pick[hidden]{display:none}
+.msg{padding:18px}
+.msg .to{font-size:14px;color:var(--ink-3);padding-bottom:10px;border-bottom:1px solid var(--rule-2)}
+.msg .to b{color:var(--ink-2);font-weight:450}
+.msg .sub{margin-top:13px;font-weight:600;font-size:16px}
+.msg .bd{margin-top:11px;font-size:15.5px;color:var(--ink-2);white-space:pre-line;line-height:1.64}
+.msg .sig{margin-top:15px;padding-top:13px;border-top:1px solid var(--rule-2);font-size:14.5px;color:var(--ink-3)}
+.uplink{display:inline-block;margin-top:13px;padding:11px 19px;background:var(--accent);color:var(--on-accent);border-radius:4px;font-size:15px;text-decoration:none;font-weight:450}
+.upnote{margin-top:10px;font-size:13px;color:var(--ink-3)}
+.msg-note{padding:14px 20px;background:var(--sunk);border-top:1px solid var(--rule);font-size:14px;color:var(--ink-3)}
+.callcard{padding:18px}
+.callcard .lead{font-size:14px;color:var(--ink-3);padding-bottom:11px;border-bottom:1px solid var(--rule-2)}
+.callcard .script{margin-top:14px;font-size:16px;line-height:1.72;color:var(--ink-2);white-space:pre-line;padding-left:16px;border-left:3px solid var(--accent)}
+.letter{padding:18px;background:var(--sunk)}
+.lpaper{background:#fff;color:#12212C;border:1px solid #D9E3EA;border-radius:3px;padding:24px;box-shadow:0 2px 6px rgba(18,33,44,.08)}
+.lpaper .lh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:2px solid #155F87}
+.lpaper .fn{font-family:"Libre Baskerville",Georgia,serif;font-size:17px}
+.lpaper .dt{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#66717B}
+.lpaper h4{font-family:"Libre Baskerville",Georgia,serif;font-size:19px;margin:18px 0 0}
+.lpaper p{font-size:15px;color:#4E5B66;margin-top:10px;line-height:1.62}
+.lpaper .box{margin-top:16px;border:1px dashed #155F87;border-radius:5px;padding:14px 16px;background:#E6F0F6}
+.lpaper .box b{color:#155F87;font-size:14px}
+.lpaper ul{margin:8px 0 0;padding-left:20px;font-size:14.5px;color:#4E5B66}
+.lpaper .sign{margin-top:18px;padding-top:12px;border-top:1px solid #D9E3EA;font-size:14px;color:#4E5B66}
+.plan{padding:20px}
+.plan ol{list-style:none;margin:0;padding:0}
+.plan>ol>li{display:grid;grid-template-columns:82px 1fr;gap:16px;padding:0 0 20px;position:relative}
+.plan>ol>li:last-child{padding-bottom:0}
+.plan>ol>li::before{content:"";position:absolute;left:40px;top:32px;bottom:0;width:1px;background:var(--rule)}
+.plan>ol>li:last-child::before{display:none}
+.plan .when{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--accent);border:1px solid var(--accent);border-radius:20px;padding:5px 0;text-align:center;background:var(--surface);z-index:1;height:fit-content}
+.plan li.addon .when{border-style:dashed;color:var(--ink-3);border-color:var(--ink-3)}
+.plan li.addon h4 em{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-left:8px}
+.plan li.off{opacity:.45}
+.plan h4{margin:3px 0 0;font-size:16px;font-weight:600}
+.plan p{font-size:14.5px;color:var(--ink-2);margin-top:4px}
+.plan .stop{margin-top:8px;font-size:14px;color:var(--ok)}
+.chain{padding:18px}
+.chain ol{list-style:none;margin:0;padding:0}
+.chain>ol>li{display:grid;grid-template-columns:28px 1fr;gap:13px;padding:0 0 18px;position:relative}
+.chain>ol>li:last-child{padding-bottom:0}
+.chain .n{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-size:12px}
+.chain h4{margin:2px 0 0;font-size:15.5px;font-weight:600}
+.chain p{font-size:14.5px;color:var(--ink-2);margin-top:3px}
+.never{margin-top:18px;border:1px solid var(--rule);border-radius:5px;padding:15px 16px;background:var(--sunk)}
+.never h4{margin:0 0 10px;font-size:15px;font-weight:600}
+.never ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.never li{font-size:14.5px;color:var(--ink-2)}
+.flow{margin:0 0 18px;border:1px solid var(--rule);border-radius:5px;background:var(--sunk);padding:14px;overflow-x:auto}
+.flow svg{width:100%;min-width:420px;height:auto;display:block;font-family:"IBM Plex Sans",sans-serif}
+.flow figcaption{font-size:13px;color:var(--ink-3);margin-top:10px}
+.cv{padding:18px;background:var(--sunk)}
+.cvcard{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:20px}
+.cvhd{display:flex;align-items:center;gap:11px;padding-bottom:13px;border-bottom:1px solid var(--rule-2)}
+.cvhd .lg{width:28px;height:28px;border-radius:5px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-family:"Libre Baskerville",Georgia,serif;font-size:14px;flex:none}
+.cvhd .nm2{font-size:15.5px;font-weight:600}
+.cvhd .sm{font-size:13px;color:var(--ink-3)}
+.cvh{font-family:"Libre Baskerville",Georgia,serif;font-size:20px;margin-top:15px}
+.cvp{font-size:15px;color:var(--ink-2);margin-top:8px}
+.cvlist{list-style:none;margin:15px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.cvlist li{display:flex;align-items:center;gap:11px;font-size:15px;color:var(--ink-2);border:1px solid var(--rule);border-radius:5px;padding:12px 14px}
+.cvlist .bx{width:18px;height:18px;border:1.5px solid var(--rule);border-radius:4px;flex:none}
+.cvlist li.done{color:var(--ok);border-color:var(--ok);background:var(--ok-soft)}
+.cvlist li.done .bx{background:var(--ok);border-color:var(--ok);position:relative}
+.cvlist li.done .bx::after{content:"\2713";position:absolute;inset:0;color:#fff;font-size:11px;display:grid;place-items:center}
+.cvlist li.gated{border-style:dashed;color:var(--ink-3)}
+.cvlist li .gt{margin-left:auto;font-size:12px;color:var(--ink-3)}
+.drop{margin-top:16px;border:1.5px dashed var(--rule);border-radius:5px;padding:24px;text-align:center;font-size:14.5px;color:var(--ink-3);background:var(--sunk)}
+.drop b{display:block;color:var(--ink-2);font-weight:500;font-size:16px;margin-bottom:5px}
+.upbtn{display:block;width:100%;margin-top:16px;padding:17px;background:var(--accent);color:var(--on-accent);border:0;border-radius:5px;font-size:17px;font-weight:500}
+.cvfoot{margin-top:16px;padding-top:14px;border-top:1px solid var(--rule-2);font-size:13.5px;color:var(--ink-3)}
+.thanks{text-align:center;padding:8px 4px 4px;animation:slide .5s ease}
+.thanks .tick{width:60px;height:60px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;font-size:26px;margin:6px auto 14px}
+.thanks h3{font-size:25px}
+.thanks .g{margin-top:12px;font-size:16px;color:var(--ink-2);line-height:1.62}
+.thanks .g b{color:var(--ink);font-weight:500}
+.thanks .rec{margin-top:16px;text-align:left;background:var(--ok-soft);border:1px solid var(--ok);border-radius:5px;padding:14px 16px}
+.thanks .rt{font-size:13px;color:var(--ok);font-weight:500}
+.thanks .rec ul{margin:8px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+.thanks .rec li{font-size:14.5px;color:var(--ink-2)}
+.thanks .callus{margin-top:18px;padding-top:15px;border-top:1px solid var(--rule-2);font-size:14px;color:var(--ink-3)}
+.again{margin-top:16px;background:none;border:1px solid var(--rule);color:var(--ink-3);padding:10px 16px;border-radius:5px;font-size:14px}
+.rcpt{margin-top:16px;border:1px solid var(--rule);border-radius:5px;background:var(--surface);padding:14px 16px;font-size:14px}
+.rcpt .to{font-size:12px;color:var(--ink-3);display:flex;justify-content:space-between;gap:8px;padding-bottom:8px;border-bottom:1px solid var(--rule-2)}
+.rcpt .sub{font-weight:600;margin-top:10px}
+.rcpt .bd{color:var(--ink-2);margin-top:6px;line-height:1.55}
+.rcpt .bd .ok{color:var(--ok)}
+.rcpt.final{border-color:var(--ok);background:var(--ok-soft)}
+.rcpt.none{color:var(--ink-3);font-size:13.5px;border-style:dashed}
+
+.feed{max-height:360px;overflow-y:auto;padding:4px 0}
+.fe{display:grid;grid-template-columns:20px 1fr auto;gap:12px;padding:12px 20px;font-size:15px;border-bottom:1px solid var(--rule-2);animation:slide .35s ease;align-items:start}
+.fe .ic{font-size:15px;padding-top:1px}
+.fe details{grid-column:2/4;margin-top:2px}
+.fe summary{list-style:none;cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.fe summary::-webkit-details-marker{display:none}
+.fe summary:hover{color:var(--accent)}
+.fe .lrow{margin-top:6px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-2);background:var(--sunk);border:1px solid var(--rule-2);border-radius:4px;padding:7px 9px;word-break:break-word}
+.feednote{padding:12px 20px;border-top:1px solid var(--rule);background:var(--sunk);font-size:13px;color:var(--ink-3)}
+.feednote b{color:var(--ink-2)}
+.fe .tx{color:var(--ink-2)} .fe .tx b{color:var(--ink);font-weight:500}
+.fe .ts{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-3);padding-top:2px}
+.fe.send .ic{color:var(--accent)} .fe.recv .ic{color:var(--ok)}
+.fe.call .ic{color:var(--warm)} .fe.call{background:var(--warm-soft)}
+.fe.sys .ic{color:var(--ink-3)}
+.fe.stop{background:var(--ok-soft)} .fe.stop .ic{color:var(--ok)}
+
+/* audit log */
+.log{max-height:300px;overflow-y:auto;font-family:"IBM Plex Mono",monospace;font-size:12.5px}
+.log .path{padding:10px 20px;border-bottom:1px solid var(--rule-2);color:var(--ink-3);background:var(--sunk);word-break:break-all}
+.log .path b{color:var(--ink);font-weight:500}
+.le{display:grid;grid-template-columns:96px 80px 1fr;gap:12px;padding:8px 20px;border-bottom:1px solid var(--rule-2);animation:slide .3s ease;align-items:baseline}
+.le .t{color:var(--ink-3)}
+.le .k{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:3px;text-align:center}
+.le .k.send{background:var(--accent-soft);color:var(--accent)}
+.le .k.recv,.le .k.upload,.le .k.ok{background:var(--ok-soft);color:var(--ok)}
+.le .k.bounce,.le .k.call{background:var(--warm-soft);color:var(--warm)}
+.le .k.sys{background:var(--rule-2);color:var(--ink-3)}
+.le .x{color:var(--ink-2);font-family:"IBM Plex Sans",sans-serif;font-size:13.5px}
+.log .empty{padding:14px 20px;color:var(--ink-3);font-family:"IBM Plex Sans",sans-serif;font-size:14px}
+@media(max-width:560px){.le{grid-template-columns:76px 1fr}.le .k{display:none}}
+
+.cutoff{border:1px solid var(--warm);background:var(--warm-soft);border-radius:5px;display:none;margin-bottom:24px}
+.cutoff.on{display:block;animation:slide .5s ease}
+.cutoff .in{padding:22px 26px}
+.cutoff h3{font-size:19px;margin-top:8px}
+.cut{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:14px;padding:14px 16px;background:var(--surface);border:1px solid var(--rule);border-radius:5px}
+.cut b{font-size:15.5px}
+.cut span{font-size:14px;color:var(--ink-2)}
+.cut .ch{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.cut .ch button{border:1px solid var(--rule);background:var(--surface);color:var(--ink-2);padding:8px 13px;font-size:13.5px}
+.cut .ch button:hover{border-color:var(--accent);color:var(--ink)}
+.cut .ch button.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.cut .chosen{width:100%;font-size:13.5px;color:var(--ok)}
+.endcard{border:1px solid var(--rule);border-top:3px solid var(--gold-line);background:var(--surface);border-radius:5px;display:none;box-shadow:0 10px 34px rgba(11,46,69,.12)}
+.endcard.on{display:block;animation:slide .5s ease}
+.endcard .in{padding:30px 32px}
+.endcard h2{font-size:29px;max-width:26ch}
+.cmp{display:grid;grid-template-columns:1fr auto 1fr;gap:26px;align-items:center;margin-top:24px;padding-top:22px;border-top:1px solid var(--rule)}
+.side .lbl{font-size:13.5px;color:var(--ink-3)}
+.side .big{font-family:"Libre Baskerville",Georgia,serif;font-size:42px;line-height:1.15;font-variant-numeric:tabular-nums}
+.side .sub{font-size:14.5px;color:var(--ink-2);margin-top:6px}
+.arrow{font-family:"IBM Plex Mono",monospace;color:var(--accent);font-size:22px}
+.after .big{color:var(--ok)}
+.run.offer{display:inline-block;text-decoration:none;margin:14px 0 8px;font-size:15px}
+@media(max-width:620px){.cmp{grid-template-columns:1fr}.arrow{display:none}}
+.foot{padding:18px 0 40px;font-size:14px;color:var(--ink-3);max-width:78ch}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.more{display:none}
+@media(max-width:620px){.rows:not(.showall) .rw:not(.changed){display:none}.more{display:block;width:100%;background:var(--sunk);border:0;border-top:1px solid var(--rule);padding:12px;font-size:14px;color:var(--ink-2)}.rows.showall+.more{display:none}.appbar{position:static}.who,.spd{display:none}.rows{max-height:none}.sched .note{margin-left:0}.status .approve{margin-left:0;width:100%}.pil,.pil+.pil{padding:18px 0;border-left:0;border-top:1px solid var(--rule-2)}.pil:first-child{border-top:0}.seg button{padding:8px 12px;font-size:13.5px}}
+.controls button[disabled],.seg button[disabled],.tog input[disabled]+.sw{opacity:.5;cursor:default}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* footer */
+.sitefoot{border-top:1px solid var(--rule);background:var(--surface);padding:32px 0 110px}
+.sitefoot .wrap{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.sitefoot .fl{font-size:13.5px;color:var(--ink-3);max-width:52ch;line-height:1.6;margin-top:10px}
+.sitefoot .legal{font-size:13.5px;color:var(--ink-3);text-align:right;max-width:46ch;display:flex;flex-direction:column;gap:6px}
+.sitefoot .legal a{color:var(--accent)}
+@media(max-width:620px){.sitefoot .legal{text-align:left}}
+
+/* ---------- Hermes chat (mock) ---------- */
+.hbtn{position:fixed;right:18px;bottom:18px;z-index:70;display:flex;align-items:center;gap:10px;background:var(--surface);color:var(--ink);
+  border:1px solid var(--rule);border-radius:999px;padding:9px 16px 9px 10px;box-shadow:0 6px 20px rgba(11,46,69,.18);font-family:inherit;font-size:14px;cursor:pointer}
+.hbtn .dot2{width:10px;height:10px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px var(--ok-soft)}
+.hbtn b{font-weight:600}
+.hwin{position:fixed;right:18px;bottom:74px;z-index:71;width:min(380px,calc(100vw - 36px));background:var(--surface);border:1px solid var(--rule);border-radius:12px;
+  box-shadow:0 16px 48px rgba(11,46,69,.28);display:none;flex-direction:column;overflow:hidden;max-height:min(560px,calc(100vh - 110px))}
+.hwin.on{display:flex;animation:slide .25s ease}
+.hhd{display:flex;align-items:center;gap:11px;padding:11px 14px;background:var(--night);color:#fff}
+.hhd .lg{width:28px;height:28px;border-radius:6px;background:#fff;color:var(--night);display:grid;place-items:center;font-family:"Libre Baskerville",Georgia,serif;font-size:14px;flex:none}
+.hhd b{display:block;font-size:14.5px;font-weight:600}
+.hhd span{font-size:12px;opacity:.85}
+.hhd button{margin-left:auto;background:transparent;border:0;color:#fff;font-size:18px;padding:2px 6px}
+.vtabs{display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--surface);border-bottom:1px solid var(--rule);font-size:12px}
+.vtabs span{color:var(--ink-3);margin-right:2px}
+.vtabs button{font-size:12px;padding:4px 10px;border-radius:20px;border:1px solid var(--rule);background:transparent;color:var(--ink-2);cursor:pointer}
+.vtabs button.on{background:var(--night);border-color:var(--night);color:#fff}
+.hlog{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px;background:var(--sunk)}
+.hm{max-width:86%;padding:10px 13px;border-radius:12px;font-size:14.5px;line-height:1.5;white-space:pre-line;animation:slide .25s ease;position:relative}
+.hm.a{background:var(--surface);border:1px solid var(--rule);border-bottom-left-radius:4px;align-self:flex-start;color:var(--ink)}
+.hm.u{background:var(--accent);color:var(--on-accent);border-bottom-right-radius:4px;align-self:flex-end}
+.hm.sys{align-self:center;background:transparent;color:var(--ink-3);font-size:12.5px;padding:2px 0}
+.hm .tm{display:block;font-size:10.5px;opacity:.6;margin-top:4px;font-family:"IBM Plex Mono",monospace}
+.htyp{align-self:flex-start;padding:10px 14px;background:var(--surface);border:1px solid var(--rule);border-radius:12px;border-bottom-left-radius:4px;display:flex;gap:4px}
+.htyp i{width:6px;height:6px;border-radius:50%;background:var(--ink-3);animation:bl 1s infinite}
+.htyp i:nth-child(2){animation-delay:.2s}.htyp i:nth-child(3){animation-delay:.4s}
+@keyframes bl{0%,100%{opacity:.25}50%{opacity:1}}
+.hchips{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px 0;background:var(--sunk)}
+.hchips button{font-size:12.5px;padding:6px 11px;border-radius:20px;border:1px solid var(--rule);background:var(--surface);color:var(--ink-2)}
+.hchips button:hover{border-color:var(--accent);color:var(--ink)}
+.hin{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--rule);background:var(--surface)}
+.hin input{flex:1;font-family:inherit;font-size:14.5px;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);color:var(--ink)}
+.hin button{background:var(--accent);color:var(--on-accent);border:0;border-radius:8px;padding:0 16px;font-size:14px}
+.hfoot{font-size:11.5px;color:var(--ink-3);padding:0 14px 10px;background:var(--surface)}
+/* ---- chat window: claim the height, so long answers are readable ---- */
+.hwin{width:min(430px,calc(100vw - 36px));height:min(760px,calc(100vh - 104px));max-height:calc(100vh - 104px)}
+.hlog{flex:1 1 auto;min-height:0;overscroll-behavior:contain}
+.hhd,.vtabs,.hchips,.hin,.hfoot{flex:none}
+.vtabs{padding:6px 12px}
+.hchips{max-height:76px;overflow-y:auto;padding-bottom:2px}
+@media(max-height:640px){.hwin{height:calc(100vh - 88px);bottom:60px}.hfoot{display:none}}
+@media(max-width:520px){.hwin{right:10px;left:10px;width:auto;height:calc(100vh - 92px)}}
+
+</style>
+
+<div class="banner"><div class="wrap">
+  <span><b>This is a white-label preview.</b> Same On File engine, your own logo, colour and name in every screen your client sees — they never see “Calas.”</span>
+  <span class="mono">Reseller preview &middot; MSP program</span>
+</div></div>
+
+<div class="appbar"><div class="wrap">
+  <div class="brand">
+    <span class="crest" id="crestMain" tabindex="0" role="button" aria-label="Hover to preview a different client logo">
+        <i class="cres"></i>
+      </span>
+    <div><div class="t1"><span class="r">On</span> File</div><div class="t2">WHITE-LABELLED FOR YOUR CLIENTS</div></div>
+    <div class="who"><b>[Your Company Name]</b>Signed in as Jordan &middot; Client Success</div>
+  </div>
+  <div class="controls">
+    <a class="getlink" href="/#pricing">Get this for your firm &middot; $2,500 + $500/mo &rarr;</a>
+    <button class="run" id="run">Send Requests</button>
+    <div class="spd" role="group" aria-label="Speed"><button data-s="1" class="on" aria-pressed="true">1&times;</button><button data-s="2" aria-pressed="false">2&times;</button><button data-s="4" aria-pressed="false">4&times;</button></div>
+    <button class="ghost" id="reset">Start over</button>
+  </div>
+</div></div>
+
+<details class="sched" id="settings"><summary class="wrap"><span class="eyebrow">Settings</span><span id="setSum">Waits for my OK &middot; Yearly &middot; no add-ons</span><span class="chev">&#8250;</span></summary>
+<div class="wrap body">
+  <div class="mode"><span id="modeLab">Sending</span>
+    <div class="seg" id="auto" role="group" aria-labelledby="modeLab">
+      <button class="on" data-a="off" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>Waits for my OK</button>
+      <button data-a="on" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Automatic</button>
+    </div>
+  </div>
+  <span class="lab" id="cadLab">This client group files</span>
+  <div class="seg" id="cad" role="group" aria-labelledby="cadLab">
+    <button class="on" data-c="yr" aria-pressed="true">Yearly</button><button data-c="qt" aria-pressed="false">Quarterly</button>
+  </div>
+  <span class="lab">Default plan: email &middot; email &middot; call flag. Add-ons:</span>
+  <div class="addons">
+    <label class="tog"><input type="checkbox" id="addCall"><span class="sw"></span>Add a second call<em>Day <span data-dd="3">13</span></em></label>
+    <label class="tog"><input type="checkbox" id="addLetter"><span class="sw"></span>Add a printed letter<em>Day <span data-dd="4">20</span> &middot; per letter</em></label>
+  </div>
+  <span class="note" id="cadNote"></span>
+</div></details>
+
+<div class="hello" id="hello"><div class="wrap">
+  <div id="startCard" class="startcard">
+    <div>
+      <p class="eyebrow">Season run &middot; demo &middot; made-up firm</p>
+      <h1>Press Send once. Watch.</h1>
+      <p>Twelve clients still owe us paperwork. I'll write each of them a warm note, keep track of who answers, thank them properly when they do, and only pass you the few who genuinely need you.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:18px">
+        <button class="run big" id="run2">Send Requests</button>
+        <button class="ghost big" id="tourBtn" style="padding:14px 22px;font-size:16.5px;display:inline-flex;align-items:center;gap:8px">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5v14l11-7z"/></svg>
+          Show me around &middot; 90 sec
+        </button>
+      </div>
+    </div>
+    <div class="cmp start one">
+      <div class="side"><div class="lbl">How it used to go</div><div class="big mono">12.5 hrs</div>
+        <div class="sub">For this batch of 12 clients, by hand &mdash; and the second look at every upload. Made-up figure; your real number gets measured.</div></div>
+    </div>
+  </div>
+  <div id="outcome" class="outcome" hidden>
+    <div class="cmp start">
+      <div class="side"><div class="lbl">How it used to go</div><div class="big mono">12.5 hrs</div>
+        <div class="sub">For this batch of 12 clients, by hand. Made-up figure; your real number gets measured.</div></div>
+      <div class="arrow">&rarr;</div>
+      <div class="side after"><div class="lbl">How it went this time</div><div class="big mono">18 min</div>
+        <div class="sub" id="outSub">A few real calls from Jordan. Everything else ran itself. Demo estimate &mdash; <span id="outHrs"></span></div>
+        <a class="run offer" href="/#pricing">Run this on your firm &mdash; see pricing &rarr;</a>
+        <div class="sub">$2,500 to build, then $500 a month. If the two-week side-by-side run doesn't return at least 6 staff hours a week, the build fee is refunded.</div></div>
+    </div>
+  </div>
+  <div id="liveRow" class="liverow" hidden>
+    <div>
+      <h1>Morning, Jordan &mdash; here's where things stand.</h1>
+      <p>Click any client to open their file.</p>
+    </div>
+    <div class="tally">
+      <div class="kpi"><span class="v red mono" id="kOut">0</span><span class="k">documents still to come in</span></div>
+      <div class="kpi"><span class="v mono" id="kSent">0</span><span class="k">notes written</span></div>
+      <div class="kpi"><span class="v ok mono" id="kIn">0</span><span class="k">in, and thanked</span></div>
+      <div class="kpi"><span class="v mono" id="kCalls">0</span><span class="k">calls queued for Jordan</span></div>
+      <div class="kpi"><span class="v tl mono" id="kHrs">0.0</span><span class="k">hours saved, demo estimate<small id="kDollars">&asymp; $0 at $30/hr this batch &middot; Manitoba&#39;s median admin wage is $24.32/hr (Job Bank Canada); $30 allows for payroll costs on top &middot; measured on your numbers in the real run</small><small id="kAddon" hidden>Add-on cost this run: letters priced per letter, on request.</small></span></div>
+    </div>
+  </div>
+</div></div>
+
+<div class="why"><div class="wrap">
+  <div class="pil p1"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 16.5C7 15.2 5.5 13.1 5.5 10.5a6.5 6.5 0 0 1 13 0c0 2.6-1.5 4.7-3.5 6z" fill="currentColor" fill-opacity=".18"/><path d="M9.5 19.5h5M10.5 22h3"/><path d="M12 12.5v4"/></svg></span><span><b>Simple</b><span>Your existing portal. Nothing new for your client to learn.</span></span></div>
+  <div class="pil p2"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="3" fill="currentColor" fill-opacity=".18"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.3" fill="currentColor" stroke="none"/><path d="M12 16.3V18"/></svg></span><span><b>Safe</b><span>Straight into your own folders. We keep nothing at all.</span></span></div>
+  <div class="pil p3"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" fill="currentColor" fill-opacity=".18"/><path d="M8 12.5l2.7 2.7L16.5 9.2"/></svg></span><span><b>Accurate</b><span>Nothing is ticked off unless it really arrived.</span></span></div>
+  <div class="pil p4"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="7.5" fill="currentColor" fill-opacity=".18"/><path d="M12 9.5V13l2.6 1.9"/><path d="M3.5 8a3.8 3.8 0 0 1 3.7-4M20.5 8a3.8 3.8 0 0 0-3.7-4"/><path d="M7.5 19.5L6 21.2M16.5 19.5L18 21.2"/></svg></span><span><b>Saves you hours</b><span>Every week in season, February to June.</span></span></div>
+</div></div>
+
+<div class="status"><div class="wrap">
+  <span class="pulse" id="pulse"></span><span id="phase">Ready when you are &mdash; please press Send Requests.</span>
+  <span class="approve" id="approveBox"><span id="approveTxt"></span><button id="approveBtn">Approve &amp; send</button></span>
+  <span class="day" id="dayLbl">Day 1</span>
+</div></div>
+<div class="stopbar" id="stopbar"><div class="wrap">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+  <div><b id="stopWho">Kildonan Dental Group: all in.</b> <span>Nothing more to send. Any remaining steps are cancelled. Jordan wasn't involved.</span></div>
+  <span class="mono" id="stopWhen">Day 1</span>
+</div></div>
+
+<div class="wrap" id="main">
+  <div class="grid">
+    <div class="card">
+      <div class="hd"><span class="eyebrow">Your clients</span><span class="eyebrow">Click a client to open their file</span></div>
+      <div class="rows" id="rows"></div>
+    </div>
+
+    <div class="stack">
+      <div class="card">
+        <div class="mtabs" role="tablist">
+          <button class="mtab" role="tab" id="tm0" aria-controls="m0" aria-selected="true" data-m="m0">The plan</button>
+          <button class="mtab" role="tab" id="tm1" aria-controls="m1" aria-selected="false" data-m="m1">What we send</button>
+          <button class="mtab" role="tab" id="tm2" aria-controls="m2" aria-selected="false" data-m="m2">Their side</button>
+          <button class="mtab" role="tab" id="tm3" aria-controls="m3" aria-selected="false" data-m="m3">Where it goes</button>
+        </div>
+
+        <div class="mpanel on" id="m0" role="tabpanel" aria-labelledby="tm0">
+          <div class="plan"><ol id="planList"></ol>
+            <p class="stop">The moment their documents arrive, everything stops. Nobody gets a reminder for something they already sent.</p>
+          </div>
+          <div class="msg-note" id="planNote"></div>
+        </div>
+
+        <div class="mpanel" id="m1" role="tabpanel" aria-labelledby="tm1">
+          <div class="pickers">
+            <button class="pick on" data-k="e1">Email</button>
+            <button class="pick" data-k="e2">Email with deadline</button>
+            <button class="pick" data-k="c1">Call flag</button>
+            <button class="pick addon" data-k="c2" hidden>2nd call</button>
+            <button class="pick addon" data-k="lt" hidden>Letter</button>
+          </div>
+          <div class="msg" id="vEmail">
+            <div class="to">To <b id="mTo">your client</b> &middot; from hello@yourcompany.example</div>
+            <div class="sub" id="mSub"></div>
+            <div class="bd" id="mBody"></div>
+            <a class="uplink" href="#m2" id="uplink">Send your documents, please &rarr;</a>
+            <div class="upnote">Your usual your usual client portal link &mdash; the same one you've always used. It stays open for anything you find later.</div>
+            <div class="sig">Thank you so much,<br><b style="color:var(--ink-2);font-weight:500">Jordan Reyes</b><br>Reception &middot; [Your Company Name]<br>hello@yourcompany.example &middot; (555) 555&#8209;0100</div>
+          </div>
+          <div class="callcard" id="vCall" style="display:none">
+            <div class="lead">On Jordan's call list: <b id="cName"></b> &middot; <span id="cWhen"></span> &middot; script below, she dials</div>
+            <p class="script" id="cScript"></p>
+          </div>
+          <div class="letter" id="vLetter" style="display:none">
+            <div class="lpaper">
+              <div class="lh"><span class="fn">[Your Company Name]</span><span class="dt" id="lDate"></span></div>
+              <h4 id="lHead"></h4>
+              <p id="lBody"></p>
+              <div class="box"><b>Still to come:</b><ul id="lList"></ul></div>
+              <p id="lDead"></p>
+              <div class="sign">Thank you kindly,<br><b>Jordan Reyes</b> &middot; [Your Company Name]<br>(555) 555&#8209;0100 &middot; hello@yourcompany.example<br>Or drop them at the office &mdash; we're open 9 to 5, Monday to Friday.</div>
+            </div>
+          </div>
+          <div class="msg-note" id="mNote"></div>
+        </div>
+
+        <div class="mpanel" id="m2" role="tabpanel" aria-labelledby="tm2">
+          <div class="cv"><div class="cvcard">
+            <div class="cvhd"><span class="lg">P</span>
+              <span><span class="nm2">[Your Company Name]</span><br><span class="sm">Secure upload for <b id="cvWho"></b></span></span></div>
+            <div id="cvForm">
+              <div class="cvh" id="cvH">Just a few things left</div>
+              <p class="cvp">If you could attach each file to its line below &mdash; a line only turns green when a file is attached to it. A photo of a paper copy works fine.</p>
+              <ul class="cvlist" id="cvList"></ul>
+              <div class="drop"><b>Drag them here, or tap to choose</b>PDF, JPG, HEIC or Excel<br><span style="color:var(--ok)">Private link &middot; we'll send you a list of everything we received, with our thanks</span></div>
+              <button class="upbtn" id="cvSend">Send these to us, please</button>
+              <p class="cvfoot">Not sure about something? Call Jordan at (555) 555&#8209;0100, or just email her back. A real person either way.</p>
+            </div>
+            <div id="cvThanks" style="display:none"><div class="thanks">
+              <div class="tick">&#10003;</div>
+              <h3 id="thName"></h3>
+              <p class="g"><b>Thank you &mdash; that's everything we needed.</b><br>We'll take care of things from here, and we'll be in touch as soon as we have your return ready.</p>
+              <div class="rec"><div class="rt">&#10003; Received safely &mdash; here's what came in</div><ul id="thList"></ul></div>
+              <p class="callus">We've just emailed you a copy of this.<br>Any questions at all, please call Jordan on (555) 555&#8209;0100.</p>
+              <button class="again" id="cvAgain">Show the upload page again</button>
+            </div></div>
+          </div>
+          <div class="dh" style="margin-top:18px">The receipt they get</div>
+          <div class="rcpt" id="rcpt"></div>
+          </div>
+          <div class="msg-note">Two taps and they're done. That's why people actually use it, and why they don't mind being asked.</div>
+        </div>
+
+        <div class="mpanel" id="m3" role="tabpanel" aria-labelledby="tm3">
+          <div class="chain">
+          <figure class="flow">
+            <svg viewBox="0 0 640 230" role="img" aria-label="Data flow: the firm's requests mailbox emails the client; the client uploads through the firm's own portal into the firm's folders; Calas Automations sees only the send log and timestamps.">
+              <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="var(--ink-3)"/></marker></defs>
+              <rect x="6" y="6" width="628" height="150" rx="10" fill="var(--accent-soft)" stroke="var(--rule)"/>
+              <text x="24" y="30" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6" fill="var(--accent)">YOUR FIRM · YOUR SYSTEMS</text>
+              <rect x="24" y="52" width="170" height="78" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
+              <text x="109" y="82" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">Requests mailbox</text>
+              <text x="109" y="101" text-anchor="middle" font-size="11.5" fill="var(--ink-2)">sends in your name</text>
+              <text x="109" y="117" text-anchor="middle" font-size="11" fill="var(--ink-3)">hello@yourcompany.example</text>
+              <rect x="446" y="52" width="170" height="78" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
+              <text x="531" y="82" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">Portal → folders</text>
+              <text x="531" y="101" text-anchor="middle" font-size="11.5" fill="var(--ink-2)">…/Clients/Kildonan Dental/</text>
+              <text x="531" y="117" text-anchor="middle" font-size="11" fill="var(--ink-3)">files stay where they are</text>
+              <rect x="245" y="176" width="150" height="46" rx="23" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="320" y="196" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">Your client</text>
+              <text x="320" y="212" text-anchor="middle" font-size="11" fill="var(--ink-3)">Amrita, on her phone</text>
+              <path d="M194 91 C 260 91, 250 199, 245 199" fill="none" stroke="var(--ink-3)" stroke-width="1.5" marker-end="url(#ah)"/>
+              <text x="150" y="150" font-size="11" fill="var(--ink-2)">email + portal link</text>
+              <path d="M395 199 C 390 199, 380 91, 446 91" fill="none" stroke="var(--ok)" stroke-width="1.5" marker-end="url(#ah)"/>
+              <text x="440" y="150" font-size="11" fill="var(--ok)">uploads the file</text>
+              <path d="M446 74 L 194 74" fill="none" stroke="var(--ok)" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#ah)"/>
+              <text x="320" y="68" text-anchor="middle" font-size="11" fill="var(--ok)">file landed → receipt, run stops</text>
+              <path d="M60 130 L60 180" fill="none" stroke="var(--ink-3)" stroke-width="1.2" stroke-dasharray="3 3"/><text x="66" y="170" font-size="10" fill="var(--ink-3)">send log</text>
+              <rect x="24" y="180" width="180" height="40" rx="6" fill="none" stroke="var(--ink-3)" stroke-dasharray="4 3"/>
+              <text x="114" y="197" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)">Calas Automations</text>
+              <text x="114" y="212" text-anchor="middle" font-size="11" fill="var(--ink-3)">sees only: send log + timestamps</text>
+            </svg>
+            <figcaption>What each party can see. The documents move from your client to your own portal and folders; we only see that a file arrived, and when.</figcaption>
+          </figure>
+          <ol>
+            <li><span class="n">1</span><div><h4>They send it through a private link</h4>
+              <p>The same client portal your firm already uses &mdash; not a new link that looks like a scam. It stays open for the receipt they find three weeks later.</p></div></li>
+            <li><span class="n">2</span><div><h4>The file goes straight into your own folders</h4>
+              <p>Right into that client's folder, in whatever you already use. It never sits on our computers.</p></div></li>
+            <li><span class="n">3</span><div><h4>Two receipts, right away</h4>
+              <p>Your client gets a note back listing what came in. Your checklist turns green. If neither happens, it didn't arrive.</p></div></li>
+            <li><span class="n">4</span><div><h4>Written down, and never quietly erased</h4>
+              <p>Every request, reply, bounce and upload is written to a log in the client's own folder with a real timestamp, the template that went out, and who approved it. At close, a one-page chase record goes in the working-paper file.</p></div></li>
+            <li><span class="n">5</span><div><h4>Nothing ticks itself</h4>
+              <p>A line turns green only when a file is attached to that line, for that year. The preparer can reject a file &mdash; wrong period, illegible, duplicate &mdash; which un-ticks it and restarts the chase for that item alone. "File it" stays locked until every line is verified.</p></div></li>
+            <li><span class="n">6</span><div><h4>A cut-off date, and a partner who hears about it</h4>
+              <p>Each client gets a documents-in cut-off (their deadline minus your turnaround). The steps are scheduled backwards from it. Anything still outstanding at cut-off lands on a partner exception report: file with what we have, extension letter, or stop chasing.</p></div></li>
+            <li><span class="n">7</span><div><h4>The T183 comes last, not first</h4>
+              <p>The T183 / T183CORP is requested only once the preparer marks the return ready, and is stored with its tax year, signature date and signing method. Nothing is EFILEd until that record exists.</p></div></li>
+            <li><span class="n">8</span><div><h4>Bounces and strays don't vanish</h4>
+              <p>A bounced or wrong address goes straight to Jordan's call list with the reason. A file that doesn't match its client and line lands in an "unsorted" folder with a same-day task for reception &mdash; never in someone else's file.</p></div></li>
+          </ol>
+          <div class="never"><h4>What we don't do</h4><ul>
+            <li><b>We don't keep copies.</b> Nothing is saved on our side.</li>
+            <li><b>We don't open the documents.</b> We only check that a file showed up. Your preparer checks it's the right one.</li>
+            <li><b>Your files stay where they already are.</b> The one-page data flow &mdash; every place a file can rest, where it's hosted, who holds credentials &mdash; comes with the proposal. Replies with attachments get swept into the client folder and purged from the mailbox on a schedule you set.</li>
+            <li><b>You can shut it off any time.</b> The files are still yours.</li>
+            <li><b>Named in your paperwork.</b> Your engagement letter and privacy notice name Calas Automations as a service provider under PIPEDA, and the CPA Manitoba confidentiality undertaking is signed before the build starts.</li>
+          </ul></div></div>
+          <div class="msg-note">Keeping your clients' information private is your job, and we build around your rules &mdash; not ours.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="hd"><span class="eyebrow">What's happening</span><span class="eyebrow" id="feedCount">nothing yet</span></div>
+        <div class="feed" id="feed"></div>
+        <div class="feednote">Every entry above is also written to <span class="mono">&hellip;/Clients/&lt;client&gt;/2025 YE/chase-log.csv</span> with a real timestamp and who approved it. Open any entry's <b>log</b> line to see the row.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cutoff" id="cutoff"><div class="in">
+    <p class="eyebrow">At cut-off &middot; partner exception report</p>
+    <h3>Still outstanding at the documents-in cut-off</h3>
+    <div id="cutList"></div>
+  </div></div>
+  <div class="endcard" id="end"><div class="in">
+    <p class="eyebrow">End of the run</p>
+    <h2 style="margin-top:10px">Nice work, Jordan. You didn't write, ring or post one of those.</h2>
+    <div class="cmp">
+      <div class="side"><div class="lbl">How it used to go</div><div class="big mono" id="endHrs">12.5 hrs</div>
+        <div class="sub">For this batch of 12 clients, by hand &mdash; and the second look at every upload. Made-up figure; your real number gets measured.</div></div>
+      <div class="arrow">&rarr;</div>
+      <div class="side after"><div class="lbl">How it went this time</div><div class="big mono">18 min</div>
+        <div class="sub" id="endSub">A few real calls from Jordan. Everything else ran itself.</div>
+        <a class="run offer" href="/#pricing">Run this on your firm &mdash; see pricing &rarr;</a>
+        <div class="sub">$2,500 to build, then $500 a month. If the two-week side-by-side run doesn't return at least 6 staff hours a week, the build fee is refunded.</div></div>
+    </div>
+  </div></div>
+  <p class="foot">Made-up times for the demo. Every step can be set to wait for your OK, every note comes from your own email address, and you can pause any client whenever you like. Filing dates shown are the general CRA rules &mdash; your firm sets the real ones per client.</p>
+</div>
+
+<footer class="sitefoot"><div class="wrap">
+  <div>
+    <a class="brand" href="#" aria-label="Calas Automations">
+      <span class="crest" id="crestFoot" aria-hidden="true">
+        <i class="cres"></i>
+      </span>
+      <div><div class="t1"><span class="r">On</span> File</div><div class="t2">BY CALAS AUTOMATIONS</div></div>
+    </a>
+    <p class="fl">On File chases the documents for small Canadian accounting firms and trades contractors, and stops the moment the file lands. Built in Winnipeg by Calas Automations.</p>
+  </div>
+  <div class="legal"><p>Want to run this yourself, without the build? <a href="mailto:dan@calasautomations.com?subject=Self-serve%20list">Join the self-serve list</a>.</p>
+    <p>Canada first &mdash; other countries on request.</p>
+    <p>&copy; <span id="yr">2026</span> Calas Automations &middot; Winnipeg, Manitoba. Demo only &mdash; made-up firm and clients.</p></div>
+</div></footer>
+
+<button class="hbtn" id="hbtn" aria-haspopup="dialog" aria-expanded="false"><span class="dot2"></span><span><b>Ask Cara</b> &middot; try to catch her out</span></button>
+<div class="hwin" id="hwin" role="dialog" aria-label="Cara, [Your Company]'s assistant">
+  <div class="hhd"><span class="lg">C</span><div><b id="hdName">Cara &middot; [Your Company]'s assistant</b><span id="hdSub">Answers in seconds &middot; Jordan is one word away</span></div><button id="hclose" aria-label="Close">&times;</button></div>
+  <div class="vtabs" id="vtabs" role="group" aria-label="Who Cara is speaking to"><span>Speaking to</span><button data-v="cpa" class="on" aria-pressed="true">a CPA client</button><button data-v="trades" aria-pressed="false">a subcontractor</button></div>
+  <div class="hlog" id="hlog"></div>
+  <div class="hchips" id="hchips"></div>
+  <div class="hin"><input id="hinp" type="text" placeholder="Type a question, like a text message" autocomplete="off"><button id="hsend">Send</button></div>
+  <div class="hfoot">Demo. Cara answers from what she knows about this person, not a keyword menu &mdash; and hands anything outside her set to a person rather than guessing.</div>
+</div>
+
+<script>
+(function(){
+/* ---------- clients: real CPA document names ---------- */
+var STAFF=["Dev Patel, CPA","Joanne Klassen, CPA","Marc Tremblay, CPA"];
+var C=[
+ {n:"Kildonan Dental Group",c:"Amrita",t:"corp",ye:"Dec 31",d:["Signed engagement letter","Bank statements","RST returns filed"],r:1,t183:"Signed T183CORP"},
+ {n:"Portage Auto Body",c:"Dave",t:"corp",ye:"Mar 31",d:["Bank statements","Credit card statements"],r:1,bounce:true},
+ {n:"Selkirk Freight Ltd.",c:"Marie",t:"corp",ye:"Dec 31",d:["Vehicle & fuel log","Loan statements","Signed engagement letter"],r:2},
+ {n:"Norwood Bakery",c:"Tomas",t:"corp",ye:"Jun 30",d:["Sales records","GST returns filed","Signed engagement letter"],r:1},
+ {n:"Osborne Physio",c:"Jen",t:"corp",ye:"Dec 31",d:["Bank statements","Signed engagement letter"],r:1},
+ {n:"Transcona Plumbing",c:"Rick",t:"corp",ye:"Dec 31",d:["T4 Summary & slips","Expense receipts","WCB annual return"],r:3},
+ {n:"Fort Garry Landscaping",c:"Ben",t:"self",ye:"Dec 31",d:["Business income & expenses","Vehicle log"],r:2,t183:"Signed T183"},
+ {n:"Wolseley Books",c:"Nadia",t:"self",ye:"Dec 31",d:["Expense receipts","Home office details"],r:1},
+ {n:"St. Vital Electric",c:"Gord",t:"corp",ye:"Sep 30",d:["T4 Summary & slips","Capital asset invoices","RST returns filed"],r:2},
+ {n:"Charleswood Roofing",c:"Lena",t:"self",ye:"Dec 31",d:["GST returns filed","Vehicle log"],r:3},
+ {n:"Marta Reyes",c:"Marta",t:"ind",ye:"—",d:["Medical receipts","Donation receipts","Childcare receipts"],r:1,t183:"Signed T183"},
+ {n:"Assiniboine Welding",c:"Curtis",t:"corp",ye:"Dec 31",d:["T4 Summary & slips","Bank statements","WCB annual return"],r:3}
+];
+var TYPE={corp:{lab:"Corporation &middot; T2",due:"T2 due 6 months after year-end. Balance due 3 months after (CCPC claiming the small business deduction), otherwise 2."},
+          self:{lab:"Self-employed &middot; T1",due:"Return due June 15. Anything owing is still due April 30."},
+          ind:{lab:"Individual &middot; T1",due:"File and pay by April 30."}};
+var PAY="T4 Summary and slips are filed by the last day of February.";
+
+/* ---------- cadence ---------- */
+var CAD={yr:{days:[1,3,6,13,20],lab:"Yearly cadence &middot; days 1, 3 and 6",
+   note:"Runs once a year, timed to each client's year-end. You can change any step or switch it off."},
+  qt:{days:[1,2,3,7,10],lab:"Quarterly cadence &middot; days halved &mdash; 1, 2 and 3",
+   note:"Quarterly filers get the same steps in half the time, because their GST (and RST, where registered) return is due one month after the period ends."}};
+var cad='yr', auto=false, addCall=false, addLetter=false;
+var STEPKEYS=['e1','e2','c1','c2','lt'];
+
+var rowsEl=document.getElementById('rows'),feedEl=document.getElementById('feed'),
+ runBtn=document.getElementById('run'),resetBtn=document.getElementById('reset'),
+ phaseEl=document.getElementById('phase'),pulseEl=document.getElementById('pulse'),
+ dayLbl=document.getElementById('dayLbl'),endEl=document.getElementById('end'),
+ feedCount=document.getElementById('feedCount'),mTo=document.getElementById('mTo'),
+ mSub=document.getElementById('mSub'),mBody=document.getElementById('mBody'),mNote=document.getElementById('mNote'),
+ approveBox=document.getElementById('approveBox'),approveTxt=document.getElementById('approveTxt'),approveBtn=document.getElementById('approveBtn'),
+ stopbar=document.getElementById('stopbar');
+var speed=1,timers=[],st=[],ev=0,lv=0,sent=0,recv=0,calls=0,out=0,day=0,hrs=0,CIDX=0,KIND='e1',phaseQ=[],paused=false,approved=false;
+function lockControls(on){document.querySelectorAll('#cad button,#auto button,.spd button,#addCall,#addLetter').forEach(function(b){b.disabled=on})}
+function showTab(id){document.querySelectorAll('.mtab').forEach(function(x){x.setAttribute('aria-selected',x.dataset.m===id?'true':'false')});document.querySelectorAll('.mpanel').forEach(function(x){x.classList.toggle('on',x.id===id)})}
+function activeSteps(){var a=[0,1,2];if(addCall)a.push(3);if(addLetter)a.push(4);return a}
+function totalDocs(){var t=0;C.forEach(function(c){t+=c.d.length});return t}
+function K(id,v){document.getElementById(id).textContent=v}
+function addHours(h){hrs+=h;K('kHrs',hrs.toFixed(1));document.getElementById('kDollars').innerHTML='&asymp; $'+Math.round(hrs*30)+' at $30/hr this batch &middot; Manitoba&#39;s median admin wage is $24.32/hr (Job Bank Canada); $30 allows for payroll costs on top &middot; demo estimate, measured on your numbers in the real run';}
+function clock(d,off){var base=[9,2],m=(base[1]+(off||0))%60,h=base[0]+Math.floor((base[1]+(off||0))/60);return 'Day '+d+' '+(h<10?'0':'')+h+':'+(m<10?'0':'')+m}
+var tick=0;
+function alog(kind,who,text){
+  tick+=3+Math.floor(Math.random()*9);lv++;
+  var row=clock(CAD[cad].days[Math.min(day,4)],tick)+' · '+kind.toUpperCase()+' · '+who+' · '+text+(auto?' · auto':' · approved: Jordan');
+  var last=feedEl.firstChild;
+  if(last&&!last.querySelector('details')){var det=document.createElement('details');det.innerHTML='<summary>log ›</summary><div class="lrow">'+row+'</div>';last.appendChild(det);}
+  else{var d=document.createElement('div');d.className='fe sys';d.innerHTML='<span class="ic">▤</span><span class="tx">'+who+' — '+text+'</span><span class="ts"></span><details><summary>log ›</summary><div class="lrow">'+row+'</div></details>';feedEl.insertBefore(d,feedEl.firstChild);}
+}
+
+/* ---------- build rows ---------- */
+function build(){
+  rowsEl.innerHTML='';st=[];
+  C.forEach(function(c,i){
+    var w=document.createElement('div');w.className='rw';w.id='w'+i;
+    w.innerHTML=
+     '<div class="row" tabindex="0" role="button" aria-expanded="false">'+
+       '<div><div class="nm">'+c.n+'</div><div class="sub2">'+c.c+' &middot; '+TYPE[c.t].lab+(c.t!=='ind'?' &middot; year-end '+c.ye:'')+'</div>'+
+       '<div class="dl">'+c.d.map(function(d,j){return '<span class="doc" id="d'+i+'_'+j+'">'+d+'</span>'}).join('')+
+       (c.t183?'<span class="doc gated" id="t183_'+i+'">'+c.t183+' <em>· after return is ready</em></span>':'')+'</div></div>'+
+       '<span class="pill p-wait" id="p'+i+'">Waiting</span>'+'<span class="caret">&#8250;</span>'+
+     '</div>'+
+     '<div class="drawer">'+
+       '<div class="dstop" id="ds'+i+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg><span><b>Nothing more to send — thank you, '+c.c+'.</b> Reminders stopped <span id="dsw'+i+'"></span>. Jordan wasn\'t involved.'+(c.t183?' The '+c.t183.replace('Signed ','')+' is requested once the return is ready.':'')+'</span></div>'+
+       '<div class="dgrid">'+
+       '<div><div class="dh">Documents on file</div><ul class="dlist" id="dd'+i+'"></ul>'+
+         '<div class="dh" style="margin-top:16px">Their plan</div><ul class="dplan" id="dp'+i+'"></ul></div>'+
+       '<div><div class="dh">File details</div>'+
+         '<dl class="meta"><dt>Contact</dt><dd>'+c.c+' &middot; '+c.c.toLowerCase()+'@example.ca</dd>'+
+         '<dt>Filing</dt><dd>'+TYPE[c.t].lab+'</dd>'+
+         '<dt>Deadline</dt><dd class="due">'+TYPE[c.t].due+'</dd>'+
+         (c.d.join(' ').indexOf('T4 Summary')>-1?'<dt>Payroll</dt><dd>'+PAY+'</dd>':'')+
+         '</dl>'+
+         '<div class="acts">'+
+           '<button class="act" data-v="'+i+'">Preparer verified</button>'+
+           (c.t183?'<button class="act" data-t="'+i+'" disabled>Return ready → request '+c.t183.replace('Signed ','')+'</button>':'')+
+           '<select id="as'+i+'"><option value="">Assign to…</option>'+STAFF.map(function(s){return '<option>'+s+'</option>'}).join('')+'</select>'+
+           '<button class="act" data-f="'+i+'" disabled>File it</button>'+
+         '</div><div class="assigned" id="ag'+i+'"></div>'+
+       '</div></div></div>';
+    rowsEl.appendChild(w);st.push({got:0,arr:{},ver:false,stopped:false,steps:[],t183:'gated'});
+    fillDrawer(i);fillPlan(i);
+  });
+  wireRows();moreRow();
+  out=totalDocs();K('kOut',out);
+}
+function reject(i,j){
+  var d=document.getElementById('d'+i+'_'+j);if(!d||!d.classList.contains('in'))return;
+  d.classList.remove('in');st[i].got--;recv--;out++;K('kIn',recv);K('kOut',out);
+  if(st[i].stopped){st[i].stopped=false;document.getElementById('w'+i).classList.remove('stopped');document.getElementById('ds'+i).classList.remove('on');}
+  pill(i,'p-note',st[i].got+' of '+C[i].d.length+' in · re-asked');fillDrawer(i);fillPlan(i);
+  feed('call','↺','<b>'+C[i].n+'</b> — preparer rejected <b>'+C[i].d[j]+'</b> (wrong period). That line is un-ticked and its chase restarts; nothing else is re-sent.');
+  alog('bounce',C[i].n,C[i].d[j]+' rejected by preparer · wrong period · line re-opened · chase restarted for this item only');
+  if(CIDX===i)render();
+}
+function fillDrawer(i){
+  var ul=document.getElementById('dd'+i);if(!ul)return;var c=C[i];
+  ul.innerHTML=c.d.map(function(d,j){
+    var el=document.getElementById('d'+i+'_'+j),got=el&&el.classList.contains('in');
+    return '<li class="'+(got?'in':'')+'">'+d+'<span class="st">'+(got?'✓ received':'waiting')+'</span>'+(got?'<button class="rej" data-r="'+i+'_'+j+'" title="Wrong period, illegible or duplicate">Reject</button>':'')+'</li>';
+  }).join('')+(c.t183?'<li class="'+(st[i].t183==='signed'?'in':'gated')+'">'+c.t183+'<span class="st">'+(st[i].t183==='gated'?'requested only once the return is ready':st[i].t183==='requested'?'requested · not yet signed':'✓ signed · 2025 · stored with date')+'</span></li>':'');
+}
+var STEPNAMES=['Email','Email + deadline','Call flag','2nd call','Letter'];
+function fillPlan(i){
+  var ul=document.getElementById('dp'+i);if(!ul)return;var d=CAD[cad].days,s=st[i];
+  ul.innerHTML=activeSteps().map(function(k){
+    var cls=s.steps.indexOf(k)>-1?'done':(s.stopped?'cut':'');
+    return '<li class="'+cls+'">Day '+d[k]+' · '+STEPNAMES[k]+(cls==='done'?' ✓':'')+'</li>';
+  }).join('');
+}
+function wireRows(){
+  document.querySelectorAll('.rw').forEach(function(w,i){
+    var head=w.querySelector('.row');
+    head.addEventListener('click',function(){var open=w.classList.toggle('open');head.setAttribute('aria-expanded',open?'true':'false');});
+    head.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();head.click();}});
+  });
+  document.querySelectorAll('[data-v]').forEach(function(b){b.addEventListener('click',function(e){
+    e.stopPropagation();var i=+b.dataset.v;st[i].ver=true;b.textContent='✓ Verified';b.classList.add('done');
+    var tb=document.querySelector('[data-t="'+i+'"]');if(tb)tb.disabled=false;
+    var fb=document.querySelector('[data-f="'+i+'"]');if(fb)fb.disabled=!!(C[i].t183&&st[i].t183!=='signed');
+    feed('recv','✓','<b>'+C[i].n+'</b> — documents checked over and verified by the preparer.');alog('ok',C[i].n,'preparer verified all lines · Dev Patel');});});
+  if(!rowsEl.dataset.rej){rowsEl.dataset.rej='1';rowsEl.addEventListener('click',function(e){var b=e.target.closest('.rej');if(!b)return;e.stopPropagation();var q=b.dataset.r.split('_');reject(+q[0],+q[1]);});}
+  document.querySelectorAll('[data-t]').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();requestT183(+b.dataset.t,true);b.disabled=true;});});
+  document.querySelectorAll('[data-f]').forEach(function(b){b.addEventListener('click',function(e){
+    e.stopPropagation();var i=+b.dataset.f,sel=document.getElementById('as'+i),who=sel.value;
+    if(!who){sel.focus();return;}
+    document.getElementById('ag'+i).textContent='✓ Filed to '+who+'’s queue.';
+    b.textContent='✓ Filed';b.classList.add('done');
+    feed('sys','◆','<b>'+C[i].n+'</b> passed to <b>'+who+'</b>.');alog('sys',C[i].n,'filed to '+who+'\'s queue');});});
+}
+function requestT183(i,manual){
+  var c=C[i];if(!c.t183||st[i].t183!=='gated')return;st[i].t183='requested';
+  var ch=document.getElementById('t183_'+i);ch.className='doc req';ch.innerHTML=c.t183+' <em>· requested</em>';
+  fillDrawer(i);feed('send','→','Return ready for <b>'+c.n+'</b> — '+c.t183.replace('Signed ','')+' requested. Stored with tax year and signature date when it comes back.');
+  alog('send',c.n,c.t183.replace('Signed ','')+' requested · return marked ready · 2025');
+  var w=manual?0:1;
+  at(1600,function(){st[i].t183='signed';ch.className='doc in';ch.innerHTML=c.t183+' <em>· 2025 · signed</em>';fillDrawer(i);
+    feed('recv','✓','<b>'+c.c+'</b> signed the '+c.t183.replace('Signed ','')+' online — stored with year and signature date. EFILE unlocked.');
+    alog('upload',c.n,c.t183.replace('Signed ','')+' signed · tax year 2025 · e-signature · EFILE unlocked');
+    var fb=document.querySelector('[data-f="'+i+'"]');if(fb&&st[i].ver)fb.disabled=false;});
+}
+
+/* ---------- feed / days ---------- */
+function feed(kind,ic,html){
+  var d=document.createElement('div');d.className='fe '+kind;
+  d.innerHTML='<span class="ic">'+ic+'</span><span class="tx">'+html+'</span><span class="ts">Day '+CAD[cad].days[Math.min(day,4)]+'</span>';
+  feedEl.insertBefore(d,feedEl.firstChild);ev++;feedCount.textContent=ev+(ev===1?' update':' updates');
+}
+function setDay(i){day=i;dayLbl.textContent='Day '+CAD[cad].days[Math.min(i,4)]}
+function at(ms,fn){timers.push(setTimeout(fn,ms/speed))}
+function flash(i,cls){var w=document.getElementById('w'+i);if(!w)return;w.classList.add(cls);at(900,function(){w.classList.remove(cls)})}
+function pill(i,c,t){var p=document.getElementById('p'+i);p.className='pill '+c;p.textContent=t;document.getElementById('w'+i).classList.toggle('changed',c!=='p-wait');moreRow();}
+function moreRow(){var n=document.querySelectorAll('.rw:not(.changed)').length,m=document.getElementById('moreRow');if(!m){m=document.createElement('button');m.id='moreRow';m.className='more';m.addEventListener('click',function(){rowsEl.classList.toggle('showall')});rowsEl.parentNode.appendChild(m);}m.textContent=n+' more, all waiting — show';m.hidden=(n===0||n===C.length);}
+function stepDone(i,k){if(st[i].steps.indexOf(k)<0)st[i].steps.push(k);fillPlan(i)}
+function stopClient(i){
+  var c=C[i],s=st[i];if(s.stopped)return;s.stopped=true;
+  var w=document.getElementById('w'+i);w.classList.add('stopped');
+  document.getElementById('ds'+i).classList.add('on');document.getElementById('dsw'+i).textContent='Day '+CAD[cad].days[Math.min(day,4)];
+  fillPlan(i);pill(i,'p-done','All in — thank you');addHours(.6);
+  document.getElementById('stopWho').textContent=c.n+': all in.';var nc=activeSteps().filter(function(k){return s.steps.indexOf(k)<0}).length;document.getElementById('stopWhen').textContent='Day '+CAD[cad].days[Math.min(day,4)]+(nc?' · '+nc+' remaining step'+(nc===1?'':'s')+' cancelled':' · nothing left to cancel');
+  stopbar.classList.add('on');
+  feed('stop','■','<b>'+c.n+'</b> — all in, thank you. Nothing more to send; remaining steps cancelled. Jordan wasn\'t involved.');
+  alog('ok',c.n,'all lines received · reminders stopped · receipt sent to '+c.c);
+}
+function got(i,j){var d=document.getElementById('d'+i+'_'+j);if(!d||d.classList.contains('in'))return;
+  d.classList.add('in');st[i].arr[j]='day '+CAD[cad].days[Math.min(day,4)];st[i].got++;recv++;out--;K('kIn',recv);K('kOut',out);fillDrawer(i);
+  alog('upload',C[i].n,C[i].d[j]+' · from '+C[i].c.toLowerCase()+'@example.ca · line ticked');
+  if(st[i].got===C[i].d.length){stopClient(i)}else{pill(i,'p-note',st[i].got+' of '+C[i].d.length+' in');}
+  if(CIDX===i)renderReceipt();}
+
+/* ---------- plan panel ---------- */
+function renderPlan(){
+  var d=CAD[cad].days;
+  var steps=[["A friendly email","A short note with their own upload link. Most people answer this one."],
+   ["Another kind email","This one mentions the deadline and what they stand to gain."],
+   ["A call on Jordan's list","If we still haven't heard back. A real person rings — the script is ready for her, nothing automated."],
+   ["One more call from Jordan","Different time of day, in case we caught them at a bad moment."],
+   ["A letter in the mail","For the handful who don't do email. We print it, you sign it."]];
+  document.getElementById('planList').innerHTML=steps.map(function(s,k){
+    var addon=k>=3,on=(k===3&&addCall)||(k===4&&addLetter);
+    return '<li class="'+(addon?'addon':'')+(addon&&!on?' off':'')+'"><span class="when">Day '+d[k]+'</span><div><h4>'+s[0]+(addon?'<em>'+(on?'add-on · on':'add-on · off')+'</em>':'')+'</h4><p>'+s[1]+'</p></div></li>'}).join('');
+  document.getElementById('planNote').innerHTML=auto?CAD[cad].note:"Nothing goes out on its own. Each day's step waits for your OK in the status bar, then sends.";
+  var lab=CAD[cad].lab+(addCall?', 2nd call day '+d[3]:'')+(addLetter?', letter day '+d[4]:'');
+  document.getElementById('cadNote').innerHTML=lab;
+  document.querySelectorAll('[data-dd]').forEach(function(s){s.textContent=d[+s.dataset.dd]});
+  document.querySelector('.pick[data-k="c2"]').hidden=!addCall;document.querySelector('.pick[data-k="lt"]').hidden=!addLetter;
+  if((KIND==='c2'&&!addCall)||(KIND==='lt'&&!addLetter)){KIND='e1';render();}
+  st.forEach(function(_,i){fillPlan(i)});
+}
+
+/* ---------- messages ---------- */
+function benefit(c){
+  if(c.t==='ind') return "Once we have these we can complete your return before the deadline — thank you.";
+  return "Once we have these we can complete your year-end before the deadline — thank you.";
+}
+function deadline(c){
+  if(c.t==='corp') return "Your T2 is due six months after your "+c.ye+" year-end, and anything owing is due before that. If you could get these to us two weeks early we'd have plenty of room. Posting them? Please allow an extra week.";
+  if(c.t==='self') return "Your return is due June 15, but anything you owe is still due April 30. Two weeks' notice is plenty for us. Mailing it? Please send it a week earlier, if you can.";
+  return "The April 30 deadline covers both filing and paying. Two weeks' notice is plenty for us. Mailing it? Please send it a week earlier, if you can.";
+}
+function outstanding(i){return C[i].d.filter(function(_,j){var el=document.getElementById('d'+i+'_'+j);return !(el&&el.classList.contains('in'))})}
+function received(i){return C[i].d.filter(function(_,j){var el=document.getElementById('d'+i+'_'+j);return el&&el.classList.contains('in')})}
+function renderReceipt(){
+  var c=C[CIDX],R=received(CIDX),O=outstanding(CIDX),el=document.getElementById('rcpt');
+  if(!R.length){el.className='rcpt none';el.textContent='No receipt yet — '+c.c+' hasn\'t sent anything. The moment a file lands, a thank-you goes back listing exactly what came in.';return;}
+  var d='Day '+CAD[cad].days[Math.min(day,4)];
+  if(!O.length){el.className='rcpt final';el.innerHTML='<div class="to"><span>From <b>hello@yourcompany.example</b></span><span>'+d+'</span></div><div class="sub">All in — thank you</div><div class="bd"><span class="ok">Received:</span> '+R.join(', ')+'. That\'s everything we needed for your '+(c.t==='corp'?'year-end':'return')+' — thank you.<br>We\'ll be in touch as soon as it\'s ready. Any questions, please call Jordan on (555) 555-0100.</div>';}
+  else{el.className='rcpt';el.innerHTML='<div class="to"><span>From <b>hello@yourcompany.example</b></span><span>'+d+'</span></div><div class="sub">Got them — thank you</div><div class="bd"><span class="ok">Received:</span> '+R.join(', ')+'.<br><b>Still to come:</b> '+O.join(', ')+'.<br>Same portal link whenever you\'re ready — no rush at all.</div>';}
+}
+function render(){
+  var c=C[CIDX], O=outstanding(CIDX); if(!O.length) O=c.d;
+  document.querySelectorAll('.pick').forEach(function(x){x.classList.toggle('on',x.dataset.k===KIND)});
+  document.getElementById('vEmail').style.display=(KIND==='e1'||KIND==='e2')?'':'none';
+  document.getElementById('vCall').style.display=(KIND==='c1'||KIND==='c2')?'':'none';
+  document.getElementById('vLetter').style.display=(KIND==='lt')?'':'none';
+  document.getElementById('cvWho').textContent=c.c;
+  document.getElementById('cvH').textContent=c.d.length===1?'Just one thing left':'Just a few things left';
+  if(KIND==='e1'||KIND==='e2'){
+    mTo.textContent=c.c+' at '+c.n;
+    if(KIND==='e1'){mSub.textContent="Just a quick note about your "+(c.t==='ind'?"return":"year-end");
+      mBody.textContent="Hi "+c.c+",\n\nI hope you're keeping well. We're working on your "+(c.t==='corp'?"year-end":"return")+" and we're still waiting on:\n\n• "+O.join("\n• ")+"\n\nWhen you have a moment, you can send them straight up here — no need to reply to this email:";
+      mNote.textContent="You write this once. It always goes out from your address, in your name, with your phone number on it.";}
+    else{mSub.textContent="One gentle reminder before the deadline";
+      mBody.textContent="Hi "+c.c+",\n\nI've tried you a couple of times, so I thought I'd write instead — I hope that's all right. We're still missing:\n\n• "+O.join("\n• ")+"\n\n"+benefit(c)+"\n\n"+deadline(c)+"\n\nSame link as before, whenever it suits you:";
+      mNote.textContent="Warmer, not firmer. It reminds them what they get out of it, and it gives them their own date.";}
+  }
+  if(KIND==='c1'||KIND==='c2'){
+    document.getElementById('cName').textContent=c.c+' at '+c.n;
+    document.getElementById('cWhen').textContent='Day '+CAD[cad].days[KIND==='c1'?2:3]+(KIND==='c1'?', 10:15am':', 3:40pm');
+    document.getElementById('cScript').textContent=(KIND==='c1')
+     ? "Hi "+c.c+", it's Jordan at [Your Company Name] — nothing urgent at all, I hope I'm not catching you at a bad time.\n\nWe're just missing a couple of things for your "+(c.t==='corp'?"year-end":"return")+". There's a link in the email I sent you, and it only takes a minute.\n\nIf it's easier to talk it through, I'm happy to now. Otherwise, no rush at all. Thank you."
+     : "Hi "+c.c+", Jordan again — I'm sorry to bother you twice.\n\nWe still need a few things before we can finish your "+(c.t==='corp'?"year-end":"return")+". The sooner we have them, the sooner it's off your plate.\n\nPlease call me back any time on 555‑555‑0100. Thank you very much.";
+    mNote.textContent=KIND==='c1'?"A flag on Jordan's list, with the script ready. She dials — nothing is automated.":"Opt-in add-on. Queued for a different time of day.";
+  }
+  if(KIND==='lt'){
+    document.getElementById('lDate').textContent='Day '+CAD[cad].days[4];
+    document.getElementById('lHead').textContent="Dear "+c.c+",";
+    document.getElementById('lBody').textContent="We've emailed and phoned a couple of times, so we thought we'd write instead — in case that's easier for you. We're nearly finished your return, and we'd be grateful for a few things from you.";
+    document.getElementById('lList').innerHTML=O.map(function(d){return '<li>'+d+'</li>'}).join('');
+    document.getElementById('lDead').textContent=benefit(c)+" "+deadline(c);
+    mNote.textContent="Opt-in add-on, priced per letter. We print it, you sign it.";
+  }
+  var f=document.getElementById('cvForm'),th=document.getElementById('cvThanks');
+  f.style.display='';th.style.display='none';
+  document.getElementById('cvList').innerHTML=c.d.map(function(d,j){
+    var el=document.getElementById('d'+CIDX+'_'+j);
+    return '<li'+((el&&el.classList.contains('in'))?' class="done"':'')+'><span class="bx"></span>'+d+'</li>';}).join('')+
+    (c.t183?'<li class="'+(st[CIDX].t183==='signed'?'done':'gated')+'"><span class="bx"></span>'+c.t183+'<span class="gt">'+(st[CIDX].t183==='gated'?'asked for once your return is ready':st[CIDX].t183==='requested'?'ready to sign online':'signed')+'</span></li>':'');
+  renderReceipt();
+}
+
+/* ---------- run ---------- */
+function setApprove(on,txt){approveBox.classList.toggle('on',on);approveTxt.textContent=txt||'';document.getElementById('dayLbl').style.display=on?'none':'';}
+function reset(){
+  timers.forEach(clearTimeout);timers=[];phaseQ=[];paused=false;lockControls(false);sent=recv=calls=ev=lv=0;hrs=0;day=0;tick=0;
+  K('kSent',0);K('kIn',0);K('kCalls',0);K('kHrs','0.0');
+  feedEl.innerHTML='';feedCount.textContent='nothing yet';
+  endEl.classList.remove('on');stopbar.classList.remove('on');setApprove(false);
+  pulseEl.classList.remove('live');phaseEl.textContent='Ready when you are — please press Send Requests.';
+  runBtn.disabled=false;runBtn.textContent='Send Requests';runBtn.classList.remove('approve');build();setDay(0);render();renderPlan();
+  document.getElementById('cutoff').classList.remove('on');document.getElementById('outcome').hidden=true;document.getElementById('kDollars').innerHTML='&asymp; $0 at $30/hr this batch &middot; Manitoba&#39;s median admin wage is $24.32/hr (Job Bank Canada); $30 allows for payroll costs on top &middot; demo estimate, measured on your numbers in the real run';
+}
+function play(){
+  if(paused && phaseQ.length){ paused=false; approved=true; setApprove(false); runBtn.disabled=true; runBtn.textContent='Sending…'; runBtn.classList.remove('approve'); pulseEl.classList.add('live'); phaseQ.shift()(); return; }
+  reset();runBtn.disabled=true;runBtn.textContent='Sending…';pulseEl.classList.add('live');lockControls(true);showTab('m1');
+  document.getElementById('startCard').hidden=true;document.getElementById('liveRow').hidden=false;document.getElementById('settings').open=false;document.body.classList.remove('pre');
+  var D=CAD[cad].days;
+  function chain(steps,done){ var t=0; steps.forEach(function(st){ t+=st[0]; at(t,st[1]); }); at(t+200,done); }
+  function gate(label,detail){
+    if(auto||approved){approved=false;return false;}
+    paused=true;runBtn.disabled=false;runBtn.textContent='Approve & send';runBtn.classList.add('approve');pulseEl.classList.remove('live');
+    phaseEl.textContent='Waiting for your OK, whenever you\'re ready — '+label;setApprove(true,label);
+    feed('sys','▢','<b>'+label+'</b> — '+(detail||'review, then Approve')+'. Nothing has gone out.');return true;
+  }
+  function next(){ if(!phaseQ.length) return; phaseQ.shift()(); }
+  function open(i){return !st[i].stopped}
+  function endRun(){
+    var left=C.filter(function(_,i){return open(i)});
+    var A=activeSteps();setDay(A[A.length-1]);phaseEl.textContent='All done. Lovely run.';pulseEl.classList.remove('live');setApprove(false);
+    left.forEach(function(c){var i=C.indexOf(c);pill(i,'p-call','Jordan to call');alog('call',c.n,'still outstanding at cut-off · partner exception report')});
+    var cl=document.getElementById('cutList');cl.innerHTML=left.map(function(c){var i=C.indexOf(c);return '<div class="cut" data-c="'+i+'"><div><b>'+c.n+'</b><br><span>Still to come: '+outstanding(i).join(', ')+' · '+TYPE[c.t].due.split('.')[0]+'</span></div><div class="ch"><button data-x="file">File with what we have</button><button data-x="ext">Extension letter</button><button data-x="stop">Stop chasing</button></div><div class="chosen"></div></div>'}).join('');
+    document.getElementById('cutoff').classList.toggle('on',left.length>0);
+    feed('sys','◆','Nice work, Jordan — and thank you. <b>'+recv+' of '+totalDocs()+'</b> came in without you writing a word — just <b>'+left.length+'</b> left to ring.');
+    document.getElementById('endHrs').textContent=hrs.toFixed(1)+' hrs';
+    document.getElementById('outHrs').innerHTML=hrs.toFixed(1)+' hrs saved &asymp; $'+Math.round(hrs*30)+' at $30/hr this batch &middot; Manitoba&#39;s median admin wage is $24.32/hr (Job Bank Canada); $30 allows for payroll costs on top, measured on your numbers in the real run.';document.getElementById('outcome').hidden=false;document.getElementById('hello').scrollIntoView({behavior:'smooth',block:'start'});
+    document.getElementById('endSub').textContent='A few real calls from Jordan'+(addLetter?', and one letter':'')+'. Everything else ran itself.';
+    runBtn.disabled=false;runBtn.textContent='Send Requests again';runBtn.classList.remove('approve');lockControls(false);paused=false;endEl.classList.add('on');
+  }
+  var P=[],PI=0;
+  P.push(function(){PI=0; if(gate('Day '+D[0]+' · '+C.length+' emails drafted','one "quick note" per client, each listing only what that client still owes — review in What we send, then Approve')){phaseQ.unshift(P[PI]);return;} var s=[];
+    s.push([300,function(){phaseEl.textContent='Having a look at who we’re still waiting on, please bear with me…';
+      feed('sys','◆','Checked <b>12 open files</b> — '+totalDocs()+' documents still to come in.');alog('sys','All clients','run started · '+(auto?'automatic':'approved by Jordan')+' · '+totalDocs()+' lines open')}]);
+    s.push([1400,function(){phaseEl.textContent='Day '+D[0]+' — writing everyone a warm note';setDay(0)}]);
+    C.forEach(function(c,i){s.push([320,function(){CIDX=i;KIND='e1';render();
+      flash(i,'hit');pill(i,'p-note','Note sent');sent++;K('kSent',sent);addHours(.28);stepDone(i,0);
+      feed('send','→','Wrote to <b>'+c.c+'</b> — warm note with their upload link.');alog('send',c.n,'email 1 · template "quick note" · '+(auto?'auto':'approved by Jordan'))}]);});
+    s.push([500,function(){var c=C[1];pill(1,'p-call','Bounced — on call list');calls++;K('kCalls',calls);
+      feed('call','↩','<b>'+c.c+'</b>\'s address bounced — straight to Jordan\'s call list with the reason, so nothing is lost.');alog('bounce',c.n,'dave@example.ca rejected (mailbox full) · to call list')}]);
+    s.push([800,function(){phaseEl.textContent='Lovely — people are answering, thank you'}]);
+    C.forEach(function(c,i){if(c.r!==1||c.bounce)return;s.push([500,function(){CIDX=i;c.d.forEach(function(_,j){got(i,j)});flash(i,'good');render();
+      feed('recv','✓','<b>'+c.c+'</b> kindly sent '+c.d.length+' files. Saved to your folder, and thanked.')}]);});
+    s.push([600,function(){phaseEl.textContent='Kildonan Dental is done — nothing more to send them, thank you Amrita. That\'s the whole point.'}]);
+    chain(s,function(){setDay(1);next()}); });
+  P.push(function(){PI=1; var who=C.filter(function(c,i){return open(i)&&!c.bounce});
+    if(gate('Day '+D[1]+' · '+who.length+' deadline emails ready')){phaseQ.unshift(P[PI]);return;} var s=[];
+    s.push([400,function(){phaseEl.textContent='Day '+D[1]+' — a kind second email, with their own deadline in it'}]);
+    who.forEach(function(c){var i=C.indexOf(c);s.push([300,function(){CIDX=i;KIND='e2';render();flash(i,'hit');pill(i,'p-note','2nd email sent');sent++;K('kSent',sent);addHours(.2);stepDone(i,1);
+      feed('send','→','Second email to <b>'+c.c+'</b> — mentions the deadline and what they stand to gain.');alog('send',c.n,'email 2 · template "deadline" · '+(auto?'auto':'approved by Jordan'))}]);});
+    s.push([500,function(){var c=C[1];CIDX=1;c.d.forEach(function(_,j){got(1,j)});flash(1,'good');render();
+      feed('recv','✓','<b>Dave</b> kindly rang back with a new address and uploaded both files.');alog('recv',c.n,'reply · new address dave.portage@example.ca · updated')}]);
+    s.push([400,function(){requestT183(0);phaseEl.textContent='Return ready for Kildonan Dental — now, and only now, the T183CORP goes out'}]);
+    C.forEach(function(c,i){if(c.r!==2)return;s.push([430,function(){CIDX=i;c.d.forEach(function(_,j){got(i,j)});flash(i,'good');render();
+      feed('recv','✓','<b>'+c.c+'</b> came through with '+c.d.length+' files — thank you.')}]);});
+    chain(s,function(){setDay(2);next()}); });
+  P.push(function(){PI=2; var who=C.filter(function(c,i){return open(i)});
+    if(gate('Day '+D[2]+' · '+who.length+' call flags for Jordan')){phaseQ.unshift(P[PI]);return;} var s=[];
+    s.push([400,function(){phaseEl.textContent='Day '+D[2]+' — the quiet ones go on Jordan\'s call list'}]);
+    who.forEach(function(c){var i=C.indexOf(c);s.push([600,function(){CIDX=i;KIND='c1';render();
+      flash(i,'hit');pill(i,'p-call','On call list');calls++;K('kCalls',calls);addHours(.1);stepDone(i,2);
+      feed('call','☎','Put <b>'+c.c+'</b> on Jordan\'s call list, script ready.');alog('call',c.n,'call flag · script "first call" · Jordan\'s list')}]);});
+    s.push([700,function(){CIDX=9;C[9].d.forEach(function(_,k){got(9,k)});flash(9,'good');render();
+      feed('recv','✓','Jordan called <b>Lena</b> — she kindly sent everything through that afternoon.');alog('recv',C[9].n,'Jordan called · 10:15 · client uploaded same day')}]);
+    s.push([700,function(){CIDX=5;C[5].d.forEach(function(_,k){got(5,k)});flash(5,'good');render();
+      feed('recv','✓','<b>Rick</b> rang back and uploaded the rest — thank you, Rick.');alog('recv',C[5].n,'client called back · 15:40 · uploaded')}]);
+    chain(s,function(){setDay(3);next()}); });
+  P.push(function(){PI=3; if(!addCall){ if(addLetter){setDay(4);next()} else endRun(); return; }
+    var who=C.filter(function(c,i){return open(i)});
+    if(gate('Day '+D[3]+' · second call for '+who.length)){phaseQ.unshift(P[PI]);return;} var s=[];
+    s.push([400,function(){phaseEl.textContent='Day '+D[3]+' — second call queued, different time of day (add-on)'}]);
+    who.forEach(function(c){var i=C.indexOf(c);s.push([620,function(){CIDX=i;KIND='c2';render();
+      flash(i,'hit');pill(i,'p-call','Second call queued');calls++;K('kCalls',calls);addHours(.1);stepDone(i,3);
+      feed('call','☎','Queued a second call to <b>'+c.c+'</b> for the afternoon.');alog('call',c.n,'call flag 2 · afternoon slot')}]);});
+    chain(s,function(){setDay(4);next()}); });
+  P.push(function(){PI=4; if(!addLetter){endRun();return;}
+    var who=C.filter(function(c,i){return open(i)});
+    if(gate('Day '+D[4]+' · '+who.length+' letter'+(who.length===1?'':'s')+' to print')){phaseQ.unshift(P[PI]);return;} var s=[];
+    s.push([400,function(){phaseEl.textContent='Day '+D[4]+' — printing a letter for the post (add-on)'}]);
+    who.forEach(function(c){var i=C.indexOf(c);s.push([500,function(){CIDX=i;KIND='lt';render();flash(i,'hit');pill(i,'p-call','Letter printed');addHours(.45);stepDone(i,4);
+      feed('call','✉','Printed a letter for <b>'+c.c+'</b>. On your desk to sign.');alog('send',c.n,'letter printed · awaiting signature · Canada Post')}]);});
+    chain(s,function(){endRun()}); });
+  phaseQ=P.slice();
+  next();
+}
+approveBtn.addEventListener('click',play);
+document.getElementById('cutList').addEventListener('click',function(e){var b=e.target.closest('button[data-x]');if(!b)return;var box=b.closest('.cut'),i=+box.dataset.c;
+  box.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});
+  var lab={file:'file with what we have',ext:'extension letter',stop:'stop chasing'}[b.dataset.x];
+  box.querySelector('.chosen').textContent='✓ Partner decision logged: '+lab+'.';
+  feed('sys','◆','<b>'+C[i].n+'</b> — partner decided at cut-off: <b>'+lab+'</b>.');alog('ok',C[i].n,'cut-off decision · '+lab+' · partner');});
+document.getElementById('run2').addEventListener('click',function(){play();document.getElementById('run').scrollIntoView({block:'nearest'});});
+
+/* ---------- Cara — composes from state. Built against Jobs/Cara/*. ---------- */
+(function(){
+  var win=document.getElementById('hwin'),btn=document.getElementById('hbtn'),log=document.getElementById('hlog'),
+      inp=document.getElementById('hinp'),chips=document.getElementById('hchips'),
+      hdName=document.getElementById('hdName'),hdSub=document.getElementById('hdSub'),
+      vtabs=document.getElementById('vtabs');
+  var opened=false, VERT='cpa', M;
+  var sampleCap=null, chatTurns=[], liveFailed=false;
+  (function(){try{
+    if(window.claude&&window.claude.use){
+      window.claude.use('sample').then(function(cap){sampleCap=cap}).catch(function(){sampleCap=null});
+    }
+  }catch(e){}})();
+
+  /* ---- the two people she might be speaking to ---- */
+  var TR={v:'trades',firm:'Northgate Construction',staff:'Dave',phone:'(204) 555-0172',
+    person:'Wes',company:'Kelsey Mechanical',
+    out:['Certificate of insurance','WCB clearance letter'],
+    got:[{d:'Signed lien waiver',day:'the 3rd'}],
+    expired:'your certificate expired on March 31'};
+  function P(){
+    if(VERT==='trades') return TR;
+    var c=C[CIDX], arr=(st[CIDX]&&st[CIDX].arr)||{};
+    return {v:'cpa',firm:'[Your Company Name]',staff:'Jordan',phone:'(555) 555-0100',
+      person:c.c,company:c.n,
+      out:outstanding(CIDX),
+      got:received(CIDX).map(function(d){var j=c.d.indexOf(d);return {d:d,day:arr[j]||'earlier in the run'}}),
+      t183:c.t183,t183st:(st[CIDX]||{}).t183,type:c.t,ye:c.ye};
+  }
+
+  /* ---- composition: the rules that stop it reading as a menu ---- */
+  function resetMem(){M={lastOp:'',signed:false,unclear:0,stopped:false,escalated:false,
+    promised:null,askedList:false,turns:0,signs:0,said:{}}}
+  resetMem();
+  function op(pool){var a=pool.filter(function(s){return s!==M.lastOp});
+    if(!a.length)a=pool; var s=a[Math.floor(Math.random()*a.length)];M.lastOp=s;return s}
+  function sign(t,end){ if(M.signs>=2)return t;
+    if(!M.signed){M.signed=true;M.signs++;return t+"\n— Cara"}
+    if(end){M.signs++;return t+"\n— Cara"} return t }
+  function terse(q){return q.trim().split(/\s+/).length<=5}
+  function list(a){return a.join(a.length===2?" and ":", ")}
+  function only(P){return P.out.length===1}
+
+  function now(){var d=new Date();return d.getHours()+':'+(d.getMinutes()<10?'0':'')+d.getMinutes()}
+  /* Scroll so the answer is actually readable: a short reply goes to the bottom as usual,
+     but a long one is parked with ITS TOP in view, so you read down instead of hunting up. */
+  function toBottom(){ log.scrollTop=log.scrollHeight;
+    if(typeof requestAnimationFrame==='function')requestAnimationFrame(function(){log.scrollTop=log.scrollHeight}) }
+  function reveal(d){
+    var show=function(){
+      if(d.offsetHeight > log.clientHeight*0.6) log.scrollTop = d.offsetTop - 10;
+      else log.scrollTop = log.scrollHeight;
+    };
+    show(); if(typeof requestAnimationFrame==='function')requestAnimationFrame(show);
+  }
+  function msg(kind,text){var d=document.createElement('div');d.className='hm '+kind;d.textContent=text;
+    if(kind!=='sys'){var t=document.createElement('span');t.className='tm';t.textContent=(kind==='a'?'Cara · ':'You · ')+now();d.appendChild(t)}
+    log.appendChild(d);
+    if(kind==='a')reveal(d); else toBottom();
+    return d}
+  function typing(ms,fn){var t=document.createElement('div');t.className='htyp';t.innerHTML='<i></i><i></i><i></i>';
+    log.appendChild(t);toBottom();setTimeout(function(){t.remove();fn()},ms)}
+  function setChips(l){chips.innerHTML='';(l||[]).forEach(function(c){var b=document.createElement('button');
+    b.textContent=c;b.addEventListener('click',function(){send(c)});chips.appendChild(b)})}
+
+  /* ---- actions. An answer that changes state beats ten that explain. ---- */
+  function toHuman(p,why){
+    M.escalated=true;
+    feed('call','☎','<b>'+p.person+'</b> — '+why+'. On '+p.staff+"'s call list with the transcript.");
+    alog('call',p.company,why+' · escalated to '+p.staff+' · transcript attached');
+    if(p.v==='cpa')pill(CIDX,'p-call',p.staff+' to call');
+  }
+  function stopChase(p,why,hard){
+    M.stopped=!!hard; M.dropped=true;
+    feed('sys','◆','<b>'+p.person+'</b> — chase stopped: '+why+'. Nothing further will send automatically.');
+    alog('ok',p.company,'chase stopped · '+why+' · no further automated contact');
+  }
+  function dropLine(p,line,why){
+    var i=p.out.indexOf(line); if(i>-1)p.out.splice(i,1);
+    feed('sys','◆','<b>'+line+'</b> taken off '+p.person+"'s list — "+why+'. Flagged for '+p.staff+'.');
+    alog('ok',p.company,line+' · marked not applicable · '+why+' · flagged');
+  }
+  function noteDate(p,when){
+    M.promised=when;
+    feed('sys','◆','<b>'+p.person+'</b> said '+when+'. Logged — the chase pauses until then.');
+    alog('ok',p.company,'promised date recorded: '+when+' · chase paused');
+  }
+
+  /* ---- the answer sets ---- */
+  var CPA_CHIPS=["What's still outstanding?","I already sent that","Is this email really from you?","Am I talking to a person?","What's a PST return?","Can I talk to a person?"];
+  var TR_CHIPS=["What's still outstanding?","My broker sends those","You already have my insurance","What's a WCB clearance letter?","I'm on site right now","Stop emailing me"];
+  function defaults(){return VERT==='trades'?TR_CHIPS:CPA_CHIPS}
+
+  function answer(q){
+    var p=P(), l=q.toLowerCase(), O=p.out, R=p.got, nm=p.person;
+    M.turns++;
+
+    /* she has been asked to stop — nothing automated follows */
+    if(M.stopped && !/sorry|start again|carry on|resume/.test(l))
+      return [sign("I've stopped everything on my side, so this is the last you'll hear from me. "+p.staff+" has your message and will pick it up personally — "+p.phone+" if you'd rather ring.",true),[]];
+
+    /* 1. hostility / stop. One apology. Stop. Get out of the way. */
+    if(/stop (email|contact|messag|send|chas|bother)|leave me alone|leave it\s*$|leave it alone|quit emailing|unsubscribe|harass|spam|piss|fed up|enough of this|stop it|take me off|off your list|remove me|stop sending|(second|third|fourth|fifth|another|3rd|4th) email|asked you (twice|again|before|already)/.test(l)){
+      stopChase(p,'asked to stop',true);toHuman(p,'asked us to stop emailing');
+      return [sign("Sorry — I've stopped the reminders now, this second. Nothing else will go out automatically. "+p.staff+" has our conversation and will be the one to come back to you, or "+p.phone+" if you'd rather reach her directly.",true),[]];
+    }
+
+    /* 2. wrong person — never chase them twice */
+    if(/wrong (person|number|address|guy)|don'?t work (there|for)|no longer (work|with)|not me|left the company|i'?m not the|ask (accounts|the office|my bookkeeper)|that'?s (my|our) bookkeeper|retired/.test(l)){
+      stopChase(p,'wrong contact');
+      return [sign("Sorry for the bother — I've taken you off this straight away, so you won't hear from me again. If you happen to know who I should be asking, I'll send it there instead. If not, no trouble at all, I'll find out at our end.",true),
+        ["Try [name] instead","No idea, sorry"]];
+    }
+    if(M.dropped && !M.stopped){
+      if(/no idea|not sure|don'?t know|sorry/.test(l))
+        return [sign("No trouble at all — I'll find out at our end. Thanks for telling me rather than just deleting it.",true),[]];
+      return [sign("Perfect — I've updated the record and I'll take it there instead. Thank you for pointing me the right way.",true),[]];
+    }
+
+    /* 3. "I already sent that" — check the log before saying anything */
+    if(/already sent|i sent|sent (it|that|them|those)|gave you|emailed (it|that|them)|you (have|got) (it|that|them)|last (week|month)|dropped (it|that) off/.test(l)
+       && !/insurance|coi|certificate/.test(l)){
+      if(R.length){
+        var named=R.filter(function(r){return l.indexOf(r.d.toLowerCase().split(' ')[0])>-1});
+        var r=named[0]||R[R.length-1];
+        if(M.said.confirmed===(r&&r.d)){
+          if(O.length) return [sign("Same one — it's in, and I won't ask you for it again. "+(only(p)?"It's only the "+O[0].toLowerCase()+" that's still open.":"What's open is "+list(O.map(function(x){return x.toLowerCase()}))+".")),[]];
+          return [sign("It's in, and so is everything else. Nothing outstanding at all.",true),[]];
+        }
+        if(M.said.confirmed){
+          toHuman(p,'says documents were sent that we may have no record of');
+          return [sign("If more went than I can see, that's ours to chase down rather than yours to send twice. I've passed it to "+p.staff+" with what you've told me."),[]];
+        }
+        M.said.confirmed=r.d;
+        if(!O.length) return [sign("You did — the "+r.d.toLowerCase()+" came in on "+r.day+", and that was the last of it. Everything for "+p.company+" is in. Nothing further needed, and I'll stop bothering you.",true),[]];
+        return [sign("You did — the "+r.d.toLowerCase()+" came in on "+r.day+", thank you. That one's ticked and I won't ask again. "+(only(p)?"The only thing still open is the "+O[0].toLowerCase()+".":"Still open: "+list(O.map(function(x){return x.toLowerCase()}))+".")),
+          ["That's with my "+(p.v==='trades'?'broker':'bookkeeper'),"Can I have until Friday?"]];
+      }
+      if(M.said.notlogged){
+        toHuman(p,'says a document was sent that we have no record of');
+        return [sign("Then it's ours to find, not yours to send twice. I've handed it to "+p.staff+" with what you've told me so she can go through the inbox properly. Nothing further from me until she's looked.",true),[]];
+      }
+      M.said.notlogged=true;
+      return [sign("I can't see it on our side — which may well be us. It's possible it went to a different address, or an attachment didn't come through. Would you mind sending it here? If you'd rather not do it twice, tell me roughly when and where you sent it and I'll go looking before I ask you for anything."),
+        ["I sent it to "+p.staff.toLowerCase()+"@ directly","I'll resend it"]];
+    }
+
+    /* 4. "you already have my insurance" — on file, or on file and aged out */
+    if(/already have|you have|on file|gave you|already sent|i sent|sent (it|that|them|those)|you'?ve got/.test(l) && /insurance|coi|certificate|cert\b|policy/.test(l)){
+      if(p.v!=='trades') return [sign("I'll check that against what we hold and come straight back to you — I'd rather look than guess."),defaults()];
+      return [sign("You did send one, and that's on our side, not yours — "+p.expired+", so the copy we hold has aged out. It's not that anything was missed; certificates just expire. A current one is all we need, and your broker can usually email it in a minute."),
+        ["My broker sends those","It renews next month"]];
+    }
+
+    /* 5. am I talking to a person — answered honestly, before any call-booking */
+    if(/are you (a )?(real|human|person|bot|ai|robot|machine)|am i (talking|speaking|chatting) (to|with) (a )?(real|human|person|bot|ai)|is this (a )?(bot|robot|human|person|ai)|you'?re a bot|actual person|\br ?u (a )?(real|human|person|bot)|are u (a )?(real|human|person|bot)|who are you|what are you|who am i (talking|speaking) to|do you (actually )?work for/.test(l))
+      return [sign("I'm an AI — "+p.firm+"'s assistant, not a person, and I work for "+p.firm+", not for you. I handle the document side so nobody has to chase you by hand. Anything I'm not sure about goes to "+p.staff+", and I can put you through right now if you'd rather."),
+        ["Yes, put me through to "+p.staff,"No, you're fine"]];
+
+    /* 6. can I talk to a person — yes, immediately, no qualifying */
+    if(/talk to|speak (to|with)|get me|put me through|call me|phone me|human|someone else|a person|^yes,? put/.test(l) && !/what|which|when|why/.test(l.slice(0,6))){
+      toHuman(p,'asked to speak with '+p.staff);
+      return [sign("Of course. You're on "+p.staff+"'s list now with everything we've said, so you won't have to go through it twice. She's usually back inside the hour on a weekday. If it's quicker, "+p.phone+".",true),[]];
+    }
+
+    /* 7. the hard line — advice with financial consequence. Before any explainer. */
+    if(p.v==='trades' && /should i sign|do i have to sign|what am i giving up|lien rights?\b|lein rights?\b|give up my|waive my|waiving|additional insured|certificate holder|coverage (amount|limit)|endorsement|is (my|the) coverage|enough coverage|2 ?million|5 ?million|named insured/.test(l)){
+      if(M.said.boundary)
+        return [sign("Same answer, and I'd rather give you the same one than a different one I've made up: that's Dave's to answer, not mine. He has both questions and the conversation. "+p.phone+"."),[]];
+      M.said.boundary=true;
+      toHuman(p,'insurance wording or lien-rights question');
+      return [sign("That one I'm not going to answer — it's an insurance and legal question with real money attached, and a confident wrong answer from me could cost you. I've sent it to "+p.staff+" at "+p.firm+" with our conversation, and he'll come back to you today. "+p.phone+" if you want him sooner.",true),[]];
+    }
+    if(p.v==='cpa' && /owe|refund|deduct|claim|write ?off|should i|is it taxable|do i need to register|tax advice|expense this|capital|dividend|salary or/.test(l)){
+      toHuman(p,'tax question');
+      return [sign("That's an accountant's answer rather than mine — I don't give tax advice, and I'd rather not guess at something you'd act on. "+p.staff+" has it with our conversation. In the meantime I'm glad to help with what to send and how."),
+        ["What's still outstanding?"]];
+    }
+
+    /* 7b. asked to pass a message on. She can carry it; she can't vouch for it. */
+    if(/tell (them|him|her|dave|sarah|the office)|let (them|him|her) know|pass (it |this )?on|say i'?ll|can you tell/.test(l)){
+      toHuman(p,'asked Cara to pass a message to '+p.staff);
+      return [sign("I'll pass that on word for word, and it's with "+p.staff+" now — but I won't speak for you beyond that, and I'd rather tell you than let you assume it's handled. If there's a date you want them to hold you to, give it to me and I'll put it against your file."),
+        ["I'll have it by Friday","What's still outstanding?"]];
+    }
+
+    /* 8. more time / a date they name */
+    if(/more time|next week|by friday|until|can i have|give me a|end of the (week|month)|after the long weekend|tomorrow|monday|tuesday|wednesday|thursday|friday|couple of days|few days|after \d|this afternoon|after lunch|later today|tonight/.test(l) && !/deadline|due|when do you/.test(l)){
+      var when=(l.match(/next week|friday|monday|tuesday|wednesday|thursday|tomorrow morning|tomorrow|end of the week|end of the month|after the long weekend|a few days|a couple of days|after \d+|this afternoon|after lunch|later today|tonight/)||['then'])[0];
+      /* a date already gone by is almost always a typo or a misunderstanding — never log it as a promise */
+      if(/last (week|friday|monday|tuesday|wednesday|thursday|month)|yesterday|already sent it (last|on)/.test(l))
+        return [sign("I want to be sure I've got that right before I put a date against your file — do you mean "+when+" just gone, or the one coming? If it's already been and gone, then something didn't reach us and that's ours to chase, not yours to do twice."),
+          ["The one coming","It's already gone"]];
+      noteDate(p,when);
+      return [sign("That's fine — I've put "+when+" down and the reminders pause until then, so nothing will nag you in between."+(p.v==='cpa'&&p.type==='corp'?" If that turns out to sit past your cut-off I'll say so rather than let it quietly become a problem.":" If that lands after you're due on site, "+p.staff+" will need to make the call, and I'll flag it now rather than later.")),
+        ["What's still outstanding?"]];
+    }
+
+    /* 9. on site, can't do it now — the most common trades reply */
+    if(/on site|on a site|on the roof|in the truck|driving|can'?t (do|deal with) (this|it) now|middle of a job|busy right now|working right now|later|no time/.test(l))
+      return [sign("No problem — don't stop for this. The link stays open, it's about two minutes, and a photo from your phone is fine. You don't need to reply to the email either. Tell me a time that suits and I'll try you then instead."),
+        ["Try me after 4","Tomorrow morning"]];
+
+    /* 10. is this really from you */
+    if(/scam|really from|actually from|is this from|is this really|legit|phish|fraud|actually you|suspicious|is this you|how do i know|verify|prove/.test(l)){
+      if(M.said.scam)
+        return [sign("Don't take the number from me either — that's the point. Go to "+p.firm+"'s website yourself, or the sign on the truck, and use the number you find there. If it doesn't match "+p.phone+", something's wrong and I'd want to know."),
+          ["What's still outstanding?"]];
+      M.said.scam=true;
+      return [sign("Good instinct, and thank you for checking. It is us — the note came from "+(p.v==='trades'?'documents@northgateconstruction.ca':'hello@yourcompany.example')+" and the upload link is the same one "+p.firm+" always uses. You'll never be asked to pay anything, or to send banking details or a SIN, by email or phone. Best thing you can do is not take my word for it: ring "+p.phone+" from "+p.firm+"'s own website and ask."),
+        ["What's still outstanding?","Can I just send a photo?"]];
+    }
+
+    /* 11. format */
+    if(/photo|picture|snap|scan|jpg|jpeg|heic|pdf|fax|format|too big|email it to you/.test(l))
+      return [sign(terse(q)?"A phone photo's fine — just get the whole page in and make sure the numbers read."
+        :"A phone photo is fine. Get the whole page in the shot and check the numbers are readable, one photo per page, each onto its own line. If anything comes out blurry I'll just ask again — no trouble."),
+        ["What's still outstanding?"]];
+
+    /* ---- trades document set ---- */
+    if(p.v==='trades'){
+      if(/@|his name is|her name is|it'?s \w+ at |broker is /.test(l) && M.said.broker){
+        dropLine(p,'Certificate of insurance','broker details supplied — requesting direct');
+        return [sign("Got it — I'll write to them today and chase them, not you. That one's done as far as you're concerned."+(p.out.length?" Just the "+p.out[0].toLowerCase()+" left on your side.":" And that was the last of it.")),
+          p.out.length?["What's a WCB clearance letter?"]:[]];
+      }
+      if(/broker|insurer|my agent|insurance company sends|they send/.test(l)){
+        M.said.broker=true;
+        return [sign("That's how most of them come in, so that's perfect — nothing wrong at your end. Give me your broker's name and email and I'll request it from them directly. Then it's off your plate entirely and you don't need to do anything else on it."),
+          ["It's [broker] at [email]","What else is left?"]];
+      }
+      if(/renew|renewal|expires|new policy|next month/.test(l)){
+        noteDate(p,'the renewal');
+        return [sign("Yes, that's fine — send it when the new policy lands and I've paused the reminders until then. One thing I'll flag rather than sit on: if the renewal date falls after you're due on site, that's "+p.staff+"'s call, not mine, so I've put it in front of him now."),
+          ["What else is left?"]];
+      }
+      if(/coi\b|certificate of insurance|what.*certificate|why.*certificate/.test(l))
+        return [sign(terse(q)?"Proof your liability insurance is live — policy number, limits, expiry, with "+p.firm+" named so we're told if it lapses."
+          :"It's proof your liability insurance is active: policy number, the coverage amounts, the expiry date, and "+p.firm+" named as certificate holder so we get told if it ever lapses. Your broker issues it, usually the same day you ask."),
+          ["My broker sends those","What else is left?"]];
+      if(/wcb|workers comp|clearance/.test(l))
+        return [sign("It's confirmation from WCB Manitoba that your account's in good standing. The honest reason we ask: if a sub isn't clear, "+p.firm+" can be on the hook for that sub's assessment costs, and our own rates can move after an accident. It's needed before you start and again before final payment. WCB's online clearance system does it, or 204-954-4505.\n\nWorth saying plainly: WCB run that clearance tool free, and they'll email status updates. For WCB on its own you don't need us. What we do is the rest — certificates, waivers, permits, tickets — and the chasing."),
+          ["What else is left?","Am I talking to a person?"]];
+      if(/lien|lein|waiver|waver|wavier|progress payment/.test(l))
+        return [sign("It's a document saying you've been paid for work up to a date and won't file a builder's lien against the property for it. Standard, and normally signed alongside a progress payment.\n\nIf you want to know whether you should sign it or what you'd be giving up, that's a lawyer's answer, not mine — say the word and I'll get "+p.staff+" on it."),
+          ["Should I sign it?","What else is left?"]];
+      if(/permit|ticket|orientation|fall protection|confined space|working at heights|first aid|hoisting|safety/.test(l))
+        return [sign("For this job it's what's on "+p.firm+"'s list — I won't invent a requirement that isn't there. Send the certificate through and the site super verifies it; I don't check whether a ticket's still current, because getting that wrong on a site is not a mistake worth making."),
+          ["What else is left?"]];
+      if(/years|known|trust|why (do you|all this)|so much paperwork|never needed/.test(l))
+        return [sign("It isn't about trust — certificates expire on their own, and "+p.firm+" has to be able to show who was covered and when. That's the whole of it. Two minutes and a phone photo and you won't hear from me again."),
+          ["Can I just send a photo?","What else is left?"]];
+    }
+
+    /* ---- CPA document set ---- */
+    if(p.v==='cpa'){
+      if(/not registered|don'?t have (an )?(rst|pst)|no (rst|pst)|we'?re not registered/.test(l)){
+        var line=O.filter(function(x){return /rst|pst|sales tax/i.test(x)})[0];
+        if(line)dropLine(p,line,'not registered');
+        return [sign((line?"Thank you — that's off your list, and I've flagged it for "+p.staff+" so nobody asks again."
+          :"Good to know — I've flagged it for "+p.staff+" so it never gets asked for.")+(O.length?" "+(only(p)?"That leaves just the "+O[0].toLowerCase()+".":"That leaves "+list(O.map(function(x){return x.toLowerCase()}))+"."):" That was the last of it, actually — you're done.")),
+          O.length?["What's still outstanding?"]:[]];
+      }
+      if(/rst|retail sales|pst|provincial sales/.test(l)){
+        var term=/pst|provincial/.test(l)?'PST':'RST';
+        M.said.tax=true;
+        var rate=/8 ?%|eight per/.test(l)?" You may be thinking of 8% — that was the rate between July 2013 and July 2019. It's 7% now, and an old rate on a filed return is worth catching.":"";
+        return [sign("It's Manitoba's "+term+" — the 7% one, filed with Manitoba Finance, separate from the GST that goes to CRA."+rate+" We only want a copy of the return you filed, or the confirmation page. Nothing to calculate. If you're not registered, say so and I'll take it off."),
+          ["I'm not registered","What's still outstanding?"]];
+      }
+      if(M.said.tax && /\d ?%|per ?cent|rate|isn'?t it|thought it was|wasn'?t it/.test(l))
+        return [sign("It's 7%. You may be thinking of 8% — that was the rate from July 2013 until July 1st 2019, when it came back down. Worth catching, because an old rate on a filed return is a real error."),
+          ["I'm not registered","What's still outstanding?"]];
+      if(/t183|e-?file authoriz|sign.*return|authoriz/.test(l))
+        return [sign("That's the form that lets us file electronically. You'll only be asked for it once your return is actually ready — we never send it blank — and signing online takes about a minute."),
+          ["What's still outstanding?"]];
+      if(/gst\b/.test(l))
+        return [sign("Just a copy of the GST return you filed for the period — the confirmation from CRA My Business Account is ideal. Tell me your year-end if you're unsure which period and I'll say which one."),
+          ["What's still outstanding?"]];
+      if(/wcb|workers comp/.test(l))
+        return [sign("That's your WCB annual payroll return, the one due end of February. What you submitted, or the confirmation, is plenty."),
+          ["What's still outstanding?"]];
+    }
+
+    /* 12. what's left */
+    if(/still (need|outstanding|waiting)|what do you need|missing|outstanding|list|what.s left|else is left|anything else/.test(l)){
+      if(!O.length){
+        var tail=(p.v==='cpa'&&p.t183&&p.t183st==='gated')?" The "+((p.t183&&p.t183.replace('Signed ',''))||'')+" comes later, once your return's ready — that's on us to ask, not you to chase.":"";
+        return [sign("Nothing — everything for "+p.company+" is in and ticked."+tail+" You won't hear from me again until there's something new.",true),[]];
+      }
+      var lead=M.askedList?op(["Still open:","As it stands:","What's left:"]) : op(["Right now, for "+p.company+" I'm waiting on:","For "+p.company+" I've still got:"]);
+      M.askedList=true;
+      if(only(p)) return [sign((R.length?"Almost there — ":"")+"the only thing left is your "+O[0].toLowerCase()+"."+(R.length?" Everything else is in."+(R[0].day?" The "+R[0].d.toLowerCase()+" came in on "+R[0].day+".":""):"")),
+        ["Can I just send a photo?","When do you need it?"]];
+      return [sign(lead+"\n• "+O.join("\n• ")+(R.length?"\n\nAlready in, thank you: "+R.map(function(r){return r.d}).join(", ")+".":"")),
+        ["Can I just send a photo?","When do you need it?"]];
+    }
+
+    /* 13. deadline */
+    if(/when|deadline|due|by when|late|how long|rush|hurry/.test(l)){
+      if(p.v==='trades') return [sign("Before you're back on site is the real answer — the clearance and the certificate both have to be current on the day you're working, not just on file somewhere. "+p.staff+" will give you the exact date for this job; I'd rather he told you than I guessed."),
+        ["Can I have until Friday?","Can I talk to "+p.staff+"?"]];
+      var d=p.type==='corp' ? "Your year-end is "+p.ye+", so the return's due six months after that, and we'd want your documents about 60 days ahead to file without a scramble."
+          : p.type==='self' ? "June 15 to file, but anything owing is still due April 30 — so sooner is genuinely better."
+          : "April 30 covers both filing and paying.";
+      return [sign(d+" "+p.staff+" will confirm your exact cut-off so you're not caught short."),
+        ["What's still outstanding?"]];
+    }
+
+    /* 14. thanks — match their brevity, add nothing */
+    if(/^(thanks|thank you|cheers|ta|great|perfect|ok|okay|got it|will do|sounds good|no worries|appreciate)/.test(l.trim()))
+      return [sign(O.length?op(["No trouble at all, "+nm+".","Any time, "+nm+"."])+" I'll leave you to it."
+        :"You're welcome, "+nm+" — everything's in, so I'll stay out of your way.",!O.length),
+        O.length?["What's still outstanding?"]:[]];
+
+    /* 14b. short acknowledgements — match their brevity, add nothing */
+    if(/^(no,? you'?re fine|you'?re fine|that'?s all|nothing else|all good|i'?ll resend|i'?ll send it|on its way|sending now|leave it with me|understood|fair enough|makes sense|right)/.test(l.trim()))
+      return [sign(/resend|send it|on its way|sending now|leave it with me/.test(l)
+        ? "Great — I'll watch for it and tick it off the moment it lands. No need to tell me twice."
+        : op(["Good. I'll leave it there.","Right you are."])),[]];
+
+    /* 15. two strikes, then a person. Never a third clarifying question. */
+    M.unclear++;
+    if(M.unclear>=2){
+      toHuman(p,"asked something outside Cara's set");
+      return [sign("I'd rather not guess at this one. "+p.staff+" has our conversation, so you won't be starting over, and she's usually back within the hour on a weekday.",true),[]];
+    }
+    return [sign(op(["Sorry, I've not quite followed.","I want to make sure I've got that right."])+" Are you asking about what to send, or when it's needed by? If it's neither, say so and I'll get "+p.staff+" rather than guess."),
+      defaults()];
+  }
+
+  function liveMsg(){
+    var d=document.createElement('div');d.className='hm a';
+    var tx=document.createElement('span');tx.className='tx';d.appendChild(tx);
+    var t=document.createElement('span');t.className='tm';t.textContent='Cara · '+now();d.appendChild(t);
+    log.appendChild(d);
+    return function(text,done){tx.textContent=text; if(done)reveal(d); else toBottom();};
+  }
+  function buildRules(){
+    var p=P();
+    var L=[];
+    L.push("You are Cara, "+p.firm+"'s client-service assistant, chatting inside a live product demo with someone playing the role of "+
+      (p.v==='trades'
+        ? "a subcontractor named "+p.person+" at "+p.company+", being chased by "+p.firm+" for site paperwork"
+        : "a client named "+p.person+" from "+p.company)+
+      ". Stay in character as Cara throughout — never break character or mention that this is a demo.");
+    L.push("Documents still outstanding from them: "+(p.out.length?p.out.join(", "):"none — everything is in")+".");
+    if(p.got&&p.got.length) L.push("Already received: "+p.got.map(function(g){return g.d+" ("+g.day+")"}).join(", ")+".");
+    if(p.v==='cpa'&&p.t183) L.push("They will also need to sign "+p.t183+", but only once their return is ready. Status right now: "+
+      (p.t183st==='signed'?"already signed":p.t183st==='requested'?"sent to them, awaiting signature":"not yet requested — don't ask for it until the return is ready")+".");
+    L.push("If you need to escalate, the staff contact is "+p.staff+", phone "+p.phone+".");
+    L.push("");
+    L.push("House rules — follow strictly:");
+    L.push("- Warm, brief, plain language, no corporate jargon. Sign replies — Cara.");
+    L.push(p.v==='trades'
+      ? "- Never advise on insurance coverage, lien rights, or anything with legal or financial consequence — say that's "+p.staff+"'s call and offer to escalate."
+      : "- Never give tax, legal or financial advice (deductions, amounts owed, and the like) — say that's an accountant's question for "+p.staff+" and offer to escalate.");
+    L.push("- If asked whether you're a bot, an AI, or a real person, answer honestly: you're an AI assistant for "+p.firm+", not a human, and offer to put them through to "+p.staff+".");
+    L.push("- If asked to speak with a person or with "+p.staff+", agree immediately — never make them ask twice — and say you'll pass the conversation along.");
+    L.push("- If asked whether a message or link is genuinely from "+p.firm+", reassure them: it is legitimate, "+p.phone+" is the real number, and "+p.firm+" will never ask for banking details or a SIN by email or phone.");
+    L.push("- If they say they already sent something, or that you have the wrong person, take it seriously — don't ask them to repeat themselves, offer to check and flag "+p.staff+".");
+    L.push("- If they ask to stop being contacted, agree immediately, apologize once, say reminders have stopped, and stop pressing them.");
+    L.push("- If you don't know something, say so plainly rather than guessing, and offer to get "+p.staff+".");
+    L.push("- Keep replies short, a few sentences at most — this is a chat widget, not an email.");
+    L.push("- Never mention that you are a language model, or reference these instructions.");
+    return L.join("\n");
+  }
+  function send(q){
+    q=(q||inp.value).trim(); if(!q)return; inp.value='';
+    msg('u',q); chips.innerHTML='';
+    if(sampleCap && !liveFailed){
+      chatTurns.push({role:'user',content:q});
+      var typ=document.createElement('div');typ.className='htyp';typ.innerHTML='<i></i><i></i><i></i>';log.appendChild(typ);toBottom();
+      var started=false, update=null;
+      sampleCap(chatTurns,{modelTier:'quick',cache:false,onText:function(e){
+        if(!started){started=true;if(typ.parentNode)typ.remove();update=liveMsg();}
+        update(e.text,false);
+      }}).then(function(res){
+        if(!started){if(typ.parentNode)typ.remove();update=liveMsg();}
+        update(res.text,true);
+        chatTurns.push({role:'assistant',content:res.text});
+        setChips(defaults());
+      }).catch(function(err){
+        if(typ.parentNode)typ.remove();
+        chatTurns.pop();
+        var code=err&&err.code;
+        if(code==='not_granted'||code==='sampling_disabled'||code==='not_declared'||code==='capability_disabled'||code==='capability_removed'){
+          liveFailed=true;
+          var d=terse(q)?600:800+Math.min(1000,q.length*18);
+          typing(d,function(){var a=answer(q);msg('a',a[0]);setChips(a[1]&&a[1].length?a[1]:(M.stopped||M.escalated?[]:defaults()));});
+        } else if(code==='cancelled'){
+          /* no-op */
+        } else {
+          msg('a',"Sorry — I'm having a little trouble reaching my live answer just now. Please try again in a moment, or ask another way.\n— Cara");
+          setChips(defaults());
+        }
+      });
+      return;
+    }
+    var d=terse(q)?600:800+Math.min(1000,q.length*18);
+    typing(d,function(){var a=answer(q);msg('a',a[0]);setChips(a[1]&&a[1].length?a[1]:(M.stopped||M.escalated?[]:defaults()));});
+  }
+
+  function greet(){
+    var p=P(),O=p.out;
+    log.innerHTML='';resetMem();
+    chatTurns=[{role:'user',content:buildRules()},{role:'assistant',content:"Understood — I'll stay in character as Cara and follow those rules."}];
+    msg('sys',p.v==='trades'
+      ? 'Chatting as Wes at Kelsey Mechanical — a subcontractor being chased by Northgate Construction for site documents.'
+      : 'Chatting as '+p.person+' from '+p.company+' — the client the demo is showing right now.');
+    typing(600,function(){
+      msg('a',sign("Hi "+p.person+", I'm Cara, "+p.firm+"'s assistant. "+
+        (O.length
+          ? (O.length===1 ? "There's one thing left on your side — your "+O[0].toLowerCase()+"." : "There are "+O.length+" things still open for "+p.company+".")+" I can list them, get "+p.staff+", or answer anything you'd like first."
+          : "Everything for "+p.company+" is in, so nothing's needed from you. Ask me anything, or I'll get "+p.staff+".")));
+      setChips(defaults());
+    });
+  }
+  function paint(){
+    var p=P();
+    hdName.textContent="Cara · "+p.firm+"'s assistant";
+    hdSub.textContent="Answers in seconds · "+p.staff+" is one word away";
+    vtabs.querySelectorAll('button').forEach(function(b){
+      var on=b.dataset.v===VERT;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false')});
+  }
+  vtabs.addEventListener('click',function(e){var b=e.target.closest('button[data-v]');if(!b||b.dataset.v===VERT)return;
+    VERT=b.dataset.v;
+    if(VERT==='trades'){TR.out=['Certificate of insurance','WCB clearance letter'];}
+    paint();greet();inp.focus();});
+
+  function open(){win.classList.add('on');btn.setAttribute('aria-expanded','true');
+    if(!opened){opened=true;paint();greet()} inp.focus()}
+  function close(){win.classList.remove('on');btn.setAttribute('aria-expanded','false')}
+  btn.addEventListener('click',function(){win.classList.contains('on')?close():open()});
+  document.getElementById('hclose').addEventListener('click',close);
+  document.getElementById('hsend').addEventListener('click',function(){send()});
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();send()}});
+  document.querySelector('.cvfoot').innerHTML='Not sure about something? Ask Cara in the corner &mdash; she answers from what she actually knows about you, and hands anything else to Jordan &mdash; or call (555) 555&#8209;0100.';
+})();
+
+/* ---------- wiring ---------- */
+document.querySelectorAll('.spd button').forEach(function(b){b.addEventListener('click',function(){
+  document.querySelectorAll('.spd button').forEach(function(x){x.classList.remove('on');x.setAttribute('aria-pressed','false')});b.classList.add('on');b.setAttribute('aria-pressed','true');speed=+b.dataset.s;});});
+document.querySelectorAll('#cad button').forEach(function(b){b.addEventListener('click',function(){
+  document.querySelectorAll('#cad button').forEach(function(x){x.classList.remove('on');x.setAttribute('aria-pressed','false')});b.classList.add('on');b.setAttribute('aria-pressed','true');
+  cad=b.dataset.c;renderPlan();render();setDay(day);setSum();});});
+document.querySelectorAll('#auto button').forEach(function(b){b.addEventListener('click',function(){
+  document.querySelectorAll('#auto button').forEach(function(x){x.classList.remove('on');x.setAttribute('aria-pressed','false')});b.classList.add('on');b.setAttribute('aria-pressed','true');
+  auto=(b.dataset.a==='on');renderPlan();setSum();});});
+function setSum(){var ad=[];if(addCall)ad.push('second call');if(addLetter)ad.push('printed letter');
+  document.getElementById('setSum').textContent=(auto?'Automatic':'Waits for my OK')+' · '+(cad==='yr'?'Yearly':'Quarterly')+' · '+(ad.length?'add-ons: '+ad.join(', '):'no add-ons');
+  document.getElementById('kAddon').hidden=!addLetter;}
+document.getElementById('addCall').addEventListener('change',function(){addCall=this.checked;renderPlan();setSum();});
+document.getElementById('addLetter').addEventListener('change',function(){addLetter=this.checked;renderPlan();setSum();});
+var MT=document.querySelectorAll('.mtab');
+MT.forEach(function(b,i){b.addEventListener('click',function(){showTab(b.dataset.m)});
+  b.addEventListener('keydown',function(e){var j;if(e.key==='ArrowRight')j=(i+1)%MT.length;else if(e.key==='ArrowLeft')j=(i-1+MT.length)%MT.length;else return;
+    e.preventDefault();MT[j].focus();MT[j].click();});});
+document.getElementById('uplink').addEventListener('click',function(e){e.preventDefault();showTab('m2');});
+document.querySelectorAll('.pick').forEach(function(b){b.addEventListener('click',function(){
+  document.querySelectorAll('.pick').forEach(function(x){x.classList.remove('on')});b.classList.add('on');KIND=b.dataset.k;render();});});
+document.getElementById('cvSend').addEventListener('click',function(){
+  var c=C[CIDX];document.querySelectorAll('#cvList li:not(.gated)').forEach(function(li){li.classList.add('done')});
+  var fresh=false;c.d.forEach(function(_,j){var el=document.getElementById('d'+CIDX+'_'+j);if(el&&!el.classList.contains('in'))fresh=true;got(CIDX,j)});
+  if(fresh){flash(CIDX,'good');feed('recv','✓','<b>'+c.c+'</b> kindly uploaded '+c.d.length+' files — saved to your folder, and thanked.');}
+  document.getElementById('thName').textContent='Thank you, '+c.c+'!';
+  document.getElementById('thList').innerHTML=c.d.map(function(d){return '<li>✓ '+d+'</li>'}).join('');
+  renderReceipt();
+  setTimeout(function(){document.getElementById('cvForm').style.display='none';
+    document.getElementById('cvThanks').style.display='';},420);});
+document.getElementById('cvAgain').addEventListener('click',function(){
+  document.getElementById('cvForm').style.display='';document.getElementById('cvThanks').style.display='none';});
+runBtn.addEventListener('click',play);resetBtn.addEventListener('click',reset);
+document.getElementById('yr').textContent=new Date().getFullYear();
+document.body.classList.add('pre');
+build();renderPlan();setDay(0);render();
+})();
+</script>
+
+<script>
+/* ---------- Guided tour: an animated cursor walks a visitor through On File and Cara ---------- */
+(function(){
+  'use strict';
+  var overlay=null,cursorEl=null,capEl=null,skipBtn=null;
+  var tourBtn=document.getElementById('tourBtn');
+  var aborted=false,resolveWait=null;
+  var reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function sleep(ms){
+    return new Promise(function(res){
+      var done=false;
+      function fire(){if(done)return;done=true;resolveWait=null;res();}
+      resolveWait=fire;
+      setTimeout(fire,reduceMotion?Math.min(ms,300):ms);
+    });
+  }
+  function q(sel){return document.querySelector(sel)}
+  function buildOverlay(){
+    overlay=document.createElement('div');
+    overlay.style.cssText='position:fixed;inset:0;z-index:9998;pointer-events:none';
+    cursorEl=document.createElement('div');
+    cursorEl.style.cssText='position:fixed;left:-40px;top:-40px;width:26px;height:26px;z-index:9999;'+
+      'transition:left .55s cubic-bezier(.4,0,.2,1),top .55s cubic-bezier(.4,0,.2,1),transform .15s ease;'+
+      'filter:drop-shadow(0 3px 8px rgba(0,0,0,.35))';
+    cursorEl.innerHTML='<svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 2l16 7-6.5 2.2L11 18z" fill="#155F87" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+    capEl=document.createElement('div');
+    capEl.style.cssText='position:fixed;left:-999px;top:-999px;z-index:9999;max-width:290px;'+
+      'background:#12212C;color:#fff;font:14.5px "IBM Plex Sans",-apple-system,sans-serif;padding:11px 15px;'+
+      'border-radius:8px;box-shadow:0 8px 26px rgba(0,0,0,.32);transition:left .55s ease,top .55s ease,opacity .3s ease;'+
+      'line-height:1.45;opacity:0';
+    skipBtn=document.createElement('button');
+    skipBtn.textContent='Skip tour ✕';
+    skipBtn.style.cssText='position:fixed;top:16px;right:16px;z-index:10000;pointer-events:auto;'+
+      'background:#12212C;color:#fff;border:0;border-radius:20px;padding:9px 16px;'+
+      'font:13.5px "IBM Plex Sans",-apple-system,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.3)';
+    skipBtn.addEventListener('click',endTour);
+    document.body.appendChild(overlay);
+    document.body.appendChild(cursorEl);
+    document.body.appendChild(capEl);
+    document.body.appendChild(skipBtn);
+  }
+  function removeOverlay(){
+    [overlay,cursorEl,capEl,skipBtn].forEach(function(el){if(el&&el.parentNode)el.parentNode.removeChild(el)});
+    overlay=cursorEl=capEl=skipBtn=null;
+  }
+  function point(el,text,opts){
+    if(aborted)return Promise.resolve();
+    if(!el){return sleep(20)}
+    opts=opts||{};
+    try{el.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'center'})}catch(e){}
+    return sleep(reduceMotion?60:380).then(function(){
+      if(aborted||!cursorEl)return;
+      var r=el.getBoundingClientRect();
+      var cx=r.left+r.width*(opts.px!=null?opts.px:0.5), cy=r.top+r.height*(opts.py!=null?opts.py:0.5);
+      cursorEl.style.left=(cx-3)+'px';cursorEl.style.top=(cy-3)+'px';
+      var capW=290,capX=Math.min(Math.max(10,cx-capW/2),window.innerWidth-capW-10);
+      var capY=cy>130?cy-70:cy+34;
+      capEl.style.left=capX+'px';capEl.style.top=capY+'px';capEl.style.opacity='1';
+      capEl.textContent=text;
+      return sleep(opts.hold||1300);
+    });
+  }
+  function tap(el){
+    if(aborted||!el||!cursorEl)return;
+    cursorEl.style.transform='scale(.8)';
+    setTimeout(function(){if(cursorEl)cursorEl.style.transform='scale(1)'},150);
+    try{el.click()}catch(e){}
+  }
+  function endTour(){
+    if(aborted)return;
+    aborted=true;
+    if(resolveWait)resolveWait();
+    removeOverlay();
+    if(tourBtn){
+      tourBtn.disabled=false;
+      var t=tourBtn.lastChild;
+      if(t&&t.nodeType===3)t.textContent=' Watch again · 90 sec';
+    }
+  }
+  function runTour(){
+    if(!aborted&&overlay)return; // already running
+    aborted=false;
+    buildOverlay();
+    if(tourBtn)tourBtn.disabled=true;
+    var s=Promise.resolve();
+    s=s.then(function(){return point(q('#auto button[data-a="on"]'),"Now switch to Automatic so the whole run plays through on its own — no clicking needed.",{hold:5608})});
+    s=s.then(function(){tap(q('#auto button[data-a="on"]'))});
+    s=s.then(function(){return sleep(350)});
+    s=s.then(function(){return point(q('#run2'),"Press Send once. On File writes every note itself, in your firm's own voice.",{hold:6424})});
+    s=s.then(function(){tap(q('#run2'))});
+    s=s.then(function(){return sleep(2600)});
+    s=s.then(function(){return point(q('#w0 .row')||q('.row'),"Every client's file, right here. Click any row to open it and see exactly where things stand.",{hold:7336})});
+    s=s.then(function(){tap(q('#w0 .row')||q('.row'))});
+    s=s.then(function(){return sleep(500)});
+    s=s.then(function(){return point(q('#tm1'),"See the exact email or call script going out — nothing is hidden from you.",{hold:5368})});
+    s=s.then(function(){tap(q('#tm1'))});
+    s=s.then(function(){return sleep(500)});
+    s=s.then(function(){return point(q('#hbtn'),"Clients can just ask Cara instead of calling your office.",{hold:4240})});
+    s=s.then(function(){tap(q('#hbtn'))});
+    s=s.then(function(){return sleep(500)});
+    s=s.then(function(){
+      if(aborted)return;
+      var inp=q('#hinp');
+      if(inp){try{inp.value='What do you still need from me?';inp.dispatchEvent(new Event('input',{bubbles:true}))}catch(e){}}
+      return point(q('#hsend'),"Cara answers instantly, from what she actually knows about that client — and hands anything real to a person.",{hold:6832});
+    });
+    s=s.then(function(){tap(q('#hsend'))});
+    s=s.then(function(){return sleep(2200)});
+    s=s.then(function(){return point(q('.kpi .v.tl')||q('.tally'),"This is what it saves — real hours back, every week in season.",{hold:5776})});
+    s=s.then(function(){return point(q('.getlink'),"Ready to see this on your own files? This is where you'd start.",{hold:5632})});
+    s=s.then(function(){
+      if(aborted||!capEl)return;
+      capEl.textContent="That's the tour — click around freely now.";
+      return sleep(4672);
+    });
+    s=s.then(function(){endTour()});
+  }
+  if(tourBtn)tourBtn.addEventListener('click',runTour);
+})();
+</script>
+
+<script>
+(function(){
+  'use strict';
+  function sparkle(crestEl){
+    var n=7;
+    for(var i=0;i<n;i++){
+      (function(i){
+        var s=document.createElement('i');
+        s.className='spark';
+        s.textContent='✦';
+        var ang=(Math.PI*2)*(i/n)+(Math.random()*0.5-0.25);
+        var dist=24+Math.random()*16;
+        s.style.setProperty('--dx',(Math.cos(ang)*dist).toFixed(1)+'px');
+        s.style.setProperty('--dy',(Math.sin(ang)*dist).toFixed(1)+'px');
+        s.style.animationDelay=(Math.random()*0.08).toFixed(2)+'s';
+        crestEl.appendChild(s);
+        setTimeout(function(){ if(s.parentNode) s.parentNode.removeChild(s); },850);
+      })(i);
+    }
+  }
+  var STOPS=[
+    {mask:'var(--crescent)',color:'var(--brandblue)',w:'30%',h:'42%',label:null,foot:'BY CALAS AUTOMATIONS'},
+    {mask:'var(--logohex)',color:'#DD8A2E',w:'78%',h:'78%',label:null,foot:'BY [YOUR COMPANY]'},
+    {mask:'var(--logocirc)',color:'#D6A400',w:'78%',h:'78%',label:null,foot:'BY [YOUR COMPANY]'},
+    {mask:'var(--logohex)',color:'#D6524A',w:'78%',h:'78%',label:null,foot:'BY [YOUR COMPANY]'},
+    {mask:'var(--logocirc)',color:'#155F87',w:'78%',h:'78%',label:null,foot:'BY [YOUR COMPANY]'}
+  ];
+  function applyStopToCrest(crestEl,idx){
+    var s=STOPS[idx];
+    var cres=crestEl.querySelector('.cres');
+    if(cres){
+      cres.style.setProperty('-webkit-mask',s.mask+' center/contain no-repeat');
+      cres.style.setProperty('mask',s.mask+' center/contain no-repeat');
+      cres.style.setProperty('background',s.color);
+      cres.style.setProperty('width',s.w);
+      cres.style.setProperty('height',s.h);
+    }
+    var foot=crestEl.closest('.sitefoot');
+    if(foot){
+      var t2=foot.querySelector('.t2');
+      if(t2) t2.textContent=s.foot;
+    }
+  }
+  function showLabel(crestEl,text){
+    if(!text)return;
+    var l=document.createElement('span');
+    l.className='wlabel';
+    l.textContent=text;
+    crestEl.appendChild(l);
+    requestAnimationFrame(function(){ l.classList.add('show'); });
+    setTimeout(function(){
+      l.classList.remove('show');
+      setTimeout(function(){ if(l.parentNode) l.parentNode.removeChild(l); },300);
+    },1800);
+  }
+  function triggerCrest(crestEl){
+    if(crestEl.dataset.busy==='1')return;
+    crestEl.dataset.busy='1';
+    var idx=parseInt(crestEl.dataset.idx||'0',10);
+    idx=(idx+1)%STOPS.length;
+    crestEl.dataset.idx=String(idx);
+    var s=STOPS[idx];
+    var orbit=document.createElement('span');
+    orbit.className='orbit';
+    var hand=document.createElement('i');
+    hand.className='wandhand';
+    hand.textContent='🪄';
+    orbit.appendChild(hand);
+    crestEl.appendChild(orbit);
+    requestAnimationFrame(function(){ orbit.classList.add('go'); });
+    setTimeout(function(){
+      var puff=document.createElement('i');
+      puff.className='puff';
+      crestEl.appendChild(puff);
+      requestAnimationFrame(function(){ puff.classList.add('go'); });
+      sparkle(crestEl);
+      applyStopToCrest(crestEl,idx);
+      showLabel(crestEl,s.label);
+      setTimeout(function(){ if(puff.parentNode) puff.parentNode.removeChild(puff); },650);
+    },460);
+    setTimeout(function(){
+      if(orbit.parentNode) orbit.parentNode.removeChild(orbit);
+      crestEl.dataset.busy='0';
+    },1000);
+  }
+  var crests=document.querySelectorAll('.crest');
+  for(var i=0;i<crests.length;i++){
+    (function(c){
+      c.addEventListener('mouseenter',function(){ triggerCrest(c); });
+      c.addEventListener('focus',function(){ triggerCrest(c); });
+    })(crests[i]);
+  }
+})();
+</script>
+
+
+
+</body></html>

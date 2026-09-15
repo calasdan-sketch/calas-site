@@ -1,0 +1,506 @@
+<!doctype html><html><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Quote Me</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#FFFFFF; --surface:#FFFFFF; --sunk:#F1F6F9; --ink:#12212C; --ink-2:#4E5B66; --ink-3:#6B7883;
+  --rule:#D9E3EA; --rule-2:#E9F0F5;
+  --ok:#17794A; --ok-soft:#E9F5EE; --warm:#8A5A12; --warm-soft:#FBF1DF;
+  --crit:#B0342B; --crit-soft:#FBE7E4; --info:#155F87; --info-soft:#E6F0F6;
+  --accent:#155F87; --accent-2:#0E4A6B; --accent-soft:#E6F0F6; --on-accent:#FFFFFF;
+  --gold:#B9812E; --gold-line:#F0C171; --crescent-fill:#155F87;
+  --radius:8px; --shadow:0 1px 2px rgba(18,33,44,.05),0 12px 40px -14px rgba(21,95,135,.22);
+  --serif:"Libre Baskerville",Georgia,serif; --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --crescent:url(data:image/png;base64,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);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0B1A26; --surface:#102434; --sunk:#0E2130; --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
+  --rule:#1F3A4D; --rule-2:#183041;
+  --ok:#6FD9A2; --ok-soft:#1B3229; --warm:#F0C171; --warm-soft:#3A2F1B;
+  --crit:#EC8078; --crit-soft:#331E1B; --info:#7CC4EA; --info-soft:#12354B;
+  --accent:#4FA3D1; --accent-2:#7CC4EA; --accent-soft:#12354B;
+  --gold:#F0C171; --gold-line:#F0C171; --crescent-fill:#FFFFFF;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 40px -14px rgba(0,0,0,.6);
+}}
+:root[data-theme="dark"]{
+  --paper:#0B1A26; --surface:#102434; --sunk:#0E2130; --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
+  --rule:#1F3A4D; --rule-2:#183041;
+  --ok:#6FD9A2; --ok-soft:#1B3229; --warm:#F0C171; --warm-soft:#3A2F1B;
+  --crit:#EC8078; --crit-soft:#331E1B; --info:#7CC4EA; --info-soft:#12354B;
+  --accent:#4FA3D1; --accent-2:#7CC4EA; --accent-soft:#12354B;
+  --gold:#F0C171; --gold-line:#F0C171; --crescent-fill:#FFFFFF;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 40px -14px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--serif);font-weight:700;margin:0;letter-spacing:-.01em;text-wrap:balance}
+button{font-family:inherit}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ---- appbar ---- */
+.appbar{background:var(--surface);border-bottom:2px solid var(--gold-line);position:sticky;top:0;z-index:30;box-shadow:0 2px 14px rgba(11,46,69,.06)}
+.bar{max-width:1220px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:12px 26px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;perspective:700px}
+.crest{width:38px;height:38px;flex:none;position:relative;transform-style:preserve-3d;animation:coin 9s linear infinite}
+.crest .cres{position:absolute;left:50%;top:50%;width:30%;height:42%;transform:translate(-50%,-50%);background:var(--crescent-fill);
+  -webkit-mask:var(--crescent) center/contain no-repeat;mask:var(--crescent) center/contain no-repeat}
+.brand:hover .crest{animation-play-state:paused}
+@keyframes coin{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
+@media(prefers-reduced-motion:reduce){.crest{animation:none}}
+.t1{font-family:var(--serif);font-size:19px;line-height:1.05}
+.t1 .r{color:var(--accent)}
+.t2{font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:var(--ink-3);margin-top:2px}
+.who{padding-left:18px;border-left:1px solid var(--rule);font-size:13.5px;color:var(--ink-2)}
+.who b{display:block;color:var(--ink);font-weight:600;font-size:14px}
+.nav{margin-left:auto;display:flex;border:1px solid var(--rule);border-radius:24px;overflow:hidden;background:var(--surface)}
+.navlink{border:0;background:transparent;color:var(--ink-3);padding:9px 16px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;transition:.14s}
+.navlink:hover{color:var(--ink)}
+.navlink.on{background:var(--accent);color:var(--on-accent)}
+.navlink .ct{font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums;background:rgba(255,255,255,.22);color:inherit;padding:1px 7px;border-radius:20px}
+.navlink:not(.on) .ct{background:var(--sunk);color:var(--ink-3)}
+
+/* ---- page ---- */
+.main{max-width:1220px;margin:0 auto;padding:0 26px 60px}
+.pagehd{display:flex;align-items:flex-end;gap:16px;padding:26px 0 20px;flex-wrap:wrap}
+.pagehd h1{font-size:26px}
+.pagehd .sub{color:var(--ink-2);font-size:14px;margin-top:6px;max-width:64ch}
+.acts{margin-left:auto;display:flex;gap:10px;align-items:center}
+.content{min-width:0}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);padding:9px 15px;border-radius:6px;font-weight:500;font-size:14px;cursor:pointer;transition:.12s}
+.btn:hover{border-color:var(--accent);color:var(--ink)}
+.btn.accent{background:linear-gradient(180deg,var(--accent),var(--accent-2));border-color:var(--accent);color:var(--on-accent);font-weight:500;box-shadow:0 2px 10px rgba(11,46,69,.2)}
+.btn.accent:hover{filter:brightness(1.05);color:var(--on-accent)}
+.btn.sm{padding:6px 11px;font-size:12.5px}
+.btn:focus-visible,.navlink:focus-visible,.row:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.demoflag{font-family:var(--mono);font-size:11px;color:var(--ink-3);border:1px solid var(--rule);border-radius:20px;padding:4px 11px}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.kpi{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);padding:15px 16px;box-shadow:var(--shadow)}
+.kpi .lab{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);font-weight:600}
+.kpi .val{font-family:var(--serif);font-weight:700;font-size:28px;margin-top:9px;line-height:1;font-variant-numeric:tabular-nums}
+.kpi .val small{font-size:14px;color:var(--ink-3);font-weight:600;font-family:var(--sans)}
+.kpi .meta{font-size:12px;color:var(--ink-3);margin-top:7px}
+.kpi.accent-top{border-top:3px solid var(--accent)}
+
+/* section head */
+.shead{display:flex;align-items:baseline;gap:12px;margin:4px 0 14px}
+.shead h2{font-size:18px;font-weight:700}
+.shead .hint{font-size:12.5px;color:var(--ink-3)}
+
+/* table */
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.thead,.row{display:grid;align-items:center;gap:14px}
+.thead{padding:11px 18px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:600;background:var(--sunk);border-bottom:1px solid var(--rule)}
+.row{padding:14px 18px;border-bottom:1px solid var(--rule-2);cursor:pointer;background:0;border-left:0;border-right:0;border-top:0;width:100%;text-align:left;color:inherit;font-family:inherit;font-size:14px;position:relative}
+.row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent);transition:width .16s}
+.row:last-child{border-bottom:0}
+.row:hover{background:var(--sunk)}
+.row:hover::before{width:3px}
+.row .id{font-family:var(--mono);font-size:12.5px;color:var(--ink-3)}
+.row .nm{font-weight:600;font-size:15px}
+.row .sub{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.amt{font-family:var(--mono);font-weight:600;font-variant-numeric:tabular-nums}
+
+.q-grid{grid-template-columns:104px 1fr 120px 96px 116px}
+.wo-grid{grid-template-columns:96px 1fr 140px 118px 96px}
+.doc-grid{grid-template-columns:1fr 150px 130px 96px}
+
+/* pills */
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:20px;font-size:12px;font-weight:500;white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.p-good{background:var(--ok-soft);color:var(--ok)}
+.p-warn{background:var(--warm-soft);color:var(--warm)}
+.p-crit{background:var(--crit-soft);color:var(--crit)}
+.p-info{background:var(--info-soft);color:var(--info)}
+.p-mute{background:var(--sunk);color:var(--ink-3)}
+.pill.plain::before{display:none}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:#0b1a2655;backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.18s;z-index:40}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100vh;width:min(560px,94vw);background:var(--surface);border-left:1px solid var(--rule);box-shadow:-14px 0 44px rgba(11,26,38,.24);transform:translateX(100%);transition:transform .22s cubic-bezier(.4,.2,.2,1);z-index:41;display:flex;flex-direction:column}
+.drawer.open{transform:none}
+.dhead{padding:22px 24px 16px;border-bottom:2px solid var(--gold-line);display:flex;align-items:flex-start;gap:12px}
+.dhead h2{font-size:21px}
+.dhead .id{font-family:var(--mono);font-size:12.5px;color:var(--ink-3);margin-top:4px}
+.x{margin-left:auto;border:1px solid var(--rule);background:var(--surface);border-radius:7px;width:32px;height:32px;cursor:pointer;color:var(--ink-2);font-size:15px;flex:none}
+.x:hover{border-color:var(--accent)}
+.dbody{padding:22px 24px;overflow:auto;flex:1}
+.dfoot{padding:15px 24px;border-top:1px solid var(--rule);display:flex;gap:10px;background:var(--sunk)}
+.field{margin-bottom:18px}
+.field .k{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);font-weight:600;font-family:var(--mono);margin-bottom:7px}
+.field .v{font-size:14.5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+/* line items */
+.li{display:grid;grid-template-columns:1fr 52px 92px 92px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--rule-2);font-size:13.5px}
+.li .desc{color:var(--ink)}
+.li .desc small{display:block;color:var(--ink-3);font-size:11.5px}
+.li input{width:100%;border:1px solid var(--rule);background:var(--sunk);color:var(--ink);border-radius:6px;padding:6px 8px;font-family:var(--mono);font-size:13px;text-align:right}
+.li input:focus{outline:none;border-color:var(--accent)}
+.li .lt{text-align:right;font-family:var(--mono);font-weight:600}
+.li.head{color:var(--ink-3);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;border-bottom:1px solid var(--rule)}
+.li.head span:first-child{text-align:left}
+.totrow{display:flex;justify-content:space-between;padding:6px 0;font-size:13.5px;color:var(--ink-2)}
+.totrow.grand{border-top:2px solid var(--ink);margin-top:6px;padding-top:11px;font-family:var(--serif);font-weight:700;font-size:19px;color:var(--ink)}
+.totrow .mono{font-weight:600}
+.addln{margin-top:11px;font-size:13px;color:var(--accent);background:0;border:1px dashed var(--rule);border-radius:7px;padding:9px;width:100%;cursor:pointer;font-weight:500}
+.addln:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+/* stepper */
+.stepper{display:flex;gap:8px}
+.step{flex:1;text-align:center;font-size:12px;font-weight:500;padding:9px 4px;border-radius:7px;border:1px solid var(--rule);background:var(--surface);color:var(--ink-3);cursor:pointer}
+.step.done{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.step.cur{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+
+.callout{background:var(--warm-soft);border:1px solid var(--rule);border-left:3px solid var(--warm);border-radius:7px;padding:12px 15px;font-size:13.5px;color:var(--ink-2);margin-bottom:20px}
+.callout b{color:var(--ink)}
+.linkrow{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1px solid var(--rule);border-radius:7px;margin-bottom:8px;font-size:13.5px;background:var(--surface)}
+.linkrow .doc{font-weight:600}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);padding:12px 20px;border-radius:9px;font-size:13.5px;font-weight:500;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.2s;z-index:60}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.hide{display:none!important}
+
+@media (max-width:820px){
+  .who{display:none}
+  .nav{margin-left:0;width:100%;justify-content:space-between}
+  .navlink{flex:1;justify-content:center;padding:9px 8px}
+  .kpis{grid-template-columns:1fr 1fr}
+  .q-grid,.wo-grid,.doc-grid{grid-template-columns:1fr auto}
+  .q-grid .c-cust,.wo-grid .c-site{grid-column:1/-1}
+  .thead{display:none}
+}
+</style>
+
+<header class="appbar">
+  <div class="bar">
+    <a class="brand" href="#" onclick="return false">
+      <span class="crest" aria-hidden="true"><i class="cres"></i></span>
+      <div><div class="t1"><span class="r">On</span> File</div><div class="t2">QUOTE ME · BY CALAS AUTOMATIONS</div></div>
+    </a>
+    <div class="who"><b>Northgate Construction</b>Signed in as Dave · Estimating</div>
+    <nav class="nav" id="nav">
+      <button class="navlink on" data-view="quotes">Site Quotes <span class="ct" id="nav-q">3</span></button>
+      <button class="navlink" data-view="work">Work Orders <span class="ct" id="nav-w">2</span></button>
+      <button class="navlink" data-view="docs">Documents <span class="ct" id="nav-d">2</span></button>
+    </nav>
+  </div>
+</header>
+
+<main class="main">
+  <div class="pagehd">
+    <div>
+      <h1 id="v-title">Site Quotes</h1>
+      <div class="sub" id="v-sub">Quotes you've sent. Accept one and it becomes a scheduled job.</div>
+    </div>
+    <div class="acts">
+      <span class="demoflag">Demo data</span>
+      <button class="btn accent" id="newbtn">+ New quote</button>
+    </div>
+  </div>
+  <div class="content" id="content"></div>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"></aside>
+<div class="toast" id="toast"></div>
+
+<script>
+const money = n => "$" + n.toLocaleString("en-CA",{minimumFractionDigits:2,maximumFractionDigits:2});
+const GST=0.05, PST=0.07; // Manitoba: 5% GST + 7% RST(PST)
+
+let quotes = [
+  {id:"Q-1042", cust:"M. Friesen", site:"418 Waterloo St, Winnipeg R3N 0S4", status:"accepted", date:"Sep 9", wo:"WO-318", decidedIn:1,
+   items:[{d:"Basement egress window + cut-in",note:"incl. permit",q:1,p:2650},{d:"Interior finishing & trim",q:1,p:980},{d:"Disposal + haul-away",q:1,p:240}]},
+  {id:"Q-1043", cust:"Prairie Oak Dental", site:"1550 Kenaston Blvd, Winnipeg R3P 2M8", status:"sent", date:"Sep 11",
+   items:[{d:"Reception millwork",q:1,p:4200},{d:"LVP flooring",note:"620 sq ft @ $3.75",q:620,p:3.75},{d:"Paint, 2 coats",q:1,p:1150}]},
+  {id:"Q-1044", cust:"K. Danyliw", site:"77 Bison Dr, Winnipeg R3T 4T2", status:"draft", date:"Sep 12",
+   items:[{d:"Deck rebuild, pressure-treated",note:"12x16",q:1,p:6800},{d:"Stair + railing",q:1,p:1400}]},
+  {id:"Q-1041", cust:"Redwood GC Ltd.", site:"900 Pembina Hwy, Winnipeg R3M 2M6", status:"expired", date:"Aug 28", decidedIn:3,
+   items:[{d:"Tenant demo, unit 4",q:1,p:3100},{d:"Dust wall + protection",q:1,p:520}]},
+];
+let workorders = [
+  {id:"WO-318", cust:"M. Friesen", site:"418 Waterloo St, Winnipeg", crew:"Crew A — Tyrell", sub:"Kelsey Mechanical", date:"Sep 16", status:"scheduled", wcb:"good",
+   items:[{d:"Basement egress window + cut-in",q:1,p:2650},{d:"Interior finishing & trim",q:1,p:980},{d:"Disposal + haul-away",q:1,p:240}], from:"Q-1042"},
+  {id:"WO-316", cust:"Assiniboine Props", site:"31 Cornish Ave, Winnipeg", crew:"Crew B — Marco", sub:"BrightSpark Electric", date:"Sep 12", status:"in-progress", wcb:"expired",
+   items:[{d:"Panel upgrade 200A",q:1,p:3400},{d:"Kitchen circuit add",q:3,p:280}], from:"Q-1037"},
+  {id:"WO-311", cust:"J. Okonkwo", site:"64 Lindenwood Dr, Winnipeg", crew:"Crew A — Tyrell", sub:"—", date:"Sep 5", status:"done", wcb:"good",
+   items:[{d:"Bathroom reno, full",q:1,p:9200},{d:"Fixture supply",q:1,p:1450}], from:"Q-1030"},
+];
+const WO_STEPS=["scheduled","in-progress","done"];
+const WO_LABEL={"scheduled":"Scheduled","in-progress":"In progress","done":"Done"};
+
+const $=s=>document.querySelector(s);
+const subtotal=o=>o.items.reduce((s,i)=>s+i.q*i.p,0);
+const grand=o=>{const s=subtotal(o);return s+s*GST+s*PST;};
+function qStatusPill(s){const m={accepted:["p-good","Accepted"],sent:["p-info","Sent"],draft:["p-mute","Draft"],expired:["p-warn","Expired"]};const[c,t]=m[s];return `<span class="pill ${c}">${t}</span>`;}
+function woStatusPill(s){const m={"scheduled":["p-info","Scheduled"],"in-progress":["p-warn","In progress"],"done":["p-good","Done"]};const[c,t]=m[s];return `<span class="pill ${c}">${t}</span>`;}
+function wcbPill(w){return w==="good"?`<span class="pill p-good">WCB on file</span>`:`<span class="pill p-crit">WCB expired</span>`;}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2200);}
+
+let view="quotes";
+const TITLES={quotes:["Site Quotes","Win more of the quotes you already send — and stop chasing clearance letters by hand."],
+  work:["Work Orders","Scheduled jobs, who's on them, and whether the sub's WCB clearance is current."],
+  docs:["Documents","On File chases the paperwork behind each job — automatically."]};
+
+function setView(v){
+  view=v;
+  document.querySelectorAll(".navlink").forEach(n=>n.classList.toggle("on",n.dataset.view===v));
+  $("#v-title").textContent=TITLES[v][0]; $("#v-sub").textContent=TITLES[v][1];
+  $("#newbtn").classList.toggle("hide",v==="docs");
+  $("#newbtn").textContent = v==="work" ? "+ New work order" : "+ New quote";
+  render();
+}
+
+function render(){
+  const c=$("#content");
+  if(view==="quotes") c.innerHTML=renderQuotes();
+  else if(view==="work") c.innerHTML=renderWork();
+  else c.innerHTML=renderDocs();
+  $("#nav-q").textContent=quotes.filter(q=>q.status!=="expired").length;
+  $("#nav-w").textContent=workorders.filter(w=>w.status!=="done").length;
+}
+
+function renderQuotes(){
+  const sent=quotes.filter(q=>q.status==="sent"), acc=quotes.filter(q=>q.status==="accepted"), exp=quotes.filter(q=>q.status==="expired");
+  const open=sent.reduce((s,q)=>s+grand(q),0);
+  const won=acc.reduce((s,q)=>s+grand(q),0);
+  const atRisk=open+exp.reduce((s,q)=>s+grand(q),0);
+  const decided=acc.length+exp.length;
+  const winRate=decided?Math.round(acc.length/decided*100):0;
+  const turns=quotes.filter(q=>q.decidedIn!=null).map(q=>q.decidedIn);
+  const turnaround=turns.length?(turns.reduce((a,b)=>a+b,0)/turns.length):0;
+  const rows=quotes.map(q=>`
+    <button class="row q-grid" data-q="${q.id}">
+      <span class="id">${q.id}</span>
+      <span class="c-cust"><span class="nm">${q.cust}</span><span class="sub">${q.site}</span></span>
+      <span>${qStatusPill(q.status)}</span>
+      <span class="sub tnum">${q.date}</span>
+      <span class="amt" style="text-align:right">${money(grand(q))}</span>
+    </button>`).join("");
+  return `
+    <div class="callout" style="border-left-color:var(--warm);background:var(--warm-soft)">💸 <b>${money(atRisk).replace('.00','')} in quotes are open or went cold</b> — ${sent.length} awaiting a reply, ${exp.length} expired unanswered. On File auto-follows up on every one, so quotes stop dying in the inbox.</div>
+    <div class="kpis">
+      <div class="kpi accent-top"><div class="lab">Open (sent)</div><div class="val">${money(open).replace('.00','')}</div><div class="meta">${sent.length} quote${sent.length===1?"":"s"} awaiting reply</div></div>
+      <div class="kpi"><div class="lab">Won this month</div><div class="val">${money(won).replace('.00','')}</div><div class="meta">${acc.length} accepted → job created</div></div>
+      <div class="kpi"><div class="lab">Win rate</div><div class="val">${winRate}<small>%</small></div><div class="meta">accepted ÷ ${decided} decided</div></div>
+      <div class="kpi"><div class="lab">Avg. turnaround</div><div class="val">${turnaround.toFixed(1)}<small> days</small></div><div class="meta">sent → decision</div></div>
+    </div>
+    <div class="shead"><h2>All quotes</h2><span class="hint">Manitoba tax: 5% GST + 7% RST on every total</span></div>
+    <div class="panel">
+      <div class="thead q-grid"><span>Quote</span><span>Customer &amp; site</span><span>Status</span><span>Date</span><span style="text-align:right">Total</span></div>
+      ${rows}
+    </div>`;
+}
+
+function renderWork(){
+  const rows=workorders.map(w=>`
+    <button class="row wo-grid" data-w="${w.id}">
+      <span class="id">${w.id}</span>
+      <span class="c-site"><span class="nm">${w.cust}</span><span class="sub">${w.site} · ${w.crew}</span></span>
+      <span>${w.sub!=="—"?wcbPill(w.wcb):'<span class="pill p-mute plain">No sub</span>'}</span>
+      <span>${woStatusPill(w.status)}</span>
+      <span class="sub tnum" style="text-align:right">${w.date}</span>
+    </button>`).join("");
+  const flagged=workorders.filter(w=>w.sub!=="—"&&w.wcb==="expired").length;
+  return `
+    ${flagged?`<div class="callout">⚠ <b>${flagged} job has a subcontractor whose WCB clearance is expired.</b> On File already emailed BrightSpark Electric for an updated clearance letter — the job stays flagged until it's back on file.</div>`:""}
+    <div class="shead"><h2>Active &amp; recent jobs</h2><span class="hint">Click a job to set its stage and check the sub's paperwork</span></div>
+    <div class="panel">
+      <div class="thead wo-grid"><span>Job</span><span>Customer &amp; site</span><span>Sub / WCB</span><span>Stage</span><span style="text-align:right">Date</span></div>
+      ${rows}
+    </div>`;
+}
+
+function renderDocs(){
+  return `
+    <div class="callout" style="border-left-color:var(--accent);background:var(--accent-soft)">This is the original <b>On File</b> — the paperwork chaser. Quote Me sits on top of it, so every quote and work order can require the right documents and On File does the chasing.</div>
+    <div class="shead"><h2>Documents tied to open jobs</h2></div>
+    <div class="panel">
+      <div class="thead doc-grid"><span>Requirement</span><span>Who owes it</span><span>Status</span><span style="text-align:right">Reminders</span></div>
+      <div class="row doc-grid" style="cursor:default">
+        <span><span class="nm">WCB clearance letter</span><span class="sub">for WO-316 · Panel upgrade</span></span>
+        <span class="sub">BrightSpark Electric</span>
+        <span><span class="pill p-crit">Expired</span></span>
+        <span class="sub tnum" style="text-align:right">3 sent</span>
+      </div>
+      <div class="row doc-grid" style="cursor:default">
+        <span><span class="nm">Certificate of insurance</span><span class="sub">for WO-318 · Egress window</span></span>
+        <span class="sub">Kelsey Mechanical</span>
+        <span><span class="pill p-good">On file</span></span>
+        <span class="sub tnum" style="text-align:right">—</span>
+      </div>
+    </div>
+    <div class="shead" style="margin-top:26px"><h2>How the pieces connect</h2></div>
+    <div class="panel" style="padding:18px 18px 10px">
+      <div class="linkrow"><span class="pill p-info plain" style="font-family:var(--mono)">1</span><span><span class="doc">Send a site quote</span> — priced line items, Manitoba tax built in.</span></div>
+      <div class="linkrow"><span class="pill p-info plain" style="font-family:var(--mono)">2</span><span>Customer accepts → <span class="doc">quote turns into a work order</span>, scheduled to a crew.</span></div>
+      <div class="linkrow"><span class="pill p-info plain" style="font-family:var(--mono)">3</span><span>If a sub is on the job, <span class="doc">On File chases their WCB clearance &amp; insurance</span> until it's current.</span></div>
+      <div class="linkrow" style="margin-bottom:14px"><span class="pill p-good plain" style="font-family:var(--mono)">4</span><span>Job closes with the money and the paperwork <span class="doc">both in one place</span>.</span></div>
+    </div>`;
+}
+
+function openDrawer(html){const d=$("#drawer");d.innerHTML=html;d.classList.add("open");d.setAttribute("aria-hidden","false");$("#scrim").classList.add("open");}
+function closeDrawer(){$("#drawer").classList.remove("open");$("#drawer").setAttribute("aria-hidden","true");$("#scrim").classList.remove("open");}
+
+function quoteDrawer(id){
+  const q=quotes.find(x=>x.id===id);
+  const lines=q.items.map((it,i)=>`
+    <div class="li">
+      <span class="desc">${it.d}${it.note?`<small>${it.note}</small>`:""}</span>
+      <input class="tnum" data-i="${i}" data-f="q" value="${it.q}" inputmode="decimal" aria-label="quantity">
+      <input class="tnum" data-i="${i}" data-f="p" value="${it.p}" inputmode="decimal" aria-label="unit price">
+      <span class="lt">${money(it.q*it.p)}</span>
+    </div>`).join("");
+  const s=subtotal(q);
+  const acted = q.status==="accepted";
+  openDrawer(`
+    <div class="dhead">
+      <div><h2>${q.cust}</h2><div class="id">${q.id} · ${q.site}</div></div>
+      <button class="x" onclick="closeDrawer()" aria-label="Close">✕</button>
+    </div>
+    <div class="dbody">
+      <div class="two">
+        <div class="field"><div class="k">Status</div><div class="v">${qStatusPill(q.status)}</div></div>
+        <div class="field"><div class="k">Sent</div><div class="v tnum">${q.date}, 2026</div></div>
+      </div>
+      <div class="field"><div class="k">Line items</div>
+        <div class="li head"><span>Description</span><span style="text-align:right">Qty</span><span style="text-align:right">Unit</span><span style="text-align:right">Line</span></div>
+        <div id="lines">${lines}</div>
+        <button class="addln" onclick="addLine('${q.id}')">+ Add line item</button>
+      </div>
+      <div class="field" style="margin-top:20px">
+        <div class="totrow"><span>Subtotal</span><span class="mono" id="d-sub">${money(s)}</span></div>
+        <div class="totrow"><span>GST (5%)</span><span class="mono" id="d-gst">${money(s*GST)}</span></div>
+        <div class="totrow"><span>RST (7%)</span><span class="mono" id="d-pst">${money(s*PST)}</span></div>
+        <div class="totrow grand"><span>Total</span><span class="mono" id="d-tot">${money(grand(q))}</span></div>
+      </div>
+    </div>
+    <div class="dfoot">
+      ${acted
+        ? (q.wo?`<button class="btn accent" style="flex:1" onclick="closeDrawer();setView('work');setTimeout(()=>workDrawer('${q.wo}'),320)">✓ Accepted → open ${q.wo} →</button>`
+               :`<span class="btn" style="cursor:default;border-style:dashed">✓ Accepted</span>`)
+        : `<button class="btn accent" style="flex:1" onclick="convertQuote('${q.id}')">Accept → create work order</button>
+           <button class="btn" onclick="toast('Quote re-sent to ${q.cust}')">Re-send</button>`}
+    </div>`);
+  wireLineInputs(q);
+}
+
+function workDrawer(id){
+  const w=workorders.find(x=>x.id===id);
+  const steps=WO_STEPS.map(s=>{
+    const idx=WO_STEPS.indexOf(w.status), si=WO_STEPS.indexOf(s);
+    const cls = si<idx?"done":si===idx?"cur":"";
+    return `<button class="step ${cls}" onclick="setStage('${w.id}','${s}')">${WO_LABEL[s]}</button>`;
+  }).join("");
+  const lines=w.items.map(it=>`<div class="li" style="grid-template-columns:1fr 90px"><span class="desc">${it.d}</span><span class="lt">${money(it.q*it.p)}${it.q>1?`<small style="font-weight:400"> · ${it.q}×</small>`:""}</span></div>`).join("");
+  openDrawer(`
+    <div class="dhead">
+      <div><h2>${w.cust}</h2><div class="id">${w.id} · from ${w.from} · ${w.site}</div></div>
+      <button class="x" onclick="closeDrawer()" aria-label="Close">✕</button>
+    </div>
+    <div class="dbody">
+      <div class="field"><div class="k">Stage</div><div class="stepper">${steps}</div></div>
+      <div class="two">
+        <div class="field"><div class="k">Crew</div><div class="v">${w.crew}</div></div>
+        <div class="field"><div class="k">Scheduled</div><div class="v tnum">${w.date}, 2026</div></div>
+      </div>
+      ${w.sub!=="—"?`<div class="field"><div class="k">Subcontractor</div>
+        <div class="linkrow" style="margin-top:2px"><span class="doc">${w.sub}</span><span style="margin-left:auto">${wcbPill(w.wcb)}</span></div>
+        ${w.wcb==="expired"?`
+          <div style="font-size:12.5px;color:var(--crit);margin:8px 0 6px">WCB clearance expired — On File is chasing it automatically:</div>
+          <div class="mono" style="font-size:12px;color:var(--ink-2);display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+            <span class="pill p-good plain">Reminder 1 · Sep 8</span>→<span class="pill p-good plain">2 · Sep 11</span>→<span class="pill p-warn plain">3 · today</span>→<span class="pill p-mute plain">next auto-send in 4 days</span>
+          </div>
+          <button class="btn sm" style="margin-top:10px" onclick="sampleLetter('${w.id}')">View the letter On File sent →</button>
+        `:`<div style="font-size:12.5px;color:var(--ok);margin-top:6px">Clearance current — nothing to chase.</div>`}
+      </div>`:""}
+      <div class="field"><div class="k">Scope &amp; value</div>
+        ${lines}
+        <div class="totrow grand" style="margin-top:8px"><span>Job value</span><span class="mono">${money(grand(w))}</span></div>
+      </div>
+    </div>
+    <div class="dfoot">
+      <button class="btn accent" style="flex:1" onclick="toast('Job sheet sent to ${w.crew.split(' — ')[1]||w.crew}')">Send job sheet to crew</button>
+      <button class="btn" onclick="toast('Invoice drafted for ${w.cust}')">Invoice</button>
+    </div>`);
+}
+
+function wireLineInputs(o){
+  $("#drawer").querySelectorAll(".li input").forEach(inp=>{
+    inp.addEventListener("input",()=>{
+      const i=+inp.dataset.i, f=inp.dataset.f, val=parseFloat(inp.value)||0;
+      o.items[i][f]=val;
+      inp.closest(".li").querySelector(".lt").textContent=money(o.items[i].q*o.items[i].p);
+      recalc(o); render();
+    });
+  });
+}
+function recalc(o){const s=subtotal(o);
+  const set=(id,v)=>{const el=$(id);if(el)el.textContent=money(v);};
+  set("#d-sub",s);set("#d-gst",s*GST);set("#d-pst",s*PST);set("#d-tot",grand(o));}
+function addLine(id){const o=quotes.find(x=>x.id===id);o.items.push({d:"New item",q:1,p:0});quoteDrawer(id);}
+function convertQuote(id){
+  const q=quotes.find(x=>x.id===id);
+  q.status="accepted"; q.decidedIn=q.decidedIn??2;
+  const nums=workorders.map(w=>parseInt((w.id||"").replace("WO-",""))||0);
+  const won="WO-"+((nums.length?Math.max(...nums):318)+1);
+  q.wo=won;
+  workorders.unshift({id:won,cust:q.cust,site:q.site.split(", Winnipeg")[0]+", Winnipeg",crew:"Crew A — Tyrell",sub:"—",date:"Sep 18",status:"scheduled",wcb:"good",items:JSON.parse(JSON.stringify(q.items)),from:q.id});
+  closeDrawer(); toast(`${q.id} accepted → ${won} scheduled · crew assigned · WCB check queued for any sub`); render();
+  setTimeout(()=>setView("work"),650);
+}
+function sampleLetter(id){
+  const w=workorders.find(x=>x.id===id);
+  openDrawer(`
+    <div class="dhead">
+      <div><h2>Clearance request</h2><div class="id">Sent by On File · on behalf of Northgate Construction</div></div>
+      <button class="x" onclick="workDrawer('${id}')" aria-label="Back">←</button>
+    </div>
+    <div class="dbody">
+      <div class="linkrow" style="display:block;padding:16px 18px">
+        <div style="font-size:12.5px;color:var(--ink-3);border-bottom:1px solid var(--rule-2);padding-bottom:9px;margin-bottom:11px">
+          <div><b style="color:var(--ink-2);font-weight:500">To:</b> accounts@brightsparkelectric.ca</div>
+          <div><b style="color:var(--ink-2);font-weight:500">From:</b> notify@northgateconstruction.ca (via On File)</div>
+          <div><b style="color:var(--ink-2);font-weight:500">Subject:</b> Reminder 3 — WCB clearance letter needed for ${w.site}</div>
+        </div>
+        <div style="font-size:14px;color:var(--ink-2);line-height:1.62">Hi BrightSpark team,<br><br>
+        Quick reminder — your WCB clearance letter on file with us expired, and we can't close out the panel-upgrade job at ${w.site} until it's current.<br><br>
+        Please upload an updated clearance here — it takes about a minute, no account needed:<br>
+        <span style="color:var(--accent);font-weight:600">onfile.link/clearance/bse-2291</span><br><br>
+        Thanks,<br>Northgate Construction<br>
+        <span style="color:var(--ink-3);font-size:12.5px">Sent automatically by On File. You've received 3 reminders; the next goes out in 4 days.</span></div>
+      </div>
+    </div>
+    <div class="dfoot">
+      <button class="btn" style="flex:1" onclick="workDrawer('${id}')">← Back to job</button>
+      <button class="btn accent" onclick="toast('Reminder re-sent to ${w.sub}')">Send now</button>
+    </div>`);
+}
+function newQuote(){
+  const nums=quotes.map(q=>parseInt(q.id.replace("Q-",""))||0);
+  const id="Q-"+((nums.length?Math.max(...nums):1044)+1);
+  quotes.push({id,cust:"New customer",site:"Site address, Winnipeg",status:"draft",date:"today",items:[{d:"Describe the work",q:1,p:0}]});
+  render(); quoteDrawer(id);
+}
+function setStage(id,s){const w=workorders.find(x=>x.id===id);w.status=s;workDrawer(id);render();toast(`${id} moved to ${WO_LABEL[s]}`);}
+
+$("#content").addEventListener("click",e=>{
+  const q=e.target.closest("[data-q]"); const w=e.target.closest("[data-w]");
+  if(q) quoteDrawer(q.dataset.q); else if(w) workDrawer(w.dataset.w);
+});
+document.querySelectorAll(".navlink").forEach(n=>n.addEventListener("click",()=>setView(n.dataset.view)));
+$("#scrim").addEventListener("click",closeDrawer);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer();});
+$("#newbtn").addEventListener("click",()=>{ if(view==="quotes") newQuote(); else toast("New work order — start from an accepted quote"); });
+
+setView("quotes");
+</script>
+
+</body></html>
