@@ -173,6 +173,8 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
       <a href="/accounting/" class="on">Accounting</a>
       <a href="/it-msp/">IT &amp; MSP</a>
       <a href="/trades/">Trades</a>
+      <a href="/quote-me/">Quote Me</a>
+      <a href="/receiptsort/">ReceiptSort</a>
       <a class="nav-cta" href="mailto:dan@calasautomations.com?subject=On%20File%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
     </nav>
   </div>
@@ -191,11 +193,28 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
       <a class="btn ghost" href="#contact">Book 15 minutes</a>
     </div>
     <div class="demo-wrap">
-      <video class="demo-video" controls preload="metadata" poster="">
-        <source src="onfile-demo.mp4" type="video/mp4">
-      </video>
-      <p class="demo-cap">90 seconds, narrated &mdash; the same document chase you can also try live above.</p>
+      <a class="tour-card" href="/demo/accounting/#tour" aria-label="Show me around the accounting demo">
+        <span class="tour-card-inner">
+          <span class="tour-cursor-icon">
+            <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true"><path d="M4 2l16 7-6.5 2.2L11 18z" fill="#155F87" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="tour-card-text">
+            <span class="tour-card-headline">&#x25B7; Show me around &middot; 90 sec, with voice</span>
+            <span class="tour-card-sub">Cursor-guided &amp; narrated — opens live demo</span>
+          </span>
+        </span>
+      </a>
+      <p class="demo-cap">Step-by-step narrated tour: the cursor shows you exactly where to look as a friendly voice walks through On File.</p>
     </div>
+    <style>
+      .tour-card{display:flex;align-items:center;justify-content:center;width:100%;margin-top:16px;padding:28px 20px;background:var(--surface,#fff);border:1.5px solid var(--rule,#dde3ea);border-radius:8px;text-decoration:none;color:inherit;cursor:pointer;transition:border-color .18s,box-shadow .18s}
+      .tour-card:hover,.tour-card:focus{border-color:#155F87;box-shadow:0 0 0 3px rgba(21,95,135,.12);outline:none}
+      .tour-card-inner{display:flex;align-items:center;gap:18px}
+      .tour-cursor-icon{display:flex;align-items:center;justify-content:center;width:56px;height:56px;background:rgba(21,95,135,.08);border-radius:50%;flex-shrink:0}
+      .tour-card-text{display:flex;flex-direction:column;gap:4px;text-align:left}
+      .tour-card-headline{font-size:17px;font-weight:600;color:var(--ink,#111);letter-spacing:-.01em}
+      .tour-card-sub{font-size:13px;color:var(--ink-3,#6b7280)}
+    </style>
   </div>
 </div>
 <div class="wrap">
@@ -336,7 +355,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 <footer>
   <div class="wrap foot-row">
     <span>Calas Automations &mdash; Winnipeg, Manitoba &mdash; 30 days&#39; notice to cancel, always</span>
-    <span>Small automations, built properly</span>
+    <span>Small automations, built properly &middot; <a href="/quote-me/">Quote Me</a> &middot; <a href="/receiptsort/">ReceiptSort</a></span>
   </div>
 </footer>
 </main>
