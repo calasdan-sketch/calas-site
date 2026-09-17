@@ -1738,6 +1738,11 @@ build();renderPlan();setDay(0);render();
     s=s.then(function(){endTour()});
   }
   if(tourBtn)tourBtn.addEventListener('click',runTour);
+  // Auto-start when arriving from the landing page via #tour hash
+  if(window.location.hash==='#tour'&&tourBtn){
+    window.location.hash='';
+    setTimeout(function(){tourBtn.click()},800);
+  }
 })();
 </script>
 
