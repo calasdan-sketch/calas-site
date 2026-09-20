@@ -1,0 +1,97 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lead Me — warm B2B leads, found and warmed for you · Calas Automations</title>
+<meta name="description" content="Lead Me finds real businesses in your territory, reads their own websites to learn what they do, scores how warm each one is, and drafts honest first-contact emails you approve before anything sends. Built by Calas Automations, Winnipeg.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{--paper:#fff;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--ink-3:#6B7883;--rule:#D9E3EA;--accent:#155F87;--accent-2:#0E4A6B;--gold:#F0C171;--ok:#17794A;--shadow:0 1px 2px rgba(18,33,44,.05),0 12px 40px -14px rgba(21,95,135,.2);--serif:"Libre Baskerville",Georgia,serif;--sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}code{font-family:var(--mono);font-size:.88em;background:var(--sunk);padding:1px 5px;border-radius:5px}
+.wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+.nav{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--rule)}
+.nav::after{content:"";display:block;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.nav .row{max-width:1060px;margin:0 auto;padding:13px 22px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit}
+.brand b{font-family:var(--serif);font-size:19px}.brand .tag{display:block;font-size:11px;color:var(--ink-3);font-family:var(--mono);margin-top:1px}
+.crest{width:32px;height:32px;flex:none}
+.cta{margin-left:auto;display:flex;gap:10px;align-items:center}
+.nav .back{font-size:14px;color:var(--ink-3);text-decoration:none}
+.btn{display:inline-block;font:inherit;font-weight:700;font-size:15px;padding:11px 20px;border-radius:11px;border:0;background:var(--accent);color:#fff;cursor:pointer;text-decoration:none;box-shadow:0 6px 18px -6px rgba(21,95,135,.6)}
+.btn:hover{background:var(--accent-2)}.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--rule);box-shadow:none}
+.hero{padding:64px 0 40px;text-align:center}
+.hero .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.hero h1{font-family:var(--serif);font-size:clamp(30px,5vw,46px);line-height:1.12;margin:0 auto 18px;max-width:18ch}
+.hero p{font-size:19px;color:var(--ink-2);max-width:60ch;margin:0 auto 26px}
+.hero .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.hero .fine{margin-top:16px;font-size:13px;color:var(--ink-3)}
+.band{background:var(--sunk);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:44px 0}
+.band h2,.section h2{font-family:var(--serif);font-size:clamp(22px,3vw,30px);text-align:center;margin:0 0 8px}
+.band .sub,.section .sub{text-align:center;color:var(--ink-2);max-width:60ch;margin:0 auto 30px}
+.section{padding:52px 0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}@media(max-width:820px){.grid3{grid-template-columns:1fr}}
+.card{background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:22px;box-shadow:var(--shadow)}
+.card .ic{font-size:26px;margin-bottom:10px}.card h3{font-family:var(--serif);font-size:19px;margin:0 0 7px}.card p{margin:0;color:var(--ink-2);font-size:14.5px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding:22px;border:1px solid var(--rule);border-radius:14px;background:var(--paper)}
+.step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--serif);font-size:17px;margin-bottom:12px}
+.step h3{font-family:var(--serif);font-size:18px;margin:0 0 6px}.step p{margin:0;color:var(--ink-2);font-size:14.5px}
+.honest{max-width:70ch;margin:36px auto 0;padding:16px 18px;border:1px solid var(--rule);border-left:3px solid var(--gold);border-radius:10px;background:var(--sunk);font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.honest b{color:var(--ink)}
+.faq{max-width:760px;margin:0 auto}.faq details{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin-bottom:10px;background:#fff}
+.faq summary{font-weight:600;cursor:pointer}.faq p{margin:8px 0 0;color:var(--ink-2);font-size:14.5px}
+footer{border-top:1px solid var(--rule);padding:28px 0;text-align:center;color:var(--ink-3);font-size:13px}
+footer a{color:var(--ink-3)}
+</style></head><body>
+
+<nav class="nav"><div class="row">
+  <a class="brand" href="/leadme/"><svg class="crest" viewBox="0 0 40 40" aria-hidden="true"><path d="M27 6a15 15 0 1 0 0 28 12 12 0 1 1 0-28z" fill="#155F87"/></svg>
+    <div><b>Lead Me</b><span class="tag">by Calas Automations</span></div></a>
+  <div class="cta"><a class="back" href="/">← Calas Automations</a><a class="btn" href="#open">Open the demo</a></div>
+</div></nav>
+
+<section class="hero"><div class="wrap">
+  <div class="eyebrow">Warm B2B lead finder + outreach · Winnipeg</div>
+  <h1>It finds the businesses worth calling, and warms them up for you.</h1>
+  <p>Lead Me searches your territory for real companies, reads each one's own website to learn what they do and how big they are, scores how good a fit they are, and drafts an honest first email built only from facts it found. You approve every message before a single one sends. Nothing guessed, nothing spammy.</p>
+  <div class="btns" id="open"><a class="btn" id="openApp" href="LEADME_APP_URL" target="_blank" rel="noopener">Open Lead Me</a><a class="btn ghost" href="#how">See how it works</a></div>
+  <div class="fine">Runs on our own machine · you review before anything is sent · unsubscribe honoured, Canadian anti-spam (CASL) built in</div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <h2>Three jobs, one dashboard</h2>
+  <p class="sub">Find the right businesses, learn the truth about each, reach out like a person — not a spammer.</p>
+  <div class="grid3">
+    <div class="card"><div class="ic">🔎</div><h3>Finds them free</h3><p>Searches your whole territory (Manitoba, Saskatchewan, NW Ontario to start) using open business listings and maps. No paid lead lists, no "dollar a lead" — Calas's own finder does it.</p></div>
+    <div class="card"><div class="ic">📖</div><h3>Reads their website</h3><p>For each company it reads their own pages — what they do, whether they're hiring or expanding, how many locations — and gives each a warmth score out of 100 with plain reasons.</p></div>
+    <div class="card"><div class="ic">✉️</div><h3>Warms them up</h3><p>Drafts a first email using only facts it found, with the source shown. You approve it. Replies are read back in, so a sequence stops the moment someone answers.</p></div>
+  </div>
+</div></section>
+
+<section class="section" id="how"><div class="wrap">
+  <h2>How it works</h2>
+  <p class="sub">Set the industry and territory once. It does the digging; you make the calls.</p>
+  <div class="steps">
+    <div class="step"><h3>You pick the target</h3><p>Choose the trade (forklifts, fleet vehicles, HVAC, and more) and the territory. It finds every matching business it can and lists them.</p></div>
+    <div class="step"><h3>It scores and drafts</h3><p>Each company gets a warmth score and a ready-to-review email built from real facts about them — no guessed names, no filler.</p></div>
+    <div class="step"><h3>You approve, it sends</h3><p>Only the warm ones you approve go out, within a daily cap, with an unsubscribe footer. Replies land in a Replies tab and pause the follow-ups automatically.</p></div>
+  </div>
+</div></section>
+
+<section class="section"><div class="wrap" style="text-align:center">
+  <a class="btn" href="LEADME_APP_URL" target="_blank" rel="noopener">Open the live demo</a>
+  <div class="honest" style="margin-top:22px"><b>What Lead Me is, and isn't.</b> It finds and researches businesses from what they publish about themselves — it does not dig into anyone's private life, and it never sends without your approval. It drafts good first emails; it does not promise anyone will reply. It's honest outreach at speed, not a spam machine. A warm score is a fit estimate, not a guarantee.</div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <h2>Questions people ask</h2>
+  <div class="faq">
+    <details><summary>Where do the leads come from?</summary><p>Open business listings and maps, plus each company's own public website. No purchased lists, no scraping of people's personal information — just businesses that have chosen to be findable.</p></details>
+    <details><summary>Will this get me in trouble with anti-spam rules?</summary><p>It's built around Canada's anti-spam law (CASL): an unsubscribe link in every email, a daily send cap, a suppression list, and your real mailing address on the footer. You approve each message before it sends.</p></details>
+    <details><summary>Does it email people automatically?</summary><p>No. It drafts; you approve. It will only send the ones you've reviewed and marked ready, and it stops a sequence the moment someone replies.</p></details>
+    <details><summary>Can it do my industry, not just forklifts?</summary><p>Yes. It ships with several trades and a builder to add your own, so it fits whatever you sell.</p></details>
+  </div>
+</div></section>
+
+<footer><div class="wrap">Lead Me · by <a href="/">Calas Automations</a> · Winnipeg · <a href="mailto:dan@calasautomations.com">dan@calasautomations.com</a> · 204-227-5308<br>Find the right businesses. Warm them up. You make the calls.</div></footer>
+</body></html>
