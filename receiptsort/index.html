@@ -197,10 +197,10 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
     <h1>Drop a folder of receipts. Get one CSV.</h1>
     <p class="lede">A free tool for the shoebox. Photos, scans, PDFs &mdash; ReceiptSort reads each one and writes one spreadsheet row per receipt. It runs on your own computer. Nothing is uploaded anywhere.</p>
     <div class="hero-actions">
-      <a class="btn" href="mailto:dan@calasautomations.com?subject=ReceiptSort%20%E2%80%94%20send%20me%20the%20tool">Get the free tool</a>
-      <a class="btn ghost" href="#how">How it works</a>
+      <a class="btn" href="/receiptsort/ReceiptSort.zip" download>Download ReceiptSort (.zip)</a>
+      <a class="btn ghost" href="#run">How to run it</a>
     </div>
-    <p class="fine">Free, no account, no support line. The download link is coming; until then, email and we'll send it.</p>
+    <p class="fine">Free, no account, no support line. No network calls, ever &mdash; the only optional connection is to a model running on your own computer (Ollama at 127.0.0.1); pass <span class="mono">--no-llm</span> to disable even that.</p>
   </div>
 </div>
 <div class="wrap">
@@ -219,6 +219,19 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
 2026-03-04,Petro-Canada,61.50,2.93,IMG_2232.jpg,
 2026-03-06,,23.80,,IMG_2240.jpg,<span class="rv">yes</span></pre>
     <p class="caption">What the output looks like. The third row is a faded thermal receipt it couldn't read with confidence, so it says so rather than guessing.</p>
+  </section>
+
+  <section id="run">
+    <div class="sec-head">
+      <p class="eyebrow">How to run it</p>
+      <h2>Download, unzip, run.</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="n">STEP 01</span><h3>Download and unzip.</h3> <p><a href="/receiptsort/ReceiptSort.zip" download>ReceiptSort.zip</a> &mdash; unzip it anywhere on your computer.</p></div>
+      <div class="step"><span class="n">STEP 02</span><h3>You need Python 3.11 or newer.</h3> <p>Then, once, in a terminal: <span class="mono">pip install markitdown</span>.</p></div>
+      <div class="step"><span class="n">STEP 03</span><h3>Start it.</h3> <p>Double-click <span class="mono">run.bat</span> (Windows), or run <span class="mono">python receiptsort.py --web</span> from the unzipped folder.</p></div>
+    </div>
+    <p class="caption">No network calls, ever &mdash; the only optional connection is to a model running on your own computer (Ollama at 127.0.0.1); pass <span class="mono">--no-llm</span> to disable even that.</p>
   </section>
 
   <section>
@@ -276,11 +289,11 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
   <div class="wrap cta-in">
     <div>
       <p class="eyebrow">Get the tool</p>
-      <h2 style="margin-top:12px;font-size:22px">Email, and we'll send it.</h2>
-      <p>The download link is on its way to this page. Until it's here, one email gets you the tool and a two-line note on how to run it.</p>
+      <h2 style="margin-top:12px;font-size:22px">Download it. Email if it breaks.</h2>
+      <p>The zip is free and needs no account. If something doesn't work, one email reaches Dan &mdash; no promise on turnaround, but we'll fix what we can.</p>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
-      <a class="btn" href="mailto:dan@calasautomations.com?subject=ReceiptSort%20%E2%80%94%20send%20me%20the%20tool">Get the free tool</a>
+      <a class="btn" href="/receiptsort/ReceiptSort.zip" download>Download ReceiptSort (.zip)</a>
       <a class="btn ghost light" href="mailto:dan@calasautomations.com?subject=On%20File%20%E2%80%94%2015%20minutes" style="text-align:center;border:1px solid var(--rule);color:var(--ink)">Book 15 minutes</a>
       <span class="eyebrow" style="text-align:center">Replies within one business day</span>
     </div>

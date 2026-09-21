@@ -183,82 +183,15 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
   <div class="hero-art" aria-hidden="true"></div>
   <div class="hero-overlay" aria-hidden="true"></div>
   <div class="wrap">
-    <p class="eyebrow">For IT companies &amp; MSPs</p>
-    <h1>White-label On File, and sell it under your own name.</h1>
-    <p class="lede">Same product, a different relationship. You keep the client and the invoice &mdash; we do the document chasing behind your brand.</p>
+    <p class="eyebrow">For IT companies &amp; MSPs &mdash; planned, not yet live</p>
+    <h1>A white-label reseller program for On File is planned. It isn't live yet.</h1>
+    <p class="lede">The idea is simple: you keep the client and the invoice, we do the document chasing behind your brand. We're proving the direct product with accounting firms and trades contractors first, and we'll open the reseller layer once there's a measured result to put behind it. If you run an MSP serving Winnipeg accounting or trades clients and want to be told when it's ready &mdash; or want to shape what it becomes &mdash; book fifteen minutes with Dan.</p>
     <div class="hero-actions">
-      <a class="btn" href="/demo/it-msp/" target="_blank" rel="noopener">See it white-labelled &mdash; live app</a>
-      <a class="btn ghost" href="#contact">Book 15 minutes</a>
+      <a class="btn" href="mailto:dan@calasautomations.com?subject=On%20File%20reseller%20program%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
     </div>
   </div>
 </div>
-<div class="wrap">
-  <section>
-    <div class="panel">
-      <div>
-        <h3>On File &mdash; reseller program</h3>
-        <p class="who">For IT companies and MSPs serving Winnipeg accounting firms and trades contractors</p>
-        <p>Your clients already come to you for everything technical. Put your name on one more thing: a document-chasing workflow on your brand, while we keep it running underneath.</p>
-        <p>Every client's data is walled off from the next &mdash; and from every other reseller on the platform &mdash; at the database level, not just in the interface:</p>
-        <div class="sql"><pre><span class="cm">-- every row carries an org_id; the database refuses to return</span>
-<span class="cm">-- rows outside your account, even if a query forgets to ask</span>
-<span class="kw">CREATE POLICY</span> reseller_isolation <span class="kw">ON</span> client_documents
-  <span class="kw">USING</span> (reseller_id = current_reseller_id());</pre></div>
-        <p class="sql-cap">The architecture the reseller platform is being built on &mdash; Postgres row-level security, so a missing filter is impossible, not just unlikely. Not yet live; noted here so you know what you'd be reselling.</p>
-        <p class="quote">&quot;An MSP won't resell their client something worse than a free tool. They'll resell something no free tool does.&quot;</p>
-        <p style="font-size:13px;color:var(--ink-3)">&mdash; my own reasoning for why this fits an MSP's book, not a partner quote.</p>
-      </div>
-      <div class="spec">
-        <dl>
-          <dt>What's white-labelled</dt><dd>Your logo, colours, domain, and email sent as you. Your client never sees the Calas name.</dd>
-          <dt>Data boundary</dt><dd>Three levels &mdash; vendor, reseller, client &mdash; enforced in the database.</dd>
-          <dt>Pricing</dt><dd class="big">Custom</dd>
-          <dt>How it's priced</dt><dd>By client count and support level. Book a call and we work it out together.</dd>
-          <dt>Status</dt><dd>In active build. The direct product (trades &amp; accounting) is live today; the reseller layer is next on the bench.</dd>
-          <dt>Best fit</dt><dd>You already support Winnipeg accounting or trades clients and want another line item without hiring for it.</dd>
-        </dl>
-      </div>
-    </div>
-  </section>
-  
-<section>
-  <div class="sec-head">
-    <p class="eyebrow">Process</p>
-    <h2>Four steps, about three weeks.</h2>
-  </div>
-  <div class="steps">
-    <div class="step"><span class="n">STEP 01</span><h3>We watch the task.</h3> <p>One hour with whoever does it &mdash; in person in Winnipeg, or a screen-share.</p></div>
-    <div class="step"><span class="n">STEP 02</span><h3>We build it.</h3> <p>Off-site, on our time. You get a working version to try first.</p></div>
-    <div class="step"><span class="n">STEP 03</span><h3>It runs beside you, free, for two weeks.</h3> <p>Next to the old way, so you see it's right before you trust it.</p></div>
-    <div class="step"><span class="n">STEP 04</span><h3>We keep it running.</h3> <p>Your systems change; the monthly fee is us keeping it working.</p></div>
-  </div>
-</section>
 
-  
-<section>
-  <div class="sec-head">
-    <p class="eyebrow">About</p>
-    <h2>Based in Winnipeg, upfront about how we work.</h2>
-  </div>
-  <p>We're Calas Automations, led by Dan Calas out of Winnipeg. You deal directly with the person who does the work, and we'll still be here when your system needs changing in three years. Fixed price before we start &mdash; no hourly billing. 30 days' notice to leave, always, and the workflow stays yours if you do.</p>
-</section>
-
-</div>
-
-<div class="cta" id="contact">
-  <div class="wrap cta-in">
-    <div>
-      <p class="eyebrow">Get in touch</p>
-      <h2 style="margin-top:12px;font-size:22px">Try it live. Then fifteen minutes with us.</h2>
-      <p>See it run in a couple of minutes. Fifteen minutes on the phone to say plainly whether a pilot makes sense for you.</p>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <a class="btn" href="/demo/it-msp/" target="_blank" rel="noopener">See it white-labelled &mdash; live app</a>
-      <a class="btn ghost light" href="mailto:dan@calasautomations.com?subject=On%20File%20%E2%80%94%2015%20minutes" style="text-align:center;border:1px solid var(--rule);color:var(--ink)">Book 15 minutes</a>
-      <span class="eyebrow" style="text-align:center">Replies within one business day</span>
-    </div>
-  </div>
-</div>
 <footer>
   <div class="wrap foot-row">
     <span>Calas Automations &mdash; Winnipeg, Manitoba &mdash; 30 days&#39; notice to cancel, always</span>

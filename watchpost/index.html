@@ -44,7 +44,7 @@ a{color:var(--accent)}code{font-family:var(--mono);font-size:.88em;background:va
 .report .kp{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}.report .kp div{border:1px solid var(--rule);border-radius:8px;padding:8px 10px}
 .report .kp b{display:block;font-size:20px;color:var(--accent)}.report .kp span{font-size:11px;color:var(--ink-3)}
 @media(max-width:640px){.report .kp{grid-template-columns:repeat(2,1fr)}}
-.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}@media(max-width:820px){.tiers{grid-template-columns:1fr}}
+.tiers{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:760px;margin:0 auto}@media(max-width:820px){.tiers{grid-template-columns:1fr}}
 .tier{background:var(--paper);border:1px solid var(--rule);border-radius:16px;padding:22px;box-shadow:var(--shadow);display:flex;flex-direction:column}
 .tier.hi{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset,var(--shadow)}
 .tier h3{font-family:var(--serif);font-size:20px;margin:0 0 4px}.tier .who{color:var(--ink-3);font-size:13.5px;min-height:40px}
@@ -97,9 +97,9 @@ footer a{color:var(--ink-3)}
 
 <section class="band"><div class="wrap">
   <h2>What the monthly page looks like</h2>
-  <p class="sub">This is a real report layout with sample numbers, not a mock-up of features we haven't built.</p>
+  <p class="sub">Sample report. This is the real report layout with made-up numbers for a made-up business, not a mock-up of features we haven't built.</p>
   <div class="report">
-    <div class="rh"><span class="crest" style="width:26px;height:26px" aria-hidden="true"></span><div><b>Watchpost security report</b><br><span>Prepared for Your Business · last 30 days</span></div></div>
+    <div class="rh"><span class="crest" style="width:26px;height:26px" aria-hidden="true"></span><div><b>Watchpost security report · sample</b><br><span>Prepared for Sample Co. (fictional) · last 30 days · sample numbers</span></div></div>
     <div class="rb">
       <div class="line">Bottom line: 2 things to do this week.</div>
       <div>3 outside addresses tried the decoys, 41 attempts in total. One of them hunted for password and configuration files, which is the serious kind.</div>
@@ -111,22 +111,19 @@ footer a{color:var(--ink-3)}
 
 <section class="section" id="start"><div class="wrap">
   <h2>Plans</h2>
-  <p class="sub">Founding-client pricing while we take on our first businesses. First month free on every plan, no setup fee, cancel with one email.</p>
+  <p class="sub">Early access. Pricing is set with the first businesses we take on. First month free, no setup fee, cancel with one email.</p>
   <div class="tiers">
     <div class="tier"><h3>Watch</h3><div class="who">One-location business. You read the alerts.</div>
       <ul><li>Decoy set on our box, in your name</li><li>Alerts to your phone within minutes</li><li>Monthly one-page report</li></ul>
-      <div class="price">Pricing on the call <small>· first month free</small></div>
-      <a class="btn" data-stripe="STRIPE_LINK_WATCH" href="mailto:dan@calasautomations.com?subject=Watchpost%20free%20month%20(Watch)&body=Hi%20Dan%2C%20I%27d%20like%20to%20try%20Watchpost%20for%20a%20month.%20Business%3A%20">Start free month</a></div>
-    <div class="tier hi"><h3>Guarded</h3><div class="who">You'd rather we read the alerts and call you when it's real.</div>
-      <ul><li>Everything in Watch</li><li>One decoy inside your office network</li><li>We watch first; we call you when it matters</li><li>Monthly report plus a 15-minute walk-through</li></ul>
-      <div class="price">Pricing on the call <small>· first month free</small></div>
-      <a class="btn" data-stripe="STRIPE_LINK_GUARDED" href="mailto:dan@calasautomations.com?subject=Watchpost%20free%20month%20(Guarded)&body=Hi%20Dan%2C%20I%27d%20like%20to%20try%20Watchpost%20Guarded%20for%20a%20month.%20Business%3A%20">Start free month</a></div>
+      <div class="price">By request <small>· first month free</small></div>
+      <a class="btn" data-stripe="STRIPE_LINK_WATCH" href="mailto:dan@calasautomations.com?subject=Watchpost%20%E2%80%94%2015%20minutes&body=Hi%20Dan%2C%20I%27d%20like%2015%20minutes%20to%20talk%20about%20Watchpost.%20Business%3A%20">Book 15 minutes</a></div>
     <div class="tier"><h3>Partner</h3><div class="who">IT shops and MSPs who want this for their own clients.</div>
       <ul><li>Per client site, your branding on the report</li><li>Alerts to your desk, not the client's</li><li>Volume pricing from five sites</li></ul>
       <div class="price">Per site <small>· let's talk</small></div>
       <a class="btn ghost" href="mailto:dan@calasautomations.com?subject=Watchpost%20partner%20plan">Talk to Dan</a></div>
   </div>
   <div class="guarantee"><b>The guarantee, in plain words.</b> First month free. After that, if a month goes by and we can't show you the decoys were up and answering, that month is free too. Cancel any time with one email. What we guarantee is that the alarm was on, which we can prove. Nobody can guarantee "no break-in", and we won't pretend to.</div>
+  <div class="honest"><b>Early access.</b> Watchpost is in early access with no marketing push. We're taking on a small number of businesses by request so we can learn from real decoys at real clients before we say anything louder than this page.</div>
   <div class="honest"><b>What Watchpost is, and isn't.</b> It's <b>detection</b>, not a lock. It tells you fast when someone's poking at doors they shouldn't, so you can act. It doesn't by itself stop a determined attacker, it doesn't replace passwords, updates, backups and a firewall, and no service on earth makes a business unhackable. It only watches decoys we placed, reports what it sees, and never touches or strikes back at anyone. Ask and we'll show you exactly how the decoys work; there's nothing hidden in them.</div>
 </div></section>
 

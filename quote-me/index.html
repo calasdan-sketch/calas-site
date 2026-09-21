@@ -213,7 +213,7 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
     </div>
     <div class="steps">
       <div class="step"><span class="n">STEP 01</span><h3>Talk it in.</h3> <p>Ninety seconds on your phone, standing in the customer's basement: what's wrong, what you'll do, what parts it takes. No typing, no form.</p></div>
-      <div class="step"><span class="n">STEP 02</span><h3>It's priced from your rate card.</h3> <p>Your labour rate, your markups, your usual parts &mdash; not an industry average. You see the quote first and change anything before it goes out.</p></div>
+      <div class="step"><span class="n">STEP 02</span><h3>It's priced from your rate card.</h3> <p>Your labour rate, your markups, your usual parts &mdash; not an industry average. You see the quote first and change anything before it goes out. You must tap <b>Reviewed</b> before any quote can be sent &mdash; the AI never sends a price you haven't looked at.</p></div>
       <div class="step"><span class="n">STEP 03</span><h3>The customer gets one link.</h3> <p>A text to their phone. They read the quote and type their name to accept it. No app to install, no account, no PDF to open.</p></div>
       <div class="step"><span class="n">STEP 04</span><h3>Deposit in, then you leave.</h3> <p>They pay the deposit from their bank account or a card, right there on their phone. You get told the moment it's done. The truck leaves with the job booked.</p></div>
     </div>
@@ -231,7 +231,7 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
       <p>Quote Me offers the customer bank debit first &mdash; a pre-authorized debit straight from their chequing account &mdash; and a card as the fallback. Here is why, using Stripe's published Canadian rates.</p>
     </div>
     <table class="fees">
-      <thead><tr><th>Deposit</th><th class="num" style="text-align:right">Card &mdash; 2.9% + $0.30</th><th class="num" style="text-align:right">Bank debit &mdash; 1% + $0.40, capped at $5</th></tr></thead>
+      <thead><tr><th>Deposit</th><th class="num" style="text-align:right">Card &mdash; 2.9% + CA$0.30</th><th class="num" style="text-align:right">Pre-authorized debit &mdash; 1% + CA$0.40, capped at CA$5.00</th></tr></thead>
       <tbody>
         <tr><td>$300</td><td class="num">$9.00</td><td class="num">$3.40</td></tr>
         <tr><td>$500</td><td class="num">$14.80</td><td class="num">$5.00</td></tr>
@@ -239,7 +239,8 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
         <tr><td>$4,000</td><td class="num">$116.30</td><td class="num">$5.00</td></tr>
       </tbody>
     </table>
-    <p class="caption">Rates are Stripe Canada's standard published pricing for domestic cards and pre-authorized debit &mdash; see <a href="https://stripe.com/en-ca/pricing" target="_blank" rel="noopener">stripe.com/en-ca/pricing</a>. <b>Verify before you rely on them</b>: Stripe changes its pricing, and your own Stripe account may be on different terms. The dollar figures above are arithmetic from those two rates, nothing more.</p>
+    <p class="caption">Source: <a href="https://stripe.com/en-ca/pricing" target="_blank" rel="noopener">Stripe Canada published pricing</a>, checked 21 Sept 2026 &mdash; verify before quoting. Cards: 2.9% + CA$0.30. Pre-Authorized Debit: 1% + CA$0.40, capped at CA$5.00 per transaction, plus CA$5.00 on a failed or disputed debit. Stripe changes its pricing, and your own Stripe account may be on different terms. The dollar figures above are arithmetic from those two rates, nothing more.</p>
+    <p class="caption">Deposits go straight to the contractor's own Stripe account. Calas Automations never holds client funds.</p>
     <p class="note"><b>The honest trade-off.</b> A card clears in seconds. A bank debit is authorized on the spot but the money confirms over the following business days, and like any pre-authorized debit it can be disputed by the account holder. You decide which to offer, and the customer decides which to use. Quote Me just puts the cheaper one first.</p>
   </section>
 
@@ -275,14 +276,16 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
       <div>
         <h3>Pricing</h3>
         <p class="who">For plumbers, electricians, HVAC and similar trades in Manitoba</p>
-        <p>There's no number on this page yet, on purpose. Quote Me is in early access and we're setting the price with the first contractors who use it. Ask and you'll get a straight answer &mdash; a number, not a call to schedule a call.</p>
-        <p class="quote">Introductory pricing &mdash; ask.</p>
+        <p>Quote Me is in early access and the price is being set with the first contractors who use it. Here is the current number, plainly.</p>
+        <!-- PLACEHOLDER PRICE: Dan can change this line. Board asked for a visible early-access price; $99/mo, no setup fee, first ten shops. -->
+        <p class="quote">Early access price: $99/mo per shop during early access, no setup fee, cancel any time &mdash; price rises after the first ten shops.</p>
       </div>
       <div class="spec">
         <dl>
-          <dt>Pricing</dt><dd class="big">Ask</dd>
+          <!-- PLACEHOLDER PRICE: keep in sync with the line at left. -->
+          <dt>Pricing</dt><dd class="big">$99/mo</dd>
           <dt>Needs</dt><dd>Your rate card (a spreadsheet, a photo of the sheet in the truck, whatever you have) and a phone that can record a voice note.</dd>
-          <dt>Payments</dt><dd>Run through Stripe. The customer pays Stripe; Stripe's fees are Stripe's, as above.</dd>
+          <dt>Payments</dt><dd>Run through your own Stripe account. Deposits go straight to you; Calas Automations never holds client funds. Stripe's fees are Stripe's, as above.</dd>
           <dt>Leaving</dt><dd>30 days' notice, always. Your quotes and acceptances are yours to take.</dd>
         </dl>
       </div>
