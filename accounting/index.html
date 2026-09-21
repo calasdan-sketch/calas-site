@@ -1,5 +1,5 @@
 <!doctype html><html><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Calas Automations — Accounting</title>
+<title>Accounting — On File chases the documents so staff don't have to · Calas Automations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
@@ -8,7 +8,7 @@
   --paper:#FFFFFF; --surface:#FFFFFF; --sunk:#F1F6F9;
   --ink:#12212C; --ink-2:#4E5B66; --ink-3:#66717B;
   --rule:#D9E3EA; --rule-2:#EAF0F4;
-  --red:#155F87; --red-2:#0E4A6B; --red-soft:#E6F0F6; --ok:#17794A; --ok-soft:#E9F5EE; --ok-line:#B7E0C7;
+  --red:#155F87; --red-2:#0E4A6B; --red-soft:#E6F0F6; --ok:#17794A; --ok-soft:#E9F5EE; --ok-line:#B7E0C7; --gold:#F0C171;
   --night:#0B2E45; --night-2:#0E3A55; --night-ink:#FFFFFF; --night-ink-2:#B9CFDD;
   --night-rule:#1E4A66;
 }
@@ -17,14 +17,14 @@
     --paper:#0B1A26; --surface:#102434; --sunk:#0D1F2C;
     --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
     --rule:#1F3A4D; --rule-2:#183041;
-    --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48;
+    --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48; --gold:#F0C171;
   }
 }
 :root[data-theme="dark"]{
   --paper:#0B1A26; --surface:#102434; --sunk:#0D1F2C;
   --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
   --rule:#1F3A4D; --rule-2:#183041;
-  --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48;
+  --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48; --gold:#F0C171;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);
@@ -163,6 +163,7 @@ tr.auto .after{color:var(--ok);font-weight:600}
 footer{padding:20px 0;border-top:1px solid var(--rule)}
 .foot-row{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink-3)}
 </style>
+<style>#hdr{position:relative}#hdr::after{content:"";display:block;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}</style>
 <header id="hdr">
   <div class="mast">
     <a class="lockup" href="/" aria-label="Calas Automations, home">
