@@ -1,5 +1,5 @@
 <!doctype html><html><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Trades — know who's working uninsured, before it costs you · Calas Automations</title>
+<title>Calas Automations — Trades</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
@@ -8,7 +8,7 @@
   --paper:#FFFFFF; --surface:#FFFFFF; --sunk:#F1F6F9;
   --ink:#12212C; --ink-2:#4E5B66; --ink-3:#66717B;
   --rule:#D9E3EA; --rule-2:#EAF0F4;
-  --red:#155F87; --red-2:#0E4A6B; --red-soft:#E6F0F6; --ok:#17794A; --ok-soft:#E9F5EE; --ok-line:#B7E0C7; --gold:#F0C171;
+  --red:#155F87; --red-2:#0E4A6B; --red-soft:#E6F0F6; --ok:#17794A; --ok-soft:#E9F5EE; --ok-line:#B7E0C7;
   --night:#0B2E45; --night-2:#0E3A55; --night-ink:#FFFFFF; --night-ink-2:#B9CFDD;
   --night-rule:#1E4A66;
 }
@@ -17,14 +17,14 @@
     --paper:#0B1A26; --surface:#102434; --sunk:#0D1F2C;
     --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
     --rule:#1F3A4D; --rule-2:#183041;
-    --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48; --gold:#F0C171;
+    --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48;
   }
 }
 :root[data-theme="dark"]{
   --paper:#0B1A26; --surface:#102434; --sunk:#0D1F2C;
   --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
   --rule:#1F3A4D; --rule-2:#183041;
-  --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48; --gold:#F0C171;
+  --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);
@@ -58,6 +58,8 @@ nav a{text-decoration:none;color:var(--ink-2)}
 nav a.on{color:var(--red);font-weight:600}
 nav a:hover{color:var(--red)}
 .nav-cta{background:var(--red);color:#fff !important;padding:9px 16px;border-radius:2px}
+nav a.sub{font-size:11.5px;margin-left:-12px;color:var(--ink-3)}
+nav a.sub::before{content:"\00b7";margin-right:6px;color:var(--rule)}
 @media(max-width:760px){.mast{flex-wrap:wrap}nav{gap:14px;font-size:12.5px}}
 
 .hero{position:relative;background-color:var(--night);color:var(--night-ink);overflow:hidden;border-bottom:1px solid var(--night-rule)}
@@ -73,6 +75,7 @@ nav a:hover{color:var(--red)}
 .hero .eyebrow{color:var(--night-ink-2)}
 .hero h1{color:#fff;font-size:clamp(28px,4vw,40px);line-height:1.12;margin-top:4px}
 .hero p.lede{color:var(--night-ink-2);font-size:17px;max-width:640px}
+.hero .fine{color:var(--night-ink-2);font-size:13px;margin-top:4px}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
 .btn{display:inline-block;padding:12px 22px;border-radius:2px;background:var(--red);color:#fff;
   text-decoration:none;font-size:14.5px;font-weight:600;border:1px solid var(--red)}
@@ -163,7 +166,6 @@ tr.auto .after{color:var(--ok);font-weight:600}
 footer{padding:20px 0;border-top:1px solid var(--rule)}
 .foot-row{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink-3)}
 </style>
-<style>#hdr{position:relative}#hdr::after{content:"";display:block;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}</style>
 <header id="hdr">
   <div class="mast">
     <a class="lockup" href="/" aria-label="Calas Automations, home">
@@ -171,10 +173,15 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
       <span><span class="lk-name"><span class="r">Calas</span></span><span class="lk-rule"></span><span class="lk-sub">AUTOMATIONS</span></span>
     </a>
     <nav>
-      <a href="/accounting/">Accounting</a>
-      <a href="/it-msp/">IT &amp; MSP</a>
-      <a href="/trades/" class="on">Trades</a>
+      <a href="/">Home</a>
+      <a href="/accounting/" class="on">On File</a>
+      <a href="/trades/" class="sub on">Trades</a>
+      <a href="/leadme/">Lead Me</a>
       <a href="/quote-me/">Quote Me</a>
+      <a href="/green-mile/">Green Mile</a>
+      <a href="/watchpost/">Watchpost</a>
+      <a href="/receiptsort/">ReceiptSort</a>
+      <a href="/pay/">Pricing</a>
       <a class="nav-cta" href="mailto:dan@calasautomations.com?subject=On%20File%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
     </nav>
   </div>
@@ -194,6 +201,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
       <a class="btn ghost" data-pay="onfile_build" href="/pay/" hidden style="display:none">Start the build &mdash; C$2,500</a>
       <a class="btn ghost" data-pay="onfile_monthly" href="/pay/" hidden style="display:none">Monthly plan &mdash; C$500/mo</a>
     </div>
+    <p class="fine">C$2,500 build + C$500/mo, flat all year &middot; build fee waived for the first three trades contractors &middot; Cara missed-call text-back add-on C$29/mo &middot; prices in CAD</p>
   </div>
 </div>
 <div class="wrap">
@@ -337,8 +345,8 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 </div>
 <footer>
   <div class="wrap foot-row">
-    <span>Calas Automations &mdash; Winnipeg, Manitoba &mdash; 30 days&#39; notice to cancel, always</span>
-    <span>Small automations, built properly</span>
+    <span>Calas Automations &middot; Winnipeg &middot; prices in CAD plus GST/RST where applicable</span>
+    <span>Small automations, built properly &middot; <a href="/accounting/">On File</a> &middot; <a href="/leadme/">Lead Me</a> &middot; <a href="/quote-me/">Quote Me</a> &middot; <a href="/green-mile/">Green Mile</a> &middot; <a href="/watchpost/">Watchpost</a> &middot; <a href="/receiptsort/">ReceiptSort</a> &middot; <a href="/pay/">Pricing</a> &middot; 30 days&#39; notice to cancel, always</span>
   </div>
 </footer>
 </main>

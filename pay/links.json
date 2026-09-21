@@ -12,8 +12,9 @@
     "leadme_monthly    C$500 / month     - Lead Me monthly plan.",
     "quoteme_monthly   C$99 / month      - Quote Me per shop. Quote Me ALSO bills in-app once STRIPE_PRICE_ID_MONTHLY is set on the sitequote worker; this link is only the fallback for shops that sign up from the website rather than inside the app.",
     "textback_monthly  C$29 / month      - Cara missed-call text-back (trades add-on). PRICE IS A HYPOTHESIS to test against real recovered calls; the trades page also mentions $19 for the first three months - do that as a Stripe coupon on the link if you want it, not a second price.",
-    "greenmile         by request        - no Payment Link yet; leave empty. The Green Mile page shows an introductory $25/mo per truck, but sales are by request for now.",
-    "watchpost_watch   by request        - no Payment Link yet; leave empty. Watchpost is early access, first month free."
+    "greenmile_small   C$29 / month      - Green Mile owner-operator plan, up to 3 trucks (C$290/yr as a Stripe annual price or coupon, not a second key). 30-day money-back guarantee.",
+    "greenmile_fleet   C$79 / month      - Green Mile small-fleet plan, up to 20 trucks (C$790/yr likewise). 30-day money-back guarantee.",
+    "watchpost_watch   C$99 / month      - Watchpost Watch plan, one location (C$990/yr likewise). First month free: set a 30-day free trial on the Payment Link. Business-hours support, no 24/7."
   ],
   "onfile_build": "",
   "onfile_monthly": "",
@@ -21,6 +22,7 @@
   "leadme_monthly": "",
   "quoteme_monthly": "",
   "textback_monthly": "",
-  "greenmile": "",
+  "greenmile_small": "",
+  "greenmile_fleet": "",
   "watchpost_watch": ""
 }

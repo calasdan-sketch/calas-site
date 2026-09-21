@@ -22,7 +22,7 @@ You will need, open in browser tabs: **Stripe** (dashboard.stripe.com), **Twilio
 
 ### A2. Create the products and prices
 
-Go to **Product catalog** (left menu; it may say **Products**) → **+ Add product**. Make these six. For each one, set **Currency** to **CAD**. "One-time" vs "Recurring / Monthly" is the important choice.
+Go to **Product catalog** (left menu; it may say **Products**) → **+ Add product**. Make these nine. For each one, set **Currency** to **CAD**. "One-time" vs "Recurring / Monthly" is the important choice.
 
 | # | Product name (type it exactly) | Price | Billing |
 |---|---|---|---|
@@ -32,20 +32,23 @@ Go to **Product catalog** (left menu; it may say **Products**) → **+ Add produ
 | 4 | Lead Me — monthly plan | 500.00 CAD | Recurring, Monthly |
 | 5 | Quote Me — per shop | 99.00 CAD | Recurring, Monthly |
 | 6 | Cara — missed-call text-back | 29.00 CAD | Recurring, Monthly |
+| 7 | Green Mile — owner-operator (up to 3 trucks) | 29.00 CAD | Recurring, Monthly |
+| 8 | Green Mile — small fleet (up to 20 trucks) | 79.00 CAD | Recurring, Monthly |
+| 9 | Watchpost — Watch plan | 99.00 CAD | Recurring, Monthly |
 
-Don't create Green Mile or Watchpost yet; they are by request.
+Watchpost's first month is free: on product 9, when you make the Payment Link (A3), turn on **Free trial** and set it to 30 days. Annual prices (Green Mile C$290 / C$790, Watchpost C$990) are optional extra prices on the same products; the website only links the monthly ones.
 
 Tax: if you have registered for GST (and RST if it applies), turn on **Stripe Tax** in Settings → Tax and set each product's tax behaviour to **Exclusive** so the tax is added on top, matching the "plus GST/RST" line on the site. If you have not registered yet, skip this and the site's wording still holds.
 
 ### A3. Create one Payment Link per price
 
 1. Left menu → **Payment Links** → **+ New**.
-2. Pick the product (one of the six above). Leave quantity fixed at 1.
+2. Pick the product (one of the nine above). Leave quantity fixed at 1.
 3. Under **Payment methods**, make sure **Card** and **Pre-authorized debit (PAD)** are both on. (PAD only appears once Stripe has PAD enabled on your account: Settings → Payment methods → turn on Pre-authorized debit.)
 4. Turn on **Collect customers' addresses** if you use Stripe Tax; otherwise leave it.
 5. After payment: choose **Don't show confirmation page** → **Redirect customers to your website** and paste `https://calasautomations.com/pay/?paid=1` (or just leave Stripe's own confirmation page; either is fine).
 6. Click **Create link**. Copy the link. It starts with `https://buy.stripe.com/`.
-7. Repeat for all six.
+7. Repeat for all nine.
 
 ### A4. Paste the links into the website
 
@@ -61,12 +64,13 @@ Tax: if you have registered for GST (and RST if it applies), turn on **Stripe Ta
   "leadme_monthly": "https://buy.stripe.com/ddddddddddddd",
   "quoteme_monthly": "https://buy.stripe.com/eeeeeeeeeeeee",
   "textback_monthly": "https://buy.stripe.com/fffffffffffff",
-  "greenmile": "",
-  "watchpost_watch": ""
+  "greenmile_small": "https://buy.stripe.com/ggggggggggggg",
+  "greenmile_fleet": "https://buy.stripe.com/hhhhhhhhhhhhh",
+  "watchpost_watch": "https://buy.stripe.com/iiiiiiiiiiiii"
 }
 ```
 
-Rules: keep the quotes; keep the commas at the end of every line except the last one; leave `greenmile` and `watchpost_watch` as `""`. A key left as `""` simply means that Pay button stays hidden on the site.
+Rules: keep the quotes; keep the commas at the end of every line except the last one. A key left as `""` simply means that Pay button stays hidden on the site, so you can fill them in one at a time.
 
 3. Commit and push (in GitHub Desktop: write "Add Stripe payment links", Commit, Push). A minute or two later the Pay buttons appear on the product pages and on calasautomations.com/pay/. If a button doesn't appear, the most common cause is a missing comma or quote in `links.json`; open https://calasautomations.com/pay/links.json in your browser and it should display as text with no error.
 
