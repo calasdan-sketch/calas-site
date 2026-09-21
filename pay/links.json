@@ -14,7 +14,8 @@
     "textback_monthly  C$29 / month      - Cara missed-call text-back (trades add-on). PRICE IS A HYPOTHESIS to test against real recovered calls; the trades page also mentions $19 for the first three months - do that as a Stripe coupon on the link if you want it, not a second price.",
     "greenmile_small   C$29 / month      - Green Mile owner-operator plan, up to 3 trucks (C$290/yr as a Stripe annual price or coupon, not a second key). 30-day money-back guarantee.",
     "greenmile_fleet   C$79 / month      - Green Mile small-fleet plan, up to 20 trucks (C$790/yr likewise). 30-day money-back guarantee.",
-    "watchpost_watch   C$99 / month      - Watchpost Watch plan, one location (C$990/yr likewise). First month free: set a 30-day free trial on the Payment Link. Business-hours support, no 24/7."
+    "watchpost_watch   C$79 / month      - Watchpost Watch plan, one location, owner reads own alerts (C$790/yr likewise). First month free. Business-hours support, no 24/7.",
+    "watchpost_guarded C$199 / month     - Watchpost Guarded plan, we triage alerts and call the client (C$1,990/yr likewise). First month free."
   ],
   "onfile_build": "https://buy.stripe.com/bJeaEXao52XGbVbgKp7Zu03",
   "onfile_monthly": "https://buy.stripe.com/6oUbJ1eEldCkgbr65L7Zu02",
@@ -24,5 +25,6 @@
   "textback_monthly": "",
   "greenmile_small": "",
   "greenmile_fleet": "",
-  "watchpost_watch": ""
+  "watchpost_watch": "https://buy.stripe.com/eVq7sLdAh9m49N3am17Zu00",
+  "watchpost_guarded": "https://buy.stripe.com/cNi28rcwdcyg2kBam17Zu01"
 }
