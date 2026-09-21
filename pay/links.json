@@ -1,0 +1,26 @@
+{
+  "_help": [
+    "Stripe Payment Links for calasautomations.com. One key per product/price. All prices CAD.",
+    "Paste the full https://buy.stripe.com/... link from Stripe > Payment Links into the matching key.",
+    "Leave a key as \"\" and its Pay button stays hidden on the site. Keys in the site that are not here are treated as empty.",
+    "Do not put anything but a full https:// URL in a value. No spaces, no notes. Notes go in _help.",
+    "See SETUP-PAYMENTS.md at the repo root for the step-by-step.",
+    "",
+    "onfile_build      C$2,500 one-time  - On File build fee (accounting + trades pages). Refunded if the two-week run doesn't return 6 staff hours/week.",
+    "onfile_monthly    C$500 / month     - On File monthly plan, flat all year.",
+    "leadme_build      C$2,500 one-time  - Lead Me setup fee. Back if not live with 40 verified warm companies in 14 days.",
+    "leadme_monthly    C$500 / month     - Lead Me monthly plan.",
+    "quoteme_monthly   C$99 / month      - Quote Me per shop. Quote Me ALSO bills in-app once STRIPE_PRICE_ID_MONTHLY is set on the sitequote worker; this link is only the fallback for shops that sign up from the website rather than inside the app.",
+    "textback_monthly  C$29 / month      - Cara missed-call text-back (trades add-on). PRICE IS A HYPOTHESIS to test against real recovered calls; the trades page also mentions $19 for the first three months - do that as a Stripe coupon on the link if you want it, not a second price.",
+    "greenmile         by request        - no Payment Link yet; leave empty. The Green Mile page shows an introductory $25/mo per truck, but sales are by request for now.",
+    "watchpost_watch   by request        - no Payment Link yet; leave empty. Watchpost is early access, first month free."
+  ],
+  "onfile_build": "",
+  "onfile_monthly": "",
+  "leadme_build": "",
+  "leadme_monthly": "",
+  "quoteme_monthly": "",
+  "textback_monthly": "",
+  "greenmile": "",
+  "watchpost_watch": ""
+}

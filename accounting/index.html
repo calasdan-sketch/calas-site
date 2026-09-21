@@ -191,6 +191,8 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
     <div class="hero-actions">
       <a class="btn" href="/demo/accounting/" target="_blank" rel="noopener">Try the accounting demo &mdash; live app</a>
       <a class="btn ghost" href="#contact">Book 15 minutes</a>
+      <a class="btn ghost" data-pay="onfile_build" href="/pay/" hidden style="display:none">Start the build &mdash; C$2,500</a>
+      <a class="btn ghost" data-pay="onfile_monthly" href="/pay/" hidden style="display:none">Monthly plan &mdash; C$500/mo</a>
     </div>
     <div class="demo-wrap">
       <a class="tour-card" href="/demo/accounting/#tour" aria-label="Show me around the accounting demo">
@@ -349,6 +351,8 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
     <div style="display:flex;flex-direction:column;gap:10px">
       <a class="btn" href="/demo/accounting/" target="_blank" rel="noopener">Try the accounting demo &mdash; live app</a>
       <a class="btn ghost light" href="mailto:dan@calasautomations.com?subject=On%20File%20%E2%80%94%2015%20minutes" style="text-align:center;border:1px solid var(--rule);color:var(--ink)">Book 15 minutes</a>
+      <a class="btn ghost light" data-pay="onfile_build" href="/pay/" hidden style="display:none;text-align:center;border:1px solid var(--rule);color:var(--ink)">Start the build &mdash; C$2,500</a>
+      <a class="btn ghost light" data-pay="onfile_monthly" href="/pay/" hidden style="display:none;text-align:center;border:1px solid var(--rule);color:var(--ink)">Monthly plan &mdash; C$500/mo</a>
       <span class="eyebrow" style="text-align:center">Replies within one business day</span>
     </div>
   </div>
@@ -384,4 +388,5 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
   }
 })();
 </script>
+<script src="/pay/pay.js" defer></script>
 </body></html>
