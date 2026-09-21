@@ -1,0 +1,84 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Watchpost Guardian — scam-message check · Calas Automations</title>
+<meta name="description" content="Paste a suspicious text or chat and Watchpost Guardian flags known romance and crypto-scam tactics. Runs entirely on your phone — nothing you paste is sent anywhere.">
+<meta name="theme-color" content="#155F87">
+<link rel="manifest" href="/guardian/manifest.json">
+<link rel="icon" href="/favicon.png">
+<style>
+:root{--accent:#155F87;--ink:#12212C;--ink2:#4E5B66;--paper:#fff;--sunk:#F1F6F9;--rule:#D9E3EA}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--sunk);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+.wrap{max-width:680px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;gap:10px;padding:12px 0}
+header svg{width:30px;height:30px;flex:none}
+header b{font-size:18px}header .tag{display:block;font-size:11px;color:var(--ink2)}
+h1{font-size:23px;margin:8px 0 4px}
+.lede{color:var(--ink2);margin:0 0 14px}
+textarea{width:100%;min-height:150px;font-size:17px;padding:12px;border:1px solid var(--rule);border-radius:12px;background:var(--paper);resize:vertical}
+button{width:100%;font-size:18px;font-weight:700;padding:15px;border:0;border-radius:12px;background:var(--accent);color:#fff;margin-top:10px;cursor:pointer}
+.result{margin-top:16px;background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:16px;display:none}
+.badge{display:inline-block;font-weight:800;font-size:15px;color:#fff;padding:6px 12px;border-radius:999px}
+.sig{border-left:3px solid var(--rule);padding:8px 12px;margin:10px 0;background:var(--sunk);border-radius:8px;font-size:15px}
+.advice{margin-top:12px;font-weight:600}
+.privacy{margin-top:14px;font-size:13px;color:var(--ink2);text-align:center}
+footer{text-align:center;color:var(--ink2);font-size:12px;padding:22px 0}
+a{color:var(--accent)}
+</style></head><body><div class="wrap">
+<header>
+<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M27 6a15 15 0 1 0 0 28 12 12 0 1 1 0-28z" fill="#155F87"/></svg>
+<div><b>Watchpost Guardian</b><span class="tag">by Calas Automations</span></div>
+</header>
+<h1>Is this message a scam?</h1>
+<p class="lede">Paste a suspicious text or a whole chat. Guardian flags known romance- and crypto-scam tactics. It runs entirely on your phone — nothing you paste is sent anywhere.</p>
+<textarea id="msg" placeholder="Paste the message or chat here…"></textarea>
+<button id="check">Check this message</button>
+<div class="result" id="result"></div>
+<p class="privacy">🔒 Private: the text never leaves your phone. A match means a known tactic showed up — a warning, not proof.</p>
+<footer>Watchpost · Calas Automations · Winnipeg<br>Add to Home Screen to keep it one tap away.</footer>
+</div>
+<script>
+const RULES=[
+ ["moved_platform",2,"Asked to move off the app to WhatsApp/Telegram/Signal fast — a known scam move to get off a platform that can ban them.",[/whatsapp/i,/telegram/i,/signal app/i,/add me on (whatsapp|telegram|hangouts)/i,/text me on my (personal|other) (number|phone)/i]],
+ ["cant_video",3,"Gave an excuse to avoid a live video call — the strongest catfish tell; a stolen photo can't hold a real-time chat.",[/camera('?s)? (broken|not working)/i,/can'?t (video ?call|facetime|do video)/i,/my webcam is broken/i,/no signal for video/i]],
+ ["overseas_worker_story",2,"Overseas military / oil rig / ship engineer / doctor-on-a-mission story — a common cover that pre-explains why they can't meet or video.",[/stationed in/i,/peacekeeping mission/i,/oil rig/i,/on a (cargo|container) ship/i,/deployed overseas/i,/military base overseas/i]],
+ ["financial_hardship_story",3,"A sudden emergency (hospital bill, customs fee, stuck traveler) right as money is asked for — the classic pressure point.",[/customs (fee|hold)/i,/hospital bill/i,/stuck at the airport/i,/my (account|card) is frozen/i,/can'?t access my (money|funds|account) (right now|currently)/i]],
+ ["crypto_investment",4,"Steering toward a crypto investment or trading platform — the 'pig-butchering' pattern: build trust, then move to fake investing.",[/crypto (platform|exchange|trading)/i,/invest(ing)? in (crypto|bitcoin|usdt|ethereum)/i,/my (broker|mentor|uncle) taught me (crypto|trading)/i,/guaranteed (returns|profit)/i,/double your (money|investment)/i]],
+ ["gift_card_request",4,"Asked for gift cards — no legitimate partner, official, or business is ever paid in gift cards.",[/gift card/i,/itunes card/i,/google play card/i,/steam card/i,/amazon gift/i]],
+ ["wire_or_crypto_request",4,"Asked to send money by wire or crypto — both are effectively unrecoverable once sent, which is why scammers prefer them.",[/wire (me|transfer)/i,/western union/i,/moneygram/i,/send (bitcoin|usdt|crypto|eth) to/i,/my wallet address/i]],
+ ["secrecy_request",2,"Asked to keep the relationship or money secret from friends/family/bank — isolation is a control tactic.",[/don'?t tell (your|anyone)/i,/keep this between us/i,/our little secret/i,/the bank (won'?t|wouldn'?t) understand/i]],
+ ["love_bombing_pace",1,"Declared strong love or marriage within days — real relationships rarely move this fast; scammers do it to short-circuit caution.",[/i (love|adore) you/i,/marry me/i,/soulmate/i,/i'?ve never felt this way/i,/destiny brought us together/i]]
+];
+const ADVICE={
+0:"Nothing matched our rules. Still: never send money, gift cards, or crypto to someone you haven't met in person.",
+1:"A little caution is warranted. Ask for a live video call on your terms (a random gesture, a specific word) before this goes further.",
+2:"Several common tactics showed up. Do not send money, gift cards, or crypto. Ask for a live, unscripted video call today.",
+3:"This matches a well-documented scam pattern closely. Stop sending anything of value now. Reverse-image-search their photos and search their exact wording — scam scripts get reused word-for-word.",
+4:"This is a strong match for a known romance or crypto scam. Do not send or invest anything else. If money already moved, tell your bank, and report at antifraudcentre-centreantifraude.ca (Canada)."
+};
+const LABEL=["No signal","Low","Moderate","High","Critical"];
+const COLOR=["#17794A","#8a6d1a","#b5651d","#b23b2e","#8b1a1a"];
+function level(s){if(s<=0)return 0;if(s<=3)return 1;if(s<=6)return 2;if(s<=10)return 3;return 4;}
+function esc(s){return s.replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+function scoreMessage(t){
+ t=(t||"").trim();
+ if(!t)return {score:0,lvl:0,signals:[]};
+ var score=0,signals=[];
+ for(var i=0;i<RULES.length;i++){
+  var w=RULES[i][1],why=RULES[i][2],pats=RULES[i][3];
+  for(var j=0;j<pats.length;j++){var m=t.match(pats[j]);if(m){signals.push(why);score+=w;break;}}
+ }
+ return {score:score,lvl:level(score),signals:signals};
+}
+function render(){
+ var r=scoreMessage(document.getElementById("msg").value);
+ var el=document.getElementById("result");
+ var html='<span class="badge" style="background:'+COLOR[r.lvl]+'">'+LABEL[r.lvl]+' · '+r.score+' pts</span>';
+ if(r.signals.length===0){html+='<div class="sig">No known scam patterns matched. That is not proof of safety — it only means nothing tripped our rules.</div>';}
+ for(var k=0;k<r.signals.length;k++){html+='<div class="sig">'+esc(r.signals[k])+'</div>';}
+ html+='<div class="advice">'+esc(ADVICE[r.lvl])+'</div>';
+ el.innerHTML=html;el.style.display="block";el.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+document.getElementById("check").addEventListener("click",render);
+if("serviceWorker" in navigator){navigator.serviceWorker.register("/guardian/sw.js").catch(function(){});}
+</script></body></html>

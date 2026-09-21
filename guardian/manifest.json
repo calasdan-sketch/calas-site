@@ -1,0 +1,12 @@
+{
+  "name": "Watchpost Guardian",
+  "short_name": "Guardian",
+  "description": "Check a suspicious text or chat for known scam tactics — private, on your phone.",
+  "start_url": "/guardian/",
+  "display": "standalone",
+  "background_color": "#F1F6F9",
+  "theme_color": "#155F87",
+  "icons": [
+    { "src": "/favicon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
