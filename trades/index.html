@@ -1,4 +1,15 @@
-<!doctype html><html><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<style id="of-lockup-css">
+/* On File hero lockup -- spinning Calas crest + wordmark, tuned for the dark hero */
+.of-lockup{display:inline-flex;align-items:center;gap:14px;text-decoration:none;margin:0 0 14px}
+.of-lockup .crest{width:34px;height:47px;background:#5FB3DD;animation:spin 6s linear infinite}
+.of-lk-text{display:flex;flex-direction:column}
+.of-lk-name{font-family:"Libre Baskerville",Georgia,serif;font-size:26px;font-weight:700;line-height:1;color:var(--night-ink-2)}
+.of-lk-name .r{color:#fff}
+.of-lk-sub{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.24em;color:var(--night-ink-2);margin-top:7px}
+@media(prefers-reduced-motion:reduce){.of-lockup .crest{animation:none}}
+</style>
+</head><body>
 <title>Calas Automations — Trades</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -198,7 +209,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
   <div class="hero-overlay" aria-hidden="true"></div>
   <div class="wrap">
     <p class="eyebrow">For trades</p>
-    <p class="of-badge"><span class="on">ON</span>&thinsp;<span class="fl">file</span></p>
+    <a class="of-lockup" href="/" aria-label="On File by Calas Automations"><span class="crest" aria-hidden="true"></span><span class="of-lk-text"><span class="of-lk-name">On <span class="r">File</span></span><span class="of-lk-sub">BY CALAS AUTOMATIONS</span></span></a>
     <h1>How many of your subs are working uninsured right now?</h1>
     <p class="lede">Same product, different paperwork &mdash; the certificate nobody's watching is the one that expires.</p>
     <div class="hero-actions">
