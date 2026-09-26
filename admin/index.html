@@ -72,6 +72,11 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
       </div>
       <div class="tablewrap"><table><thead><tr><th>Code</th><th>App</th><th>For</th><th>Status</th><th>Works until</th><th>Type</th><th>Last used</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
     </section>
+
+    <section class="card">
+      <h2>Dispatch Me requests</h2>
+      <div class="tablewrap"><table><thead><tr><th>When</th><th>Type</th><th>Who</th><th>Contact</th><th>Where / size</th><th>Notes</th><th>Status</th></tr></thead><tbody id="lrows"></tbody></table></div>
+    </section>
   </div>
 </main>
 <script>
@@ -91,7 +96,12 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
   $('#lf').addEventListener('submit',function(e){e.preventDefault();login($('#pw').value)});
   $('#out').addEventListener('click',function(){ss('cpw',null);location.reload()});
 
-  function load(){call('/api/admin/codes').then(function(d){
+  function loadLeads(){call('/api/admin/leads').then(function(d){if(!d.ok)return;var h='';
+    d.leads.forEach(function(l){h+='<tr><td>'+day(l.created_at)+'</td><td>'+(l.kind==='crew'?'Crew wants in':'Needs clearing')+'</td><td>'+esc(l.name)+'<br><small>'+esc(l.company)+'</small></td><td>'+esc(l.phone)+'<br><small>'+esc(l.email)+'</small></td><td style="white-space:normal;min-width:180px">'+esc(l.area)+'<br><small>'+esc(l.size)+'</small></td><td style="white-space:normal;min-width:200px">'+esc(l.notes)+'</td><td><select data-lead="'+l.id+'">'+['new','contacted','signed','no'].map(function(s){return'<option'+(s===l.status?' selected':'')+'>'+s+'</option>'}).join('')+'</select></td></tr>'});
+    $('#lrows').innerHTML=h||'<tr><td colspan="7" style="color:var(--ink2)">No requests yet.</td></tr>'})}
+  $('#lrows').addEventListener('change',function(e){var id=e.target.getAttribute('data-lead');if(id)call('/api/admin/leads/'+id+'/status',{status:e.target.value})});
+
+  function load(){loadLeads();call('/api/admin/codes').then(function(d){
     DATA=d;var sel=$('#app-sel'),fa=$('#f-app');
     if(!sel.options.length){Object.keys(d.apps).forEach(function(k){sel.add(new Option(d.apps[k],k));fa.add(new Option(d.apps[k],k))});sel.value='leadme'}
     var s='';

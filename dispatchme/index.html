@@ -309,6 +309,60 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
       <a class="btn ghost" href="mailto:dan@calasautomations.com?subject=Calas%20Automations%20%E2%80%94%2015%20minutes">Book 15 minutes</a></p>
     </div>
   </section>
+
+  <section id="start">
+    <div class="sec-head">
+      <p class="eyebrow">Get started</p>
+      <h2>Tell us about your lots. Or join our crew list.</h2>
+      <p>Fill this in and we&rsquo;ll call you back within one business day. No cost to ask.</p>
+    </div>
+    <div class="dm-tabs" role="tablist">
+      <button type="button" class="dm-tab on" data-kind="property" role="tab" aria-selected="true">I need snow clearing</button>
+      <button type="button" class="dm-tab" data-kind="crew" role="tab" aria-selected="false">I run a plow crew</button>
+    </div>
+    <form id="dm-form" class="dm-form" novalidate>
+      <input type="hidden" name="kind" value="property">
+      <div class="dm-grid">
+        <label>Your name<input name="name" required autocomplete="name"></label>
+        <label><span class="dm-l-company">Company or property name</span><input name="company" autocomplete="organization"></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel"></label>
+        <label>Email<input name="email" type="email" autocomplete="email"></label>
+        <label><span class="dm-l-area">Property address(es)</span><input name="area"></label>
+        <label><span class="dm-l-size">Lot size / how many properties</span><input name="size"></label>
+      </div>
+      <label>Anything else we should know<textarea name="notes" rows="3"></textarea></label>
+      <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+      <p><button class="btn" type="submit">Send</button></p>
+      <p class="dm-msg" aria-live="polite"></p>
+    </form>
+  </section>
+<style>
+.dm-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.dm-tab{font:inherit;font-weight:600;padding:10px 16px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);border-radius:2px;cursor:pointer}
+.dm-tab.on{background:var(--night);color:#fff;border-color:var(--night)}
+.dm-form{max-width:760px}.dm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 16px}
+.dm-form label{display:block;font-size:14px;font-weight:600;color:var(--ink-2);margin-bottom:12px}
+.dm-form input,.dm-form textarea{display:block;width:100%;box-sizing:border-box;margin-top:4px;font:inherit;font-weight:400;padding:11px;border:1px solid var(--rule);border-radius:2px;background:var(--surface);color:var(--ink)}
+.dm-msg{font-weight:600;min-height:1.4em}
+</style>
+<script>
+(function(){
+  var f=document.getElementById('dm-form'),msg=f.querySelector('.dm-msg'),tabs=document.querySelectorAll('.dm-tab');
+  var L={property:['Company or property name','Property address(es)','Lot size / how many properties'],crew:['Company name','Areas you cover','Equipment and crew size']};
+  tabs.forEach(function(t){t.addEventListener('click',function(){var k=t.getAttribute('data-kind');f.kind.value=k;
+    tabs.forEach(function(x){var on=x===t;x.classList.toggle('on',on);x.setAttribute('aria-selected',on)});
+    f.querySelector('.dm-l-company').textContent=L[k][0];f.querySelector('.dm-l-area').textContent=L[k][1];f.querySelector('.dm-l-size').textContent=L[k][2];msg.textContent=''})});
+  f.addEventListener('submit',function(e){e.preventDefault();
+    var d={};['kind','name','company','phone','email','area','size','notes','website'].forEach(function(n){d[n]=f[n].value});
+    if(!d.name||(!d.phone&&!d.email)){msg.textContent='Please add your name and a phone number or email.';return}
+    msg.textContent='Sending…';
+    fetch('https://calas-access.calasdan.workers.dev/api/dispatch/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
+      .then(function(r){return r.json()}).then(function(r){
+        if(r.ok){f.reset();f.kind.value=d.kind;msg.textContent='Thanks! We got it and will call you back within one business day.'}
+        else msg.textContent=r.error==='bad_email'?'That email doesn’t look right.':r.error==='too_many'?'Too many tries. Please call (431) 244-9026.':'Something went wrong. Please call (431) 244-9026.'})
+      .catch(function(){msg.textContent='Couldn’t send. Please call (431) 244-9026.'})});
+})();
+</script>
 </div>
 
 <footer>
