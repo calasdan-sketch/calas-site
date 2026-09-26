@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/favicon.png">
+<title>Your Access Code · Calas Automations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;600&display=swap">
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;background:#0B2E45;color:#fff;font:16px/1.55 "IBM Plex Sans",-apple-system,Segoe UI,Roboto,sans-serif}
+.card{width:100%;max-width:460px;background:#0E3A55;border:1px solid #1E4A66;border-radius:14px;padding:28px 22px;text-align:center}
+h1{font:700 23px/1.25 "Libre Baskerville",Georgia,serif;margin:0 0 8px}p{color:#B9CFDD;margin:0 0 14px}
+.code{font:500 26px "IBM Plex Mono",monospace;letter-spacing:2px;background:#0B2E45;border:1px solid #1E4A66;border-radius:10px;padding:16px;margin:8px 0 14px;word-break:break-all}
+a.btn,button{display:block;width:100%;padding:13px;border:0;border-radius:10px;font:600 16px "IBM Plex Sans",sans-serif;cursor:pointer;text-decoration:none;margin-top:10px}
+a.btn{background:#4FA3D1;color:#0B2E45}button{background:#fff;color:#0B2E45}small{color:#8FB0C4}small a{color:#B9CFDD}
+</style></head><body>
+<div class="card" id="c">
+  <h1>Thank you!</h1>
+  <p id="m">Getting your access code&hellip;</p>
+</div>
+<script>
+(function(){
+  var API='https://calas-access.calasdan.workers.dev';
+  var URLS={quoteme:'/quote-me/app/',leadme:'/leadme/',onfile:'/accounting/',dispatchme:'/dispatchme/',watchpost:'/watchpost/',haulme:'/haul-me/',cara:'/trades/',all:'/'};
+  var sid=new URLSearchParams(location.search).get('session_id')||'',tries=0,c=document.getElementById('c');
+  function esc(s){return String(s||'').replace(/[&<>"]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[x]})}
+  function fail(t){c.innerHTML='<h1>Payment received</h1><p>'+t+'</p><small>Email <a href="mailto:dan@calasautomations.com">dan@calasautomations.com</a> and we’ll sort it out right away.</small>'}
+  if(!sid){fail('We couldn’t find your order number on this page. Your code is also on its way by email.');return}
+  function go(){fetch(API+'/api/claim?session_id='+encodeURIComponent(sid)).then(function(r){return r.json()}).then(function(d){
+    if(d.ok){var u=URLS[d.app]||'/';
+      c.innerHTML='<h1>You’re in. Welcome to '+esc(d.app_name)+'.</h1><p>Here is your access code. Keep it somewhere safe'+(d.email?' — we also emailed it to '+esc(d.email):'')+'.</p><div class="code" id="k">'+esc(d.code)+'</div>'+
+        '<button id="cp">Copy code</button><a class="btn" href="'+u+'?code='+encodeURIComponent(d.code)+'">Open '+esc(d.app_name)+' now</a>'+
+        '<p style="margin-top:16px"><small>Your code keeps working as long as your monthly plan is active.</small></p>';
+      document.getElementById('cp').onclick=function(){navigator.clipboard&&navigator.clipboard.writeText(d.code);this.textContent='Copied'};return}
+    if(d.error==='not_paid_yet'&&tries++<10){setTimeout(go,3000);return}
+    if(d.error==='no_app_for_this_purchase'){fail('Thanks — this purchase doesn’t need an access code. We’ll be in touch by email about next steps.');return}
+    fail('Your payment went through, but your code is taking longer than usual.')}).catch(function(){if(tries++<5)setTimeout(go,3000);else fail('We couldn’t reach our server just now. Your code is also on its way by email.')})}
+  go();
+})();
+</script>
+</body></html>

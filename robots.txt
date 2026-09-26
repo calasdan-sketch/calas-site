@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /access/
 
 Sitemap: https://calasautomations.com/sitemap.xml
