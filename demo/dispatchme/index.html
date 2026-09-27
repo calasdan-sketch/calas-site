@@ -1,0 +1,226 @@
+﻿<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dispatch Me — guided walkthrough · Calas Automations</title>
+<meta name="description" content="A 60-second guided walkthrough of Dispatch Me: a property manager's snow request comes in, Cara intakes it, and it's matched to the right crew and dispatched.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{--paper:#fff;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--ink-3:#6B7883;--rule:#D9E3EA;--accent:#155F87;--accent-2:#0E4A6B;--gold:#F0C171;--ok:#17794A;--warm:#B8541F;--serif:"Libre Baskerville",Georgia,serif;--sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace;--shadow:0 1px 2px rgba(18,33,44,.05),0 12px 40px -14px rgba(21,95,135,.2)}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--sunk);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+.crestmask{width:30px;height:30px;flex:none;background:#155F87;-webkit-mask:url(/favicon.png) center/contain no-repeat;mask:url(/favicon.png) center/contain no-repeat}
+.topnav{background:var(--paper);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:30}
+.topnav::after{content:"";display:block;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.topnav .row{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:12px}
+.topnav b{font-family:var(--serif);font-size:18px}.topnav .tag{font-size:11px;color:var(--ink-3);font-family:var(--mono)}
+.topnav .sp{margin-left:auto;display:flex;gap:10px}
+.btn{font:inherit;font-weight:700;font-size:14px;padding:10px 18px;border-radius:10px;border:0;background:var(--accent);color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:var(--accent-2)}.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--rule)}
+.btn[disabled]{background:var(--ok);cursor:default}
+.intro{max-width:1080px;margin:0 auto;padding:26px 20px 6px;text-align:center}
+.intro h1{font-family:var(--serif);font-size:clamp(24px,4vw,34px);margin:0 0 8px}
+.intro p{color:var(--ink-2);max-width:60ch;margin:0 auto 16px}
+.app{max-width:1080px;margin:16px auto 40px;padding:0 20px}
+.frame{background:var(--paper);border:1px solid var(--rule);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+.appbar{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--rule)}
+.appbar .grp{font-family:var(--mono);font-size:12px;color:var(--ink-3);border:1px solid var(--rule);border-radius:20px;padding:6px 12px}
+.appbar .count{margin-left:auto;font-size:13px;color:var(--ink-3)}
+.tabs{display:flex;gap:2px;padding:0 18px;border-bottom:1px solid var(--rule)}
+.tab{border:0;background:none;font:inherit;font-size:14px;color:var(--ink-3);padding:12px 14px;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer}
+.tab.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.body{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.25fr);gap:0}@media(max-width:800px){.body{grid-template-columns:1fr}}
+.list{border-right:1px solid var(--rule);max-height:560px;overflow:auto}@media(max-width:800px){.list{border-right:0;border-bottom:1px solid var(--rule)}}
+.lead{padding:14px 18px;border-bottom:1px solid var(--rule);cursor:pointer;display:flex;gap:12px;align-items:flex-start;transition:background .15s}
+.lead:hover,.lead.sel{background:var(--sunk)}
+.score{flex:none;width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-family:var(--serif);font-size:15px;color:#fff;text-align:center;line-height:1.05}
+.s-warm{background:var(--ok)}.s-mid{background:var(--warm)}.s-cold{background:#8A97A3}
+.lead h4{margin:0 0 2px;font-size:15px}
+.lead .meta{font-size:12.5px;color:var(--ink-3)}
+.badge{display:inline-block;font-size:11px;font-family:var(--mono);color:var(--warm);border:1px solid #EBD3C2;background:#FBF2EC;border-radius:20px;padding:1px 8px;margin-top:6px}
+.badge.new{color:var(--accent);border-color:#C7DEEA;background:#EAF3F8}
+.detail{padding:20px 22px;min-height:300px}
+.detail h3{font-family:var(--serif);font-size:20px;margin:0 0 2px}
+.detail .sub{color:var(--ink-3);font-size:13px;margin-bottom:14px}
+.sec-label{font-size:11px;font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);margin:16px 0 6px}
+.facts{background:var(--sunk);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;font-size:13.5px;margin:0}
+.facts li{margin:3px 0}.facts .src{font-size:12px;color:var(--ink-3);margin-top:8px}
+.crewcard{border:1px solid var(--rule);border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start}
+.crewcard h4{margin:0 0 2px;font-size:15px}.crewcard .meta{font-size:12.5px;color:var(--ink-3)}
+.proof{border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin-top:6px}
+.proof .ph{background:var(--sunk);padding:9px 14px;border-bottom:1px solid var(--rule);font-size:12.5px;color:var(--ink-2)}
+.proof .pb{padding:14px;font-size:13.5px;line-height:1.6}
+.proof .shot{height:120px;border-radius:8px;background:linear-gradient(160deg,#dfeaf1,#c3d4de);display:grid;place-items:center;color:var(--ink-3);font-size:12.5px;margin-bottom:10px}
+.actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center}
+.pill{font-size:12px;color:var(--ink-3);display:inline-flex;align-items:center;gap:6px}
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--rule)}@media(max-width:640px){.results{grid-template-columns:1fr}}
+.results div{padding:16px 18px;text-align:center;border-right:1px solid var(--rule)}
+.results div:last-child{border-right:0}
+.results b{display:block;font-family:var(--serif);font-size:22px;color:var(--accent)}
+.results span{font-size:12.5px;color:var(--ink-3)}
+.foot{max-width:1080px;margin:0 auto;padding:8px 20px 40px;text-align:center;color:var(--ink-3);font-size:12.5px}
+.demoNote{max-width:1080px;margin:0 auto;padding:0 20px 8px;text-align:center;color:var(--ink-3);font-size:12px}
+</style></head><body>
+
+<nav class="topnav"><div class="row">
+  <span class="crestmask" aria-hidden="true"></span>
+  <div><b>Dispatch Me</b> <span class="tag">by Calas Automations</span></div>
+  <div class="sp">
+    <button class="btn" id="tourBtn" type="button">&#9654; Watch the walkthrough &middot; 60 sec</button>
+    <a class="btn ghost" href="/dispatchme/">Back to Dispatch Me</a>
+  </div>
+</div></nav>
+
+<div class="intro">
+  <h1>See Dispatch Me work, in one minute</h1>
+  <p>Press play and Cara walks you through it &mdash; a property manager's snow request comes in, gets sized up, and is matched to the right crew and dispatched. Everything below is a sample so you can watch safely.</p>
+</div>
+<div class="demoNote">Sample data for the walkthrough &mdash; names here are made up.</div>
+
+<div class="app"><div class="frame">
+  <div class="appbar">
+    <span class="grp">Winnipeg &amp; Manitoba &middot; Commercial snow</span>
+    <span class="grp">Cara &middot; on the line</span>
+    <span class="count" id="count">3 requests waiting</span>
+  </div>
+  <div class="tabs">
+    <button class="tab on" id="reqTab" type="button">Requests</button>
+    <button class="tab" id="crewsTab" type="button">Crews <span style="color:var(--ok)">&bull;65</span></button>
+    <button class="tab" type="button">Done</button>
+  </div>
+  <div class="body">
+    <div class="list" id="reqlist">
+      <div class="lead sel" id="req0">
+        <div class="score s-warm">NEW</div>
+        <div><h4>Fort Garry Medical Centre</h4>
+          <div class="meta">Parking lot + walks &middot; Winnipeg, MB &middot; 40 stalls</div>
+          <div class="badge new">Just came in &middot; 6:12 a.m.</div></div>
+      </div>
+      <div class="lead" id="req1">
+        <div class="score s-mid">2h</div>
+        <div><h4>Osborne Village Condos</h4>
+          <div class="meta">Lot + sidewalks &middot; Winnipeg, MB &middot; 2 entrances</div></div>
+      </div>
+      <div class="lead" id="req2">
+        <div class="score s-mid">4h</div>
+        <div><h4>Brandon Business Park</h4>
+          <div class="meta">Large lot &middot; Brandon, MB &middot; 100+ stalls</div></div>
+      </div>
+    </div>
+    <div class="detail" id="detail">
+      <h3>Fort Garry Medical Centre</h3>
+      <div class="sub">Winnipeg, MB &middot; requested 6:12 a.m.</div>
+
+      <div class="sec-label">Cara took the intake</div>
+      <ul class="facts" id="intake">
+        <li>Address: 1200 Pembina Hwy, Winnipeg &mdash; main lot + two entrances.</li>
+        <li>Needs: plow, salt, and clear the front walkways.</li>
+        <li>Deadline: cleared before staff arrive at 7 a.m.</li>
+        <div class="src">Captured by Cara on the call &mdash; no form for the manager to fill out.</div>
+      </ul>
+
+      <div class="sec-label">Site readiness</div>
+      <ul class="facts" id="readiness">
+        <li>Lot sized at ~40 stalls &mdash; needs a loader, not just a truck.</li>
+        <li>Salt required: slip-liability at the medical entrance.</li>
+        <li>Priority: high &mdash; healthcare, early open.</li>
+      </ul>
+
+      <div class="sec-label">Matched crew</div>
+      <div class="crewcard" id="crew">
+        <div class="score s-warm">96</div>
+        <div><h4>North End Snow Pros</h4>
+          <div class="meta">4 km away &middot; has a loader + salter &middot; insured &#10003; &middot; free before 7 a.m.</div>
+          <div class="badge new">Best fit for this lot</div></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="dispatchBtn" type="button">&#10003; Dispatch this crew</button>
+        <span class="pill">Crew confirms in minutes &middot; you never make the call</span>
+      </div>
+
+      <div class="proof" id="proof" style="display:none">
+        <div class="ph">Cleared &middot; proof received 6:51 a.m. &middot; before the 7 a.m. deadline</div>
+        <div class="pb">
+          <div class="shot">&#128247; Timestamped photo of the cleared lot</div>
+          Lot and walks cleared, salted at the entrance. Photo + timestamp on file &mdash; forward it straight to the property's insurer.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="results" id="results">
+    <div><b>14</b><span>property managers in the pipeline</span></div>
+    <div><b>65</b><span>vetted crews ready</span></div>
+    <div><b>You</b><span>own the contract &mdash; the machine coordinates</span></div>
+  </div>
+</div></div>
+
+<div class="foot">Dispatch Me &middot; by <a href="/">Calas Automations</a> &middot; a sample walkthrough &middot; nothing here dispatches a real crew</div>
+
+<script>
+(function(){
+  "use strict";
+  var LINES=["Welcome to Dispatch Me. A property manager just sent in a parking lot that needs clearing. Here is their request.","Cara takes it from here. She captures the address, the lot size, and exactly what they need, with no phone tag and no missed calls.","Dispatch Me sizes up the lot and flags what it takes, the walkways, the salting, and the deadline before the first snowfall.","Then it matches the job to the right crew nearby, chosen by their area and their equipment, from your vetted list.","One tap sends the dispatch. The crew is on it, and you never had to answer a five a.m. phone call.","When it is done, the crew sends photo proof with a timestamp, so you can show the property's insurer the lot was cleared.","You own the contract. The machine runs the coordination. That is the whole idea, you scale without the chaos.","That is the tour. Have a look around."];
+  var DURS=[8.93, 9.31, 7.46, 6.84, 7.68, 7.15, 9.12, 4.08];
+  var AUDIO_BASE="narration/step-";
+  var overlay=null,cursorEl=null,capEl=null,skipBtn=null,muteBtn=null;
+  var tourBtn=document.getElementById("tourBtn");
+  var aborted=false,resolveWait=null,current=null,muted=false;
+  var reduceMotion=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var clips=LINES.map(function(_,i){var a=new Audio(AUDIO_BASE+i+".mp3");a.preload="none";return a});
+  function sleep(ms){return new Promise(function(res){var d=false;function f(){if(d)return;d=true;resolveWait=null;res()}resolveWait=f;setTimeout(f,reduceMotion?Math.min(ms,300):ms)})}
+  function say(i){if(aborted)return Promise.resolve();var a=clips[i];if(!a)return sleep(1300);return new Promise(function(res){var d=false;function f(){if(d)return;d=true;resolveWait=null;a.onended=null;a.onerror=null;res()}resolveWait=f;a.onended=f;a.onerror=f;a.muted=muted;current=a;try{a.currentTime=0}catch(e){}var p;try{p=a.play()}catch(e){}if(p&&p.catch)p.catch(function(){});setTimeout(f,(DURS[i]||4)*1000+600)})}
+  function stopAudio(){if(current){try{current.pause();current.currentTime=0}catch(e){}current=null}}
+  function q(sel){return document.querySelector(sel)}
+  function buildOverlay(){
+    overlay=document.createElement("div");overlay.style.cssText="position:fixed;inset:0;z-index:9998;pointer-events:none";
+    cursorEl=document.createElement("div");
+    cursorEl.style.cssText="position:fixed;left:-40px;top:-40px;width:26px;height:26px;z-index:9999;transition:left .55s cubic-bezier(.4,0,.2,1),top .55s cubic-bezier(.4,0,.2,1),transform .15s ease;filter:drop-shadow(0 3px 8px rgba(0,0,0,.35))";
+    cursorEl.innerHTML='<svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 2l16 7-6.5 2.2L11 18z" fill="#155F87" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+    capEl=document.createElement("div");
+    capEl.style.cssText="position:fixed;left:-999px;top:-999px;z-index:9999;max-width:340px;background:#12212C;color:#fff;font:14.5px 'IBM Plex Sans',-apple-system,sans-serif;padding:11px 15px;border-radius:8px;box-shadow:0 8px 26px rgba(0,0,0,.32);transition:left .55s ease,top .55s ease,opacity .3s ease;line-height:1.45;opacity:0";
+    var b="position:fixed;top:16px;z-index:10000;pointer-events:auto;background:#12212C;color:#fff;border:0;border-radius:20px;padding:9px 16px;font:13.5px 'IBM Plex Sans',-apple-system,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.3)";
+    skipBtn=document.createElement("button");skipBtn.textContent="Skip tour \u2715";skipBtn.style.cssText=b+";right:16px";skipBtn.addEventListener("click",endTour);
+    muteBtn=document.createElement("button");muteBtn.style.cssText=b+";right:132px";setMuteLabel();
+    muteBtn.addEventListener("click",function(){muted=!muted;clips.forEach(function(a){a.muted=muted});setMuteLabel()});
+    document.body.appendChild(overlay);document.body.appendChild(cursorEl);document.body.appendChild(capEl);document.body.appendChild(skipBtn);document.body.appendChild(muteBtn);
+  }
+  function setMuteLabel(){if(muteBtn)muteBtn.textContent=muted?"\uD83D\uDD07 Voice off":"\uD83D\uDD0A Voice on"}
+  function removeOverlay(){[overlay,cursorEl,capEl,skipBtn,muteBtn].forEach(function(el){if(el&&el.parentNode)el.parentNode.removeChild(el)});overlay=cursorEl=capEl=skipBtn=muteBtn=null}
+  function point(el,i,opts){
+    if(aborted)return Promise.resolve();opts=opts||{};
+    if(el){try{el.scrollIntoView({behavior:reduceMotion?"auto":"smooth",block:"center"})}catch(e){}}
+    return sleep(reduceMotion?60:380).then(function(){
+      if(aborted||!cursorEl)return;var cx=window.innerWidth/2,cy=160;
+      if(el){var r=el.getBoundingClientRect();cx=r.left+r.width*(opts.px!=null?opts.px:0.5);cy=r.top+r.height*(opts.py!=null?opts.py:0.5);cursorEl.style.left=(cx-3)+"px";cursorEl.style.top=(cy-3)+"px"}
+      var capW=340,capX=Math.min(Math.max(10,cx-capW/2),window.innerWidth-capW-10);var capY=cy>150?cy-90:cy+34;
+      capEl.style.left=capX+"px";capEl.style.top=capY+"px";capEl.style.opacity="1";capEl.textContent=LINES[i];
+      return say(i);
+    });
+  }
+  function tap(el){if(aborted||!el||!cursorEl)return;cursorEl.style.transform="scale(.8)";setTimeout(function(){if(cursorEl)cursorEl.style.transform="scale(1)"},150);try{el.click()}catch(e){}}
+  function endTour(){if(aborted)return;aborted=true;stopAudio();if(resolveWait)resolveWait();removeOverlay();if(tourBtn){tourBtn.disabled=false;tourBtn.textContent="\u25B6 Watch again \u00B7 60 sec"}}
+  function runTour(){
+    if(!aborted&&overlay)return;aborted=false;clips.forEach(function(a){try{a.load()}catch(e){}});buildOverlay();if(tourBtn)tourBtn.disabled=true;
+    var s=Promise.resolve();
+    s=s.then(function(){return point(q("#req0"),0)});
+    s=s.then(function(){return point(q("#intake"),1,{py:0.3})});
+    s=s.then(function(){return point(q("#readiness"),2,{py:0.3})});
+    s=s.then(function(){return point(q("#crew"),3)});
+    s=s.then(function(){return point(q("#dispatchBtn"),4)});
+    s=s.then(function(){tap(q("#dispatchBtn"))});
+    s=s.then(function(){return sleep(500)});
+    s=s.then(function(){return point(q("#proof"),5,{py:0.25})});
+    s=s.then(function(){return point(q("#results"),6,{py:0.4})});
+    s=s.then(function(){return point(null,7)});
+    s=s.then(function(){return sleep(600)});
+    s=s.then(function(){endTour()});
+  }
+  if(tourBtn)tourBtn.addEventListener("click",runTour);
+  if(window.location.hash==="#tour"&&tourBtn){window.location.hash="";setTimeout(function(){tourBtn.click()},800)}
+  var db=document.getElementById("dispatchBtn");
+  if(db)db.addEventListener("click",function(){var pr=document.getElementById("proof");if(pr)pr.style.display="";db.textContent="\u2713 Dispatched";db.disabled=true});
+  ["req0","req1","req2"].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener("click",function(){document.querySelectorAll(".lead").forEach(function(l){l.classList.remove("sel")});el.classList.add("sel")})});
+})();
+</script>
+</body></html>
