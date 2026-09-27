@@ -15,7 +15,9 @@
     "greenmile_small   C$29 / month      - Green Mile owner-operator plan, up to 3 trucks (C$290/yr as a Stripe annual price or coupon, not a second key). 30-day money-back guarantee.",
     "greenmile_fleet   C$79 / month      - Green Mile small-fleet plan, up to 20 trucks (C$790/yr likewise). 30-day money-back guarantee.",
     "watchpost_watch   C$79 / month      - Watchpost Watch plan, one location, owner reads own alerts (C$790/yr likewise). First month free. Business-hours support, no 24/7.",
-    "watchpost_guarded C$199 / month     - Watchpost Guarded plan, we triage alerts and call the client (C$1,990/yr likewise). First month free."
+    "watchpost_guarded C$199 / month     - Watchpost Guarded plan, we triage alerts and call the client (C$1,990/yr likewise). First month free.",
+    "watchpost_family    C$9.99 / month    - Watchpost Family, per family. Promo code FOUNDINGFAMILY = C$5/mo for 36 months, first 20 families (monthly link only).",
+    "watchpost_family_yr C$99 / year       - Watchpost Family, yearly."
   ],
   "onfile_build": "",
   "onfile_monthly": "https://buy.stripe.com/6oUbJ1eEldCkgbr65L7Zu02",
@@ -28,5 +30,7 @@
   "greenmile_small_yr": "https://buy.stripe.com/3cIbJ11Rz2XG6ARdyd7Zu09",
   "greenmile_fleet_yr": "https://buy.stripe.com/7sY7sLdAh7dW5wN79P7Zu0a",
   "watchpost_watch": "https://buy.stripe.com/eVq7sLdAh9m49N3am17Zu00",
-  "watchpost_guarded": "https://buy.stripe.com/cNi28rcwdcyg2kBam17Zu01"
+  "watchpost_guarded": "https://buy.stripe.com/cNi28rcwdcyg2kBam17Zu01",
+  "watchpost_family": "https://buy.stripe.com/dRm9AT1Rz9m4bVb9hX7Zu0b",
+  "watchpost_family_yr": "https://buy.stripe.com/5kQ7sLao5dCk8IZ8dT7Zu0c"
 }
