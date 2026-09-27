@@ -364,6 +364,12 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
       <fieldset class="dm-svc"><legend>What do you need? (property owners)</legend>
         <label><input type="checkbox" value="Plowing"> Plowing</label><label><input type="checkbox" value="Sidewalks"> Sidewalks</label><label><input type="checkbox" value="Salting/sanding"> Salting / sanding</label><label><input type="checkbox" value="Snow hauling"> Snow hauling</label>
       </fieldset>
+      <fieldset class="dm-svc dm-gear" style="display:none"><legend>What do you run? (crews)</legend>
+        <label><input type="checkbox" value="plow_truck"> Plow truck(s)</label><label><input type="checkbox" value="loader"> Loader</label><label><input type="checkbox" value="skid_steer"> Skid steer / Bobcat</label><label><input type="checkbox" value="spreader"> Salt / sand spreader</label><label><input type="checkbox" value="sidewalk"> Sidewalk crew / blowers</label><label><input type="checkbox" value="hauling"> Dump truck (hauling)</label>
+      </fieldset>
+      <fieldset class="dm-svc dm-consent" style="display:none"><legend>Job offers</legend>
+        <label><input type="checkbox" name="offers_ok"> Yes, email me jobs that fit my area and equipment</label><label><input type="checkbox" name="sms_ok"> Text me too</label>
+      </fieldset>
       <label>Anything else we should know<textarea name="notes" rows="3"></textarea></label>
       <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
       <p><button class="btn" type="submit">Send</button></p>
@@ -386,10 +392,14 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
   var L={property:['Company or property name','Property address(es)','Lot size / how many properties'],crew:['Company name','Areas you cover','Equipment and crew size']};
   tabs.forEach(function(t){t.addEventListener('click',function(){var k=t.getAttribute('data-kind');f.kind.value=k;
     tabs.forEach(function(x){var on=x===t;x.classList.toggle('on',on);x.setAttribute('aria-selected',on)});
-    f.querySelector('.dm-l-company').textContent=L[k][0];f.querySelector('.dm-l-area').textContent=L[k][1];f.querySelector('.dm-l-size').textContent=L[k][2];f.querySelector('.dm-svc').style.display=k==='crew'?'none':'';msg.textContent=''})});
+    f.querySelector('.dm-l-company').textContent=L[k][0];f.querySelector('.dm-l-area').textContent=L[k][1];f.querySelector('.dm-l-size').textContent=L[k][2];f.querySelector('.dm-svc').style.display=k==='crew'?'none':'';f.querySelector('.dm-gear').style.display=f.querySelector('.dm-consent').style.display=k==='crew'?'':'none';msg.textContent=''})});
+  var qs=new URLSearchParams(location.search),ref=(qs.get('ref')||'').slice(0,64);
+  if(qs.get('crew'))tabs[1].click();
   f.addEventListener('submit',function(e){e.preventDefault();
     var d={};['kind','name','company','phone','email','area','size','notes','website'].forEach(function(n){d[n]=f[n].value});
-    var sv=[].slice.call(f.querySelectorAll('.dm-svc input:checked')).map(function(c){return c.value});if(sv.length&&d.kind==='property')d.notes=('Needs: '+sv.join(', ')+'. '+d.notes).trim();
+    var sv=[].slice.call(f.querySelectorAll('.dm-svc:not(.dm-gear):not(.dm-consent) input:checked')).map(function(c){return c.value});if(sv.length&&d.kind==='property'){d.services=sv;d.notes=('Needs: '+sv.join(', ')+'. '+d.notes).trim()}
+    if(d.kind==='crew'){d.equipment=[].slice.call(f.querySelectorAll('.dm-gear input:checked')).map(function(c){return c.value});d.offers_ok=f.offers_ok.checked?'1':'';d.sms_ok=f.sms_ok.checked?'1':'';if(ref)d.ref=ref;
+      if(!d.offers_ok){msg.textContent='Tick “email me jobs” so we can send you work.';return}}
     if(!d.name||(!d.phone&&!d.email)){msg.textContent='Please add your name and a phone number or email.';return}
     msg.textContent='Sending…';
     fetch('https://calas-access.calasdan.workers.dev/api/dispatch/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})

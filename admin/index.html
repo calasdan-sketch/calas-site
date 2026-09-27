@@ -19,6 +19,7 @@ label{display:block;font-size:13px;font-weight:600;color:var(--ink2);margin:0 0 
 input,select{width:100%;font:inherit;padding:10px;border:1px solid var(--rule);border-radius:8px;background:var(--card);color:var(--ink)}
 button{font:600 15px "IBM Plex Sans",sans-serif;padding:11px 16px;border:0;border-radius:8px;background:var(--blue);color:#fff;cursor:pointer}
 button.ghost{background:transparent;color:var(--blue);border:1px solid var(--rule);padding:6px 10px;font-size:13px}
+button:disabled{opacity:.45;cursor:not-allowed}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;align-items:end}
 .check{display:flex;gap:8px;align-items:center;font-size:14px;margin-top:10px}.check input{width:auto}
 .notice{padding:10px 12px;border-radius:8px;margin:0 0 12px;font-size:14px}.warn{background:var(--midbg);color:var(--mid)}.good{background:var(--okbg);color:var(--ok)}.err{background:var(--badbg);color:var(--bad)}
@@ -101,8 +102,28 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
       <div class="tablewrap"><table><thead><tr><th>Code</th><th>App</th><th>For</th><th>Status</th><th>Works until</th><th>Type</th><th>Last used</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
     </section>
 
+    <section class="card" id="dsp">
+      <h1>Dispatch Me · jobs</h1>
+      <div id="dsp-notes"></div>
+      <div class="tablewrap"><table><thead><tr><th>When</th><th>Score</th><th>Customer</th><th>Where · lot</th><th>Work</th><th>Status</th><th>Best crews</th></tr></thead><tbody id="jrows"></tbody></table></div>
+    </section>
+
     <section class="card">
-      <h2>Dispatch Me requests</h2>
+      <h2>Dispatch Me · crews</h2>
+      <p style="color:var(--ink2);margin-top:0">New sign-ups wait here until you turn them on. Only crews who ticked “email me jobs” can be offered work.</p>
+      <div class="tablewrap"><table><thead><tr><th>Crew</th><th>Contact</th><th>Areas</th><th>Equipment</th><th>Biggest lot</th><th>Offers</th><th>Status</th><th></th></tr></thead><tbody id="crows"></tbody></table></div>
+    </section>
+
+    <section class="card">
+      <h2>Dispatch Me · recruit crews by email</h2>
+      <div id="rc-top"></div>
+      <details style="margin:10px 0"><summary style="cursor:pointer;font-weight:600">See the email exactly as crews get it</summary><div id="rc-prev" style="border:1px solid var(--rule);border-radius:8px;padding:12px;margin-top:8px;background:#fff;color:#14202b"></div></details>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><label for="rc-n" style="margin:0">How many to send now</label><input id="rc-n" type="number" min="1" max="25" value="10" style="width:90px"><button id="rc-send" type="button">Send</button><span id="rc-msg" style="font-size:14px"></span></div>
+      <details style="margin-top:12px"><summary style="cursor:pointer;font-weight:600">The crew list</summary><div class="tablewrap"><table><thead><tr><th>Crew</th><th>City</th><th>Email</th><th>Can email?</th><th>Status</th></tr></thead><tbody id="rrows"></tbody></table></div></details>
+    </section>
+
+    <section class="card">
+      <h2>Dispatch Me requests (raw inbox)</h2>
       <div class="tablewrap"><table><thead><tr><th>When</th><th>Type</th><th>Who</th><th>Contact</th><th>Where / size</th><th>Notes</th><th>Status</th></tr></thead><tbody id="lrows"></tbody></table></div>
     </section>
   </div>
@@ -165,7 +186,47 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
       if(!d.ok){$('#a-made').innerHTML='<div class="notice err">'+({pick_an_end_date:'Pick an end date.',end_date_in_past:'That date has already passed.',pick_an_app:'Pick an app.',bad_email:'Check the email address.',bad_copy:'Copy name: lowercase letters and numbers only.',already_has_login:'That email already has a login for this app. Use “New password” in the list instead.'}[d.error]||'Something went wrong.')+'</div>';return}
       showPw('#a-made',d,email);$('#a-name').value='';$('#a-email').value='';loadAccounts()})});
 
-  function load(){loadLeads();loadAccounts();call('/api/admin/codes').then(function(d){
+  // ---- Dispatch Me engine ----
+  var DSP=null;
+  function title(s){return String(s||'').replace(/\b\w/g,function(c){return c.toUpperCase()})}
+  function loadDispatch(){call('/api/admin/dispatch').then(function(d){if(!d.ok)return;DSP=d;var n='';
+    if(!d.cara_ready)n+='<div class="notice warn">Cara isn’t connected to Dispatch yet (no DISPATCH_TOOL_KEY). Web requests still work.</div>';
+    n+='<div class="notice warn">Texts to crews are written down but <b>not sent</b> until you approve Twilio. Offers go by email when you press Offer'+(d.auto_offer?' (auto-offer by email is ON).':'.')+'</div>';
+    $('#dsp-notes').innerHTML=n;
+    var crewById={};d.crews.forEach(function(c){crewById[c.id]=c});
+    var h='';d.jobs.forEach(function(j){
+      var tier='<span class="pill '+(j.tier==='A'?'on':j.tier==='B'?'soon':'off')+'" title="'+esc(j.score_reasons.join('\n'))+'">'+j.tier+' · '+j.score+'</span>';
+      var st={new:'New',matched:'Matched',no_crew:'<b style="color:var(--bad)">No crew fits</b>',offered:'Offered',taken:'<b style="color:var(--ok)">Taken</b>',closed:'Closed'}[j.status]||esc(j.status);
+      var ms=j.matches.map(function(m){var lab={suggested:'',offered:' <small>(offered)</small>',accepted:' <b style="color:var(--ok)">✓ took it</b>',declined:' <small>(passed)</small>',withdrawn:' <small>(withdrawn)</small>'}[m.status]||'';
+        return '<div>'+esc(m.company)+' <small>fit '+m.fit+'</small>'+lab+(j.status!=='taken'&&j.status!=='closed'&&(m.status==='suggested'||m.status==='declined')?' <button class="ghost" data-j="'+j.id+'" data-offer="'+m.crew_id+'">Offer</button>':'')+'</div>'}).join('')||'<small>—</small>';
+      h+='<tr><td>'+day(j.created_at)+'<br><small>'+(j.source==='cara'?'by phone (Cara)':'web form')+'</small></td><td>'+tier+'</td><td>'+esc(j.company||j.name)+'<br><small>'+esc(j.name)+' · '+esc(j.phone)+' '+esc(j.email)+'</small></td><td style="white-space:normal;min-width:180px">'+esc(j.address)+'<br><small>'+esc(title(j.city))+' · '+esc(d.sizes[j.size_bucket]||'')+(j.properties>1?' · '+j.properties+' properties':'')+'</small></td><td>'+j.services.map(function(s){return esc(d.services[s]||s)}).join(', ')+'<br><small>'+(j.urgency==='now'?'<b>NOW</b>':'seasonal')+'</small></td><td>'+st+'</td><td style="white-space:normal;min-width:200px">'+ms+'<div style="margin-top:4px"><button class="ghost" data-j="'+j.id+'" data-ja="rematch">Re-match</button> <button class="ghost" data-j="'+j.id+'" data-ja="close">Close</button></div></td></tr>'});
+    $('#jrows').innerHTML=h||'<tr><td colspan="7" style="color:var(--ink2)">No jobs yet.</td></tr>';
+    var c='';d.crews.forEach(function(x){
+      var st=x.status==='active'?'<span class="pill on">On</span>':x.status==='paused'?'<span class="pill off">Paused</span>':'<span class="pill soon">Waiting for you</span>';
+      c+='<tr><td>'+esc(x.company)+'</td><td>'+esc(x.contact_name)+'<br><small>'+esc(x.phone)+' '+esc(x.email)+'</small></td><td style="white-space:normal">'+esc(x.areas.map(title).join(', ')||'—')+'</td><td style="white-space:normal">'+esc(x.equipment.map(function(g){return d.equipment[g]||g}).join(', ')||'—')+'</td><td>'+esc(x.max_size)+'</td><td>'+(x.offers_ok?'Email':'<b style="color:var(--bad)">Not agreed</b>')+(x.sms_ok?' + text':'')+'</td><td>'+st+'</td><td>'+
+        (x.status==='active'?'<button class="ghost" data-c="'+x.id+'" data-ca="pause">Pause</button> ':'<button class="ghost" data-c="'+x.id+'" data-ca="activate">Turn on</button> ')+
+        '<button class="ghost" data-c="'+x.id+'" data-ca="edit">Edit areas</button></td></tr>'});
+    $('#crows').innerHTML=c||'<tr><td colspan="8" style="color:var(--ink2)">No crews yet. Recruit some below.</td></tr>'})}
+  $('#jrows').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var j=b.getAttribute('data-j');
+    if(b.hasAttribute('data-offer')){var crew=b.parentNode.textContent.split(' fit')[0];if(!confirm('Email job #'+j+' to '+crew+'? They get a take-it / pass link.'))return;
+      call('/api/admin/dispatch/jobs/'+j+'/offer',{crew_id:+b.getAttribute('data-offer')}).then(function(d){if(!d.ok)alert('Couldn’t offer: '+(d.error||'unknown'));else if(!d.emailed)alert('Marked as offered, but the email did not send. Check email is switched on.');loadDispatch()});return}
+    var a=b.getAttribute('data-ja');if(a==='close'&&!confirm('Close job #'+j+'?'))return;
+    call('/api/admin/dispatch/jobs/'+j+'/'+a,{}).then(loadDispatch)});
+  $('#crows').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var id=b.getAttribute('data-c'),a=b.getAttribute('data-ca'),body={};
+    if(a==='edit'){var x=DSP.crews.filter(function(k){return k.id==id})[0];var ar=prompt('Cities they cover, separated by commas:',x.areas.map(title).join(', '));if(ar===null)return;body.areas=ar;
+      var mx=prompt('Biggest lot they take: small, medium, large or xl',x.max_size);if(mx)body.max_size=mx.trim().toLowerCase()}
+    call('/api/admin/dispatch/crews/'+id+'/'+a,body).then(loadDispatch)});
+  function loadRecruit(){call('/api/admin/dispatch/recruit').then(function(d){if(!d.ok)return;var t={},ready=0;d.counts.forEach(function(r){t[(r.eligible?'ok_':'no_')+r.status]=r.n;if(r.eligible&&r.status==='new')ready=r.n});
+    var top='<p style="margin-top:0"><b>'+ready+'</b> crews ready to email · '+(t.ok_sent||0)+' sent · '+(t.ok_signed_up||0)+' signed up · '+((t.ok_unsubscribed||0)+(t.no_unsubscribed||0))+' unsubscribed · '+Object.keys(t).filter(function(k){return k.indexOf('no_')===0}).reduce(function(s,k){return s+t[k]},0)+' held back (guessed emails — never sent)</p>';
+    if(!d.mailing_address_set)top+='<div class="notice err">Sending is locked: the law needs your mailing address on every email. Add it once as the MAILING_ADDRESS setting (a PO box is fine).</div>';
+    if(!d.email_ready)top+='<div class="notice err">Email isn’t switched on.</div>';
+    $('#rc-top').innerHTML=top;$('#rc-send').disabled=!d.mailing_address_set||!d.email_ready||!ready;
+    $('#rc-prev').innerHTML='<p style="margin:0 0 8px"><b>Subject:</b> '+esc(d.subject)+'</p>'+d.html;
+    $('#rrows').innerHTML=d.prospects.map(function(p){return'<tr><td>'+esc(p.company)+'</td><td>'+esc(title(p.city))+'</td><td>'+esc(p.email)+'</td><td>'+(p.eligible?'Yes':'<span title="'+esc(p.reason)+'">No — '+esc(p.reason)+'</span>')+'</td><td>'+esc(p.status)+(p.sent_at?' '+day(p.sent_at):'')+'</td></tr>'}).join('')})}
+  $('#rc-send').addEventListener('click',function(){var n=Math.max(1,Math.min(25,+$('#rc-n').value||10));if(!confirm('Send the crew invitation to '+n+' crews now?'))return;
+    $('#rc-msg').textContent='Sending…';call('/api/admin/dispatch/recruit/send',{limit:n}).then(function(d){$('#rc-msg').textContent=d.ok?('Sent '+d.sent+(d.failed?', '+d.failed+' failed':'')+(d.skipped?', '+d.skipped+' skipped (unsubscribed)':'')+'.'):'Not sent: '+({need_mailing_address:'add your mailing address first',email_not_ready:'email isn’t switched on'}[d.error]||d.error);loadRecruit()})});
+
+  function load(){loadLeads();loadAccounts();loadDispatch();loadRecruit();call('/api/admin/codes').then(function(d){
     DATA=d;var sel=$('#app-sel'),fa=$('#f-app');
     if(!sel.options.length){Object.keys(d.apps).forEach(function(k){sel.add(new Option(d.apps[k],k));fa.add(new Option(d.apps[k],k))});sel.value='leadme'}
     var s='';
