@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Your Watchpost account · Calas Automations</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{--paper:#F1F6F9;--card:#fff;--ink:#12212C;--ink2:#4E5B66;--rule:#D9E3EA;--blue:#155F87;--night:#0B2E45;--gold:#F0C171;--ok:#17794A;--okbg:#E9F5EE;--bad:#A3352B;--badbg:#FBECEA;--mid:#8A6100;--midbg:#FFF4DA}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 "IBM Plex Sans",-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:var(--night);color:#fff;border-bottom:2px solid var(--gold)}header .w{max-width:760px;margin:0 auto;padding:14px 18px;display:flex;align-items:center;gap:10px;justify-content:space-between}
+header a{color:#fff;text-decoration:none;font:700 18px "Libre Baskerville",Georgia,serif}header button{width:auto;margin:0;background:transparent;border:1px solid #1E4A66;color:#B9CFDD;padding:6px 12px;font-size:14px}
+main{max-width:760px;margin:0 auto;padding:18px}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:20px;margin-bottom:16px}
+h1,h2{font-family:"Libre Baskerville",Georgia,serif;margin:0 0 8px}h1{font-size:22px}h2{font-size:18px}
+p{margin:0 0 12px}.muted{color:var(--ink2)}small{color:var(--ink2)}
+label{display:block;font-size:14px;font-weight:600;color:var(--ink2);margin:10px 0 4px}
+input[type=email],input[type=text],input[type=tel]{width:100%;font:inherit;padding:11px;border:1px solid var(--rule);border-radius:8px}
+input:focus,button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+button{font:600 16px "IBM Plex Sans",sans-serif;padding:12px 18px;border:0;border-radius:8px;background:var(--blue);color:#fff;cursor:pointer;margin-top:12px}
+button.ghost{background:#fff;color:var(--blue);border:1px solid var(--rule);padding:8px 12px;font-size:14px;margin:0}
+button:disabled{opacity:.5;cursor:not-allowed}
+.big{display:block;width:100%;font-size:18px;padding:16px;background:#8b1a1a}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400;color:var(--ink);margin:12px 0}.check input{margin-top:4px;width:18px;height:18px}
+.note{padding:10px 12px;border-radius:8px;font-size:14px;margin:10px 0}.good{background:var(--okbg);color:var(--ok)}.bad{background:var(--badbg);color:var(--bad)}.warn{background:var(--midbg);color:var(--mid)}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:13px;font-weight:600;background:var(--okbg);color:var(--ok)}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;padding:8px 6px;border-bottom:1px solid var(--rule);vertical-align:top}th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2)}
+.word{font:600 22px "IBM Plex Mono",monospace;letter-spacing:1px;background:#f2f5f8;padding:10px 14px;border-radius:8px;display:inline-block}
+[hidden]{display:none!important}
+</style>
+</head><body>
+<header><div class="w"><a href="/watchpost/">Watchpost</a><button id="out" type="button" hidden>Sign out</button></div></header>
+<main>
+  <div id="msg" role="status" aria-live="polite"></div>
+
+  <section class="card" id="signin" hidden>
+    <h1>Sign in</h1>
+    <p class="muted">No password. We email you a link that signs you in on this device.</p>
+    <form id="sf"><label for="se">Your email</label><input id="se" type="email" autocomplete="email" required>
+    <button>Email me a sign-in link</button></form>
+  </section>
+
+  <section class="card" id="invite" hidden>
+    <h1>You're invited to <span id="iv-family"></span></h1>
+    <p><b id="iv-from"></b> would like you on Watchpost Family. You'd use Guardian on your phone to check suspicious messages.</p>
+    <p class="muted">You decide what they see. Nothing is shared unless you tick the boxes below, and you can change your mind any time on this page.</p>
+    <label class="check"><input type="checkbox" id="iv-alerts"> When Guardian rates a message <b>High</b> or <b>Critical</b>, let them know so they can check on me. (They see the warning and the scam signs, not the message.)</label>
+    <label class="check"><input type="checkbox" id="iv-text" disabled> Also include a short piece of the message (the first 140 characters).</label>
+    <button id="iv-accept" type="button">Join the family</button>
+  </section>
+
+  <div id="home" hidden>
+    <section class="card">
+      <h1 id="hi">Your account</h1>
+      <p><span class="pill" id="tier"></span> <small id="email"></small></p>
+      <div id="upsell"></div>
+      <label for="nm">Your name (shown to your family)</label><input id="nm" type="text" maxlength="80" autocomplete="name">
+      <label for="ph">Your phone (the only number we will ever call for you)</label><input id="ph" type="tel" autocomplete="tel" placeholder="204 555 0123">
+      <small>Canada and US numbers. You can change it once a week.</small><br>
+      <button id="save" type="button">Save</button>
+    </section>
+
+    <section class="card" id="human" hidden>
+      <h2>Talk to a real person</h2>
+      <p class="muted">Something feels off? We'll ring your phone and connect you with Cara, our assistant, who can bring in a person from Calas.</p>
+      <button class="big" id="call" type="button">📞 Get me on with a real person</button>
+      <p><small>Up to 3 a day. Calls last up to 15 minutes.</small></p>
+    </section>
+
+    <section class="card" id="fam-create" hidden>
+      <h2>Set up your family</h2>
+      <p class="muted">Invite the people you look out for. Each of them runs Guardian on their own phone and chooses whether its High warnings reach you.</p>
+      <label for="fn">Family name</label><input id="fn" type="text" maxlength="60" placeholder="e.g. The Smith family">
+      <button id="fc" type="button">Create my family</button>
+    </section>
+
+    <section class="card" id="fam-admin" hidden>
+      <h2 id="fa-name"></h2>
+      <h3 style="font-size:15px;margin:14px 0 4px">1 · Get alerts on your phone</h3>
+      <p class="muted" style="font-size:14px">Install the free <b>ntfy</b> app (<a href="https://apps.apple.com/app/ntfy/id1625396347" rel="noopener">iPhone</a> · <a href="https://play.google.com/store/apps/details?id=io.heckel.ntfy" rel="noopener">Android</a>), tap <b>+</b>, and subscribe to this private channel. Keep it to yourself.</p>
+      <p><span class="word" id="fa-topic" style="font-size:15px"></span> <button class="ghost" id="fa-copy" type="button">Copy</button></p>
+      <p class="muted" style="font-size:14px">You'll also get each alert by email.</p>
+      <h3 style="font-size:15px;margin:14px 0 4px">2 · Your family safe word</h3>
+      <p class="muted" style="font-size:14px">A word only your family knows. If "you" call Mom asking for money in a panic, she asks for the word. Everyone in the family can see it here.</p>
+      <p><span class="word" id="fa-word"></span></p>
+      <label for="fa-sw">Set or change it (at least 6 letters)</label><input id="fa-sw" type="text" maxlength="60" autocomplete="off">
+      <button class="ghost" id="fa-swb" type="button" style="margin-top:8px">Save safe word</button>
+      <h3 style="font-size:15px;margin:18px 0 4px">3 · Invite family</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div><label for="fa-ie">Their email</label><input id="fa-ie" type="email"></div>
+        <div><label for="fa-in">What you call them</label><input id="fa-in" type="text" maxlength="60" placeholder="Mom"></div>
+      </div>
+      <button class="ghost" id="fa-ib" type="button" style="margin-top:10px">Send invitation</button>
+      <table style="margin-top:14px"><thead><tr><th>Who</th><th>Status</th><th>Alerts</th><th></th></tr></thead><tbody id="fa-members"></tbody></table>
+      <h3 style="font-size:15px;margin:18px 0 4px">Recent alerts</h3>
+      <div id="fa-alerts"></div>
+    </section>
+
+    <section class="card" id="fam-member" hidden>
+      <h2 id="fm-name"></h2>
+      <p>Your family safe word: <span class="word" id="fm-word"></span></p>
+      <label class="check"><input type="checkbox" id="fm-alerts"> Let my family admin know when Guardian rates a message High or Critical.</label>
+      <label class="check"><input type="checkbox" id="fm-text"> Also include the first 140 characters of the message.</label>
+      <button class="ghost" id="fm-save" type="button">Save my choices</button>
+      <button class="ghost" id="fm-leave" type="button" style="margin-left:8px">Leave this family</button>
+      <p style="margin-top:14px"><a href="/guardian/">Open Guardian</a> to check a message.</p>
+    </section>
+  </div>
+</main>
+<script>
+(function(){
+  'use strict';
+  var API='https://watchpost-api.calasdan.workers.dev', ME=null;
+  var $=function(s){return document.querySelector(s)};
+  function ls(k,v){try{if(v===undefined)return localStorage.getItem(k)||'';if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return ''}}
+  function ss(k,v){try{if(v===undefined)return sessionStorage.getItem(k)||'';if(v===null)sessionStorage.removeItem(k);else sessionStorage.setItem(k,v)}catch(e){return ''}}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function say(t,kind){$('#msg').innerHTML=t?'<div class="note '+(kind||'good')+'">'+esc(t)+'</div>':''}
+  function api(path,body,method){var h={'Content-Type':'application/json'},s=ls('wp_session');if(s)h.Authorization='Bearer '+s;
+    return fetch(API+path,{method:method||(body?'POST':'GET'),headers:h,body:body?JSON.stringify(body):undefined}).then(function(r){return r.json().then(function(d){d._status=r.status;return d})})
+      .catch(function(){return{ok:false,error:'offline'}})}
+  var ERR={bad_email:'That email doesn’t look right.',too_many:'Too many tries — wait a few minutes.',link_expired:'That sign-in link has expired or was already used. Ask for a new one.',
+    bad_phone:'Please enter a Canada or US phone number.',phone_changed_recently:'You changed your number recently. You can change it again in a week.',
+    needs_family_plan:'Family needs the Family plan.',already_member:'They’re already in your family.',family_full:'Your family is full (6 people).',thats_you:'That’s your own email.',
+    too_short:'Use at least 6 letters.',invite_expired:'This invitation has expired. Ask them to send a new one.',different_email:'This invitation was sent to another email address. Sign in with that one.',
+    already_member_elsewhere:'You’re already in a family.',need_phone:'Add your phone number first, then tap again.',needs_paid_plan:'Talking to a person is part of the paid plans.',
+    limit_reached:'You’ve reached today’s limit. If it’s an emergency, call 911.',call_in_progress:'A call is already on its way to you.',busy_try_later:'We’re very busy — please try again shortly.',
+    offline:'Couldn’t reach Watchpost. Check your connection.',call_failed:'The call didn’t go through. Please try again.'};
+  function err(d){return ERR[d.error]||'Something went wrong. Please try again.'}
+
+  // ---- arriving from an email link ----
+  var hash=location.hash.slice(1),hp=new URLSearchParams(hash);
+  if(hp.get('invite')){ss('wp_invite',hp.get('invite'));history.replaceState(null,'',location.pathname)}
+  var login=hp.get('login');
+  if(login){history.replaceState(null,'',location.pathname);api('/api/auth/verify',{token:login}).then(function(d){
+    if(d.ok){ls('wp_session',d.session);say('You’re signed in.')}else say(err(d),'bad');start()})}
+  else start();
+
+  function start(){
+    var inv=ss('wp_invite');
+    if(!ls('wp_session')){$('#signin').hidden=false;
+      if(inv)api('/api/family/invite/preview',{token:inv}).then(function(d){if(d.ok){$('#se').value=d.email;say(d.from+' invited you to '+d.family+'. Sign in with '+d.email+' to see the invitation.','warn')}});
+      return}
+    load()}
+
+  $('#sf').addEventListener('submit',function(e){e.preventDefault();var b=e.submitter||$('#sf button');b.disabled=true;
+    api('/api/auth/start',{email:$('#se').value}).then(function(d){b.disabled=false;
+      say(d.ok?'Check your email for the sign-in link. It works once, for 15 minutes.':err(d),d.ok?'good':'bad')})});
+  $('#out').addEventListener('click',function(){api('/api/auth/logout',{}).then(function(){ls('wp_session',null);location.reload()})});
+
+  function load(){api('/api/me').then(function(d){
+    if(d._status===401){ls('wp_session',null);$('#signin').hidden=false;return}
+    if(!d.ok){say(err(d),'bad');return}
+    ME=d;$('#out').hidden=false;$('#signin').hidden=true;$('#home').hidden=false;
+    $('#hi').textContent=d.name?'Hi, '+d.name:'Your account';$('#tier').textContent=d.tier_name;$('#email').textContent=d.email;
+    $('#nm').value=d.name||'';$('#ph').value=d.phone||'';
+    var f=d.features;
+    $('#upsell').innerHTML=d.tier==='guardian'?'<p class="muted" style="font-size:14px">You’re on free Guardian. <a href="/watchpost/">See Family and Watch plans</a> for family alerts and a real person on call.</p>':'';
+    $('#human').hidden=f.indexOf('human_call')<0;
+    var fam=d.family;$('#fam-create').hidden=!(f.indexOf('family_mode')>=0&&!fam);
+    $('#fam-admin').hidden=!(fam&&fam.role==='admin');$('#fam-member').hidden=!(fam&&fam.role==='member');
+    if(fam&&fam.role==='admin')drawAdmin(fam);
+    if(fam&&fam.role==='member'){$('#fm-name').textContent=fam.name;$('#fm-word').textContent=fam.safe_word||'(not set yet)';$('#fm-alerts').checked=fam.alerts_ok;$('#fm-text').checked=fam.share_text;$('#fm-text').disabled=!fam.alerts_ok}
+    var inv=ss('wp_invite');
+    if(inv&&!fam)api('/api/family/invite/preview',{token:inv}).then(function(p){if(!p.ok){ss('wp_invite',null);say(err(p),'bad');return}
+      $('#iv-family').textContent=p.family;$('#iv-from').textContent=p.from;$('#invite').hidden=false;$('#home').hidden=true})})}
+
+  function drawAdmin(fam){$('#fa-name').textContent=fam.name;$('#fa-topic').textContent=fam.ntfy_topic;$('#fa-word').textContent=fam.safe_word||'(not set yet)';
+    $('#fa-members').innerHTML=fam.members.map(function(m){return'<tr><td>'+esc(m.display_name||m.email)+'<br><small>'+esc(m.email)+'</small></td><td>'+(m.status==='active'?'Joined':'Invited')+'</td><td>'+(m.status!=='active'?'—':m.alerts_ok?(m.share_text?'On, with a snippet':'On'):'Off (their choice)')+'</td><td><button class="ghost" data-rm="'+m.id+'" type="button">Remove</button></td></tr>'}).join('')||'<tr><td colspan="4" class="muted">No one yet.</td></tr>';
+    $('#fa-alerts').innerHTML=fam.alerts.map(function(a){return'<div class="note '+(a.level>=4?'bad':'warn')+'"><b>'+esc(a.display_name||a.email)+'</b> · '+['','','','High','Critical'][a.level]+' · '+new Date(a.created_at).toLocaleString('en-CA')+'<br>'+esc(a.signals.join('; '))+(a.excerpt?'<br><i>“'+esc(a.excerpt)+'”</i>':'')+'</div>'}).join('')||'<p class="muted">None yet.</p>'}
+
+  $('#save').addEventListener('click',function(){api('/api/me',{name:$('#nm').value,phone:$('#ph').value}).then(function(d){say(d.ok?'Saved.':err(d),d.ok?'good':'bad');if(d.ok)load()})});
+  $('#call').addEventListener('click',function(){var b=$('#call');b.disabled=true;b.textContent='Connecting…';
+    api('/api/call/human',{}).then(function(d){b.disabled=false;b.textContent='📞 Get me on with a real person';say(d.ok?d.message:err(d),d.ok?'good':'bad')})});
+  $('#fc').addEventListener('click',function(){api('/api/family',{name:$('#fn').value}).then(function(d){if(!d.ok)say(err(d),'bad');else{say('Family created. Now invite someone.');load()}})});
+  $('#fa-copy').addEventListener('click',function(){try{navigator.clipboard.writeText($('#fa-topic').textContent);$('#fa-copy').textContent='Copied'}catch(e){}});
+  $('#fa-swb').addEventListener('click',function(){api('/api/family/safe-word',{safe_word:$('#fa-sw').value}).then(function(d){say(d.ok?'Safe word saved. Tell your family in person, too.':err(d),d.ok?'good':'bad');if(d.ok){$('#fa-sw').value='';load()}})});
+  $('#fa-ib').addEventListener('click',function(){api('/api/family/invite',{email:$('#fa-ie').value,display_name:$('#fa-in').value}).then(function(d){
+    say(d.ok?(d.emailed?'Invitation sent.':'Saved, but the email didn’t send. Try again later.'):err(d),d.ok?'good':'bad');if(d.ok){$('#fa-ie').value='';$('#fa-in').value='';load()}})});
+  $('#fa-members').addEventListener('click',function(e){var b=e.target.closest('[data-rm]');if(!b)return;if(!confirm('Remove them from your family? Their alerts stop right away.'))return;
+    api('/api/family/members/'+b.getAttribute('data-rm')+'/remove',{}).then(load)});
+  $('#iv-alerts').addEventListener('change',function(){$('#iv-text').disabled=!this.checked;if(!this.checked)$('#iv-text').checked=false});
+  $('#fm-alerts').addEventListener('change',function(){$('#fm-text').disabled=!this.checked;if(!this.checked)$('#fm-text').checked=false});
+  $('#iv-accept').addEventListener('click',function(){api('/api/family/invite/accept',{token:ss('wp_invite'),alerts_ok:$('#iv-alerts').checked,share_text:$('#iv-text').checked}).then(function(d){
+    if(!d.ok){say(err(d),'bad');return}ss('wp_invite',null);$('#invite').hidden=true;say('Welcome to the family. Guardian is ready at calasautomations.com/guardian.');load()})});
+  $('#fm-save').addEventListener('click',function(){api('/api/family/me',{alerts_ok:$('#fm-alerts').checked,share_text:$('#fm-text').checked}).then(function(d){say(d.ok?'Saved.':err(d),d.ok?'good':'bad')})});
+  $('#fm-leave').addEventListener('click',function(){if(!confirm('Leave this family? Alerts stop right away.'))return;api('/api/family/me',{leave:true}).then(function(){say('You left the family.');load()})});
+})();
+</script>
+</body></html>
