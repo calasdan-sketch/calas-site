@@ -3,7 +3,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <link rel="icon" type="image/png" href="/favicon.png">
-<title>Access Codes · Calas Admin</title>
+<title>People &amp; Access · Calas Admin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
@@ -30,7 +30,7 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
 #login{max-width:380px;margin:60px auto}
 </style>
 </head><body>
-<header><div class="w"><b>Calas · Access codes</b><button id="out" hidden>Sign out</button></div></header>
+<header><div class="w"><b>Calas · People &amp; access</b><button id="out" hidden>Sign out</button></div></header>
 <main>
   <section id="login" class="card">
     <h1>Owner sign-in</h1>
@@ -42,6 +42,34 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
 
   <div id="app" hidden>
     <div id="setup"></div>
+    <section class="card">
+      <h1>People · app logins</h1>
+      <p style="color:var(--ink2);margin-top:0">Each person gets their own password for one app. It’s made for them and emailed; they can change it on the sign-in page. Your admin password opens every app.</p>
+      <form id="af">
+        <div class="grid">
+          <div><label for="a-app">App</label><select id="a-app"></select></div>
+          <div><label for="a-copy">Which copy</label><input id="a-copy" value="main" placeholder="main" pattern="[a-z0-9]{1,20}" title="Lowercase letters and numbers only"></div>
+          <div><label for="a-name">Their name</label><input id="a-name" placeholder="e.g. Pat Smith"></div>
+          <div><label for="a-email">Their email</label><input id="a-email" type="email" required placeholder="pat@company.ca"></div>
+          <div><label for="a-exp">Works until (end of this day)</label><input id="a-exp" type="date" required></div>
+        </div>
+        <div id="a-warn" class="notice warn" style="margin-top:12px" hidden></div>
+        <label class="check"><input type="checkbox" id="a-send" checked> Email the login to them now</label>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <button>Make login</button>
+          <button type="button" class="ghost" data-adays="30">1 month</button>
+          <button type="button" class="ghost" data-adays="90">3 months</button>
+          <button type="button" class="ghost" data-adays="365">1 year</button>
+        </div>
+      </form>
+      <div id="a-made" style="margin-top:14px"></div>
+      <div class="filters" style="margin-top:16px">
+        <select id="fa-app"><option value="">Every app</option></select>
+        <input id="fa-q" placeholder="Search name, email, copy">
+      </div>
+      <div class="tablewrap"><table><thead><tr><th>Person</th><th>App · copy</th><th>Status</th><th>Works until</th><th>Password</th><th>Last sign-in</th><th></th></tr></thead><tbody id="arows"></tbody></table></div>
+    </section>
+
     <section class="card">
       <h1>Make a free access code</h1>
       <form id="cf">
@@ -101,7 +129,43 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
     $('#lrows').innerHTML=h||'<tr><td colspan="7" style="color:var(--ink2)">No requests yet.</td></tr>'})}
   $('#lrows').addEventListener('change',function(e){var id=e.target.getAttribute('data-lead');if(id)call('/api/admin/leads/'+id+'/status',{status:e.target.value})});
 
-  function load(){loadLeads();call('/api/admin/codes').then(function(d){
+  // ---- People: one login per person per app ----
+  var ACC=null;
+  function copyWarn(){var a=$('#a-app').value,c=($('#a-copy').value||'main').toLowerCase(),w=$('#a-warn');
+    if(c==='main'&&a!=='onfile'){w.hidden=false;w.textContent='“main” is Calas’s own copy, with your own data. Only give it to your own staff. Customers get their own copy name (e.g. acme).'}
+    else w.hidden=true}
+  ['#a-app','#a-copy'].forEach(function(s){$(s).addEventListener('input',copyWarn)});
+  function loadAccounts(){call('/api/admin/accounts').then(function(d){if(!d.ok)return;ACC=d;var sel=$('#a-app'),fa=$('#fa-app');
+    if(!sel.options.length){Object.keys(d.apps).forEach(function(k){sel.add(new Option(d.apps[k],k));fa.add(new Option(d.apps[k],k))});copyWarn()}
+    renderAccounts()})}
+  function renderAccounts(){if(!ACC)return;var fa=$('#fa-app').value,q=$('#fa-q').value.toLowerCase(),now=Date.now(),h='';
+    ACC.accounts.forEach(function(a){
+      if(fa&&a.app!==fa)return;if(q&&(a.name+' '+a.email+' '+a.copy).toLowerCase().indexOf(q)<0)return;
+      var soon=a.live&&a.expires_at-now<7*864e5;
+      var st=a.status==='revoked'?'<span class="pill off">Turned off</span>':!a.live?'<span class="pill off">Ended</span>':soon?'<span class="pill soon">Ends soon</span>':'<span class="pill on">Working</span>';
+      h+='<tr><td>'+esc(a.name||'—')+'<br><small>'+esc(a.email)+'</small></td><td>'+esc(ACC.apps[a.app]||a.app)+' · '+esc(a.copy)+'<br><small><a href="'+esc(a.url)+'" target="_blank" rel="noopener">'+esc(a.url.replace('https://',''))+'</a></small></td><td>'+st+'</td><td>'+day(a.expires_at)+'</td><td>'+(a.pw_set_by_user?'Their own':'The one we sent')+'</td><td>'+(a.last_login_at?day(a.last_login_at):'Never')+'</td><td>'+
+        (a.status==='revoked'?'<button class="ghost" data-aa="restore" data-id="'+a.id+'">Turn on</button> ':'<button class="ghost" data-aa="revoke" data-id="'+a.id+'">Turn off</button> ')+
+        '<button class="ghost" data-aa="extend" data-id="'+a.id+'">Change date</button> '+
+        '<button class="ghost" data-aa="reset" data-id="'+a.id+'" data-e="'+esc(a.email)+'">New password</button> '+
+        '<button class="ghost" data-aa="delete" data-id="'+a.id+'" data-e="'+esc(a.email)+'">Delete</button></td></tr>'});
+    $('#arows').innerHTML=h||'<tr><td colspan="7" style="color:var(--ink2)">No logins yet.</td></tr>'}
+  ['#fa-app','#fa-q'].forEach(function(s){$(s).addEventListener('input',renderAccounts)});
+  function showPw(where,d,email){$(where).innerHTML='<div class="notice good">'+(d.emailed?'Emailed to '+esc(email)+'. ':'Not emailed — copy it and send it yourself. ')+'This is the only time the password is shown.</div><div class="made">'+esc(d.password)+'</div>'+(d.url?'<p style="margin:6px 0 0">Sign-in page: <a href="'+esc(d.url)+'" target="_blank" rel="noopener">'+esc(d.url)+'</a></p>':'')}
+  $('#arows').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var id=b.getAttribute('data-id'),a=b.getAttribute('data-aa'),body={};
+    if(a==='revoke'&&!confirm('Turn this login off? They’re signed out within 10 minutes.'))return;
+    if(a==='delete'&&!confirm('Delete the login for '+b.getAttribute('data-e')+'? This can’t be undone. (Turn off keeps it.)'))return;
+    if(a==='extend'){var d=prompt('New end date (YYYY-MM-DD):',plus(30));if(!d)return;body.expires=d}
+    if(a==='reset'){if(!confirm('Make a new password for '+b.getAttribute('data-e')+'? Their current one stops working.'))return;body.send_email=confirm('Email the new password to them? (Cancel = just show it to me)')}
+    call('/api/admin/accounts/'+id+'/'+a,body).then(function(d){if(!d.ok){alert('That didn’t work: '+(d.error||'unknown'));return}
+      if(a==='reset')showPw('#a-made',d,b.getAttribute('data-e'));loadAccounts()})});
+  document.querySelectorAll('[data-adays]').forEach(function(b){b.addEventListener('click',function(){$('#a-exp').value=plus(+b.getAttribute('data-adays'))})});
+  $('#a-exp').value=plus(30);
+  $('#af').addEventListener('submit',function(e){e.preventDefault();var email=$('#a-email').value;
+    call('/api/admin/accounts',{app:$('#a-app').value,copy:($('#a-copy').value||'main').toLowerCase(),name:$('#a-name').value,email:email,expires:$('#a-exp').value,send_email:$('#a-send').checked}).then(function(d){
+      if(!d.ok){$('#a-made').innerHTML='<div class="notice err">'+({pick_an_end_date:'Pick an end date.',end_date_in_past:'That date has already passed.',pick_an_app:'Pick an app.',bad_email:'Check the email address.',bad_copy:'Copy name: lowercase letters and numbers only.',already_has_login:'That email already has a login for this app. Use “New password” in the list instead.'}[d.error]||'Something went wrong.')+'</div>';return}
+      showPw('#a-made',d,email);$('#a-name').value='';$('#a-email').value='';loadAccounts()})});
+
+  function load(){loadLeads();loadAccounts();call('/api/admin/codes').then(function(d){
     DATA=d;var sel=$('#app-sel'),fa=$('#f-app');
     if(!sel.options.length){Object.keys(d.apps).forEach(function(k){sel.add(new Option(d.apps[k],k));fa.add(new Option(d.apps[k],k))});sel.value='leadme'}
     var s='';
