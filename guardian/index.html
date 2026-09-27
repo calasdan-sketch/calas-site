@@ -35,6 +35,44 @@ a{color:var(--accent)}
 <button id="check">Check this message</button>
 <div class="result" id="result"></div>
 <p class="privacy">🔒 Private: the text never leaves your phone. A match means a known tactic showed up — a warning, not proof.</p>
+
+<hr style="border:0;border-top:1px solid var(--rule);margin:26px 0">
+<section>
+  <h2 style="font-size:19px;margin:0 0 6px">Before you send money &mdash; stop and check</h2>
+  <p class="lede" style="margin:0 0 10px">Scams almost always cost you at one moment: when you send. If any of these is true, don't send &mdash; talk to someone first.</p>
+  <div style="background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:14px">
+    <div class="sig">They want <b>gift cards, crypto, a wire, or e-transfer</b> &mdash; and you've never met in person.</div>
+    <div class="sig"><b>Sudden urgency</b> &mdash; an emergency, a fee to "unlock" money, "do it right now."</div>
+    <div class="sig">You were told to <b>keep it secret</b> from family or your bank.</div>
+    <div class="sig">You're paying to <b>"invest,"</b> or to withdraw "profits" you were shown.</div>
+    <div class="advice">Any one of these? Stop. No real partner, official, or business is ever paid in gift cards or crypto.</div>
+  </div>
+</section>
+<section style="margin-top:24px">
+  <h2 style="font-size:19px;margin:0 0 6px">Not sure? Talk to a real person &mdash; free.</h2>
+  <p class="lede" style="margin:0 0 10px">If you're on a call or chat right now and something feels off, don't decide alone.</p>
+  <a href="tel:+14312449026" style="display:block;text-align:center;background:var(--accent);color:#fff;font-weight:700;font-size:18px;padding:15px;border-radius:12px;text-decoration:none">&#128222; Call Watchpost &mdash; (431) 244-9026</a>
+  <p style="font-size:13px;color:var(--ink2);text-align:center;margin-top:6px">We'll talk it through before you do anything.</p>
+</section>
+<section style="margin-top:24px">
+  <h2 style="font-size:19px;margin:0 0 6px">Beat the voice-clone: set a family "safe word"</h2>
+  <p class="lede" style="margin:0 0 10px">Scammers now fake a loved one's voice &mdash; "it's me, I'm in trouble, send money fast." A safe word stops it cold: if they can't say it, it isn't them. Agree on one in person, today.</p>
+  <button id="genWord" type="button" style="background:#0E4A6B">Suggest a safe word</button>
+  <div id="wordOut" style="display:none;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:14px;margin-top:10px;text-align:center;font-size:22px;font-weight:800;color:var(--accent)"></div>
+  <p style="font-size:13px;color:var(--ink2);margin-top:8px">Pick something only your family knows. Never share it by text or email &mdash; say it out loud, on a call you started.</p>
+</section>
+<section style="margin-top:24px">
+  <h2 style="font-size:19px;margin:0 0 6px">Protecting an older parent?</h2>
+  <p class="lede">The people scammers hit hardest often won't check a message themselves. Put Guardian on their phone, agree on your safe word, and be the person they call. A full family "watch-over" plan is coming to <a href="/watchpost/">Watchpost</a>.</p>
+</section>
+<script>
+(function(){
+  var A=["Maple","Anchor","Copper","Lantern","Willow","Harbour","Cedar","Falcon","Compass","Granite","Beacon","Cobalt","Timber","Saffron","Juniper","Aspen"];
+  var B=["seventeen","gemini","bagpipe","paddle","velvet","domino","walnut","trombone","cactus","zephyr","quartz","lasso","pretzel","waffle","banjo","comet"];
+  var b=document.getElementById("genWord"),o=document.getElementById("wordOut");
+  if(b)b.addEventListener("click",function(){var w=A[Math.floor(Math.random()*A.length)]+" "+B[Math.floor(Math.random()*B.length)];o.style.display="block";o.textContent='“'+w+'”';});
+})();
+</script>
 <footer>Watchpost · Calas Automations · Winnipeg<br><footer>Watchpost Guardian is free, by <a href="/" style="color:inherit">Calas Automations</a> &middot; Winnipeg<br>Add to Home Screen to keep it one tap away.<br><br>Want this kind of tripwire on your whole business? <a href="/watchpost/" style="color:inherit;font-weight:bold">Watchpost</a> plants decoy systems only an intruder would touch &mdash; you get a text the moment someone does, and a one-page report for your insurer every month.<br><br><a href="/watchpost/" style="color:inherit;font-weight:bold">See Watchpost &rarr;</a> &nbsp;&middot;&nbsp; <a href="/" style="color:inherit">&larr; Back to home</a></footer>
 
 </div>
