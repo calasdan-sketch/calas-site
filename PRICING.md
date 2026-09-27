@@ -4,7 +4,7 @@ All prices in Canadian dollars, plus GST/RST where applicable. This file is the 
 
 | Key (`pay/links.json`) | Product | Price | Type | Guarantee | Status |
 |---|---|---|---|---|---|
-| `onfile_build` | On File — build fee | C$2,500 | one-time | Build fee refunded if the two-week run doesn't return 6 staff hours/week | Firm |
+| `onfile_build` | On File — setup fee | **C$0 (dropped)** | one-time | Free two-week trial; no setup fee | Removed 2026-09-27 (was C$2,500; top deal-killer) |
 | `onfile_monthly` | On File — monthly plan | C$500/mo | recurring monthly | 30 days' notice to cancel | Firm |
 | `leadme_build` | Lead Me — setup fee | C$2,500 | one-time | Live with 40 verified warm companies in 14 days, or setup fee back | Firm |
 | `leadme_monthly` | Lead Me — monthly plan | C$500/mo | recurring monthly | 30 days' notice to cancel | Firm |
@@ -16,7 +16,7 @@ All prices in Canadian dollars, plus GST/RST where applicable. This file is the 
 
 ## One-line rationale each
 
-- **On File build, C$2,500.** Roughly two weeks of set-up against a client's own file list; low enough to be a line item, high enough that we don't cut corners. The refund-if-under-6-hours guarantee makes the number safe to say yes to.
+- **On File setup, C$0.** The C$2,500 build fee was dropped on 2026-09-27 — it was the top deal-killer. On File now starts with a free two-week trial and no setup fee; the C$500/mo plan begins only if the run returns at least 6 staff hours a week.
 - **On File monthly, C$500.** C$6,000/yr against an estimated 8–12 staff hours a week recovered (~C$9,000–14,000/yr at C$30/hr). Flat all year so it stays maintained through the quiet months.
 - **Lead Me setup, C$2,500.** Same shape as On File: profile, territory, first verified list. The 40-companies-in-14-days guarantee is the measurable version of "it works for your territory".
 - **Lead Me monthly, C$500.** Ongoing finding, reading, scoring and drafting; priced against what a part-time SDR or a paid lead list costs, without the per-lead fee.
@@ -34,7 +34,7 @@ All prices in Canadian dollars, plus GST/RST where applicable. This file is the 
 
 ## Discounts and exceptions already promised on the site
 
-- Trades page: the C$2,500 On File build fee is **waived for the first three trades contractors** (they still pay C$500/mo) in exchange for a measured case study. In Stripe, do this with a 100% one-time coupon on the build link or simply don't send the build link — don't create a second product.
+- On File has **no build fee** (dropped 2026-09-27) — the old "waived for the first three trades contractors" offer is moot. Everyone now gets the free two-week trial and C$500/mo.
 - Trades page: Cara text-back **first three months at C$19**. In Stripe, a coupon (C$10 off, repeating for 3 months) on the C$29 price, not a second price.
 - Watchpost: **first month free** — a 30-day free trial on the `watchpost_watch` Payment Link.
 - Green Mile / Watchpost annual prices (C$290, C$790): a second Stripe price on the same product, or offer by email; the site keys are the monthly ones.
