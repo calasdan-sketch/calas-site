@@ -71,15 +71,26 @@ function scoreMessage(t){
  }
  return {score:score,lvl:level(score),signals:signals};
 }
+var lastReport=null;
+function extractIdentifiers(t){var out=[];function add(l,a){if(a){var u=[];a.forEach(function(x){x=x.trim();if(x&&u.indexOf(x)<0)u.push(x);});if(u.length)out.push(l+": "+u.join(", "));}}add("Email",t.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g));add("Phone",t.match(/\+?\d[\d\s().-]{7,}\d/g));add("Crypto wallet",t.match(/\b(0x[a-fA-F0-9]{40}|bc1[a-z0-9]{20,60}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})\b/g));add("Handle",t.match(/@[A-Za-z0-9_]{2,}/g));add("Link",t.match(/https?:\/\/[^\s]+/g));return out;}
 function render(){
- var r=scoreMessage(document.getElementById("msg").value);
+ var msg=document.getElementById("msg").value;
+ var r=scoreMessage(msg);
+ lastReport={msg:msg,r:r,ids:extractIdentifiers(msg||"")};
  var el=document.getElementById("result");
  var html='<span class="badge" style="background:'+COLOR[r.lvl]+'">'+LABEL[r.lvl]+' · '+r.score+' pts</span>';
  if(r.signals.length===0){html+='<div class="sig">No known scam patterns matched. That is not proof of safety — it only means nothing tripped our rules.</div>';}
  for(var k=0;k<r.signals.length;k++){html+='<div class="sig">'+esc(r.signals[k])+'</div>';}
  html+='<div class="advice">'+esc(ADVICE[r.lvl])+'</div>';
+ if(r.score>0){
+  if(lastReport.ids.length){html+='<div class="sig"><b>What the scammer gave away</b><br>'+esc(lastReport.ids.join(" · "))+'</div>';}
+  html+='<button id="reportBtn" type="button" style="background:#8b1a1a">📮 Report this scam to authorities</button><p class="privacy" id="repNote" style="display:none"></p>';
+ }
  el.innerHTML=html;el.style.display="block";el.scrollIntoView({behavior:"smooth",block:"nearest"});
+ var rb=document.getElementById("reportBtn");if(rb)rb.addEventListener("click",reportScam);
 }
+function buildDossier(){var d=lastReport||{msg:"",r:{lvl:0,score:0,signals:[]},ids:[]};var L=[];L.push("SCAM REPORT — prepared with Watchpost Guardian");L.push("Date: "+new Date().toLocaleString("en-CA"));L.push("Risk level: "+LABEL[d.r.lvl]+" ("+d.r.score+" points)");L.push("");L.push("Scam tactics detected:");(d.r.signals.length?d.r.signals:["(none matched automatically)"]).forEach(function(s){L.push(" - "+s);});L.push("");if(d.ids.length){L.push("Identifiers the sender provided:");d.ids.forEach(function(x){L.push(" - "+x);});L.push("");}L.push("The message(s) received:");L.push(d.msg);L.push("");L.push("Reporter: (add your name and contact so the authorities can follow up)");return L.join("\n");}
+function reportScam(){var text=buildDossier();function done(){var n=document.getElementById("repNote");if(n){n.style.display="block";n.textContent="Your report is copied. Paste it into the official form that just opened, add your contact details, and submit — you choose what to send.";}try{window.open("https://reportcyberandfraud.canada.ca/","_blank","noopener");}catch(e){}}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,done);}else{try{var ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);}catch(e){}done();}}
 document.getElementById("check").addEventListener("click",render);
 if("serviceWorker" in navigator){navigator.serviceWorker.register("/guardian/sw.js").catch(function(){});}
 </script></body></html>
