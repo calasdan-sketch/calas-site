@@ -32,11 +32,11 @@ Go to **Product catalog** (left menu; it may say **Products**) → **+ Add produ
 | 4 | Lead Me — monthly plan | 500.00 CAD | Recurring, Monthly |
 | 5 | Quote Me — per shop | 99.00 CAD | Recurring, Monthly |
 | 6 | Cara — missed-call text-back | 29.00 CAD | Recurring, Monthly |
-| 7 | Green Mile — owner-operator (up to 3 trucks) | 29.00 CAD | Recurring, Monthly |
-| 8 | Green Mile — small fleet (up to 20 trucks) | 79.00 CAD | Recurring, Monthly |
+| 7 | Haul Me — owner-operator (up to 3 trucks) | 29.00 CAD | Recurring, Monthly |
+| 8 | Haul Me — small fleet (up to 20 trucks) | 79.00 CAD | Recurring, Monthly |
 | 9 | Watchpost — Watch plan | 99.00 CAD | Recurring, Monthly |
 
-Watchpost's first month is free: on product 9, when you make the Payment Link (A3), turn on **Free trial** and set it to 30 days. Annual prices (Green Mile C$290 / C$790, Watchpost C$990) are optional extra prices on the same products; the website only links the monthly ones.
+Watchpost's first month is free: on product 9, when you make the Payment Link (A3), turn on **Free trial** and set it to 30 days. Annual prices (Haul Me C$290 / C$790, Watchpost C$990) are optional extra prices on the same products; the website only links the monthly ones.
 
 Tax: if you have registered for GST (and RST if it applies), turn on **Stripe Tax** in Settings → Tax and set each product's tax behaviour to **Exclusive** so the tax is added on top, matching the "plus GST/RST" line on the site. If you have not registered yet, skip this and the site's wording still holds.
 
