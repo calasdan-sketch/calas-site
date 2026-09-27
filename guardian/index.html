@@ -34,7 +34,7 @@ a{color:var(--accent)}
 <textarea id="msg" placeholder="Paste the message or chat here…"></textarea>
 <button id="check">Check this message</button>
 <div class="result" id="result"></div>
-<p class="privacy">🔒 Private: the text never leaves your phone. A match means a known tactic showed up — a warning, not proof.</p>
+<p class="privacy">🔒 Private: the message text never leaves your phone. To check numbers and links against scams other Guardian users reported, only a scrambled fingerprint is sent — never the number or link itself. A match means a known tactic showed up — a warning, not proof.</p>
 
 <hr style="border:0;border-top:1px solid var(--rule);margin:26px 0">
 <section>
@@ -65,6 +65,7 @@ a{color:var(--accent)}
   <h2 style="font-size:19px;margin:0 0 6px">Protecting an older parent?</h2>
   <p class="lede">The people scammers hit hardest often won't check a message themselves. Put Guardian on their phone, agree on your safe word, and be the person they call. A full family "watch-over" plan is coming to <a href="/watchpost/">Watchpost</a>.</p>
 </section>
+<script src="/guardian/scamcheck.js"></script>
 <script>
 (function(){
   var A=["Maple","Anchor","Copper","Lantern","Willow","Harbour","Cedar","Falcon","Compass","Granite","Beacon","Cobalt","Timber","Saffron","Juniper","Aspen"];
@@ -126,6 +127,29 @@ function render(){
  }
  el.innerHTML=html;el.style.display="block";el.scrollIntoView({behavior:"smooth",block:"nearest"});
  var rb=document.getElementById("reportBtn");if(rb)rb.addEventListener("click",reportScam);
+ shared(msg,r,el);
+}
+function shared(msg,r,el){
+ if(!window.WPScam)return;
+ var items=WPScam.extract(msg||"");
+ WPScam.check(items).then(function(found){
+  var lvl=r.lvl;
+  if(found.length){
+   lvl=Math.max(lvl,3);
+   var box=document.createElement("div");box.className="sig";box.style.borderLeft="4px solid #8b1a1a";
+   box.innerHTML="<b>⚠ Other Guardian users reported this</b><br>"+found.map(function(f){return esc(f.value)+" — reported by "+f.reporters+(f.reporters===1?" person":" people");}).join("<br>");
+   el.insertBefore(box,el.firstChild.nextSibling);
+   var badge=el.querySelector(".badge");if(badge&&lvl>r.lvl){badge.style.background=COLOR[lvl];badge.textContent=LABEL[lvl]+" · reported scam";}
+  }
+  if(items.length&&(r.score>0||found.length)){
+   var w=document.createElement("button");w.type="button";w.textContent="🛡 Warn other Guardian users about "+(items.length===1?"this "+items[0].kind:"these "+items.length+" details");
+   w.addEventListener("click",function(){w.disabled=true;w.textContent="Sending…";
+    WPScam.report(items,Math.max(r.score,found.length?8:0)).then(function(d){w.textContent=d&&d.ok?"✓ Thanks — others will be warned":"Couldn’t send right now";}).catch(function(){w.textContent="Couldn’t send right now";});});
+   el.appendChild(w);
+   var n=document.createElement("p");n.className="privacy";n.textContent="Sends only the number/link/handle above, not your message.";el.appendChild(n);
+  }
+  if(lvl>=3)WPScam.alertFamily({lvl:lvl,score:r.score,signals:r.signals},msg).then(function(d){if(d){var a=document.createElement("p");a.className="privacy";a.textContent="Your family was alerted, as you chose. Call them and use your safe word.";el.appendChild(a);}});
+ });
 }
 function buildDossier(){var d=lastReport||{msg:"",r:{lvl:0,score:0,signals:[]},ids:[]};var L=[];L.push("SCAM REPORT — prepared with Watchpost Guardian");L.push("Date: "+new Date().toLocaleString("en-CA"));L.push("Risk level: "+LABEL[d.r.lvl]+" ("+d.r.score+" points)");L.push("");L.push("Scam tactics detected:");(d.r.signals.length?d.r.signals:["(none matched automatically)"]).forEach(function(s){L.push(" - "+s);});L.push("");if(d.ids.length){L.push("Identifiers the sender provided:");d.ids.forEach(function(x){L.push(" - "+x);});L.push("");}L.push("The message(s) received:");L.push(d.msg);L.push("");L.push("Reporter: (add your name and contact so the authorities can follow up)");return L.join("\n");}
 function reportScam(){var text=buildDossier();function done(){var n=document.getElementById("repNote");if(n){n.style.display="block";n.textContent="Your report is copied. Paste it into the official form that just opened, add your contact details, and submit — you choose what to send.";}try{window.open("https://reportcyberandfraud.canada.ca/","_blank","noopener");}catch(e){}}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,done);}else{try{var ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);}catch(e){}done();}}
