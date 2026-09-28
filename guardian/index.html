@@ -155,4 +155,5 @@ function buildDossier(){var d=lastReport||{msg:"",r:{lvl:0,score:0,signals:[]},i
 function reportScam(){var text=buildDossier();function done(){var n=document.getElementById("repNote");if(n){n.style.display="block";n.textContent="Your report is copied. Paste it into the official form that just opened, add your contact details, and submit — you choose what to send.";}try{window.open("https://reportcyberandfraud.canada.ca/","_blank","noopener");}catch(e){}}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,done);}else{try{var ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);}catch(e){}done();}}
 document.getElementById("check").addEventListener("click",render);
 if("serviceWorker" in navigator){navigator.serviceWorker.register("/guardian/sw.js").catch(function(){});}
-</script></body></html>
+</script><script src="/cara/cara.js" data-app="site" defer></script>
+</body></html>
