@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Watchpost Guardian — scam-message check · Calas Automations</title>
-<meta name="description" content="Paste a suspicious text or chat and Watchpost Guardian flags known romance and crypto-scam tactics. Runs entirely on your phone — nothing you paste is sent anywhere.">
+<title>Watchpost Guardian — just screenshot it · scam check · Calas Automations</title>
+<meta name="description" content="Got a suspicious text, DM or email? Just screenshot it — Watchpost Guardian reads it and tells you in seconds if it's a scam. Runs entirely on your phone; the picture is never uploaded. Free.">
 <meta name="theme-color" content="#155F87">
 <link rel="manifest" href="/guardian/manifest.json">
 <link rel="icon" href="/favicon.png">
@@ -24,15 +24,26 @@ button{width:100%;font-size:18px;font-weight:700;padding:15px;border:0;border-ra
 .privacy{margin-top:14px;font-size:13px;color:var(--ink2);text-align:center}
 footer{text-align:center;color:var(--ink2);font-size:12px;padding:22px 0}
 a{color:var(--accent)}
+.shotbtn{display:block;text-align:center;margin-top:10px;padding:12px;border:1px dashed #9DB8CC;border-radius:10px;color:#155F87;font-weight:600;cursor:pointer}
+.shotbtn:hover,.shotbtn:focus-within{background:#EEF5FA}
+.shotbtn.primary{border:0;background:var(--accent);color:#fff;font-size:18px;font-weight:700;padding:16px}
+.shotbtn.primary:hover,.shotbtn.primary:focus-within{background:#0E4A6B}
+.small{font-size:13px;color:#4E5B66;margin:8px 0 0}
 </style></head><body><div class="wrap">
 <header>
 <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M27 6a15 15 0 1 0 0 28 12 12 0 1 1 0-28z" fill="#155F87"/></svg>
 <div><b>Watchpost Guardian</b><span class="tag">by Calas Automations</span></div>
 </header>
-<h1>Is this message a scam?</h1>
-<p class="lede">Paste a suspicious text or a whole chat. Guardian flags known romance- and crypto-scam tactics. It runs entirely on your phone — nothing you paste is sent anywhere.</p>
-<textarea id="msg" placeholder="Paste the message or chat here…"></textarea>
+<h1>Is this a scam? Just screenshot it.</h1>
+<p class="lede">See a suspicious text, DM, or email? <b>Take a screenshot and tap below</b> &mdash; Guardian reads it and tells you in seconds if it smells like a scam. No typing, no account. It runs entirely on your phone, so the picture is <b>never uploaded</b>.</p>
+<label class="shotbtn primary" for="shot">&#128247; Check a screenshot</label>
+<input id="shot" type="file" accept="image/*" hidden>
+<p class="small" id="shotNote" hidden></p>
+<p class="small" id="shareTip">On Android: add Guardian to your home screen, then <b>Share &rarr; Guardian</b> straight from any text, link or screenshot &mdash; not even a tap to open it. (Screenshot reading works best on Android today; on iPhone, take the screenshot and open it here.)</p>
+<details style="margin-top:14px"><summary style="cursor:pointer;color:var(--accent);font-weight:600">Or paste the message text instead</summary>
+<textarea id="msg" placeholder="Paste the message or chat here…" style="margin-top:10px"></textarea>
 <button id="check">Check this message</button>
+</details>
 <div class="result" id="result"></div>
 <p class="privacy">🔒 Private: the message text never leaves your phone. To check numbers and links against scams other Guardian users reported, only a scrambled fingerprint is sent — never the number or link itself. A match means a known tactic showed up — a warning, not proof.</p>
 
@@ -155,5 +166,23 @@ function buildDossier(){var d=lastReport||{msg:"",r:{lvl:0,score:0,signals:[]},i
 function reportScam(){var text=buildDossier();function done(){var n=document.getElementById("repNote");if(n){n.style.display="block";n.textContent="Your report is copied. Paste it into the official form that just opened, add your contact details, and submit — you choose what to send.";}try{window.open("https://reportcyberandfraud.canada.ca/","_blank","noopener");}catch(e){}}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,done);}else{try{var ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);}catch(e){}done();}}
 document.getElementById("check").addEventListener("click",render);
 if("serviceWorker" in navigator){navigator.serviceWorker.register("/guardian/sw.js").catch(function(){});}
+/* Screenshot reading happens on this phone (Tesseract, loaded only when a picture is chosen).
+   The engine and English letters download once; the picture itself is never uploaded. */
+var shotNote=document.getElementById("shotNote");
+function note(t){shotNote.hidden=!t;shotNote.textContent=t||"";}
+function loadOCR(){return window.Tesseract?Promise.resolve(window.Tesseract):new Promise(function(ok,no){var s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";s.onload=function(){ok(window.Tesseract)};s.onerror=no;document.head.appendChild(s);});}
+function readPicture(blob){note("Reading the screenshot on your phone… (first time takes a few seconds)");
+  return loadOCR().then(function(T){return T.recognize(blob,"eng");}).then(function(r){
+    var t=(r&&r.data&&r.data.text||"").trim();
+    if(!t){note("Couldn't find any words in that picture. Try a clearer screenshot, or paste the text.");return;}
+    var box=document.getElementById("msg");box.value=(box.value?box.value+"\n":"")+t;note("Read "+t.split(/\s+/).length+" words from the screenshot. Check them below, then see the result.");render();
+  }).catch(function(){note("Couldn't read the screenshot here. Paste the text instead.");});}
+document.getElementById("shot").addEventListener("change",function(e){var f=e.target.files&&e.target.files[0];if(f)readPicture(f);e.target.value="";});
+if(/[?&]shared=1/.test(location.search)&&"caches" in window){caches.open("guardian-share").then(function(c){
+  return Promise.all([c.match("/guardian/_shared-text"),c.match("/guardian/_shared-image")]).then(function(r){
+    var p=r[0]?r[0].text():Promise.resolve("");
+    return p.then(function(t){if(t){document.getElementById("msg").value=t;render();}
+      var done=function(){c.delete("/guardian/_shared-text");c.delete("/guardian/_shared-image");history.replaceState(null,"","/guardian/");};
+      if(r[1])return r[1].blob().then(readPicture).then(done);done();});});});}
 </script><script src="/cara/cara.js" data-app="site" defer></script>
 </body></html>
