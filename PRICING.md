@@ -6,7 +6,7 @@ All prices in Canadian dollars, plus GST/RST where applicable. This file is the 
 |---|---|---|---|---|---|
 | `onfile_build` | On File — setup fee | **C$0 (dropped)** | one-time | Free two-week trial; no setup fee | Removed 2026-09-27 (was C$2,500; top deal-killer) |
 | `onfile_monthly` | On File — monthly plan | C$500/mo | recurring monthly | 30 days' notice to cancel | Firm |
-| `leadme_build` | Lead Me — setup fee | C$2,500 | one-time | Live with 40 verified warm companies in 14 days, or setup fee back | Firm |
+| `leadme_build` | Lead Me — setup fee | **C$0 (dropped)** | one-time | 40 verified warm companies in 14 days, or walk away owing nothing | Removed 2026-09-28 (was C$2,500) |
 | `leadme_monthly` | Lead Me — monthly plan | C$500/mo | recurring monthly | 30 days' notice to cancel | Firm |
 | `quoteme_monthly` | Quote Me — per shop | C$99/mo | recurring monthly | 60-day deposit-or-refund: no real deposit collected in 60 days, first two months refunded | Early access; rises after first ten shops |
 | `textback_monthly` | Cara — missed-call text-back | C$29/mo | recurring monthly | none yet; first three months C$19 while validating | **Hypothesis** |
