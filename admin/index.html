@@ -29,6 +29,10 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
 .on{background:var(--okbg);color:var(--ok)}.off{background:var(--badbg);color:var(--bad)}.soon{background:var(--midbg);color:var(--mid)}
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.filters select,.filters input{width:auto;min-width:150px}
 #login{max-width:380px;margin:60px auto}
+.apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.appbtn{display:block;padding:14px 16px;border:1px solid var(--rule);border-radius:10px;color:var(--ink);text-decoration:none;font:700 17px "Libre Baskerville",Georgia,serif;border-left:4px solid var(--blue);transition:transform .12s,box-shadow .12s}
+.appbtn span{display:block;font:400 13px "IBM Plex Sans",sans-serif;color:var(--ink2);margin-top:2px}
+.appbtn:hover,.appbtn:focus-visible{transform:translateY(-1px);box-shadow:0 4px 14px rgba(11,46,69,.14);outline:none}
 </style>
 </head><body>
 <header><div class="w"><b>Calas · People &amp; access</b><button id="out" hidden>Sign out</button></div></header>
@@ -43,6 +47,22 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
 
   <div id="app" hidden>
     <div id="setup"></div>
+    <section class="card" aria-labelledby="open-h">
+      <h1 id="open-h">Open the apps</h1>
+      <p style="color:var(--ink2);margin-top:0">Each app opens in a new tab. Sign in there with <b>dan@calasautomations.com</b> and this same admin password &mdash; it's the master login for every app and every customer copy.</p>
+      <div class="apps">
+        <a class="appbtn" href="https://leadme.calasautomations.com/" target="_blank" rel="noopener">Lead Me<span>Calas's own leads</span></a>
+        <a class="appbtn" href="https://haulme.calasautomations.com/" target="_blank" rel="noopener">Haul Me<span>Calas's own copy</span></a>
+        <a class="appbtn" href="https://onfile.calasautomations.com/" target="_blank" rel="noopener">On File<span>Calas's own copy</span></a>
+        <a class="appbtn" href="/quote-me/app/" target="_blank" rel="noopener">Quote Me<span>the app</span></a>
+        <a class="appbtn" href="/watchpost/account/" target="_blank" rel="noopener">Watchpost<span>account page</span></a>
+      </div>
+      <form id="cf" class="grid" style="margin-top:14px">
+        <div><label for="c-app">A customer's private copy</label><select id="c-app"><option value="leadme">Lead Me</option><option value="haulme">Haul Me</option><option value="onfile">On File</option></select></div>
+        <div><label for="c-copy">Copy name</label><input id="c-copy" placeholder="e.g. acme" pattern="[a-z0-9]{1,20}" title="Lowercase letters and numbers only" required></div>
+        <div><button>Open that copy</button></div>
+      </form>
+    </section>
     <section class="card">
       <h1>People · app logins</h1>
       <p style="color:var(--ink2);margin-top:0">Each person gets their own password for one app. It’s made for them and emailed; they can change it on the sign-in page. Your admin password opens every app.</p>
@@ -265,6 +285,13 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
       if(!d.ok){$('#madebox').innerHTML='<div class="notice err">'+({pick_an_end_date:'Pick an end date.',end_date_in_past:'That date has already passed.',pick_an_app:'Pick an app.'}[d.error]||'Something went wrong.')+'</div>';return}
       $('#madebox').innerHTML='<div class="notice good">Made. Works until '+day(d.expires_at)+'.</div>'+d.made.map(function(m){return'<div class="made">'+esc(m.code)+(m.emailed?' <small style="font-family:IBM Plex Sans">(emailed)</small>':'')+'</div>'}).join('');
       load()})});
+
+  // A customer's private copy lives at <app>-<copy>.calasautomations.com
+  // (calas-copy on the server); "main" is Calas's own at <app>.calasautomations.com.
+  $('#cf').addEventListener('submit',function(e){e.preventDefault();
+    var c=$('#c-copy').value.trim().toLowerCase();if(!/^[a-z0-9]{1,20}$/.test(c))return;
+    var host=$('#c-app').value+(c==='main'?'':'-'+c)+'.calasautomations.com';
+    window.open('https://'+host+'/','_blank','noopener')});
 
   var saved=ss('cpw');if(saved)login(saved);
 })();
