@@ -269,7 +269,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
       <div>
         <h3>On File &mdash; MSP reseller</h3>
         <p class="who">Wholesale pricing per client &mdash; you set your own billing rate</p>
-        <p>You pay Calas a wholesale rate. You invoice your client at whatever rate makes sense for your relationship. The direct rate we charge accounting firms is $2,500&nbsp;setup&nbsp;+&nbsp;$500/mo &mdash; your client price can match, undercut, or exceed that. That&rsquo;s your call.</p>
+        <p>You pay Calas a wholesale rate. You invoice your client at whatever rate makes sense for your relationship. The direct rate we charge accounting firms is $500/mo&nbsp;with&nbsp;no&nbsp;setup&nbsp;fee &mdash; your client price can match, undercut, or exceed that. That&rsquo;s your call.</p>
         <p class="quote">&ldquo;Your clients keep calling you. The document pile calls On File instead.&rdquo;</p>
         <p style="font-size:13px;color:var(--ink-3)">Not a named client &mdash; we&rsquo;re a new program. First cohort shapes the guarantee.</p>
       </div>
@@ -277,7 +277,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
         <dl>
           <dt>Wholesale setup</dt><dd class="big">$1,800 <span style="font-size:13px;font-weight:400;color:var(--ink-3)">per client</span></dd>
           <dt>Wholesale monthly</dt><dd>$400/mo per client &mdash; $4,800/yr. Flat, all year, no per-chase fees.</dd>
-          <dt>Your suggested margin</dt><dd>Bill direct at $2,500&nbsp;setup&nbsp;+&nbsp;$500/mo and you net $700 on setup and $100/mo per client &mdash; $1,200/yr per client at one, growing with each add-on.</dd>
+          <dt>Your suggested margin</dt><dd>Bill direct at $500/mo and you net $100/mo per client &mdash; $1,200/yr per client, growing with each add-on.</dd>
           <dt>Minimum commitment</dt><dd>One client, one year. After that, 30 days&rsquo; notice to cancel any client slot.</dd>
           <dt>White-label included</dt><dd>Client-facing emails from your domain, your shared folder, no Calas branding visible to your clients.</dd>
           <dt>Guarantee</dt><dd>Same as the direct product: if the two-week free run doesn&rsquo;t return at least 6 staff hours a week to your client, the setup fee is refunded &mdash; to you, so you can refund your client on your own terms.</dd>
@@ -312,7 +312,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
   if(hrs && rate){
     var money=function(n){return '$'+Math.round(n).toLocaleString('en-CA')};
     function calc(){
-      var h=+hrs.value, r=+rate.value, build=2500, yearly=6000;
+      var h=+hrs.value, r=+rate.value, build=0, yearly=6000;
       var saved=h*0.85*46, gross=saved*r, cost=build+yearly, net=gross-cost;
       document.getElementById('hrsv').textContent=h;
       document.getElementById('ratev').textContent=r;

@@ -236,13 +236,13 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
           <label for="rate">What that person costs you an hour <b>$<span id="ratev">30</span>/hr</b></label>
           <input type="range" id="rate" min="20" max="120" value="30" step="1">
         </div>
-        <div class="field"><label>Build fee <b>$2,500</b></label></div>
+        <div class="field"><label>Setup fee <b>$0</b></label></div>
       </div>
       <div class="out">
         <div class="row"><span class="k">Hours returned each year</span><span class="v" id="oHrs">313</span></div>
         <div class="row"><span class="k">That labour, valued</span><span class="v" id="oGross">$9,384</span></div>
-        <div class="row"><span class="k">Less first-year cost ($2,500 + $6,000)</span><span class="v" id="oCost">&minus;$8,500</span></div>
-        <div class="row net"><span class="k">Net, year one</span><span class="v" id="oNet">$884</span></div>
+        <div class="row"><span class="k">Less first-year cost ($6,000, no setup fee)</span><span class="v" id="oCost">&minus;$6,000</span></div>
+        <div class="row net"><span class="k">Net, year one</span><span class="v" id="oNet">$3,384</span></div>
       </div>
     </div>
     <p class="caption"><b>This is an estimate, not a measurement.</b> The sliders are your inputs; the arithmetic assumes 85% of those hours come back over 46 working weeks &mdash; our assumption, with no external source behind it. Every figure here is an illustrative figure &mdash; your real number gets measured in the two-week free run.</p>
@@ -261,9 +261,9 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
         <dl>
           <dt>Tracks</dt><dd>Certificates of insurance, WCB clearance letters, lien waivers, permits and inspection sign-offs, safe-work certificates, signed change orders.</dd>
           <dt>Best fit</dt><dd>8&ndash;60 people, and you use subcontractors. If you don't, this isn't for you and we'll say so.</dd>
-          <dt>Build</dt><dd class="big">$2,500</dd>
+          <dt>Setup</dt><dd class="big">$0</dd>
           <dt>Monthly</dt><dd>$500, flat, all year. Compliance exposure doesn't take a summer off.</dd>
-          <dt>Guarantee</dt><dd>If the two-week free run doesn't return at least 6 staff hours a week, the build fee is refunded.</dd>
+          <dt>Guarantee</dt><dd>If the two-week free run doesn't return at least 6 staff hours a week, you walk away owing nothing.</dd>
           <dt>Not included</dt><dd>Legal or insurance advice, or any judgement about whether a policy is adequate. On File tracks and chases documents; your broker still assesses them.</dd>
         </dl>
       </div>
@@ -273,8 +273,8 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
   <section>
     <div class="sec-head">
       <p class="eyebrow">Founding clients</p>
-      <h2>The first three trades clients: build fee waived, in exchange for a case study.</h2>
-      <p>We have no trades case study yet, and we'd rather earn one than write around it. So for the first three trades contractors who sign on, the $2,500 build fee is waived. You still pay the $500 a month. In return, we measure the hours before and after, and publish the result as a named case study with your company on it &mdash; the real numbers, whatever they turn out to be. If you'd rather not be named, that's fine; the standard $2,500 build applies.</p>
+      <h2>The first three trades clients: help us write our first case study.</h2>
+      <p>We have no trades case study yet, and we'd rather earn one than write around it. So we're asking the first three trades contractors who sign on to be it. In return, we measure the hours before and after, and publish the result as a named case study with your company on it &mdash; the real numbers, whatever they turn out to be. If you'd rather not be named, that's fine; the price is the same either way: no setup fee, $500 a month.</p>
     </div>
   </section>
   <section>
@@ -316,7 +316,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
         <ul>
           <li>You don't use subcontractors &mdash; there's nothing here worth paying for.</li>
           <li>You want a computer making judgement calls a professional should make.</li>
-          <li>You want it for a few hundred dollars &mdash; the fixed build is $2,500 and we won't cut corners to go lower.</li>
+          <li>You want it for less than $500 a month &mdash; that's the flat price and we won't cut corners to go lower.</li>
         </ul>
       </div>
     </div>
@@ -378,7 +378,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
   if(hrs && rate){
     var money=function(n){return '$'+Math.round(n).toLocaleString('en-CA')};
     function calc(){
-      var h=+hrs.value, r=+rate.value, build=2500, yearly=6000;
+      var h=+hrs.value, r=+rate.value, build=0, yearly=6000;
       var saved=h*0.85*46, gross=saved*r, cost=build+yearly, net=gross-cost;
       document.getElementById('hrsv').textContent=h;
       document.getElementById('ratev').textContent=r;
