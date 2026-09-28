@@ -14,7 +14,7 @@
 .nav-signin{font-weight:600;color:var(--ink) !important;border:1px solid currentColor;padding:8px 14px;border-radius:2px}
 </style></head><body>
 <title>ReceiptSort — drop receipts, get one CSV · Calas Automations</title>
-<meta name="description" content="ReceiptSort is a free tool: drop a folder of receipt photos and PDFs, get one CSV. Runs on your own computer, nothing uploaded. Rows it is not sure about are marked needs review.">
+<meta name="description" content="ReceiptSort is a free tool: drop a folder of receipt photos and PDFs, get one CSV. Works in the browser on any phone or computer, nothing uploaded. Rows it is not sure about are marked needs review.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
@@ -217,9 +217,9 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
   <div class="wrap">
     <p class="by">ReceiptSort &middot; by Calas Automations &middot; free</p>
     <h1>Drop a folder of receipts. Get one CSV.</h1>
-    <p class="lede">A free tool for the shoebox. Photos, scans, PDFs &mdash; ReceiptSort reads each one and writes one spreadsheet row per receipt. It runs on your own computer. Nothing is uploaded anywhere.</p>
+    <p class="lede">A free tool for the shoebox. Photos, scans, PDFs &mdash; ReceiptSort reads each one and writes one spreadsheet row per receipt. It runs on your own phone or computer. Nothing is uploaded anywhere.</p>
     <div class="hero-actions">
-      <a class="btn" href="/receiptsort/ReceiptSort.zip" download>Download ReceiptSort (.zip)</a>
+      <a class="btn" href="/receiptsort/app/">Open ReceiptSort &mdash; free</a>
       <a class="btn ghost" href="#run">How to run it</a>
     </div>
     <p class="fine">Free &mdash; C$0, no account, no support line. No network calls, ever &mdash; the only optional connection is to a model running on your own computer (Ollama at 127.0.0.1); pass <span class="mono">--no-llm</span> to disable even that.</p>
@@ -269,15 +269,15 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
 
   <section id="run">
     <div class="sec-head">
-      <p class="eyebrow">How to run it</p>
-      <h2>Download, unzip, run.</h2>
+      <p class="eyebrow">How to use it</p>
+      <h2>Open it. Pick receipts. Download.</h2>
     </div>
     <div class="steps">
-      <div class="step"><span class="n">STEP 01</span><h3>Download and unzip.</h3> <p><a href="/receiptsort/ReceiptSort.zip" download>ReceiptSort.zip</a> &mdash; unzip it anywhere on your computer.</p></div>
-      <div class="step"><span class="n">STEP 02</span><h3>You need Python 3.11 or newer.</h3> <p>Once, in a terminal: <span class="mono">pip install markitdown pytesseract Pillow</span>. To read photos, also install Tesseract OCR (free, offline). PDFs with a text layer work without it.</p></div>
-      <div class="step"><span class="n">STEP 03</span><h3>Start it.</h3> <p>Double-click <span class="mono">run.bat</span> (Windows), or run <span class="mono">python receiptsort.py --web</span> from the unzipped folder.</p></div>
+      <div class="step"><span class="n">STEP 01</span><h3>Open ReceiptSort.</h3> <p><a href="/receiptsort/app/">calasautomations.com/receiptsort/app</a> works in the browser on Windows, Mac, iPhone, iPad and Android. Nothing to install. Add it to your home screen to use it like an app.</p></div>
+      <div class="step"><span class="n">STEP 02</span><h3>Pick your receipts.</h3> <p>Photos or PDFs, as many as you like. Each one is read right on your device &mdash; nothing is uploaded.</p></div>
+      <div class="step"><span class="n">STEP 03</span><h3>Check and download.</h3> <p>Fix anything marked &ldquo;Check this&rdquo;, then download one spreadsheet (CSV) for Excel, Google Sheets or your accounting software.</p></div>
     </div>
-    <p class="caption">No network calls, ever &mdash; the only optional connection is to a model running on your own computer (Ollama at 127.0.0.1); pass <span class="mono">--no-llm</span> to disable even that.</p>
+    <p class="caption">Private by design: your receipts never leave your phone or computer. The reading tool downloads once, then works offline.</p>
   </section>
 
   <section>
@@ -353,7 +353,7 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
       <p>The zip is free and needs no account. If something doesn't work, one email reaches Dan &mdash; no promise on turnaround, but we'll fix what we can.</p>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
-      <a class="btn" href="/receiptsort/ReceiptSort.zip" download>Download ReceiptSort (.zip)</a>
+      <a class="btn" href="/receiptsort/app/">Open ReceiptSort &mdash; free</a>
       <a class="btn ghost light" href="mailto:dan@calasautomations.com?subject=On%20File%20%E2%80%94%2015%20minutes" style="text-align:center;border:1px solid var(--rule);color:var(--ink)">Book 15 minutes</a>
       <span class="eyebrow" style="text-align:center">Replies within one business day</span>
     </div>

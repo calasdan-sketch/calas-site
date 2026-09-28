@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ReceiptSort &middot; free receipt-to-spreadsheet</title>
+<meta name="description" content="Pick receipt photos or PDFs, get one spreadsheet (CSV) of date, vendor, subtotal, GST and total. Works on any phone or computer. Nothing is uploaded.">
+<link rel="manifest" href="/receiptsort/app/manifest.json">
+<meta name="theme-color" content="#155F87">
+<link rel="apple-touch-icon" href="/favicon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{--paper:#fff;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--rule:#D9E3EA;--accent:#155F87;--accent-2:#0E4A6B;--night:#0B2E45;--gold:#F0C171;--ok:#17794A;--okbg:#E9F5EE;--warn:#8A5A12;--warnbg:#FBF1DF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F2231;--sunk:#0A1722;--ink:#EEF4F8;--ink-2:#B2C3CF;--rule:#1E3A4D;--accent:#5CAAD6;--accent-2:#8ACBEE;--okbg:#16302A;--ok:#6FD9A2;--warnbg:#352A10;--warn:#F2C465}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--sunk);color:var(--ink);font:16px/1.55 "IBM Plex Sans",system-ui,-apple-system,sans-serif}
+.top{background:linear-gradient(135deg,#0B2E45,#123C57);color:#fff;border-bottom:2px solid #B9812E}
+.top .in{max-width:980px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.top b{font:700 18px "Libre Baskerville",Georgia,serif}.top small{display:block;font:500 9px "IBM Plex Mono",monospace;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+.top a{margin-left:auto;color:#CFE3EF;font-size:14px}
+main{max-width:980px;margin:0 auto;padding:24px 16px 48px}
+h1{font:700 clamp(24px,4vw,34px)/1.2 "Libre Baskerville",Georgia,serif;margin:0 0 8px}
+.lede{color:var(--ink-2);margin:0 0 20px;max-width:62ch}
+.drop{display:block;background:var(--paper);border:2px dashed #9DB8CC;border-radius:14px;padding:34px 18px;text-align:center;cursor:pointer;transition:background .15s,border-color .15s}
+.drop:hover,.drop:focus-within,.drop.over{background:#EEF5FA;border-color:var(--accent)}
+.drop b{display:block;font-size:19px;margin-bottom:4px}.drop span{color:var(--ink-2);font-size:14px}
+.drop input{position:absolute;width:1px;height:1px;opacity:0}
+.status{margin:14px 0 0;color:var(--ink-2);font-size:14px;min-height:1.5em}
+.bar{height:6px;background:var(--rule);border-radius:99px;overflow:hidden;margin-top:8px;display:none}.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 10px;align-items:center}
+.btn{font:600 15px inherit;border:0;border-radius:8px;padding:11px 16px;background:var(--accent);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--rule)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.wrap{overflow-x:auto;background:var(--paper);border:1px solid var(--rule);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule)}
+th{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+td input{width:100%;border:1px solid transparent;background:transparent;font:inherit;color:inherit;padding:4px 6px;border-radius:6px}
+td input:hover,td input:focus{border-color:var(--rule);background:var(--sunk);outline:none}
+td.num input{text-align:right;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.pill.ok{background:var(--okbg);color:var(--ok)}.pill.rev{background:var(--warnbg);color:var(--warn)}
+.empty{padding:26px;text-align:center;color:var(--ink-2)}
+.note{font-size:13px;color:var(--ink-2);margin-top:14px}
+.cta{margin-top:26px;padding:16px 18px;background:var(--paper);border:1px solid var(--rule);border-left:4px solid var(--gold);border-radius:10px;font-size:15px}
+</style>
+</head>
+<body>
+<header class="top"><div class="in"><div><b>ReceiptSort</b><small>Free &middot; by Calas Automations</small></div><a href="/receiptsort/">About</a></div></header>
+<main>
+  <h1>Receipts in. One spreadsheet out.</h1>
+  <p class="lede">Pick receipt photos or PDFs. ReceiptSort reads each one right here on your phone or computer and lists the date, vendor, subtotal, GST and total. Nothing is uploaded. Anything it isn't sure about is left blank and marked for you to check.</p>
+
+  <label class="drop" id="drop">
+    <input type="file" id="files" accept="image/*,.pdf,application/pdf" multiple>
+    <b>&#128206; Choose receipts</b>
+    <span>Photos or PDFs &middot; pick as many as you like &middot; or drag them here</span>
+  </label>
+  <p class="status" id="status" aria-live="polite"></p>
+  <div class="bar" id="bar" aria-hidden="true"><i id="barFill"></i></div>
+
+  <div class="tools">
+    <button class="btn" id="dl" type="button" disabled>Download spreadsheet (CSV)</button>
+    <button class="btn ghost" id="clear" type="button" disabled>Start over</button>
+    <span class="note" id="count"></span>
+  </div>
+  <div class="wrap"><table>
+    <thead><tr><th>File</th><th>Date</th><th>Vendor</th><th>Subtotal</th><th>GST</th><th>Total</th><th>Status</th></tr></thead>
+    <tbody id="rows"><tr><td colspan="7" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr></tbody>
+  </table></div>
+  <p class="note">The CSV opens in Excel, Google Sheets, Numbers or your accounting software. Tip: add this page to your home screen to use it like an app, even offline after the first use.</p>
+  <div class="cta">Chasing clients for their receipts? <b>On File</b> by Calas Automations does the chasing for you. <a href="/accounting/">See On File &rarr;</a></div>
+</main>
+<script src="/receiptsort/app/parse.js"></script>
+<script>
+(function () {
+  'use strict';
+  var TESS = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+  var PDFJS = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js';
+  var PDFWORKER = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+  var rows = [], busy = false, worker = null;
+  var $ = function (id) { return document.getElementById(id); };
+  var statusEl = $('status'), bar = $('bar'), fill = $('barFill'), tbody = $('rows');
+
+  function load(src) {
+    return new Promise(function (ok, no) { var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
+  }
+  function ocrWorker() {
+    if (worker) return Promise.resolve(worker);
+    return (window.Tesseract ? Promise.resolve() : load(TESS)).then(function () { return Tesseract.createWorker('eng'); })
+      .then(function (w) { worker = w; return w; });
+  }
+  function pdfLib() {
+    return (window.pdfjsLib ? Promise.resolve() : load(PDFJS)).then(function () { pdfjsLib.GlobalWorkerOptions.workerSrc = PDFWORKER; return pdfjsLib; });
+  }
+  // Photo -> canvas: fix phone rotation, greyscale, scale up small shots, boost contrast.
+  function prepImage(blob) {
+    return createImageBitmap(blob, { imageOrientation: 'from-image' }).then(function (bmp) {
+      var s = Math.max(1, 1600 / Math.max(bmp.width, bmp.height));
+      var c = document.createElement('canvas'); c.width = Math.round(bmp.width * s); c.height = Math.round(bmp.height * s);
+      var g = c.getContext('2d'); g.drawImage(bmp, 0, 0, c.width, c.height);
+      var d = g.getImageData(0, 0, c.width, c.height), p = d.data, lo = 255, hi = 0, i, v;
+      for (i = 0; i < p.length; i += 4) { v = p[i] * .299 + p[i + 1] * .587 + p[i + 2] * .114; p[i] = v; if (v < lo) lo = v; if (v > hi) hi = v; }
+      var span = Math.max(1, hi - lo);
+      for (i = 0; i < p.length; i += 4) { v = (p[i] - lo) * 255 / span; p[i] = p[i + 1] = p[i + 2] = v; }
+      g.putImageData(d, 0, 0); return c;
+    });
+  }
+  function ocr(canvasOrBlob) { return ocrWorker().then(function (w) { return w.recognize(canvasOrBlob); }).then(function (r) { return (r.data && r.data.text || '').trim(); }); }
+  function readPdf(file) {
+    return pdfLib().then(function (lib) { return file.arrayBuffer().then(function (buf) { return lib.getDocument({ data: buf }).promise; }); })
+      .then(function (doc) {
+        var pages = [], n = Math.min(doc.numPages, 3);
+        for (var i = 1; i <= n; i++) pages.push(doc.getPage(i));
+        return Promise.all(pages).then(function (ps) {
+          return Promise.all(ps.map(function (pg) {
+            return pg.getTextContent().then(function (tc) {
+              var lines = {}, out = [];
+              tc.items.forEach(function (it) { var y = Math.round(it.transform[5]); (lines[y] = lines[y] || []).push(it); });
+              Object.keys(lines).map(Number).sort(function (a, b) { return b - a; }).forEach(function (y) {
+                out.push(lines[y].sort(function (a, b) { return a.transform[4] - b.transform[4]; }).map(function (i) { return i.str; }).join(' '));
+              });
+              return out.join('\n');
+            });
+          })).then(function (texts) {
+            var text = texts.join('\n').trim();
+            if (text) return text;
+            // scanned PDF (no text layer): read page 1 as a picture
+            return ps[0].getViewport ? (function () {
+              var vp = ps[0].getViewport({ scale: 2 }), c = document.createElement('canvas'); c.width = vp.width; c.height = vp.height;
+              return ps[0].render({ canvasContext: c.getContext('2d'), viewport: vp }).promise.then(function () { return ocr(c); });
+            })() : '';
+          });
+        });
+      });
+  }
+  function readFile(file) {
+    var isPdf = /pdf$/i.test(file.type) || /\.pdf$/i.test(file.name);
+    return isPdf ? readPdf(file) : prepImage(file).then(ocr);
+  }
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function fmt(v) { return v === null || v === undefined || v === '' ? '' : Number(v).toFixed(2); }
+  function render() {
+    if (!rows.length) { tbody.innerHTML = '<tr><td colspan="7" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr>'; }
+    else tbody.innerHTML = rows.map(function (r, i) {
+      var ok = r.status === 'ok';
+      return '<tr><td>' + esc(r.file) + '</td>' +
+        '<td><input data-i="' + i + '" data-k="date" value="' + esc(r.date) + '" placeholder="YYYY-MM-DD" aria-label="Date"></td>' +
+        '<td><input data-i="' + i + '" data-k="vendor" value="' + esc(r.vendor) + '" aria-label="Vendor"></td>' +
+        ['subtotal', 'gst', 'total'].map(function (k) { return '<td class="num"><input data-i="' + i + '" data-k="' + k + '" inputmode="decimal" value="' + esc(fmt(r[k])) + '" aria-label="' + k + '"></td>'; }).join('') +
+        '<td><span class="pill ' + (ok ? 'ok' : 'rev') + '">' + (ok ? 'OK' : 'Check this') + '</span></td></tr>';
+    }).join('');
+    var review = rows.filter(function (r) { return r.status !== 'ok'; }).length;
+    $('count').textContent = rows.length ? rows.length + ' receipt' + (rows.length === 1 ? '' : 's') + (review ? ' · ' + review + ' to check' : '') : '';
+    $('dl').disabled = $('clear').disabled = !rows.length || busy;
+  }
+  tbody.addEventListener('change', function (e) {
+    var el = e.target; if (!el.dataset || el.dataset.i === undefined) return;
+    var r = rows[+el.dataset.i], k = el.dataset.k, v = el.value.trim();
+    r[k] = (k === 'date' || k === 'vendor') ? (v || null) : (v === '' ? null : (isNaN(parseFloat(v.replace(/[$,]/g, ''))) ? null : parseFloat(v.replace(/[$,]/g, ''))));
+    if (r.date && r.vendor && r.total !== null && r.total !== undefined) r.status = 'ok';
+    render();
+  });
+
+  function run(list) {
+    var files = [].slice.call(list || []).filter(function (f) { return /^image\//.test(f.type) || /pdf$/i.test(f.type) || /\.(pdf|jpe?g|png|heic|webp)$/i.test(f.name); });
+    if (!files.length || busy) return;
+    busy = true; bar.style.display = 'block'; render();
+    var done = 0;
+    statusEl.textContent = 'Getting ready… the first time takes a few seconds while the reader downloads.';
+    files.reduce(function (p, f) {
+      return p.then(function () {
+        statusEl.textContent = 'Reading ' + (done + 1) + ' of ' + files.length + ': ' + f.name;
+        return readFile(f).then(function (text) {
+          var r = RSParse.extract(text); r.file = f.name; rows.push(r);
+        }, function () { rows.push({ file: f.name, date: null, vendor: null, subtotal: null, gst: null, total: null, status: 'needs_review (could not read)' }); })
+          .then(function () { done++; fill.style.width = (done / files.length * 100) + '%'; render(); });
+      });
+    }, Promise.resolve()).then(function () {
+      busy = false; bar.style.display = 'none'; fill.style.width = '0';
+      statusEl.textContent = 'Done. Check anything marked "Check this", then download.'; render();
+    });
+  }
+  $('files').addEventListener('change', function (e) { run(e.target.files); e.target.value = ''; });
+  var drop = $('drop');
+  ['dragenter', 'dragover'].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave', 'drop'].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop', function (e) { run(e.dataTransfer && e.dataTransfer.files); });
+  $('dl').addEventListener('click', function () {
+    var blob = new Blob(['﻿' + RSParse.toCSV(rows)], { type: 'text/csv;charset=utf-8' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'receipts-' + new Date().toISOString().slice(0, 10) + '.csv';
+    document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  });
+  $('clear').addEventListener('click', function () { if (!busy) { rows = []; statusEl.textContent = ''; render(); } });
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/receiptsort/app/sw.js').catch(function () {});
+})();
+</script>
+<script src="/cara/cara.js" data-app="site" defer></script>
+</body>
+</html>

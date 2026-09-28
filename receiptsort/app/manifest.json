@@ -1,0 +1,11 @@
+{
+  "name": "ReceiptSort by Calas Automations",
+  "short_name": "ReceiptSort",
+  "description": "Receipt photos or PDFs in, one spreadsheet out. Runs on your device; nothing is uploaded.",
+  "start_url": "/receiptsort/app/",
+  "scope": "/receiptsort/app/",
+  "display": "standalone",
+  "background_color": "#F1F6F9",
+  "theme_color": "#155F87",
+  "icons": [{ "src": "/favicon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }]
+}
