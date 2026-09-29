@@ -87,3 +87,12 @@ button,.btn,a.btn,input[type=submit],input[type=button]{
 .of-lk-name{font-family:"Libre Baskerville",Georgia,serif;font-size:26px;font-weight:700;line-height:1;color:#B9CFDD;display:block}
 .of-lk-name .r{color:#fff}
 .of-lk-sub{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:9px;letter-spacing:.24em;color:#B9CFDD;margin-top:7px;display:block}
+
+/* --- Reusable On File hero band: drop <section class="calas-hero"> on any page for the
+   identical dark-navy hero (light-blue crest lockup + two-tone wordmark) sitewide. --- */
+.calas-hero{background:#0B2E45;color:#fff;border-bottom:1px solid #1E4A66}
+.calas-hero .calas-hero-in{max-width:1240px;margin:0 auto;padding:46px 26px 42px;box-sizing:border-box}
+.calas-hero .eyebrow{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#4FA3D1;margin:0 0 8px}
+.calas-hero h1{font-family:"Libre Baskerville",Georgia,serif;font-weight:700;color:#fff;font-size:clamp(26px,3.6vw,38px);line-height:1.14;margin:6px 0 10px}
+.calas-hero p{color:#B9CFDD;font-size:16.5px;line-height:1.5;max-width:640px;margin:0}
+.calas-hero .of-lockup{margin:0 0 12px}
