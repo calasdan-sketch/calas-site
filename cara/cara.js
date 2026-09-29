@@ -17,9 +17,12 @@
     quoteme: "Hi, I'm Cara. Ask me how Quote Me turns a voice note into a priced quote.",
     haulme: "Hi, I'm Cara. Ask me how Haul Me works out your floor rate.",
     watchpost: "Hi, I'm Cara. Ask me how Watchpost's decoys and alerts work.",
-    dispatchme: "Hi, I'm Cara. Ask me how Dispatch Me covers your lots all winter."
+    dispatchme: "Hi, I'm Cara. Ask me how Dispatch Me covers your lots all winter.",
+    guardian: "Hi, I'm Cara. Not sure about a message? Tell me what it says and I'll help you think it through."
   };
-  var CHIPS = ['What does it cost?', 'How do I get started?', 'Is my data private?'];
+  var CHIPS = APP === 'guardian'
+    ? ['Is Guardian free?', 'What if I already sent money?', 'Is my message private?']
+    : ['What does it cost?', 'How do I get started?', 'Is my data private?'];
 
   var css = '' +
     '.cc-btn{position:fixed;right:18px;bottom:18px;z-index:2147483000;display:flex;align-items:center;gap:10px;background:#fff;color:#12212C;' +
@@ -34,18 +37,25 @@
     '.cc-hd{display:flex;align-items:center;gap:11px;padding:11px 14px;background:linear-gradient(135deg,#0B2E45,#123C57);color:#fff;border-bottom:2px solid #B9812E}' +
     '.cc-lg{width:28px;height:28px;border-radius:6px;background:#fff;color:#0B2E45;display:grid;place-items:center;font:700 14px "Libre Baskerville",Georgia,serif;flex:none}' +
     '.cc-hd b{display:block;font-size:14.5px;font-weight:600}.cc-hd span{font-size:12px;opacity:.85}' +
-    '.cc-x{margin-left:auto;background:transparent;border:0;color:#fff;font-size:20px;line-height:1;padding:2px 6px;cursor:pointer}' +
+    '.cc-win .cc-x{margin:0 0 0 auto;width:auto;min-width:0;background:transparent;border:0;box-shadow:none;color:#fff;font-size:20px;line-height:1;padding:2px 6px;cursor:pointer;flex:none}' +
+    '.cc-hd > div{flex:1;min-width:0}' +
     '.cc-log{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:9px;background:#F4F8FA}' +
     '.cc-m{max-width:85%;padding:9px 12px;border-radius:12px;white-space:pre-wrap;word-wrap:break-word}' +
     '.cc-m.a{background:#fff;border:1px solid #DCE5EB;align-self:flex-start;border-bottom-left-radius:4px}' +
     '.cc-m.u{background:#155F87;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}' +
     '.cc-m.t{color:#7A868F;font-style:italic;background:transparent;border:0;padding:2px 4px}' +
     '.cc-chips{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px 0;background:#F4F8FA}' +
-    '.cc-chip{border:1px solid #D3E2EF;background:#fff;color:#0E4A6B;border-radius:999px;padding:5px 11px;font:500 12.5px inherit;cursor:pointer}' +
-    '.cc-in{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #DCE5EB;background:#fff}' +
-    '.cc-in input{flex:1;border:1px solid #D9E3EA;border-radius:8px;padding:10px;font:inherit;min-width:0}' +
-    '.cc-in input:focus{outline:2px solid #155F87;outline-offset:1px}' +
-    '.cc-in button{background:#155F87;color:#fff;border:0;border-radius:8px;padding:0 15px;font:600 14px inherit;cursor:pointer}' +
+    '.cc-win .cc-chip{width:auto;min-width:0;margin:0;box-shadow:none;text-align:left;border:1px solid #D3E2EF;background:#fff;color:#0E4A6B;border-radius:999px;' +
+    'padding:5px 11px;font:500 12.5px/1.3 "IBM Plex Sans",system-ui,sans-serif;cursor:pointer}' +
+    // Scoped with the .cc-win prefix and explicit resets so a host page's own
+    // input/button rules (e.g. full-width buttons) can't squash the box.
+    '.cc-win .cc-in{display:flex;flex-direction:column;align-items:stretch;gap:8px;padding:10px 12px;margin:0;border-top:1px solid #DCE5EB;background:#fff}' +
+    '.cc-win .cc-in textarea{display:block;box-sizing:border-box;width:100%;min-height:4.9em;max-height:9em;margin:0;resize:none;' +
+    'border:1px solid #D9E3EA;border-radius:8px;padding:9px 10px;font:14.5px/1.45 "IBM Plex Sans",system-ui,sans-serif;color:#12212C;background:#fff}' +
+    '.cc-win .cc-in textarea:focus{outline:2px solid #155F87;outline-offset:1px}' +
+    '.cc-win .cc-in button{align-self:flex-end;width:auto;min-width:0;margin:0;background:#155F87;color:#fff;border:0;border-radius:8px;' +
+    'padding:7px 18px;font:600 14px "IBM Plex Sans",system-ui,sans-serif;cursor:pointer;box-shadow:none}' +
+    '@media(max-width:560px){.cc-win{right:8px;left:8px;width:auto;bottom:70px;height:calc(100vh - 90px);height:calc(100dvh - 90px)}}' +
     '.cc-note{font-size:11.5px;color:#7A868F;padding:0 12px 9px;background:#fff}' +
     '@media print{.cc-btn,.cc-win{display:none!important}}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
@@ -59,11 +69,11 @@
   win.innerHTML = '<div class="cc-hd"><span class="cc-lg" aria-hidden="true">C</span><div><b>Cara</b><span>Calas Automations assistant</span></div>' +
     '<button class="cc-x" type="button" aria-label="Close chat">&times;</button></div>' +
     '<div class="cc-log" aria-live="polite"></div><div class="cc-chips"></div>' +
-    '<form class="cc-in"><input type="text" maxlength="800" placeholder="Type a question" aria-label="Your question" autocomplete="off"><button type="submit">Send</button></form>' +
+    '<form class="cc-in"><textarea rows="3" maxlength="800" placeholder="Type your question…" aria-label="Your question"></textarea><button type="submit">Send</button></form>' +
     '<div class="cc-note">Cara can make mistakes. Anything important, email dan@calasautomations.com.</div>';
   document.body.appendChild(btn); document.body.appendChild(win);
 
-  var log = win.querySelector('.cc-log'), form = win.querySelector('form'), input = form.querySelector('input'),
+  var log = win.querySelector('.cc-log'), form = win.querySelector('form'), input = form.querySelector('textarea'),
       chips = win.querySelector('.cc-chips'), history = [], busy = false;
 
   function add(text, who) {
@@ -95,5 +105,9 @@
   btn.addEventListener('click', function () { open(!win.classList.contains('on')); });
   win.querySelector('.cc-x').addEventListener('click', function () { open(false); });
   form.addEventListener('submit', function (e) { e.preventDefault(); var q = input.value; input.value = ''; ask(q); });
+  // Enter sends; Shift+Enter starts a new line.
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', { cancelable: true })); }
+  });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && win.classList.contains('on')) open(false); });
 })();
