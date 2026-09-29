@@ -74,3 +74,16 @@ button,.btn,a.btn,input[type=submit],input[type=button]{
   transform:translateY(-3px);
   box-shadow:0 10px 26px rgba(18,33,44,.10);
 }
+
+/* --- On File-style hero lockup: light-blue spinning crest + two-tone wordmark, for dark hero bands.
+   Reuse on every product hero for one consistent brand across the site. --- */
+@keyframes ofspin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+.of-lockup{display:inline-flex;align-items:center;gap:14px;text-decoration:none;margin:0 0 14px}
+.of-lockup .crest{width:34px;height:47px;flex:none;display:inline-block;background:#5FB3DD;
+  -webkit-mask:url(/favicon.png) center/contain no-repeat;mask:url(/favicon.png) center/contain no-repeat;
+  animation:ofspin 6s linear infinite}
+@media(prefers-reduced-motion:reduce){.of-lockup .crest{animation:none}}
+.of-lk-text{display:inline-block}
+.of-lk-name{font-family:"Libre Baskerville",Georgia,serif;font-size:26px;font-weight:700;line-height:1;color:#B9CFDD;display:block}
+.of-lk-name .r{color:#fff}
+.of-lk-sub{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:9px;letter-spacing:.24em;color:#B9CFDD;margin-top:7px;display:block}

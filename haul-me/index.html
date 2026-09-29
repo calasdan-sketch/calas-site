@@ -11,7 +11,7 @@
   --paper:#FFFFFF; --surface:#FFFFFF; --sunk:#F1F6F9;
   --ink:#12212C; --ink-2:#4E5B66; --ink-3:#66717B;
   --rule:#D9E3EA; --rule-2:#EAF0F4;
-  --red:#1B6B3A; --red-2:#124A28; --red-soft:#E7F4EC; --ok:#17794A; --ok-soft:#E9F5EE; --ok-line:#B7E0C7;
+  --red:#155F87; --red-2:#0E4A6B; --red-soft:#E7F0F5; --ok:#17794A; --ok-soft:#E9F5EE; --ok-line:#B7E0C7;
   --night:#0B2E45; --night-2:#0E3A55; --night-ink:#FFFFFF; --night-ink-2:#B9CFDD;
   --night-rule:#1E4A66;
 }
@@ -20,14 +20,14 @@
     --paper:#0B1A26; --surface:#102434; --sunk:#0D1F2C;
     --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
     --rule:#1F3A4D; --rule-2:#183041;
-    --red:#5FC98C; --red-2:#8FE0AC; --red-soft:#123A26; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48;
+    --red:#5FB3DD; --red-2:#8FCBE6; --red-soft:#12304A; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48;
   }
 }
 :root[data-theme="dark"]{
   --paper:#0B1A26; --surface:#102434; --sunk:#0D1F2C;
   --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
   --rule:#1F3A4D; --rule-2:#183041;
-  --red:#5FC98C; --red-2:#8FE0AC; --red-soft:#123A26; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48;
+  --red:#5FB3DD; --red-2:#8FCBE6; --red-soft:#12304A; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);
@@ -204,7 +204,8 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
 <div class="hero">
   <div class="wrap">
     <p class="by">Haul Me &middot; by Calas Automations &middot; Winnipeg &middot; Prices in CAD</p>
-    <h1>Know your floor rate before you say yes to the load.</h1>
+    <a class="of-lockup" href="/" aria-label="Haul Me by Calas Automations"><span class="crest" aria-hidden="true"></span><span class="of-lk-text"><span class="of-lk-name">Haul <span class="r">Me</span></span><span class="of-lk-sub">BY CALAS AUTOMATIONS</span></span></a>
+<h1>Know your floor rate before you say yes to the load.</h1>
     <p class="lede">Most owner-operators price loads off a gut feeling, not their real cost per mile. Haul Me takes your actual truck costs &mdash; fuel, insurance, maintenance, payments, everything &mdash; and turns every offered load into a plain green light or red light in seconds, before you commit to it.</p>
     <div class="hero-actions">
       <a class="btn" href="/pay/#haulme">Get started &mdash; C$29/mo</a>
