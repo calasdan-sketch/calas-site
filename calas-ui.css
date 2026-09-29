@@ -47,3 +47,23 @@ button,.btn,a.btn,input[type=submit],input[type=button]{
   border-radius:6px !important;
   font-weight:600;
 }
+
+/* --- Shared crest masthead for app / utility screens (injected by calas-brandbar.js
+   only on pages that don't already have the marketing masthead) --- */
+.cbar{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #DCE6ED;font-family:"IBM Plex Sans",system-ui,sans-serif}
+.cbar::after{content:"";display:block;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.cbar .cbar-in{max-width:1060px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.cbar .lock{display:flex;align-items:center;gap:12px;text-decoration:none}
+.cbar .crest{width:26px;height:36px;flex:none;background:var(--accent);
+  -webkit-mask:url(/favicon.png) center/contain no-repeat;mask:url(/favicon.png) center/contain no-repeat;
+  animation:cbarflip 6s linear infinite}
+@keyframes cbarflip{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+@media(prefers-reduced-motion:reduce){.cbar .crest{animation:none}}
+.cbar .name{font-family:"Libre Baskerville",Georgia,serif;font-size:19px;font-weight:700;color:var(--accent);line-height:1;letter-spacing:-.01em}
+.cbar .sub{display:block;font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.24em;color:#6B7883;margin-top:3px;border-top:1.5px solid var(--accent);padding-top:3px}
+.cbar nav{display:flex;align-items:center;gap:14px;font-size:13px;flex-wrap:wrap}
+.cbar nav a{text-decoration:none;color:#4E5B66}
+.cbar nav a:hover{color:var(--accent)}
+.cbar .nav-cta{background:var(--accent) !important;color:#fff !important;padding:9px 16px;border-radius:6px !important;font-weight:600}
+.cbar .nav-cta:hover{background:var(--accent-2) !important}
+@media(max-width:760px){.cbar .cbar-in{padding:10px 16px}.cbar nav{gap:12px;font-size:12.5px}}

@@ -188,4 +188,4 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;p
   $('#fm-leave').addEventListener('click',function(){if(!confirm('Leave this family? Alerts stop right away.'))return;api('/api/family/me',{leave:true}).then(function(){say('You left the family.');load()})});
 })();
 </script>
-</body></html>
+<script src="/calas-brandbar.js" defer></script></body></html>
