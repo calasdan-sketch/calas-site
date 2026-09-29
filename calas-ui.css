@@ -67,3 +67,10 @@ button,.btn,a.btn,input[type=submit],input[type=button]{
 .cbar .nav-cta{background:var(--accent) !important;color:#fff !important;padding:9px 16px;border-radius:6px !important;font-weight:600}
 .cbar .nav-cta:hover{background:var(--accent-2) !important}
 @media(max-width:760px){.cbar .cbar-in{padding:10px 16px}.cbar nav{gap:12px;font-size:12.5px}}
+
+/* --- Card hover-lift: gentle raise + soft shadow on the product/segment/pricing cards --- */
+.card,.tier,.seg,.segment,.product-card{transition:transform .18s ease, box-shadow .18s ease}
+.card:hover,.tier:hover,.seg:hover,.segment:hover,.product-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 26px rgba(18,33,44,.10);
+}
