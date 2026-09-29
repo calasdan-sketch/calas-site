@@ -26,6 +26,15 @@ button{width:100%;font-size:18px;font-weight:700;padding:15px;border:0;border-ra
 .privacy{margin-top:14px;font-size:13px;color:var(--ink2);text-align:center}
 footer{text-align:center;color:var(--ink2);font-size:12px;padding:22px 0}
 a{color:var(--accent)}
+.big{display:flex;flex-direction:column;gap:18px;margin-top:18px}
+.bigbtn{display:block;width:100%;margin:0;text-align:center;font-size:20px;font-weight:700;padding:20px 14px;border:0;border-radius:14px;
+background:var(--accent);color:#fff;text-decoration:none;cursor:pointer}
+.bigbtn.alt{background:#fff;color:var(--accent);border:2px solid var(--accent)}
+.bigbtn.call{background:#17794A}
+.bigbtn.share{background:#fff;color:var(--ink);border:2px solid var(--rule);font-size:18px}
+.bigbtn:focus-visible{outline:3px solid #F0C171;outline-offset:2px}
+#pasteBox textarea{min-height:120px;font-family:inherit}
+body{padding-bottom:70px}
 .shotbtn{display:block;text-align:center;margin-top:10px;padding:12px;border:1px dashed #9DB8CC;border-radius:10px;color:#155F87;font-weight:600;cursor:pointer}
 .shotbtn:hover,.shotbtn:focus-within{background:#EEF5FA}
 .shotbtn.primary{border:0;background:var(--accent);color:#fff;font-size:18px;font-weight:700;padding:16px}
@@ -36,58 +45,25 @@ a{color:var(--accent)}
 <span class="crest" aria-hidden="true"></span>
 <div><b>Watchpost Guardian</b><span class="tag">by Calas Automations</span></div>
 </header>
-<h1>Not sure about a message? Check it in seconds.</h1>
-<p class="lede">Screenshot the text, DM or email and tap below. Free, no account, and the picture never leaves your phone.</p>
-<label class="shotbtn primary" for="shot">&#128247; Check a screenshot</label>
+<h1>Check a message before you trust it.</h1>
+<div class="big">
+<label class="bigbtn" for="shot">&#128247; Check a screenshot</label>
 <input id="shot" type="file" accept="image/*" hidden>
 <p class="small" id="shotNote" hidden></p>
-<p class="small" id="shareTip">Android tip: add Guardian to your home screen, then use <b>Share &rarr; Guardian</b> from any message.</p>
-<details style="margin-top:14px"><summary style="cursor:pointer;color:var(--accent);font-weight:600">Or paste the message text instead</summary>
-<textarea id="msg" placeholder="Paste the message or chat here…" style="margin-top:10px"></textarea>
-<button id="check">Check this message</button>
-</details>
+<button class="bigbtn alt" id="pasteBtn" type="button">&#128203; Paste a message</button>
+<div id="pasteBox" hidden>
+<textarea id="msg" placeholder="Paste the message here&hellip;"></textarea>
+<button id="check" type="button">Check it</button>
+</div>
+<a class="bigbtn call" href="tel:+14312449026">&#128222; Talk to a real person</a>
+<button class="bigbtn share" id="shareBtn" type="button">&#128228; Send Guardian to someone</button>
+<p class="small" id="shareNote" hidden></p>
+</div>
 <div class="result" id="result"></div>
-<p class="privacy">🔒 Your message stays on your phone. A result is a warning, not proof.</p>
-
-<hr style="border:0;border-top:1px solid var(--rule);margin:26px 0">
-<section>
-  <h2 style="font-size:19px;margin:0 0 6px">Before you send money &mdash; stop and check</h2>
-  <p class="lede" style="margin:0 0 10px">If any of these is true, don't send. Talk to someone first.</p>
-  <div style="background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:14px">
-    <div class="sig">They want <b>gift cards, crypto, a wire, or e-transfer</b> &mdash; and you've never met in person.</div>
-    <div class="sig"><b>Sudden urgency</b> &mdash; an emergency, a fee to "unlock" money, "do it right now."</div>
-    <div class="sig">You were told to <b>keep it secret</b> from family or your bank.</div>
-    <div class="sig">You're paying to <b>"invest,"</b> or to withdraw "profits" you were shown.</div>
-    <div class="advice">No real business or official ever asks to be paid in gift cards or crypto.</div>
-  </div>
-</section>
-<section style="margin-top:24px">
-  <h2 style="font-size:19px;margin:0 0 6px">Not sure? Talk to a real person &mdash; free.</h2>
-  <p class="lede" style="margin:0 0 10px">Something feel off? Don't decide alone.</p>
-  <a href="tel:+14312449026" style="display:block;text-align:center;background:var(--accent);color:#fff;font-weight:700;font-size:18px;padding:15px;border-radius:12px;text-decoration:none">&#128222; Call Watchpost &mdash; (431) 244-9026</a>
-  <p style="font-size:13px;color:var(--ink2);text-align:center;margin-top:6px">We'll talk it through before you do anything.</p>
-</section>
-<section style="margin-top:24px">
-  <h2 style="font-size:19px;margin:0 0 6px">Beat the voice-clone: set a family "safe word"</h2>
-  <p class="lede" style="margin:0 0 10px">Scammers can fake a loved one's voice. If the caller can't say your family's safe word, it isn't them.</p>
-  <button id="genWord" type="button" style="background:#0E4A6B">Suggest a safe word</button>
-  <div id="wordOut" style="display:none;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:14px;margin-top:10px;text-align:center;font-size:22px;font-weight:800;color:var(--accent)"></div>
-  <p style="font-size:13px;color:var(--ink2);margin-top:8px">Agree on it in person. Never text or email it.</p>
-</section>
-<section style="margin-top:24px">
-  <h2 style="font-size:19px;margin:0 0 6px">Protecting an older parent?</h2>
-  <p class="lede">Put Guardian on their phone, agree on a safe word, and be the person they call.</p>
-</section>
+<p class="privacy">&#128274; Free. Your messages stay on your phone.</p>
 <script src="/guardian/scamcheck.js"></script>
-<script>
-(function(){
-  var A=["Maple","Anchor","Copper","Lantern","Willow","Harbour","Cedar","Falcon","Compass","Granite","Beacon","Cobalt","Timber","Saffron","Juniper","Aspen"];
-  var B=["seventeen","gemini","bagpipe","paddle","velvet","domino","walnut","trombone","cactus","zephyr","quartz","lasso","pretzel","waffle","banjo","comet"];
-  var b=document.getElementById("genWord"),o=document.getElementById("wordOut");
-  if(b)b.addEventListener("click",function(){var w=A[Math.floor(Math.random()*A.length)]+" "+B[Math.floor(Math.random()*B.length)];o.style.display="block";o.textContent='“'+w+'”';});
-})();
-</script>
-<footer>Watchpost Guardian is free, by <a href="/" style="color:inherit">Calas Automations</a> &middot; Winnipeg<br>Protect your whole business: <a href="/watchpost/" style="color:inherit;font-weight:bold">see Watchpost &rarr;</a> &nbsp;&middot;&nbsp; <a href="/" style="color:inherit">&larr; Home</a></footer>
+
+<footer>Watchpost Guardian &middot; <a href="/" style="color:inherit">Calas Automations</a>, Winnipeg</footer>
 
 </div>
 <script>
@@ -167,6 +143,14 @@ function shared(msg,r,el){
 function buildDossier(){var d=lastReport||{msg:"",r:{lvl:0,score:0,signals:[]},ids:[]};var L=[];L.push("SCAM REPORT — prepared with Watchpost Guardian");L.push("Date: "+new Date().toLocaleString("en-CA"));L.push("Risk level: "+LABEL[d.r.lvl]+" ("+d.r.score+" points)");L.push("");L.push("Scam tactics detected:");(d.r.signals.length?d.r.signals:["(none matched automatically)"]).forEach(function(s){L.push(" - "+s);});L.push("");if(d.ids.length){L.push("Identifiers the sender provided:");d.ids.forEach(function(x){L.push(" - "+x);});L.push("");}L.push("The message(s) received:");L.push(d.msg);L.push("");L.push("Reporter: (add your name and contact so the authorities can follow up)");return L.join("\n");}
 function reportScam(){var text=buildDossier();function done(){var n=document.getElementById("repNote");if(n){n.style.display="block";n.textContent="Your report is copied. Paste it into the official form that just opened, add your contact details, and submit — you choose what to send.";}try{window.open("https://reportcyberandfraud.canada.ca/","_blank","noopener");}catch(e){}}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,done);}else{try{var ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);}catch(e){}done();}}
 document.getElementById("check").addEventListener("click",render);
+document.getElementById("pasteBtn").addEventListener("click",function(){var b=document.getElementById("pasteBox");b.hidden=!b.hidden;if(!b.hidden)document.getElementById("msg").focus();});
+document.getElementById("shareBtn").addEventListener("click",function(){
+  var url="https://calasautomations.com/guardian/",text="Check a text or email before you trust it. Free, and it stays on your phone.",n=document.getElementById("shareNote");
+  if(navigator.share){navigator.share({title:"Watchpost Guardian",text:text,url:url}).catch(function(){});return;}
+  var done=function(){n.hidden=false;n.textContent="Link copied. Paste it in a text to anyone.";};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(done,function(){n.hidden=false;n.textContent=url;});else{n.hidden=false;n.textContent=url;}
+});
+
 if("serviceWorker" in navigator){navigator.serviceWorker.register("/guardian/sw.js").catch(function(){});}
 /* Screenshot reading happens on this phone (Tesseract, loaded only when a picture is chosen).
    The engine and English letters download once; the picture itself is never uploaded. */

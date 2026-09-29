@@ -25,7 +25,7 @@
     : ['What does it cost?', 'How do I get started?', 'Is my data private?'];
 
   var css = '' +
-    '.cc-btn{position:fixed;right:18px;bottom:18px;z-index:2147483000;display:flex;align-items:center;gap:10px;background:#fff;color:#12212C;' +
+    '.cc-btn{position:fixed;right:18px;left:auto;bottom:18px;width:auto;margin:0;z-index:2147483000;display:flex;align-items:center;gap:10px;background:#fff;color:#12212C;' +
     'border:1px solid #D9E3EA;border-radius:999px;padding:11px 16px;font:500 14.5px "IBM Plex Sans",system-ui,sans-serif;cursor:pointer;' +
     'box-shadow:0 10px 30px -8px rgba(11,46,69,.35)}' +
     '.cc-btn:hover,.cc-btn:focus-visible{border-color:#155F87;outline:none}' +
