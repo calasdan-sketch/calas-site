@@ -1,3 +1,0 @@
-markitdown
-pytesseract
-Pillow
