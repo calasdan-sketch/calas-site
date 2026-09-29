@@ -1,0 +1,8 @@
+Brand: gold hairline signature on every page (sign-in, apps, all pages)
+
+Adds the 2px gold (#F0C171) hairline at the top of every HTML page across the
+site and app front-ends — uniform Calas house-brand accent. Blue/white and all
+buttons unchanged; the hairline is decorative only (pointer-events:none).
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01PMXxeM96T5T3X72TEvCmaT
