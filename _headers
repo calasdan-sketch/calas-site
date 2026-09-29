@@ -1,0 +1,11 @@
+# Defensive security headers for calasautomations.com (Cloudflare Pages).
+# Added 2026-09-28 (Dan asked for defensive security on his own sites).
+# These are the safe, non-breaking protections: they stop clickjacking,
+# content-type tricks, referrer leakage, and force HTTPS. A full
+# Content-Security-Policy is deliberately left for a tested follow-up,
+# because the site uses inline scripts/styles that a wrong CSP would break.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
