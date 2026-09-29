@@ -1,0 +1,49 @@
+/* calas-ui.css — Calas Automations shared UI: brand font + one button system.
+   Loaded LAST on every page so it unifies fonts and button edging site-wide.
+   Blue #155F87 primary, gold #F0C171 hairline, IBM Plex Sans body / Libre Baskerville headings. */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&family=Libre+Baskerville:wght@400;700&display=swap');
+
+:root{--accent:#155F87;--accent-2:#0E4A6B;--gold:#F0C171}
+
+/* Brand base font everywhere (headings keep their own serif via their own rules) */
+body{font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+
+/* --- One button look on EVERY page: same font, same edging --- */
+button,.btn,a.btn,input[type=submit],input[type=button]{
+  font-family:"IBM Plex Sans",system-ui,sans-serif !important;
+  border-radius:6px !important;
+  letter-spacing:.01em;
+}
+
+/* The standard marketing button class: full canonical spec */
+.btn{
+  display:inline-block;
+  font-weight:600;
+  font-size:15px;
+  line-height:1.2;
+  padding:12px 22px;
+  border:1.5px solid transparent;
+  background:var(--accent);
+  color:#fff;
+  text-decoration:none;
+  cursor:pointer;
+  transition:background .15s ease,border-color .15s ease;
+}
+.btn:hover{background:var(--accent-2)}
+
+/* Secondary / ghost buttons — solid white with blue text, works on light and dark */
+.btn.ghost,.btn.secondary,.btn-ghost,.btn.outline{
+  background:#fff !important;
+  color:var(--accent) !important;
+  border:1.5px solid rgba(21,95,135,.35) !important;
+}
+.btn.ghost:hover,.btn.secondary:hover,.btn-ghost:hover,.btn.outline:hover{
+  background:rgba(21,95,135,.06) !important;
+}
+
+/* Header nav CTA (Book 15 minutes) matches the button system */
+.nav-cta{
+  font-family:"IBM Plex Sans",sans-serif !important;
+  border-radius:6px !important;
+  font-weight:600;
+}
