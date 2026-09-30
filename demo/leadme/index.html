@@ -576,7 +576,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
     html += '<div class="rc-who"><div class="card-top"><span class="score-pill" aria-label="Lead score ' + l.score + ' out of 100">' + l.score + '</span>' +
       '<h3>' + esc(l.name) + '</h3>' + (l.isNew ? '<span class="new-label">new</span>' : '') + '<span class="heat-label">' + h + '</span></div>';
     html += '<p class="meta">' + (l.email ? '<span>' + esc(l.email) + '</span>' : '') + '<span>' + esc(l.city) + '</span><span>' + esc(l.ind) + '</span></p>';
-    var line = l.state === 'sent' ? 'Email 1 of 4 sent ' + TODAY + ' &middot; next one in 4 days unless they reply' : 'Next email due ' + TODAY;
+    var line = l.state === 'sent' ? 'Email 1 of 3 sent ' + TODAY + ' &middot; next one in 3 days unless they reply' : 'Next email due ' + TODAY;
     html += '<p class="rc-line">' + (l.verify ? '<span class="verify-flag">Needs verification</span>' : '') + line + '</p>';
     html += '<details class="rc-more"><summary>More about this lead</summary>' +
       '<p class="small muted" style="margin:0 0 .2rem"><strong>' + l.score + '</strong> &ndash; ' + esc(l.reasons) + '</p>' +
@@ -672,7 +672,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
       slots.map(function (d, i) { return '- ' + fmt(d) + ' at ' + times[i]; }).join('\n') + '\n\n' + REP.name + '\n' + REP.phone;
     list.innerHTML = '<article class="card reply-card" id="replyCard">' +
       '<div class="card-top"><h3>Portage Veterinary Hospital</h3><span class="heat-label">' + (S.booked ? 'booked' : S.replyNew ? 'new' : 'replied') + '</span></div>' +
-      '<p class="muted small" style="margin:0">' + TODAY + ', just now &middot; Email 1 of 4 sent yesterday &middot; follow-ups paused</p>' +
+      '<p class="muted small" style="margin:0">' + TODAY + ', just now &middot; Email 1 of 3 sent yesterday &middot; follow-ups paused</p>' +
       '<p style="margin:0">From <strong>jordan.lee@portagevet.example</strong></p>' +
       '<blockquote><p>Hi Pat, thanks for reaching out. Good timing, we\'re opening a second clinic this spring. Send me a couple of times next week and we\'ll talk.</p></blockquote>' +
       '<details class="howto" open><summary>Propose times</summary><div class="slotrow">' + slotBtns + '</div>' +
