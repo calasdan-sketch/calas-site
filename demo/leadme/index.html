@@ -38,10 +38,10 @@ p{margin:0 0 .8rem;max-width:68ch}
 .wrap{max-width:1180px;margin:0 auto;padding:0 1.25rem}
 
 /* ---- demo strip (On File standard) ---- */
-.demostrip{background:var(--sunk);color:var(--ink-2);font-size:13.5px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.demostrip{background:var(--sunk);color:var(--ink-2);font-size:16.5px;padding:10px 0;border-bottom:1px solid var(--rule)}
 .demostrip .wrap{display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;align-items:center}
 .demostrip b{color:var(--ink);font-weight:600}
-.demostrip .mono{font-family:var(--font-mono);font-size:12px}
+.demostrip .mono{font-family:var(--font-mono);font-size:15px}
 
 /* ---- app bar: the live app's navy header ---- */
 .appbar{background:linear-gradient(135deg,#0B2E45,#123C57);border-bottom:2px solid var(--gold-deep);color:#fff}
@@ -351,7 +351,7 @@ details.howto p{margin:.6rem 0 0}
   </div>
 </section>
 <main><div class="wrap">
-  <div class="notice" role="note"><strong>This is where you set up Lead Me.</strong> Fill in your details, connect your email, and check what you sell and where. Leads appear after that, found for your industry and territory.</div>
+  <div class="notice" role="note"><strong>This is where you set up Lead Me.</strong> Fill in your name, company and email, then press Find my leads. Lead Me works out who buys from you and finds them in your territory.</div>
 
   <section class="panel" id="s-you" aria-labelledby="s-you-h">
     <h2 id="s-you-h">You</h2>
@@ -364,10 +364,15 @@ details.howto p{margin:.6rem 0 0}
     <div class="field"><label for="rep_address">Business mailing address</label>
       <input type="text" id="rep_address" value="400 Main St, Winnipeg MB R3C 1A1" style="max-width:44rem">
       <p class="help">Required by law on every email (Canada's anti-spam law). Sending stays paused until this is filled in.</p></div>
+    <div class="quick-find" style="margin-top:14px;padding:14px;border:1px solid #cfe0ea;border-radius:10px;background:#f4f9fc">
+      <button type="button" class="btn btn-primary" id="quickFind">Find my leads</button>
+      <p class="help" id="quickFindMsg" style="margin-top:8px">Just your name, company and email above. We look up your business, work out who buys from you, and start finding leads &mdash; nothing else to fill in.</p>
+    </div>
   </section>
 
   <section class="panel" id="s-mail" aria-labelledby="s-mail-h">
-    <h2 id="s-mail-h">Connect your email</h2>
+    <h2 id="s-mail-h">Send automatically (optional)</h2>
+    <p class="help">You don't need this. Press <strong>Open in my email</strong> on any lead to send it from your own inbox. This is only for letting Lead Me send by itself.</p>
     <div class="grid2">
       <div class="field"><label for="smtp_provider">Which email do you use?</label>
         <select id="smtp_provider">
@@ -601,7 +606,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
     } else {
       if (l.state === 'approved') html += '<div class="rc-status appr">Approved for the batch</div>';
       html += '<div class="card-actions">' +
-        '<button type="button" class="btn btn-primary btn-small" data-act="send"' + (l.email ? '' : ' disabled title="No email address yet: needs verification"') + '>Send</button>' +
+        '<button type="button" class="btn btn-primary btn-small" data-act="send"' + (l.email ? '' : ' disabled title="No email address yet: needs verification"') + '>Open in my email</button>' +
         '<button type="button" class="btn btn-ghost btn-small" data-act="skip">Skip</button>' +
         '<button type="button" class="btn btn-danger btn-small" data-act="unsub">Unsubscribe</button></div>';
     }
@@ -691,7 +696,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
     $('finder-status').textContent = 'Idle'; $('batch-status').textContent = 'Nothing running';
     $('find-btn').disabled = false; $('heroFind').disabled = false;
     $('finder-detail').textContent = 'Finds up to 40 new companies per press across your territory. Press again for the next 40; companies already on your list are skipped.';
-    $('savedMsg').textContent = ''; $('testMailMsg').textContent = '';
+    $('savedMsg').textContent = ''; $('testMailMsg').textContent = ''; $('quickFindMsg').textContent = 'Just your name, company and email above. We look up your business, work out who buys from you, and start finding leads — nothing else to fill in.';
     $('lead-search').value = '';
   }
 
@@ -814,6 +819,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
   $('nav-settings').addEventListener('click', function () { setView('settings'); });
   $('backLeads').addEventListener('click', function () { setView('leads'); });
   $('saveSettings').addEventListener('click', function () { $('savedMsg').textContent = 'Saved (demo). Nothing leaves this page.'; });
+  $('quickFind').addEventListener('click', function () { $('quickFindMsg').textContent = 'Demo: in the real app Lead Me looks up your business and starts finding your leads right away.'; });
   $('testMail').addEventListener('click', function () { $('testMailMsg').textContent = 'Demo: in the real app a test email lands in your own inbox.'; });
   $('reset').addEventListener('click', reset);
 
@@ -833,10 +839,10 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
       "Each one gets a fit score out of a hundred. Sixty is a good fit, eighty-five is a best fit, and the best fits sit at the top.",
       "Open a lead to see what their own website says, and why Lead Me chose that opening line.",
       "The first email is already written from those facts. Nothing guessed, no made-up names.",
-      "Press Send when you're happy with it. In this demo it's only marked sent, so nothing is really emailed.",
+      "Press Open in my email and it opens in your own inbox, already written. Read it, press Send, and replies come straight back to you. In this demo it's only marked sent.",
       "Or approve every good-fit lead with a verified contact at once, and send them as one batch, within your daily limit.",
       "When someone writes back, it lands in Replied and the follow-ups stop. This vet hospital wants to talk next week.",
-      "Settings is where you begin: add your name, company, phone and mailing address, and connect your email so replies come back to you.",
+      "Getting started takes three boxes: your name, your company and your email. Press Find my leads, and Lead Me works out who buys from you and starts finding them. No passwords, nothing else to set up.",
       "Lead Me starts at a hundred and ninety-nine dollars a month, with no setup fee. Forty checked, ready-to-email businesses in fourteen days, or you owe nothing.",
       "That's the tour. Now click around: find leads, open a card, send a few. It's all made up, so nothing leaves this page."
     ],
@@ -854,7 +860,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
   function first(sel) { return document.querySelector('#cards .row-card:not([hidden]) ' + (sel || '')); }
   CalasTour.start({
     lines: T.lines,
-    durs: [7.58, 7.15, 6.96, 7.78, 5.11, 5.35, 6.19, 7.37, 7.1, 7.87, 9.84, 7.37],
+    durs: [7.58, 7.15, 6.96, 7.78, 5.11, 5.35, 10.22, 7.37, 7.1, 12.17, 9.84, 7.37],
     audioBase: 'narration/step-',
     onReplay: function () { T.reset(); window.scrollTo(0, 0); },
     script: function (t) {
