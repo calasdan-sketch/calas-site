@@ -17,12 +17,12 @@
     '@media(prefers-reduced-motion:reduce){.cbar .crest,.cfoot .crest{animation:none}}' +
     '.cbar .name{font-family:"Libre Baskerville",Georgia,serif;font-size:19px;font-weight:700;color:#155F87;line-height:1;letter-spacing:-.01em}' +
     '.cbar .sub{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:8px;letter-spacing:.24em;color:#6B7883;margin-top:3px;border-top:1.5px solid #155F87;padding-top:3px}' +
-    '.cbar nav{display:flex;align-items:center;gap:14px;font-size:13px;flex-wrap:wrap}' +
+    '.cbar nav{display:flex;align-items:center;gap:15px;font-size:15.5px;flex-wrap:wrap}' +
     '.cbar nav a{text-decoration:none;color:#4E5B66}' +
     '.cbar nav a:hover{color:#155F87}' +
     '.cbar .nav-cta{background:#155F87;color:#fff;padding:9px 16px;border-radius:6px;font-weight:600}' +
     '.cbar .nav-cta:hover{background:#0E4A6B}' +
-    '@media(max-width:760px){.cbar .cbar-in{padding:10px 16px}.cbar nav{gap:12px;font-size:12.5px}}' +
+    '@media(max-width:760px){.cbar .cbar-in{padding:10px 16px}.cbar nav{gap:14px;font-size:15px}}' +
     /* footer */
     '.cfoot{margin-top:48px;background:#fff;border-top:2px solid #F0C171;font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#4E5B66}' +
     '.cfoot .cfoot-in{max-width:1240px;margin:0 auto;padding:30px 30px 34px;box-sizing:border-box}' +
