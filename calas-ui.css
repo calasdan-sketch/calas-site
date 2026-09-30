@@ -106,3 +106,14 @@ header nav .nav-cta,.cbar .nav-cta{font-size:14.5px;white-space:nowrap;padding:9
 header nav a,.cbar nav a{white-space:nowrap}
 @media(max-width:1300px){header nav,.cbar nav{flex-wrap:wrap;gap:12px}}
 @media(max-width:760px){header nav,.cbar nav{font-size:15px;gap:12px}}
+
+/* 2026-09-29 Dan: the home page hero on every page. Pages that don't already
+   carry the home photo (.hero-art) get the same photo and the same navy
+   shading behind their own title. Selector outranks each page's own .hero. */
+.hero:not(:has(> .hero-art)),.calas-hero{
+  position:relative;overflow:hidden;background-color:#0B2E45;
+  background-image:
+    linear-gradient(180deg,rgba(11,46,69,.55) 0%,rgba(11,46,69,.28) 45%,rgba(11,46,69,.78) 100%),
+    linear-gradient(95deg,rgba(11,46,69,.8) 0%,rgba(11,46,69,.5) 40%,rgba(11,46,69,.2) 78%,rgba(11,46,69,.3) 100%),
+    url(/hero-bg.jpg);
+  background-size:cover;background-position:center}
