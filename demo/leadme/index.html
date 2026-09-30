@@ -3,157 +3,885 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lead Me walkthrough &middot; Calas Automations</title>
-<meta name="description" content="A one-minute narrated tour of the real Lead Me app: find leads in your territory, see them scored, open a lead, and send only what you approve.">
+<title>Lead Me demo &middot; Calas Automations</title>
+<meta name="description" content="Try Lead Me with made-up data: find warm B2B leads in your territory, see each one scored out of 100 with reasons, read the first email it drafted, and send only what you approve.">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
-:root{--paper:#fff;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--rule:#D9E3EA;--accent:#155F87;--accent-2:#0E4A6B;--night:#0B2E45;--gold:#F0C171;
-  --serif:"Libre Baskerville",Georgia,serif;--sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace;
-  --shadow:0 1px 2px rgba(18,33,44,.06),0 24px 60px -24px rgba(11,46,69,.35)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F2231;--sunk:#0A1722;--ink:#EEF4F8;--ink-2:#B2C3CF;--rule:#1E3A4D;--accent:#5CAAD6;--accent-2:#8ACBEE}}
+/* Tokens and components copied from the live Lead Me app (brand theme, 2026-09-29). */
+:root{
+  --paper:#fff;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--ink-3:#6B7883;--rule:#D9E3EA;
+  --accent:#155F87;--accent-2:#0E4A6B;--accent-soft:#EAF2F9;--gold:#F0C171;--gold-deep:#B9812E;
+  --hero:#0B2E45;--hero-eyebrow:#4FA3D1;--hero-sub:#C6D6E4;--navy:#0B1D33;
+  --ok:#17794A;--warn:#B25E09;--bad:#C03221;
+  --radius:18px;--radius-sm:12px;
+  --shadow:0 1px 2px rgba(18,33,44,.05),0 12px 40px -14px rgba(21,95,135,.2);
+  --font-body:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-display:'Libre Baskerville',Georgia,serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--sunk);color:var(--ink);font:16px/1.55 var(--sans)}
+[hidden]{display:none!important}
+html{font-size:115%}
+body{margin:0;font-family:var(--font-body);background:var(--sunk);color:var(--ink);font-size:1rem;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:var(--accent)}
-.top{background:var(--night);color:#fff;border-bottom:2px solid var(--gold)}
-.top .in{max-width:1240px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.top b{font:700 18px var(--serif)}
-.top a{color:#CFE0EA;text-decoration:none;font-size:14px}
-.top .sp{flex:1}
-main{max-width:1240px;margin:0 auto;padding:28px 20px 48px}
-.eyebrow{font:500 12px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
-h1{font:700 clamp(26px,3.4vw,38px)/1.15 var(--serif);margin:0 0 6px}
-.lede{color:var(--ink-2);margin:0 0 22px;max-width:62ch}
-.stage{background:var(--paper);border:1px solid var(--rule);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
-.chrome{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--rule);background:var(--sunk)}
-.chrome i{width:11px;height:11px;border-radius:50%;background:#D8DEE3;display:block}
-.chrome .url{margin-left:10px;font:500 12px var(--mono);color:var(--ink-2);background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:4px 10px;flex:1;max-width:420px}
-.screen{position:relative;aspect-ratio:16/10;overflow:hidden;background:#EEF4F8}
-.screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transition:opacity .6s ease;transform:scale(1)}
-.screen img.on{opacity:1;animation:drift 9s ease-out forwards}
-@keyframes drift{from{transform:scale(1)}to{transform:scale(1.035)}}
-@media (prefers-reduced-motion:reduce){.screen img.on{animation:none}}
-.start{position:absolute;inset:0;display:grid;place-items:center;background:rgba(11,46,69,.38);border:0;cursor:pointer;color:#fff;font:600 18px var(--sans)}
-.start span{background:var(--accent);padding:16px 26px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
-.start:hover span,.start:focus-visible span{background:var(--accent-2)}
-.bar{height:4px;background:var(--rule)}
-.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s linear}
-.caption{display:flex;gap:18px;align-items:center;padding:16px 18px;flex-wrap:wrap}
-.caption p{margin:0;flex:1;min-width:260px;font-size:17px}
-.ctrls{display:flex;gap:8px}
-.ctrls button{font:600 14px var(--sans);border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:9px 14px;border-radius:8px;cursor:pointer;min-width:44px}
-.ctrls button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.ctrls button:hover,.ctrls button:focus-visible{border-color:var(--accent);outline:none}
-.steps{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0;padding:0;list-style:none}
-.steps button{font:500 13px var(--sans);border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);padding:6px 12px;border-radius:999px;cursor:pointer}
-.steps button[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
-.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;align-items:center}
-.cta a.btn{background:var(--accent);color:#fff;text-decoration:none;padding:11px 18px;border-radius:8px;font-weight:600}
-.cta a.ghost{background:transparent;color:var(--accent);border:1px solid var(--rule)}
-.note{color:var(--ink-2);font-size:13px;margin-top:10px}
-</style>
-<style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20260929i"></head>
-<body>
-<header class="top"><div class="in">
-  <b>Lead Me</b><span class="sp"></span>
-  <a href="/leadme/">&larr; Back to Lead Me</a><a href="/signin/">Sign in</a>
-</div></header>
-<main>
-  <p class="eyebrow">Walkthrough &middot; about a minute</p>
-  <h1>See the real Lead Me</h1>
-  <p class="lede">These are the actual app screens, filled with made-up example companies. Press play and follow along, or step through at your own pace.</p>
+h1,h2,h3{font-family:var(--font-display);letter-spacing:-.01em;line-height:1.2;margin:0 0 .5rem}
+h2{font-size:1.4rem}
+h3{font-size:1.1rem;font-family:var(--font-body);font-weight:600;letter-spacing:0}
+p{margin:0 0 .8rem;max-width:68ch}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--ink-2)}
+.small{font-size:.86rem}
+:focus-visible{outline:3px solid rgba(21,95,135,.5);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 1.25rem}
 
-  <section class="stage" aria-label="Lead Me walkthrough">
-    <div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span class="url">leadme.calasautomations.com</span></div>
-    <div class="screen" id="screen">
-      <img src="shots/1-overview.jpg" alt="Lead Me dashboard: hot, warm and cold lead counts and emails sent today" class="on">
-      <img src="shots/2-find.jpg" alt="The Find leads panel and the batch sending panel" loading="lazy">
-      <img src="shots/3-cards.jpg" alt="Leads listed as compact rows, each scored out of 100 with its reasons" loading="lazy">
-      <img src="shots/4-open.jpg" alt="One lead opened: what their website says, the chosen opener, and the drafted email" loading="lazy">
-      <img src="shots/5-settings.jpg" alt="Settings: company name, phone, email and business mailing address" loading="lazy">
-      <button class="start" id="start" type="button"><span>&#9654; Play the tour</span></button>
+/* ---- demo strip (On File standard) ---- */
+.demostrip{background:var(--sunk);color:var(--ink-2);font-size:13.5px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.demostrip .wrap{display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.demostrip b{color:var(--ink);font-weight:600}
+.demostrip .mono{font-family:var(--font-mono);font-size:12px}
+
+/* ---- app bar: the live app's navy header ---- */
+.appbar{background:linear-gradient(135deg,#0B2E45,#123C57);border-bottom:2px solid var(--gold-deep);color:#fff}
+.appbar-in{display:flex;align-items:center;justify-content:space-between;gap:.8rem 1.4rem;padding:.75rem 1.25rem;max-width:1180px;margin:0 auto;flex-wrap:wrap}
+.lm-brand{display:flex;align-items:center;gap:.75rem;min-width:0}
+.coin{display:inline-block;position:relative;width:26px;height:36px;flex:none;transform-style:preserve-3d;animation:lmspin 7s linear infinite}
+.coin i{position:absolute;inset:0;background:#fff;-webkit-mask:url(/favicon.png) center/contain no-repeat;mask:url(/favicon.png) center/contain no-repeat;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.coin i.back{transform:rotateY(180deg)}
+@keyframes lmspin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+.lm-name{font-family:var(--font-display);font-size:1.2rem;font-weight:700;line-height:1.05;display:block;color:#fff}
+.lm-sub{display:block;font-family:var(--font-mono);font-size:.58rem;font-weight:500;letter-spacing:.2em;color:var(--gold);margin-top:3px}
+.lm-who{padding-left:1rem;border-left:1px solid rgba(207,227,239,.35);font-size:.82rem;color:#CFE3EF;line-height:1.35}
+.lm-who b{display:block;color:#fff;font-weight:600;font-size:.88rem}
+.appnav{display:flex;align-items:center;gap:.3rem;flex-wrap:wrap}
+.appnav button{background:transparent;border:1px solid transparent;color:#CFE3EF;font:500 .9rem var(--font-body);padding:.45rem .85rem;border-radius:999px;cursor:pointer}
+.appnav button:hover{color:#fff;background:rgba(255,255,255,.08)}
+.appnav button.on{color:#fff;font-weight:600;border-color:rgba(240,193,113,.7)}
+.appnav .reset{border:1px solid rgba(207,227,239,.5);border-radius:6px}
+.getlink{color:var(--gold);text-decoration:none;font-size:.86rem;font-weight:600;border-bottom:1px solid transparent;margin-right:.4rem}
+.getlink:hover{border-bottom-color:var(--gold)}
+
+/* ---- hero ---- */
+.lm-hero{background:var(--hero);color:#fff;text-align:center;padding:36px 1.25rem 32px}
+.lm-hero .eyebrow{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--hero-eyebrow);margin:0}
+.lm-hero h1{color:#fff;font-size:clamp(1.8rem,4.4vw,2.7rem);line-height:1.12;margin:.3rem auto .4rem;max-width:22ch}
+.lm-hero p{color:var(--hero-sub);font-size:1.02rem;max-width:60ch;margin:0 auto}
+.rep-bar{display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;margin:.9rem auto 0;font-family:var(--font-mono);font-size:.78rem;color:var(--hero-eyebrow)}
+.rep-bar .sep{color:var(--hero-sub);opacity:.5}
+.rep-bar .rep-name{font-weight:600;color:#fff}
+.hero-cta{margin-top:.9rem}
+.hero-cta p{margin-bottom:.6rem}
+.hero-cta p strong{color:#fff}
+.hero-cta-actions{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+
+/* ---- buttons ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:44px;padding:.6rem 1.15rem;border-radius:11px;border:1px solid transparent;font:700 .92rem var(--font-body);cursor:pointer;text-decoration:none;line-height:1.2;transition:background .18s ease,border-color .18s ease,box-shadow .18s ease}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 6px 18px -6px rgba(21,95,135,.6)}
+.btn-primary:hover{background:var(--accent-2)}
+.btn-ghost{background:#fff;border-color:var(--rule);color:var(--accent)}
+.btn-ghost:hover{border-color:var(--accent)}
+.btn-light{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.6)}
+.btn-light:hover{background:rgba(255,255,255,.12);border-color:#fff}
+.btn-danger{background:#fff;border-color:#EFB9B1;color:var(--bad)}
+.btn-danger:hover{background:#FDF0EE}
+.btn-ok{background:var(--ok);color:#fff}
+.btn-small{min-height:36px;padding:.4rem .9rem;font-size:.82rem}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+
+/* ---- tiles, panels ---- */
+main .wrap{padding-top:1.5rem;padding-bottom:2rem}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin:0 0 1.5rem}
+.tile{background:#fff;border-radius:var(--radius);padding:1rem 1.15rem .95rem;box-shadow:var(--shadow);border:1px solid var(--rule);display:flex;flex-direction:column;gap:.15rem}
+.tile-num{font-size:1.7rem;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile-label{font-size:.86rem;color:var(--ink-2);font-weight:500}
+.panel{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--rule);padding:1.3rem 1.45rem;margin:0 0 1.5rem}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.9rem}
+.section-head h2{margin:0}
+.toolbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:0 0 1rem}
+.toolbar input[type=search]{flex:1;min-width:12rem;max-width:26rem;padding:.6rem 1rem;border:1px solid var(--rule);border-radius:999px;font:400 .92rem var(--font-body);background:#fff}
+.progress{background:#E3EAF2;border-radius:999px;height:.7rem;overflow:hidden;min-width:8rem;flex:1}
+.progress>i{display:block;height:100%;width:0;background:var(--accent);border-radius:999px;transition:width .3s ease}
+.radiorow{display:flex;flex-wrap:wrap;gap:.4rem .9rem;margin:.2rem 0 .9rem}
+.radiorow label{display:inline-flex;align-items:center;gap:.45rem;font-weight:500;background:#fff;border:1px solid var(--rule);border-radius:999px;padding:.45rem 1rem;cursor:pointer}
+.radiorow label:hover{border-color:var(--accent)}
+.radiorow input{accent-color:var(--accent)}
+.checkrow{display:flex;align-items:flex-start;gap:.65rem;margin:0 0 .8rem;max-width:44rem}
+.checkrow input{width:1.1rem;height:1.1rem;margin-top:.2rem;accent-color:var(--accent);flex:0 0 auto}
+.checkrow .lab{font-weight:500}
+.checkrow .help{font-size:.82rem;color:var(--ink-2);margin:.15rem 0 0}
+.notice{background:#EFF8F1;border:1px solid #BDE3C9;border-radius:var(--radius-sm);padding:.85rem 1.1rem;margin:0 0 1.2rem}
+.newreply{display:flex;gap:.8rem;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#fff;border:1px solid var(--rule);border-left:4px solid var(--gold);border-radius:var(--radius-sm);padding:.75rem 1rem;margin:0 0 1rem;box-shadow:var(--shadow)}
+.newreply p{margin:0}
+
+/* ---- tabs ---- */
+.tabs{width:100%;overflow-x:auto;display:flex;gap:.5rem;padding:.35rem .1rem;margin:0 0 1.1rem}
+.tab{flex:0 0 auto;border:1px solid var(--rule);background:#fff;color:var(--accent-2);border-radius:999px;padding:.5rem 1.1rem;font:600 .9rem var(--font-body);cursor:pointer;min-height:42px;display:inline-flex;align-items:center;gap:.45rem}
+.tab:hover{border-color:var(--accent)}
+.tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.tab .num{font-weight:600}
+.tab .newtag{font-size:.72rem;font-weight:700;background:var(--gold);color:var(--ink);border-radius:999px;padding:.05rem .45rem}
+
+/* ---- horizontal lead cards (live app, plain version: no glow, no coloured outlines) ---- */
+.cards{display:flex;flex-direction:column;gap:.55rem}
+.card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--rule);position:relative}
+.row-card{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr) auto;gap:.4rem 1.1rem;align-items:start;padding:.75rem 1rem;transition:opacity .25s ease}
+.card-top{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.card-top h3{margin:0;flex:1;min-width:10ch;font-size:1.02rem}
+.heat-label{font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:.26rem .7rem;border-radius:999px;background:var(--accent-soft);color:var(--accent-2)}
+.new-label{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.26rem .6rem;border-radius:999px;background:#FBF1DF;color:#8A5A12}
+.score-pill{font-weight:700;font-size:.9rem;min-width:2.3rem;text-align:center;border-radius:8px;padding:.1rem .4rem;background:#EEF3F7;color:var(--accent-2);font-variant-numeric:tabular-nums}
+.heat-hot .score-pill{background:var(--accent-2);color:#fff}
+.heat-warm .score-pill{background:var(--accent-soft);color:var(--accent-2)}
+.meta{font-size:.82rem;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:.2rem .8rem;margin:.2rem 0 0}
+.rc-line{margin:.15rem 0 0;font-size:.78rem;color:var(--ink-2)}
+.verify-flag{font-size:.76rem;font-weight:600;color:var(--warn);background:#FFF4E2;border-radius:8px;padding:.15rem .6rem;display:inline-block;margin-right:.4rem}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.3rem 0}
+.chip{font-size:.72rem;font-weight:500;background:var(--accent-soft);color:var(--accent-2);border-radius:999px;padding:.14rem .55rem;border:1px solid #D3E2EF}
+details.rc-more{margin-top:.25rem;font-size:.84rem}
+details.rc-more summary{font-size:.8rem;cursor:pointer;font-weight:600;color:var(--accent-2)}
+details.rc-more[open]{border-top:1px solid var(--rule);padding-top:.4rem}
+details.rc-more[open] summary{margin-bottom:.4rem}
+.site-says{background:var(--sunk);border-radius:10px;padding:.55rem .75rem;margin:.45rem 0}
+.site-says .lbl,.opener .lbl{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:.15rem}
+.site-says q{quotes:"\201C" "\201D";color:var(--ink)}
+.opener{font-size:.84rem;border-left:3px solid var(--gold);padding:.15rem 0 .15rem .8rem;color:var(--ink-2);margin:.5rem 0}
+.opener p{margin:0 0 .25rem}
+.opener .said{color:var(--ink)}
+.facts{margin:.2rem 0 .4rem;padding-left:1.1rem;font-size:.82rem;color:var(--ink-2)}
+.facts .src{color:var(--ink-3)}
+.draft{background:var(--sunk);border-radius:var(--radius-sm);padding:.55rem .75rem;font-size:.84rem}
+.draft .subj{font-weight:600;margin:0 0 .2rem}
+.draft summary{cursor:pointer;color:var(--ink-2)}
+.draft pre{white-space:pre-wrap;font-family:var(--font-body);margin:.35rem 0 0;max-height:13rem;overflow:auto;font-size:.8rem;line-height:1.5}
+.rc-side{display:flex;flex-direction:column;align-items:stretch;gap:.35rem;min-width:8.8rem}
+.card-actions{display:flex;flex-direction:column;gap:.35rem}
+.rc-side .btn{min-height:34px;width:100%}
+.rc-status{font-size:.78rem;font-weight:600;border-radius:8px;padding:.35rem .55rem;text-align:center;line-height:1.3;max-width:10rem}
+.rc-status.sent{background:#EFF8F1;color:var(--ok);border:1px solid #BDE3C9}
+.rc-status.appr{background:var(--accent-soft);color:var(--accent-2);border:1px solid #D3E2EF}
+.rc-status.off{background:#F3F5F7;color:var(--ink-3);border:1px solid var(--rule)}
+.row-card.is-done .rc-who,.row-card.is-done .rc-draft{opacity:.55}
+.empty{background:#fff;border:1px dashed var(--rule);border-radius:var(--radius);padding:1.6rem;text-align:center;color:var(--ink-2)}
+.reply-card{padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:.55rem}
+.reply-card blockquote{margin:0;background:var(--sunk);border-radius:var(--radius-sm);padding:.8rem 1rem;font-size:.92rem}
+.reply-card blockquote p{margin:0}
+.reply-card .card-actions{flex-direction:row;flex-wrap:wrap}
+.slotrow{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0}
+.slotrow .btn.picked{background:var(--accent);color:#fff;border-color:var(--accent)}
+details.howto{background:#fff;border:1px solid var(--rule);border-radius:var(--radius-sm);padding:.75rem 1.1rem;margin:0 0 1rem}
+details.howto summary{cursor:pointer;font-weight:600;color:var(--accent-2)}
+details.howto p{margin:.6rem 0 0}
+
+/* ---- settings ---- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.field{margin:0 0 1rem}
+.field label,.field .flab{display:block;font-weight:600;font-size:.88rem;margin-bottom:.3rem}
+.field .help{font-size:.8rem;color:var(--ink-2);margin:.3rem 0 0}
+.field input,.field select,.field textarea{width:100%;max-width:34rem;padding:.62rem .85rem;border:1px solid var(--rule);border-radius:var(--radius-sm);font:400 .92rem var(--font-body);background:#fff;color:var(--ink)}
+.field textarea{min-height:5.5rem;font-family:var(--font-mono);font-size:.8rem;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(21,95,135,.15);outline:none}
+.formfoot{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--rule)}
+.saved{color:var(--ok);font-weight:600;font-size:.88rem}
+
+.appfoot{background:var(--navy);color:#B9C9DC;font-size:.84rem}
+.appfoot .wrap{padding-top:1.2rem;padding-bottom:1.3rem;display:flex;flex-wrap:wrap;gap:.6rem 1rem;justify-content:space-between;align-items:center}
+.appfoot a{color:#fff}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:#12212C;color:#fff;padding:.7rem 1.1rem;border-radius:10px;font-size:.88rem;box-shadow:0 8px 26px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;z-index:9000;width:max-content;max-width:calc(100vw - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:860px) and (min-width:561px){
+  .row-card{grid-template-columns:minmax(0,1fr) auto}
+  .row-card .rc-who,.row-card .rc-draft{grid-column:1}
+  .row-card .rc-side{grid-column:2;grid-row:1 / span 2}
+}
+@media (max-width:760px){
+  .grid2{grid-template-columns:1fr}
+  .tiles{grid-template-columns:1fr 1fr 1fr;gap:.5rem}
+  .tile{padding:.75rem .8rem}
+  .tile-num{font-size:1.35rem}
+  .tile-label{font-size:.76rem}
+  .lm-who{display:none}
+}
+@media (max-width:560px){
+  html{font-size:106%}
+  .row-card{grid-template-columns:1fr}
+  .rc-side{flex-direction:row;flex-wrap:wrap;min-width:0}
+  .card-actions{flex-direction:row;flex-wrap:wrap}
+  .rc-side .btn{width:auto}
+  .rc-status{max-width:none}
+  .panel{padding:1.05rem 1rem}
+  .appbar-in{padding:.6rem 1rem}
+  .getlink{order:3;width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .coin{animation:none}
+  *,*::before,*::after{transition-duration:.001s!important}
+}
+</style>
+</head>
+<body>
+
+<div class="demostrip"><div class="wrap">
+  <span><b>This is a demo.</b> Made-up salesperson, made-up companies. None of this is anyone's real information, and nothing is ever emailed.</span>
+  <span class="mono">Calas Automations &middot; Winnipeg</span>
+</div></div>
+
+<div class="appbar"><div class="appbar-in">
+  <div class="lm-brand">
+    <span class="coin" aria-hidden="true"><i></i><i class="back"></i></span>
+    <div><span class="lm-name">Lead Me</span><span class="lm-sub">BY CALAS AUTOMATIONS</span></div>
+    <div class="lm-who"><b>Northgate Business Services</b>Signed in as Pat Morgan &middot; Sales</div>
+  </div>
+  <div class="appnav">
+    <a class="getlink" id="getlink" href="/pay/#leadme">Get this for your business &middot; C$500/mo, no setup fee &rarr;</a>
+    <button type="button" id="nav-leads" class="on" data-view="leads">Leads</button>
+    <button type="button" id="nav-settings" data-view="settings">Settings</button>
+    <button type="button" class="reset" id="reset">Start over</button>
+  </div>
+</div></div>
+
+<!-- ================= LEADS VIEW ================= -->
+<div id="view-leads">
+<section class="lm-hero">
+  <div class="wrap">
+    <h1 id="heroTitle">Today&rsquo;s leads</h1>
+    <p id="heroDate"></p>
+    <div class="rep-bar">
+      <span class="rep-name">Pat Morgan</span><span class="sep">&middot;</span><span>Northgate Business Services</span><span class="sep">&middot;</span><span>pat@northgate.example</span>
     </div>
-    <div class="bar" aria-hidden="true"><i id="bar"></i></div>
-    <div class="caption">
-      <p id="cap" aria-live="polite">This is Lead Me, the real app.</p>
-      <div class="ctrls">
-        <button type="button" id="back" aria-label="Previous step">&larr;</button>
-        <button type="button" id="play" class="primary" aria-label="Play">Play</button>
-        <button type="button" id="next" aria-label="Next step">&rarr;</button>
+    <div class="hero-cta">
+      <p id="heroLine"></p>
+      <div class="hero-cta-actions">
+        <button class="btn btn-primary" type="button" id="reviewBtn">Review leads</button>
+        <button class="btn btn-light" type="button" id="heroFind">Find more leads</button>
       </div>
     </div>
-  </section>
-  <ol class="steps" id="steps" aria-label="Jump to a step"></ol>
-
-  <div class="cta">
-    <a class="btn" href="/pay/#leadme">See pricing</a>
-    <a class="btn ghost" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
   </div>
-  <p class="note">Example companies only. Your own Lead Me shows businesses found for your industry and territory, and only you can see them.</p>
-</main>
+</section>
+
+<main id="main"><div class="wrap">
+
+  <section class="tiles" id="tiles" aria-label="At a glance">
+    <div class="tile"><span class="tile-num" id="t-hot">0</span><span class="tile-label">Hot leads ready</span></div>
+    <div class="tile"><span class="tile-num" id="t-rep">0</span><span class="tile-label" id="t-rep-l">Replies / booked</span></div>
+    <div class="tile"><span class="tile-num" id="t-rev">0</span><span class="tile-label">To review</span></div>
+  </section>
+
+  <section class="panel" id="findPanel" aria-labelledby="find-h">
+    <div class="section-head">
+      <h2 id="find-h">Find leads</h2>
+      <span class="muted small" id="finder-status">Idle</span>
+    </div>
+    <div class="radiorow" role="radiogroup" aria-label="Sources">
+      <label><input type="radio" name="src" value="both" checked> Both</label>
+      <label><input type="radio" name="src" value="web"> Websites</label>
+      <label><input type="radio" name="src" value="map"> Map data</label>
+    </div>
+    <div class="toolbar">
+      <button class="btn btn-primary" type="button" id="find-btn">Find 40 more</button>
+      <div class="progress" aria-hidden="true"><i id="finder-bar"></i></div>
+    </div>
+    <p class="muted small" id="finder-detail" aria-live="polite">Finds up to 40 new companies per press across your territory. Press again for the next 40; companies already on your list are skipped.</p>
+  </section>
+
+  <section class="panel" id="batchPanel" aria-labelledby="batch-h">
+    <div class="section-head">
+      <h2 id="batch-h">Batch</h2>
+      <span class="muted small" id="batch-status">Nothing running</span>
+    </div>
+    <p class="muted"><strong>Demo mode</strong> &mdash; sends here are pretend. In the real app, the emails you approve go out from your own inbox once it is connected in Settings.</p>
+    <p class="muted small">Sending window: Mon&ndash;Fri 08:00&ndash;17:00 &middot; at most 30 emails a day</p>
+    <div class="toolbar">
+      <button class="btn btn-ghost" type="button" id="approve-btn">Approve all warm with a verified contact</button>
+      <button class="btn btn-primary" type="button" id="batch-btn">Send approved batch</button>
+    </div>
+    <p id="batch-count" aria-live="polite"></p>
+    <div class="progress" aria-hidden="true"><i id="batch-bar"></i></div>
+  </section>
+
+  <div class="tabs" role="tablist" aria-label="Lead lists" id="tabs">
+    <button type="button" class="tab on" role="tab" data-tab="all">All <span class="num" data-count="all">0</span></button>
+    <button type="button" class="tab" role="tab" data-tab="hot">Hot <span class="num" data-count="hot">0</span></button>
+    <button type="button" class="tab" role="tab" data-tab="warm">Warm <span class="num" data-count="warm">0</span></button>
+    <button type="button" class="tab" role="tab" data-tab="cold">Cold <span class="num" data-count="cold">0</span></button>
+    <button type="button" class="tab" role="tab" data-tab="replied" id="tab-replied">Replied <span class="num" data-count="replied">0</span><span class="newtag" id="replyNew" hidden>1 new</span></button>
+  </div>
+
+  <div id="replyNotice" class="newreply" hidden>
+    <p><strong>New reply</strong> from Portage Veterinary Hospital. Their follow-up emails are paused.</p>
+    <button class="btn btn-ghost btn-small" type="button" id="openReply">Open Replied</button>
+  </div>
+
+  <div id="pane-due">
+    <div class="toolbar">
+      <input type="search" id="lead-search" placeholder="Filter by company, city, industry&hellip;" aria-label="Filter leads">
+      <span class="muted small" id="filter-count" aria-live="polite"></span>
+    </div>
+    <div class="cards" id="cards"></div>
+  </div>
+
+  <div id="pane-replied" hidden>
+    <section class="panel" aria-labelledby="replies-h">
+      <div class="section-head">
+        <h2 id="replies-h">Replies</h2>
+        <span class="muted small">Watching your inbox (demo)</span>
+      </div>
+      <div class="cards" id="replyList"></div>
+    </section>
+  </div>
+
+  <details class="howto">
+    <summary>How this works</summary>
+    <p>Every lead is scored out of 100 from your industry's signals. <strong>Warm is 60 or more</strong>; <strong>hot starts at 85</strong>. The warmest leads sit at the top. The batch only emails leads you have approved, so one tap after a big find never mails thirty companies nobody reviewed. Every email carries your mailing address and an easy way to say no, and a reply pauses the follow-ups.</p>
+  </details>
+
+</div></main>
+</div>
+
+<!-- ================= SETTINGS VIEW ================= -->
+<div id="view-settings" hidden>
+<section class="lm-hero">
+  <div class="wrap">
+    <p class="eyebrow">Lead Me</p>
+    <h1>Settings</h1>
+    <p>Your details, your email, what you sell and where.</p>
+  </div>
+</section>
+<main><div class="wrap">
+  <div class="notice" role="note"><strong>This is where you set up Lead Me.</strong> Fill in your details, connect your email, and check what you sell and where. Leads appear after that, found for your industry and territory.</div>
+
+  <section class="panel" id="s-you" aria-labelledby="s-you-h">
+    <h2 id="s-you-h">You</h2>
+    <div class="grid2">
+      <div class="field"><label for="rep_name">Your name</label><input type="text" id="rep_name" value="Pat Morgan"></div>
+      <div class="field"><label for="rep_company">Company</label><input type="text" id="rep_company" value="Northgate Business Services"></div>
+      <div class="field"><label for="rep_phone">Phone</label><input type="text" id="rep_phone" value="204-555-0142"></div>
+      <div class="field"><label for="rep_email">Reply-to email</label><input type="email" id="rep_email" value="pat@northgate.example"></div>
+    </div>
+    <div class="field"><label for="rep_address">Business mailing address</label>
+      <input type="text" id="rep_address" value="400 Main St, Winnipeg MB R3C 1A1" style="max-width:44rem">
+      <p class="help">Required by law on every email (Canada's anti-spam law). Sending stays paused until this is filled in.</p></div>
+  </section>
+
+  <section class="panel" id="s-mail" aria-labelledby="s-mail-h">
+    <h2 id="s-mail-h">Connect your email</h2>
+    <div class="grid2">
+      <div class="field"><label for="smtp_provider">Which email do you use?</label>
+        <select id="smtp_provider">
+          <option>Gmail / Google Workspace</option><option>Outlook.com / Hotmail / Live</option><option>Microsoft 365 (work email)</option>
+          <option>Yahoo Mail</option><option>iCloud Mail</option><option>Other (my domain host, my IT person)</option>
+        </select></div>
+      <div class="field"><label for="smtp_from">Your email address</label>
+        <input type="email" id="smtp_from" placeholder="you@yourcompany.com">
+        <p class="help">Your emails go out from this address, so replies come straight back to you.</p></div>
+      <div class="field"><label for="smtp_pw">App password</label>
+        <input type="text" id="smtp_pw" placeholder="Not used in this demo" disabled>
+        <p class="help">In the real app: used only to send the emails you approve.</p></div>
+    </div>
+    <div class="formfoot"><button class="btn btn-ghost" type="button" id="testMail">Send a test email to myself</button><span class="saved" id="testMailMsg" aria-live="polite"></span></div>
+  </section>
+
+  <section class="panel" aria-labelledby="s-sell-h">
+    <h2 id="s-sell-h">What you sell, and where</h2>
+    <div class="field"><label for="vertical">Industry playbook</label>
+      <select id="vertical">
+        <option>Auto parts sales (wholesale / aftermarket)</option>
+        <option>Commercial &amp; fleet vehicle sales</option>
+        <option>Commercial HVAC &amp; electrical maintenance contracts</option>
+        <option selected>Managed IT services (10&ndash;200 person offices)</option>
+        <option>Commercial cleaning &amp; janitorial contracts</option>
+        <option>Restaurant &amp; foodservice supply</option>
+      </select></div>
+    <div class="field"><label for="territory">Cities and regions (one per line)</label>
+      <textarea id="territory" rows="3">Manitoba: Winnipeg, Brandon, Steinbach, Portage la Prairie, Selkirk
+Saskatchewan: Regina, Saskatoon, Prince Albert, Moose Jaw
+Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
+  </section>
+
+  <section class="panel" aria-labelledby="s-safe-h">
+    <h2 id="s-safe-h">Sending rules</h2>
+    <div class="field"><label for="max_daily">Max emails per day</label><input type="number" id="max_daily" value="30" min="1" max="500" style="max-width:10rem">
+      <p class="help">A hard ceiling. Nothing is sent that you have not approved.</p></div>
+    <div class="checkrow"><input type="checkbox" id="c1" checked><div><label class="lab" for="c1">Warm up gradually</label><p class="help">Starts with a few emails a day and adds more, so a new address does not look like spam.</p></div></div>
+    <div class="checkrow"><input type="checkbox" id="c2" checked><div><label class="lab" for="c2">Only send during business hours</label><p class="help">Mon&ndash;Fri, 08:00 to 17:00.</p></div></div>
+    <div class="formfoot">
+      <button class="btn btn-primary" type="button" id="saveSettings">Save settings</button>
+      <button class="btn btn-ghost" type="button" id="backLeads">Back to leads</button>
+      <span class="saved" id="savedMsg" aria-live="polite"></span>
+    </div>
+  </section>
+</div></main>
+</div>
+
+<div class="appfoot"><div class="wrap">
+  <div><strong>Lead Me</strong> by Calas Automations &middot; Winnipeg<div class="small">A demo with made-up data. In the real app, you are the sender of every email.</div></div>
+  <a href="/leadme/">About Lead Me</a>
+</div></div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
-(function(){
-  // Screen shown for each narration line (6 lines, 5 screens: the last line
-  // closes on the cards). Captions are the narration, word for word.
-  var STEPS=[
-    {img:0,label:"Your day",cap:"This is Lead Me, the real app. Your day starts here: hot, warm and cold leads counted at a glance, and how many emails have gone out."},
-    {img:1,label:"Find leads",cap:"Press Find leads, and Lead Me searches map data and the web across your territory, for businesses in your industry."},
-    {img:2,label:"Scored",cap:"Every company it finds is scored out of a hundred. The warmest sit at the top, with the reasons shown right on the card."},
-    {img:3,label:"Open a lead",cap:"Open a lead to see what Lead Me learned from their own website, the opener it picked and why, and a first email already written from those facts."},
-    {img:4,label:"Settings",cap:"It all starts in Settings. Add your company name, phone, email and mailing address, and Lead Me finds companies that fit your business."},
-    {img:2,label:"You approve",cap:"Nothing sends until you approve it. That's Lead Me: the right businesses, found and warmed up, ready for you to call."}
+(function () {
+  'use strict';
+
+  /* ---------- dates ---------- */
+  var DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function fmt(d) { return DAYS[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS[d.getMonth()]; }
+  function nextWeekdays(n) {
+    var out = [], d = new Date();
+    while (out.length < n) { d = new Date(d.getTime() + 864e5); if (d.getDay() > 0 && d.getDay() < 6) out.push(new Date(d)); }
+    return out;
+  }
+  var TODAY = fmt(new Date());
+
+  /* ---------- the salesperson ---------- */
+  var REP = { name: 'Pat Morgan', co: 'Northgate Business Services', phone: '204-555-0142', email: 'pat@northgate.example', addr: '400 Main St, Winnipeg MB R3C 1A1' };
+
+  function warmBody(name, opener) {
+    return 'Hi there,\n\n' + opener + '\n\nWhen a computer, printer or the email at ' + name + ' stops working, who fixes it: someone whose real job is something else, or a company you can call?\n\n' +
+      "I'm " + REP.name + ' with ' + REP.co + '. We look after the computers, email, backups and security for offices your size, on a flat monthly fee, so the person who is "good with computers" can go back to their actual job.\n\n' +
+      "Would a 20-minute conversation be useful? You tell me how things are set up today and I tell you plainly whether there's a gap worth closing.\n\n" + sig();
+  }
+  function coldBody(name, opener) {
+    return 'Hi there,\n\n' + opener + "\n\nI don't know yet how " + name + " handles its computers and email, so I'll keep this short.\n\n" +
+      "I'm " + REP.name + ' with ' + REP.co + ': managed IT support for offices in the area, with help desk, backups and security on a monthly fee.\n\n' +
+      "If there's no one whose job that is at " + name + ", reply and I'll set up a 20-minute conversation. If it's covered, say so and I'll take you off the list.\n\n" + sig();
+  }
+  function sig() {
+    return REP.name + ' - ' + REP.co + ' - ' + REP.phone + ' - ' + REP.email + '\n\n' + REP.co + ', ' + REP.addr +
+      "\nDon't want these emails? Just reply and say so, and I will stop. No further emails on this.";
+  }
+
+  var HIRING = "Saw you're hiring right now. That usually means things are busy on your side.";
+  var REPLIES_WARM = [
+    ['We have an IT guy.', "Ask whether that's a person on staff or a company. If it's a person, offer to be the backup when they're away."],
+    ['We use a provider already.', 'Good, keep them. Ask when the contract renews and offer a second quote then.'],
+    ['What does it cost?', 'Ask for the number of people and computers first; a price without them is a guess.']
   ];
-  var imgs=[].slice.call(document.querySelectorAll('#screen img'));
-  var cap=document.getElementById('cap'), bar=document.getElementById('bar');
-  var play=document.getElementById('play'), start=document.getElementById('start');
-  var stepsEl=document.getElementById('steps');
-  var audio=new Audio(), i=0, playing=false;
-  audio.preload='auto';
+  var REPLIES_COLD = [
+    ['Head office handles IT.', 'Thank them and press Unsubscribe. Ask for the head-office contact only if they offer.'],
+    ['Who are you again?', 'One line: managed IT support for offices in their area. Then offer the 20-minute conversation.']
+  ];
 
-  STEPS.forEach(function(s,n){
-    var li=document.createElement('li'), b=document.createElement('button');
-    b.type='button'; b.textContent=(n+1)+'. '+s.label;
-    b.addEventListener('click',function(){go(n,playing)});
-    li.appendChild(b); stepsEl.appendChild(li);
-  });
-  var stepBtns=[].slice.call(stepsEl.querySelectorAll('button'));
+  /* score, name, email, city, industry, size, signals, address, what their site says, opener, why the opener, facts, needs-verification */
+  function L(o) { return o; }
+  var START = [
+    L({ id: 'riverside', score: 72, name: 'Riverside Accounting Group', email: 'office@riversideacct.example', city: 'Winnipeg, Manitoba', ind: 'accounting', size: '51-200 people', chips: ['hiring', 'multiple locations'], addr: '200 Portage Ave, Winnipeg', web: 'riversideacct.example',
+      reasons: 'industry fits (accounting); 51-200 people; role email (office@)',
+      site: 'Careers: we are hiring two staff accountants and a receptionist for our downtown and St. Vital offices.',
+      opener: HIRING, why: 'Their careers page lists three open jobs. Hiring is the strongest recent fact on their site, so the email opens with it.',
+      facts: ["You're hiring right now", 'You run more than one location', "You're an accounting business in Winnipeg"] }),
+    L({ id: 'queencity', score: 70, name: 'Queen City Insurance Brokers', email: 'service@qcinsurance.example', city: 'Regina, Saskatchewan', ind: 'insurance brokerage', size: '11-50 people', chips: ['expanding', 'hiring'], addr: '1900 Albert St, Regina', web: 'qcinsurance.example',
+      reasons: 'industry fits (insurance brokerage); 11-50 people; role email (service@)',
+      site: 'News: we are opening a second branch in east Regina this winter, and we are hiring licensed brokers.',
+      opener: HIRING, why: 'Their news page mentions new hires and a second branch. Hiring is the most concrete of the two, so it leads.',
+      facts: ["You're hiring right now", 'Your site talks about expanding', "You're an insurance brokerage in Regina"] }),
+    L({ id: 'keystone', score: 63, name: 'Keystone Dental Clinic', email: 'manager@keystonedental.example', city: 'Winnipeg, Manitoba', ind: 'dental clinic', size: '11-50 people', chips: ['expanding'], addr: '1450 Corydon Ave, Winnipeg', web: 'keystonedental.example',
+      reasons: 'industry fits (dental clinic); 11-50 people; role email (manager@)',
+      site: 'We have grown to six dentists and added four new treatment rooms this year.',
+      opener: 'Saw Keystone Dental Clinic is growing. That usually means more to keep on top of, not less.', why: 'Their About page says they added rooms and dentists this year, so the email opens on growth.',
+      facts: ['Your site talks about expanding', "You're a dental clinic in Winnipeg"] }),
+    L({ id: 'lakeview', score: 62, name: 'Lakeview Realty', email: 'broker@lakeviewrealty.example', city: 'Moose Jaw, Saskatchewan', ind: 'real estate office', size: '11-50 people', chips: ['hiring', 'expanding'], addr: '45 Main St N, Moose Jaw', web: 'lakeviewrealty.example',
+      reasons: 'industry fits (real estate office); 11-50 people; hiring',
+      site: 'Join our team: we are looking for an office administrator and new agents.',
+      opener: HIRING, why: 'Their "Join our team" page is current, so hiring is the opener.',
+      facts: ["You're hiring right now", 'Your site talks about expanding', "You're a real estate office in Moose Jaw"] }),
+    L({ id: 'prairieprop', score: 61, name: 'Prairie Property Management', email: 'info@prairieprop.example', city: 'Brandon, Manitoba', ind: 'property management', size: '11-50 people', chips: ['multiple locations'], addr: '800 Rosser Ave, Brandon', web: 'prairieprop.example',
+      reasons: 'industry fits (property management); 11-50 people; several locations',
+      site: 'Offices in Brandon, Dauphin and Portage la Prairie, managing over 1,200 units.',
+      opener: 'Saw Prairie Property Management runs several locations. That is a lot of ground to keep running smoothly.', why: 'Their contact page lists three offices. More sites means more to keep working, so that is the opener.',
+      facts: ['You run more than one location', "You're a property management business in Brandon"] }),
+    L({ id: 'assiniboine', score: 60, name: 'Assiniboine Law LLP', email: 'admin@assiniboinelaw.example', city: 'Winnipeg, Manitoba', ind: 'law firm', size: '11-50 people', chips: ['hiring'], addr: '360 Main St, Winnipeg', web: 'assiniboinelaw.example',
+      reasons: 'industry fits (law firm); 11-50 people; hiring',
+      site: 'Careers: we are hiring a legal assistant for our real estate practice.',
+      opener: HIRING, why: 'Their careers page has an open role, so hiring is the opener.',
+      facts: ["You're hiring right now", "You're a law firm in Winnipeg"] }),
+    L({ id: 'northphysio', score: 57, name: 'Northern Physiotherapy', email: '', city: 'Prince Albert, Saskatchewan', ind: 'physiotherapy clinic', size: '11-50 people', chips: ['hiring'], addr: '', web: 'northernphysio.example', verify: true,
+      reasons: 'industry fits (physiotherapy clinic); 11-50 people; hiring; no email found yet',
+      site: 'We are hiring a front-desk coordinator. Book online or call the clinic.',
+      opener: HIRING, why: 'A job post on their site. No email address was published, so this lead needs checking before it can be sent.',
+      facts: ["You're hiring right now", "You're a physiotherapy clinic in Prince Albert"] }),
+    L({ id: 'lakehead', score: 53, name: 'Lakehead Engineering', email: 'info@lakeheadeng.example', city: 'Thunder Bay, Ontario', ind: 'engineering consultancy', size: '51-200 people', chips: [], addr: '900 Victoria Ave E, Thunder Bay', web: 'lakeheadeng.example',
+      reasons: 'industry fits (engineering consultancy); 51-200 people; general email only',
+      site: 'Civil and structural engineering for northwestern Ontario since 1988.',
+      opener: "Saw you're an engineering consultancy in Thunder Bay, so I'll keep this short and relevant.", why: 'Nothing recent on their site (no hiring, no news), so the opener sticks to the plain facts.',
+      facts: ["You're an engineering consultancy in Thunder Bay"] }),
+    L({ id: 'selkirk', score: 23, name: 'Selkirk Marketing Co', email: 'hello@selkirkmarketing.example', city: 'Selkirk, Manitoba', ind: 'marketing agency', size: '11-50 people', chips: [], addr: '44 Eveline St, Selkirk', web: 'selkirkmarketing.example',
+      reasons: '11-50 people; general email only; industry is a weak fit',
+      site: 'A small creative team doing branding and social media for local businesses.',
+      opener: "Saw you're a marketing agency in Selkirk, so I'll keep this short and relevant.", why: 'Weak fit, nothing recent on their site, so the opener is the plain facts only.',
+      facts: ["You're a marketing agency in Selkirk"] }),
+    L({ id: 'bridgecity', score: 20, name: 'Bridge City Architects', email: 'studio@bridgecityarch.example', city: 'Saskatoon, Saskatchewan', ind: 'architecture', size: '11-50 people', chips: [], addr: '220 3rd Ave S, Saskatoon', web: 'bridgecityarch.example',
+      reasons: '11-50 people; industry is a weak fit',
+      site: 'Residential and small commercial architecture in Saskatoon.',
+      opener: "Saw you're an architecture practice in Saskatoon, so I'll keep this short and relevant.", why: 'Weak fit, so the opener is the plain facts only.',
+      facts: ["You're an architecture practice in Saskatoon"] })
+  ];
+  var FOUND = [
+    L({ id: 'crescent', score: 91, name: 'Crescent Heights Dental Centre', email: 'office@crescentdental.example', city: 'Regina, Saskatchewan', ind: 'dental clinic', size: '51-200 people', chips: ['hiring', 'new location', 'multiple locations'], addr: '2150 Victoria Ave, Regina', web: 'crescentdental.example',
+      reasons: 'industry fits (dental clinic); 51-200 people; hiring; opening a new location; role email (office@)',
+      site: 'Now open: our third location in Harbour Landing. We are hiring hygienists and front-desk staff for all three clinics.',
+      opener: 'Saw Crescent Heights just opened a third clinic in Harbour Landing. Congratulations, that is a big step.', why: 'Their home page announces a brand-new third location. A new site means new computers, phones and email to set up, which is exactly what you sell.',
+      facts: ['You just opened a third location', "You're hiring at all three clinics", "You're a dental clinic in Regina"] }),
+    L({ id: 'osborne', score: 86, name: 'Osborne Law Group', email: 'reception@osbornelaw.example', city: 'Winnipeg, Manitoba', ind: 'law firm', size: '11-50 people', chips: ['hiring', 'expanding'], addr: '155 Carlton St, Winnipeg', web: 'osbornelaw.example',
+      reasons: 'industry fits (law firm); 11-50 people; hiring; expanding; role email (reception@)',
+      site: 'We are moving to a larger office on Carlton Street in November and welcoming two new associates.',
+      opener: 'Saw Osborne Law Group is moving to a bigger office in November. Moves are when IT problems love to show up.', why: 'Their news page announces an office move next month. A move is the moment offices most need outside IT help.',
+      facts: ["You're moving to a larger office in November", "You're adding two associates", "You're a law firm in Winnipeg"] }),
+    L({ id: 'harbourview', score: 74, name: 'Harbourview Insurance', email: 'info@harbourviewins.example', city: 'Thunder Bay, Ontario', ind: 'insurance brokerage', size: '11-50 people', chips: ['hiring'], addr: '600 Red River Rd, Thunder Bay', web: 'harbourviewins.example',
+      reasons: 'industry fits (insurance brokerage); 11-50 people; hiring',
+      site: 'Careers: customer service representative, full time.',
+      opener: HIRING, why: 'Their careers page has an open role, so hiring is the opener.',
+      facts: ["You're hiring right now", "You're an insurance brokerage in Thunder Bay"] }),
+    L({ id: 'broadway', score: 44, name: 'Broadway Optometry', email: 'eyes@broadwayoptometry.example', city: 'Saskatoon, Saskatchewan', ind: 'optometry clinic', size: '1-10 people', chips: [], addr: '705 Broadway Ave, Saskatoon', web: 'broadwayoptometry.example',
+      reasons: 'industry fits (optometry clinic); 1-10 people, smaller than your usual customer',
+      site: 'Eye exams and eyewear on Broadway since 2009.',
+      opener: "Saw you're an optometry clinic in Saskatoon, so I'll keep this short and relevant.", why: 'Nothing recent on their site, so the opener sticks to the plain facts.',
+      facts: ["You're an optometry clinic in Saskatoon"] })
+  ];
 
-  function show(n){
-    imgs.forEach(function(im,k){
-      var on=k===STEPS[n].img;
-      if(on&&im.classList.contains('on')){im.classList.remove('on');void im.offsetWidth}
-      im.classList.toggle('on',on);
+  /* ---------- state ---------- */
+  var S;
+  function fresh() {
+    return {
+      leads: START.map(function (l) { return Object.assign({ state: 'new', isNew: false }, l); }),
+      found: false, finding: false, batching: false,
+      replyIn: false, replyNew: false, booked: false, pickedSlot: -1,
+      tab: 'all', query: '', view: 'leads', timers: []
+    };
+  }
+  function later(fn, ms) { var t = setTimeout(fn, ms); S.timers.push(t); return t; }
+
+  function heat(l) { return l.score >= 85 ? 'hot' : l.score >= 60 ? 'warm' : 'cold'; }
+  function subject(l) { return heat(l) === 'cold' ? 'IT support for ' + l.name + ', worth a look?' : 'Who fixes it when the server is down at ' + l.name + '?'; }
+  function body(l) { return heat(l) === 'cold' ? coldBody(l.name, l.opener) : warmBody(l.name, l.opener); }
+  function byId(id) { for (var i = 0; i < S.leads.length; i++) if (S.leads[i].id === id) return S.leads[i]; return null; }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function $(id) { return document.getElementById(id); }
+
+  var toastT = null;
+  function toast(msg) {
+    var t = $('toast'); t.textContent = msg; t.classList.add('on');
+    clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove('on'); }, 2600);
+  }
+
+  /* ---------- rendering ---------- */
+  function cardHTML(l) {
+    var h = heat(l), done = l.state === 'sent' || l.state === 'skipped' || l.state === 'unsub';
+    var html = '<article class="card row-card heat-' + h + (done ? ' is-done' : '') + '" id="lead-' + l.id + '" data-id="' + l.id + '">';
+    html += '<div class="rc-who"><div class="card-top"><span class="score-pill" aria-label="Lead score ' + l.score + ' out of 100">' + l.score + '</span>' +
+      '<h3>' + esc(l.name) + '</h3>' + (l.isNew ? '<span class="new-label">new</span>' : '') + '<span class="heat-label">' + h + '</span></div>';
+    html += '<p class="meta">' + (l.email ? '<span>' + esc(l.email) + '</span>' : '') + '<span>' + esc(l.city) + '</span><span>' + esc(l.ind) + '</span></p>';
+    var line = l.state === 'sent' ? 'Email 1 of 4 sent ' + TODAY + ' &middot; next one in 4 days unless they reply' : 'Next email due ' + TODAY;
+    html += '<p class="rc-line">' + (l.verify ? '<span class="verify-flag">Needs verification</span>' : '') + line + '</p>';
+    html += '<details class="rc-more"><summary>More about this lead</summary>' +
+      '<p class="small muted" style="margin:0 0 .2rem"><strong>' + l.score + '</strong> &ndash; ' + esc(l.reasons) + '</p>' +
+      '<p class="small muted" style="margin:0">' + esc(l.size) + ' (their site says)' + (l.addr ? ' &middot; ' + esc(l.addr) : '') + '</p>' +
+      (l.chips.length ? '<div class="chips" aria-label="Buying signals">' + l.chips.map(function (c) { return '<span class="chip">' + esc(c) + '</span>'; }).join('') + '</div>' : '') +
+      '<div class="site-says"><span class="lbl">What their website says</span><q>' + esc(l.site) + '</q></div>' +
+      '<div class="opener"><span class="lbl">Why this opener &middot; their website, checked ' + TODAY + '</span><p class="said">&ldquo;' + esc(l.opener) + '&rdquo;</p><p class="small">' + esc(l.why) + '</p></div>' +
+      '<ul class="facts">' + l.facts.map(function (f) { return '<li>' + esc(f) + ' <span class="src">(their website)</span></li>'; }).join('') + '</ul>' +
+      '<p class="small" style="margin:.3rem 0 .1rem"><strong>If they reply:</strong></p><ul class="facts">' +
+      (h === 'cold' ? REPLIES_COLD : REPLIES_WARM).map(function (r) { return '<li><strong>&ldquo;' + esc(r[0]) + '&rdquo;</strong> &mdash; ' + esc(r[1]) + '</li>'; }).join('') +
+      '</ul></details></div>';
+    html += '<div class="rc-draft draft" aria-label="Draft email"><p class="subj">' + esc(subject(l)) + '</p>' +
+      '<details class="mail"><summary class="small">Read the email</summary><pre>' + esc(body(l)) + '</pre></details></div>';
+    html += '<div class="rc-side">';
+    if (l.state === 'sent') {
+      html += '<div class="rc-status sent">Sent (demo, nothing actually emailed)</div>';
+    } else if (l.state === 'skipped') {
+      html += '<div class="rc-status off">Skipped for now</div><button type="button" class="btn btn-ghost btn-small" data-act="undo">Undo</button>';
+    } else if (l.state === 'unsub') {
+      html += '<div class="rc-status off">Unsubscribed. Never emailed again.</div>';
+    } else {
+      if (l.state === 'approved') html += '<div class="rc-status appr">Approved for the batch</div>';
+      html += '<div class="card-actions">' +
+        '<button type="button" class="btn btn-primary btn-small" data-act="send"' + (l.email ? '' : ' disabled title="No email address yet: needs verification"') + '>Send</button>' +
+        '<button type="button" class="btn btn-ghost btn-small" data-act="skip">Skip</button>' +
+        '<button type="button" class="btn btn-danger btn-small" data-act="unsub">Unsubscribe</button></div>';
+    }
+    html += '</div></article>';
+    return html;
+  }
+
+  function sorted() { return S.leads.slice().sort(function (a, b) { return b.score - a.score; }); }
+
+  function renderCards() {
+    $('cards').innerHTML = sorted().map(cardHTML).join('');
+    applyFilter();
+  }
+  function rerender(id) {
+    var old = $('lead-' + id); if (!old) return renderCards();
+    var more = old.querySelector('.rc-more'), mail = old.querySelector('.mail');
+    var wasMore = more && more.open, wasMail = mail && mail.open;
+    var tmp = document.createElement('div'); tmp.innerHTML = cardHTML(byId(id));
+    var n = tmp.firstChild; old.parentNode.replaceChild(n, old);
+    if (wasMore) n.querySelector('.rc-more').open = true;
+    if (wasMail) n.querySelector('.mail').open = true;
+    applyFilter();
+  }
+
+  function applyFilter() {
+    var q = S.query.trim().toLowerCase(), shown = 0;
+    Array.prototype.forEach.call($('cards').children, function (el) {
+      var l = byId(el.getAttribute('data-id'));
+      var hay = (l.name + ' ' + l.city + ' ' + l.ind + ' ' + l.email).toLowerCase();
+      var ok = (S.tab === 'all' || heat(l) === S.tab) && (!q || hay.indexOf(q) >= 0);
+      el.hidden = !ok; if (ok) shown++;
     });
-    cap.textContent=STEPS[n].cap;
-    stepBtns.forEach(function(b,k){b.setAttribute('aria-current',k===n?'true':'false')});
+    $('filter-count').textContent = q ? shown + ' shown' : '';
+    renderCounts();
   }
-  function go(n,andPlay){
-    i=Math.max(0,Math.min(STEPS.length-1,n)); show(i); bar.style.width='0';
-    audio.src='narration/step-'+i+'.mp3';
-    if(andPlay){audio.play().catch(function(){setPlaying(false)})}
+
+  function renderCounts() {
+    var c = { all: 0, hot: 0, warm: 0, cold: 0 }, hotReady = 0, review = 0, approved = 0, sent = 0;
+    S.leads.forEach(function (l) {
+      var h = heat(l); c.all++; c[h]++;
+      var open = l.state === 'new' || l.state === 'approved';
+      if (h === 'hot' && open) hotReady++;
+      if (h !== 'cold' && l.state === 'new') review++;
+      if (l.state === 'approved') approved++;
+      if (l.state === 'sent') sent++;
+    });
+    c.replied = S.replyIn ? 1 : 0;
+    Object.keys(c).forEach(function (k) { var e = document.querySelector('[data-count="' + k + '"]'); if (e) e.textContent = c[k]; });
+    $('replyNew').hidden = !S.replyNew;
+    $('t-hot').textContent = hotReady;
+    $('t-rev').textContent = review;
+    $('t-rep').textContent = S.replyIn ? 1 : 0;
+    $('t-rep-l').innerHTML = S.booked ? 'Replies / booked &middot; <strong>1 booked</strong>' : S.replyNew ? 'Replies / booked &middot; <strong>1 new</strong>' : 'Replies / booked';
+    var warmReady = S.leads.filter(function (l) { return heat(l) !== 'cold' && (l.state === 'new' || l.state === 'approved'); }).length;
+    $('heroLine').innerHTML = warmReady ? '<strong>' + warmReady + ' warm</strong> leads ready for you today.' : '<strong>All caught up.</strong> Every warm lead has been handled today.';
+    $('batch-count').textContent = approved + ' approved · ' + review + ' waiting on your approval · ' + sent + ' sent today';
+    $('batch-btn').disabled = S.batching || approved === 0;
+    $('batch-btn').textContent = approved ? 'Send approved batch (' + approved + ')' : 'Send approved batch';
   }
-  function setPlaying(p){playing=p;play.textContent=p?'Pause':'Play';play.setAttribute('aria-label',p?'Pause':'Play');start.hidden=true}
-  audio.addEventListener('timeupdate',function(){if(audio.duration)bar.style.width=(audio.currentTime/audio.duration*100)+'%'});
-  audio.addEventListener('ended',function(){
-    if(i<STEPS.length-1){go(i+1,true)}else{setPlaying(false);bar.style.width='100%'}
+
+  function renderReplies() {
+    var list = $('replyList');
+    if (!S.replyIn) { list.innerHTML = '<div class="empty">No replies yet. When someone writes back, it lands here and their follow-ups stop.</div>'; return; }
+    var slots = nextWeekdays(3), times = ['10:00', '14:00', '10:00'];
+    var slotBtns = slots.map(function (d, i) {
+      return '<button type="button" class="btn btn-ghost btn-small' + (S.pickedSlot === i ? ' picked' : '') + '" data-slot="' + i + '">' + fmt(d) + ' at ' + times[i] + '</button>';
+    }).join('');
+    var pasted = 'Hi Jordan,\n\nThanks for getting back to me. Would one of these work for a quick call?\n\n' +
+      slots.map(function (d, i) { return '- ' + fmt(d) + ' at ' + times[i]; }).join('\n') + '\n\n' + REP.name + '\n' + REP.phone;
+    list.innerHTML = '<article class="card reply-card" id="replyCard">' +
+      '<div class="card-top"><h3>Portage Veterinary Hospital</h3><span class="heat-label">' + (S.booked ? 'booked' : S.replyNew ? 'new' : 'replied') + '</span></div>' +
+      '<p class="muted small" style="margin:0">' + TODAY + ', just now &middot; Email 1 of 4 sent yesterday &middot; follow-ups paused</p>' +
+      '<p style="margin:0">From <strong>jordan.lee@portagevet.example</strong></p>' +
+      '<blockquote><p>Hi Pat, thanks for reaching out. Good timing, we\'re opening a second clinic this spring. Send me a couple of times next week and we\'ll talk.</p></blockquote>' +
+      '<details class="howto" open><summary>Propose times</summary><div class="slotrow">' + slotBtns + '</div>' +
+      '<div class="field" style="margin:.4rem 0 0"><span class="flab">Reply to paste</span><pre class="draft" style="white-space:pre-wrap;font-family:var(--font-body);margin:0">' + esc(pasted) + '</pre></div></details>' +
+      '<div class="card-actions">' +
+      (S.booked ? '<span class="rc-status sent">Booked (demo)</span>' : '<button class="btn btn-primary btn-small" type="button" data-reply="booked">Mark booked</button>') +
+      '<button class="btn btn-danger btn-small" type="button" data-reply="unsub">Unsubscribe</button></div></article>';
+  }
+
+  function renderAll() {
+    $('heroDate').textContent = TODAY;
+    renderCards(); renderReplies(); renderCounts(); renderTabs(); renderView();
+    $('replyNotice').hidden = !(S.replyIn && S.replyNew);
+    $('finder-bar').style.width = '0%'; $('batch-bar').style.width = '0%';
+    $('finder-status').textContent = 'Idle'; $('batch-status').textContent = 'Nothing running';
+    $('find-btn').disabled = false; $('heroFind').disabled = false;
+    $('finder-detail').textContent = 'Finds up to 40 new companies per press across your territory. Press again for the next 40; companies already on your list are skipped.';
+    $('savedMsg').textContent = ''; $('testMailMsg').textContent = '';
+    $('lead-search').value = '';
+  }
+
+  function renderTabs() {
+    Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (b) { b.classList.toggle('on', b.getAttribute('data-tab') === S.tab); b.setAttribute('aria-selected', b.getAttribute('data-tab') === S.tab); });
+    $('pane-due').hidden = S.tab === 'replied';
+    $('pane-replied').hidden = S.tab !== 'replied';
+  }
+  function setTab(t) {
+    S.tab = t;
+    if (t === 'replied') { S.replyNew = false; $('replyNotice').hidden = true; renderReplies(); }
+    renderTabs(); applyFilter();
+  }
+  function renderView() {
+    $('view-leads').hidden = S.view !== 'leads';
+    $('view-settings').hidden = S.view !== 'settings';
+    $('nav-leads').classList.toggle('on', S.view === 'leads');
+    $('nav-settings').classList.toggle('on', S.view === 'settings');
+  }
+  function setView(v) { S.view = v; renderView(); window.scrollTo(0, 0); }
+
+  /* ---------- actions ---------- */
+  function sendLead(id, quiet) {
+    var l = byId(id); if (!l || !l.email) return;
+    l.state = 'sent'; rerender(id);
+    if (!quiet) toast('Sent (demo, nothing actually emailed) to ' + l.name);
+    arriveReply();
+  }
+  function arriveReply() {
+    if (S.replyIn || S.replyQueued) return;
+    S.replyQueued = true;
+    later(function () {
+      S.replyIn = true; S.replyNew = true;
+      $('replyNotice').hidden = S.tab === 'replied';
+      renderReplies(); renderCounts();
+      toast('New reply from Portage Veterinary Hospital');
+    }, 3200);
+  }
+
+  function find() {
+    if (S.finding) return;
+    S.finding = true;
+    $('find-btn').disabled = true; $('heroFind').disabled = true;
+    var steps = [
+      [8, 'Searching map data across your territory…', 'Working'],
+      [26, 'Searching the web for businesses that fit managed IT…', 'Working'],
+      [48, 'Found 40 companies. Skipping the ones already on your list…', 'Working'],
+      [70, 'Reading their websites: 12 of 40…', 'Reading'],
+      [88, 'Reading their websites: 34 of 40…', 'Reading'],
+      [100, 'Scoring each one out of 100…', 'Scoring']
+    ];
+    steps.forEach(function (s, i) {
+      later(function () { $('finder-bar').style.width = s[0] + '%'; $('finder-detail').textContent = s[1]; $('finder-status').textContent = s[2]; }, 150 + i * 620);
+    });
+    later(function () {
+      var add = S.found ? [] : FOUND;
+      add.forEach(function (f) { S.leads.push(Object.assign({ state: 'new', isNew: true }, f)); });
+      S.found = true; S.finding = false;
+      $('finder-status').textContent = 'Done';
+      $('finder-detail').textContent = add.length
+        ? 'Checked 40 companies. ' + add.length + ' good fits were added and scored; the rest were already on your list or a weak fit. (Demo: the real finder takes a few minutes.)'
+        : 'Checked the next 40. No new fits this time in the demo; the real finder keeps going through your territory.';
+      $('find-btn').disabled = false; $('heroFind').disabled = false;
+      if (S.tab === 'replied') setTab('all');
+      renderCards();
+      if (add.length) toast(add.length + ' new leads added and scored');
+    }, 150 + steps.length * 620 + 250);
+  }
+
+  function approveWarm() {
+    var n = 0;
+    S.leads.forEach(function (l) { if (heat(l) !== 'cold' && l.state === 'new' && l.email && !l.verify) { l.state = 'approved'; n++; } });
+    renderCards();
+    toast(n ? n + ' warm leads approved for the batch' : 'Nothing new to approve');
+  }
+  function runBatch() {
+    var q = sorted().filter(function (l) { return l.state === 'approved'; });
+    if (!q.length || S.batching) return;
+    S.batching = true; renderCounts();
+    $('batch-status').textContent = 'Sending (demo)';
+    q.forEach(function (l, i) {
+      later(function () {
+        sendLead(l.id, true);
+        $('batch-bar').style.width = Math.round((i + 1) / q.length * 100) + '%';
+        if (i === q.length - 1) {
+          S.batching = false; $('batch-status').textContent = 'Done';
+          renderCounts();
+          toast(q.length + ' sent (demo, nothing actually emailed)');
+        }
+      }, 350 + i * 420);
+    });
+  }
+
+  /* ---------- wiring ---------- */
+  $('cards').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-act]'); if (!b) return;
+    var id = b.closest('.row-card').getAttribute('data-id'), l = byId(id), act = b.getAttribute('data-act');
+    if (act === 'send') sendLead(id);
+    else if (act === 'skip') { l.state = 'skipped'; rerender(id); toast('Skipped ' + l.name + ' for now'); }
+    else if (act === 'unsub') { l.state = 'unsub'; rerender(id); toast(l.name + ' will never be emailed again'); }
+    else if (act === 'undo') { l.state = 'new'; rerender(id); }
   });
-  function toggle(){
-    if(playing){audio.pause();setPlaying(false)}
-    else{setPlaying(true);if(!audio.src)go(i,true);else audio.play().catch(function(){setPlaying(false)})}
-  }
-  start.addEventListener('click',function(){setPlaying(true);go(0,true)});
-  play.addEventListener('click',toggle);
-  document.getElementById('back').addEventListener('click',function(){go(i-1,playing)});
-  document.getElementById('next').addEventListener('click',function(){go(i+1,playing)});
-  document.addEventListener('keydown',function(e){
-    if(e.target.tagName==='BUTTON'&&(e.key===' '||e.key==='Enter'))return;
-    if(e.key==='ArrowRight')go(i+1,playing); else if(e.key==='ArrowLeft')go(i-1,playing);
-    else if(e.key===' '){e.preventDefault();toggle()}
+  $('replyList').addEventListener('click', function (e) {
+    var s = e.target.closest('[data-slot]');
+    if (s) { S.pickedSlot = +s.getAttribute('data-slot'); renderReplies(); toast('Time picked. Copy the reply below and send it from your inbox.'); return; }
+    var r = e.target.closest('[data-reply]'); if (!r) return;
+    if (r.getAttribute('data-reply') === 'booked') { S.booked = true; toast('Marked booked'); }
+    else toast('Portage Veterinary Hospital will never be emailed again');
+    renderReplies(); renderCounts();
   });
-  show(0);
+  $('tabs').addEventListener('click', function (e) { var t = e.target.closest('.tab'); if (t) setTab(t.getAttribute('data-tab')); });
+  $('openReply').addEventListener('click', function () { setTab('replied'); $('tabs').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  $('lead-search').addEventListener('input', function (e) { S.query = e.target.value; applyFilter(); });
+  $('find-btn').addEventListener('click', find);
+  $('heroFind').addEventListener('click', function () { $('findPanel').scrollIntoView({ behavior: 'smooth', block: 'center' }); find(); });
+  $('reviewBtn').addEventListener('click', function () { setTab('all'); $('tabs').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  $('approve-btn').addEventListener('click', approveWarm);
+  $('batch-btn').addEventListener('click', runBatch);
+  $('nav-leads').addEventListener('click', function () { setView('leads'); });
+  $('nav-settings').addEventListener('click', function () { setView('settings'); });
+  $('backLeads').addEventListener('click', function () { setView('leads'); });
+  $('saveSettings').addEventListener('click', function () { $('savedMsg').textContent = 'Saved (demo). Nothing leaves this page.'; });
+  $('testMail').addEventListener('click', function () { $('testMailMsg').textContent = 'Demo: in the real app a test email lands in your own inbox.'; });
+  $('reset').addEventListener('click', reset);
+
+  function reset() {
+    if (S) S.timers.forEach(clearTimeout);
+    S = fresh();
+    renderAll();
+  }
+  reset();
+
+  /* ---------- guided tour (shared engine) ---------- */
+  window.LEADME_TOUR = {
+    lines: [
+      "This is Lead Me. Each morning opens on today's leads: your name, your company, and how many warm businesses are ready.",
+      "These tiles are your day at a glance: hot leads ready, replies and bookings, and drafts waiting for your okay.",
+      "Press Find forty more, and Lead Me searches maps and the web across your territory for businesses that fit what you sell.",
+      "Each one is scored out of a hundred. Sixty is warm, eighty-five is hot, and the warmest sit at the top.",
+      "Open a lead to see what their own website says, and why Lead Me chose that opening line.",
+      "The first email is already written from those facts. Nothing guessed, no made-up names.",
+      "Press Send when you're happy with it. In this demo it's only marked sent, so nothing is really emailed.",
+      "Or approve every warm lead with a verified contact at once, and send them as one batch, within your daily limit.",
+      "When someone writes back, it lands in Replied and the follow-ups stop. This vet hospital wants to talk next week.",
+      "Settings is where you begin: add your name, company, phone and mailing address, and connect your email so replies come back to you.",
+      "Lead Me is five hundred dollars a month, no setup fee. Forty warm companies in fourteen days, or you owe nothing.",
+      "That's the tour. Now click around: find leads, open a card, send a few. It's all made up, so nothing leaves this page."
+    ],
+    reset: reset,
+    setView: setView,
+    setTab: setTab
+  };
 })();
 </script>
-<script src="/calas-brandbar.js?v=20260929i" defer></script></body>
+
+<script src="/demo/_tour/tour.js"></script>
+<script>
+(function () {
+  var T = window.LEADME_TOUR;
+  function first(sel) { return document.querySelector('#cards .row-card:not([hidden]) ' + (sel || '')); }
+  CalasTour.start({
+    lines: T.lines,
+    durs: [7.44, 6.84, 6.96, 6.38, 5.11, 5.35, 6.19, 7.2, 7.1, 7.87, 7.32, 7.37],
+    audioBase: 'narration/step-',
+    onReplay: function () { T.reset(); window.scrollTo(0, 0); },
+    script: function (t) {
+      return t.point('#heroTitle', 0)
+        .then(function () { return t.point('#tiles', 1); })
+        .then(function () { return t.point('#find-btn', 2); })
+        .then(function () { t.tap('#find-btn'); return t.sleep(4400); })
+        .then(function () { return t.point(first('.score-pill'), 3); })
+        .then(function () { t.tap(first('.rc-more summary')); return t.sleep(500); })
+        .then(function () { return t.point(first('.site-says'), 4); })
+        .then(function () { t.tap(first('.mail summary')); return t.sleep(500); })
+        .then(function () { return t.point(first('.mail pre'), 5, { py: 0.3 }); })
+        .then(function () { t.tap(first('.rc-more summary')); t.tap(first('.mail summary')); return t.point(first('[data-act="send"]'), 6); })
+        .then(function () { t.tap(first('[data-act="send"]')); return t.sleep(1200); })
+        .then(function () { return t.point('#approve-btn', 7); })
+        .then(function () { t.tap('#approve-btn'); return t.sleep(700); })
+        .then(function () { t.tap('#batch-btn'); return t.sleep(2600); })
+        .then(function () { t.tap('#tab-replied'); return t.sleep(600); })
+        .then(function () { return t.point('#replyCard blockquote', 8); })
+        .then(function () { t.tap('#nav-settings'); return t.sleep(500); })
+        .then(function () { return t.point('#s-you', 9, { py: 0.9 }); })
+        .then(function () { return t.point('#getlink', 10); })
+        .then(function () { t.tap('#nav-leads'); T.setTab('all'); return t.sleep(300); })
+        .then(function () { return t.point('#heroTitle', 11); });
+    }
+  });
+})();
+</script>
+<script src="/calas-brandbar.js?v=20260929j" defer></script>
+</body>
 </html>

@@ -26,6 +26,20 @@
     '.cbar .nav-cta:hover{background:#0E4A6B}' +
     '@media(max-width:1400px){.cbar .cbar-in{padding:16px 22px;gap:14px}.cbar nav{gap:11px}.cbar .nav-cta{padding:9px 12px}}' +
     '@media(max-width:760px){.cbar .cbar-in{padding:10px 16px}.cbar nav{gap:14px;font-size:16px}}' +
+    /* phone (2026-09-29, Dan: the app needs the room): one slim row, menu behind a button */
+    '.cbar .cbar-menu{display:none;background:none;border:1px solid #C9D6DF;border-radius:6px;padding:6px 12px;font:600 14px "IBM Plex Sans",system-ui,sans-serif;color:#12212C;cursor:pointer}' +
+    '@media(max-width:760px){' +
+      '.cbar{position:static}' +
+      'body .cbar .cbar-in{padding:8px 14px;flex-wrap:nowrap}' +
+      '.cbar .crest{width:20px;height:28px}.cbar .name{font-size:16px}.cbar .sub{font-size:7px}' +
+      '.cbar .cbar-menu{display:inline-block}' +
+      'body .cbar nav{display:none}' +
+      'body .cbar.open .cbar-in{flex-wrap:wrap}' +
+      'body .cbar.open nav{display:flex;flex-direction:column;align-items:stretch;flex-basis:100%;gap:0;font-size:16px;padding:6px 0 4px}' +
+      'body .cbar.open nav a{padding:10px 2px;border-top:1px solid #EEF2F5;margin:0}' +
+      'body .cbar.open nav .nav-signin,body .cbar.open nav .nav-cta{margin-top:8px;text-align:center;border-top:0}' +
+    '}' +
+    '@media(max-width:760px){.calas-in-app .cbar,.calas-in-app .cfoot{display:none}}' +
     /* footer */
     '.cfoot{margin-top:48px;background:#fff;border-top:2px solid #F0C171;font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#4E5B66}' +
     '.cfoot .cfoot-in{max-width:1240px;margin:0 auto;padding:30px 30px 34px;box-sizing:border-box}' +
@@ -72,11 +86,18 @@
           '<span class="crest" aria-hidden="true"></span>' +
           '<span><span class="name">Calas</span><span class="sub">AUTOMATIONS</span></span>' +
         '</a>' +
+        '<button class="cbar-menu" type="button" aria-expanded="false">Menu</button>' +
         '<nav>' + NAV + '<a class="nav-signin" href="/signin/">Sign in</a>' +
           '<a class="nav-cta" href="mailto:dan@calasautomations.com?subject=Calas%20Automations%20%E2%80%94%2015%20minutes">Book 15 minutes</a>' +
         '</nav>' +
       '</div>';
     document.body.insertBefore(bar, document.body.firstChild);
+    var btn = bar.querySelector('.cbar-menu');
+    btn.addEventListener('click', function () {
+      var open = bar.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? 'Close' : 'Menu';
+    });
   }
 
   function footerHTML() {
@@ -109,6 +130,10 @@
 
   function run() {
     if (!document.body) return;
+    // Inside a working app (Quote Me, ReceiptSort...) the app has its own
+    // header and menu; on a phone the Calas bar and footer only take room
+    // from it (2026-09-29, Dan). Desktop keeps them.
+    if (/^\/[a-z-]+\/app\//.test(location.pathname)) document.documentElement.classList.add('calas-in-app');
     ensureStyle();
     injectMasthead();
     injectFooter();

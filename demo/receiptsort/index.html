@@ -1,0 +1,532 @@
+<!doctype html><html lang="en"><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ReceiptSort &middot; demo &middot; Calas Automations</title><meta name="description" content="Try ReceiptSort with made-up receipts: it reads each one and lists the date, vendor, subtotal, GST and total, then gives you one spreadsheet."><style>:root{color-scheme:light}body{margin:0;padding:0}[hidden]{display:none!important}</style><style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20260929j">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
+<style>
+:root{
+  --paper:#FFFFFF;--surface:#FFFFFF;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--ink-3:#6B7883;
+  --rule:#D9E3EA;--rule-2:#E9F0F5;
+  --ok:#17794A;--ok-soft:#E9F5EE;--warm:#8A5A12;--warm-soft:#FBF1DF;
+  --accent:#155F87;--accent-2:#0E4A6B;--accent-soft:#E6F0F6;--on-accent:#FFFFFF;
+  --night:#0B2E45;--crescent-fill:#155F87;--gold-line:#F0C171;
+  --crescent:url(data:image/png;base64,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);
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif;font-weight:700;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.wrap{max-width:1300px;margin:0 auto;padding:0 28px}
+button{font-family:inherit;font-size:15px;cursor:pointer;border-radius:4px;transition:opacity .2s,border-color .2s,color .2s,background .2s}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.banner{background:var(--sunk);color:var(--ink-2);font-size:13.5px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.banner .wrap{display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.banner b{color:var(--ink);font-weight:600}
+
+/* app bar */
+.appbar{background:var(--surface);border-bottom:2px solid var(--gold-line);position:relative;z-index:30;box-shadow:0 2px 14px rgba(11,46,69,.08)}
+.appbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 28px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:13px;perspective:700px;text-decoration:none;color:inherit}
+.crest{width:44px;height:44px;flex:none;position:relative;transform-style:preserve-3d;animation:coin 8s linear infinite}
+.crest .cres{position:absolute;left:50%;top:50%;width:30%;height:42%;transform:translate(-50%,-50%);background:var(--crescent-fill);-webkit-mask:var(--crescent) center/contain no-repeat;mask:var(--crescent) center/contain no-repeat}
+@keyframes coin{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
+.t1{font-family:"Libre Baskerville",Georgia,serif;font-size:18px;line-height:1.1}
+.t1 .r{color:var(--accent)}
+.t2{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.22em;color:var(--ink-3)}
+.who{padding-left:18px;border-left:1px solid var(--rule);font-size:14.5px;color:var(--ink-2)}
+.who b{display:block;color:var(--ink);font-weight:600}
+.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.getlink{font-size:14px;color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;margin-right:6px}
+.getlink:hover{border-bottom-color:var(--accent)}
+.run{background:linear-gradient(180deg,var(--accent) 0%,var(--accent-2) 100%);color:var(--on-accent);border:1px solid var(--accent);padding:12px 24px;font-weight:500;box-shadow:0 2px 10px rgba(11,46,69,.22);transition:transform .12s,box-shadow .12s,opacity .2s}
+.run:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(11,46,69,.3)}
+.run[disabled]{opacity:.45;cursor:default;transform:none;box-shadow:none}
+.ghost{background:transparent;color:var(--ink-2);border:1px solid var(--rule);padding:11px 16px}
+.ghost:hover{border-color:var(--accent);color:var(--ink)}
+.ghost[disabled]{opacity:.45;cursor:default}
+
+/* hello */
+.hello{background:var(--surface);border-bottom:1px solid var(--rule);padding:26px 0}
+.hello .wrap{display:flex;gap:28px;justify-content:space-between;align-items:flex-end;flex-wrap:wrap}
+.hello h1{font-size:30px;margin-top:8px}
+.hello p{color:var(--ink-2);font-size:16.5px;margin-top:8px;max-width:60ch}
+.tally{display:flex;gap:30px;flex-wrap:wrap}
+.kpi .v{font-family:"Libre Baskerville",Georgia,serif;font-size:31px;font-variant-numeric:tabular-nums;display:block;line-height:1.1}
+.kpi .v.ok{color:var(--ok)} .kpi .v.warn{color:var(--warm)}
+.kpi .k{font-size:13.5px;color:var(--ink-3)}
+
+/* pillars */
+.why{border-bottom:1px solid var(--rule);background:var(--surface)}
+.why .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));padding:0 28px}
+.pil{padding:20px 24px 20px 0;display:flex;gap:14px;align-items:flex-start}
+.pil+.pil{padding-left:24px;border-left:1px solid var(--rule-2)}
+.pil .ico{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;flex:none;background:var(--accent-soft);color:var(--accent)}
+.pil.p3 .ico{background:var(--ok-soft);color:var(--ok)} .pil.p4 .ico{background:var(--warm-soft);color:var(--warm)}
+.pil .ico svg{width:20px;height:20px}
+.pil b{display:block;font-size:16px;font-weight:600}
+.pil > span:last-child > span{display:block;font-size:14px;color:var(--ink-2);margin-top:3px;line-height:1.5}
+
+/* status line */
+.status{border-bottom:1px solid var(--rule);background:var(--surface)}
+.status .wrap{display:flex;align-items:center;gap:11px;padding:13px 28px;font-size:15.5px;color:var(--ink-2);flex-wrap:wrap}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--ink-3);flex:none}
+.pulse.live{background:var(--accent);animation:pl 1.1s infinite}
+.pulse.done{background:var(--ok)}
+@keyframes pl{0%,100%{opacity:1}50%{opacity:.3}}
+.bar{flex-basis:100%;height:5px;background:var(--rule-2);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:100%;background:var(--accent);transform-origin:left;transform:scaleX(0);transition:transform .35s ease}
+
+/* layout */
+.grid{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.6fr);gap:24px;padding:24px 0 30px;align-items:start}
+@media(max-width:1020px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{border:1px solid var(--rule);background:var(--surface);border-radius:5px;overflow:hidden;box-shadow:0 6px 24px rgba(11,46,69,.08)}
+.card .hd{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:15px 20px;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.stack{display:flex;flex-direction:column;gap:24px}
+
+/* the shoebox: drawn receipts */
+.tray{background:var(--sunk);padding:22px 18px 26px;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:18px 14px;align-items:start}
+@media(max-width:560px){.tray{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.rc{position:relative;cursor:pointer;transition:transform .25s ease,box-shadow .25s ease;border-radius:2px}
+.rc:nth-child(odd){transform:rotate(-1.4deg)} .rc:nth-child(even){transform:rotate(1.1deg)} .rc:nth-child(3n){transform:rotate(-.4deg)}
+.rc:hover,.rc.on{transform:rotate(0) translateY(-3px)}
+.rc .pp{background:#FFFEFA;color:#2B2B2B;font:10.5px/1.45 "IBM Plex Mono",monospace;padding:12px 10px 16px;box-shadow:0 3px 10px rgba(18,33,44,.16);
+  -webkit-mask:linear-gradient(#000,#000) top/100% calc(100% - 6px) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/10px 6px repeat-x;
+  mask:linear-gradient(#000,#000) top/100% calc(100% - 6px) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/10px 6px repeat-x;overflow:hidden;position:relative}
+.rc .pp .v{font-weight:600;text-align:center;font-size:11px;letter-spacing:.04em;line-height:1.25;margin-bottom:3px}
+.rc .pp .c{text-align:center;color:#6A6A6A}
+.rc .pp .l{display:flex;justify-content:space-between;gap:6px}
+.rc .pp .l span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rc .pp .l.b{font-weight:600}
+.rc .pp hr{border:0;border-top:1px dashed #BDBDBD;margin:4px 0}
+.rc .pp.pdf{-webkit-mask:none;mask:none;border-top:4px solid var(--accent);font-family:"IBM Plex Sans",sans-serif;font-size:10px}
+.rc .pp.pdf .v{text-align:left;font-family:"Libre Baskerville",Georgia,serif;font-size:10.5px;color:var(--accent-2)}
+.rc .pp.pdf .c{text-align:left}
+.rc .pp.warmp{background:#FCF8EE}
+.rc .fn{display:block;margin-top:7px;font:11px "IBM Plex Mono",monospace;color:var(--ink-3);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc .scan{position:absolute;left:0;right:0;top:0;height:28px;background:linear-gradient(180deg,transparent,rgba(21,95,135,.28),transparent);opacity:0;pointer-events:none}
+.rc.reading .scan{opacity:1;animation:scan .8s ease-in-out infinite alternate}
+@keyframes scan{from{transform:translateY(-10px)}to{transform:translateY(190px)}}
+.rc .tick{position:absolute;right:-7px;top:-7px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;color:#fff;background:var(--ok);box-shadow:0 2px 6px rgba(0,0,0,.2);transform:scale(0);transition:transform .25s cubic-bezier(.3,1.6,.6,1)}
+.rc.done .tick{transform:scale(1)}
+.rc.rev .tick{background:var(--warm)}
+.drop{margin:0;border-top:1px solid var(--rule);padding:16px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--surface)}
+.drop p{font-size:14px;color:var(--ink-3);flex:1;min-width:200px}
+.drop p b{color:var(--ink-2);font-weight:500}
+
+/* table (mirrors the real app) */
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:14px 20px;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.tools .note{font-size:13.5px;color:var(--ink-3)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:800px}
+td.d{width:132px}td.vn{width:205px}td.num{width:86px}
+td.d input{font:13px "IBM Plex Mono",monospace;min-width:108px}td.vn input{min-width:175px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule-2)}
+th{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);background:var(--surface)}
+td.f{font:12px "IBM Plex Mono",monospace;color:var(--ink-3);white-space:nowrap}
+td input{width:100%;min-width:60px;border:1px solid transparent;background:transparent;font:inherit;color:inherit;padding:4px 6px;border-radius:5px}
+td input:hover,td input:focus{border-color:var(--rule);background:var(--sunk);outline:none}
+td input.blank{border:1px dashed var(--warm);background:var(--warm-soft)}
+td.num input{text-align:right;font-variant-numeric:tabular-nums;font-family:"IBM Plex Mono",monospace;font-size:13px}
+tbody tr{animation:rowin .35s ease;transition:background .3s}
+tbody tr.hl{background:var(--accent-soft)}
+tbody tr.fixed{background:var(--ok-soft)}
+@keyframes rowin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;white-space:nowrap}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}.pill.rev{background:var(--warm-soft);color:var(--warm)}
+.empty{padding:30px 20px;text-align:center;color:var(--ink-3);font-size:15px}
+.why-rev{margin:0;padding:12px 20px;background:var(--warm-soft);border-top:1px solid var(--rule);font-size:14px;color:var(--ink-2)}
+.why-rev b{color:var(--warm)}
+
+/* the spreadsheet view */
+.sheet .hd .fn{font:12.5px "IBM Plex Mono",monospace;color:var(--ink-2)}
+.xl{overflow-x:auto;background:#fff}
+.xl table{min-width:640px;font:12.5px "IBM Plex Mono",monospace;color:#12212C}
+.xl th,.xl td{border:1px solid #DDE3E8;padding:5px 8px;white-space:nowrap}
+.xl thead th{background:#EEF2F5;color:#66717B;text-align:center;font:11px "IBM Plex Mono",monospace;letter-spacing:0;text-transform:none}
+.xl td.rn{background:#EEF2F5;color:#66717B;text-align:center;width:34px}
+.xl tr.h td:not(.rn){font-weight:600;background:#F7F9FA}
+.xl td.n{text-align:right}
+.sheet .foot2{padding:12px 20px;border-top:1px solid var(--rule);background:var(--sunk);font-size:13.5px;color:var(--ink-3)}
+.sheet{animation:rowin .4s ease}
+
+.foot{padding:4px 0 44px;font-size:14px;color:var(--ink-3);max-width:80ch}
+.foot b{color:var(--ink-2);font-weight:500}
+.sitefoot{border-top:1px solid var(--rule);padding:30px 0 110px}
+
+@media(max-width:620px){
+  .appbar{position:static}.who{display:none}.wrap{padding:0 18px}.appbar .wrap,.status .wrap{padding-left:18px;padding-right:18px}
+  .hello h1{font-size:25px}.pil,.pil+.pil{padding:16px 0;border-left:0;border-top:1px solid var(--rule-2)}.pil:first-child{border-top:0}
+  .why .wrap{padding:0 18px}.tally{gap:22px}.kpi .v{font-size:26px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+
+<div class="banner"><div class="wrap">
+  <span><b>This is a demo.</b> Made-up business, made-up receipts. None of this is anyone's real information.</span>
+  <span class="mono">Calas Automations &middot; Winnipeg</span>
+</div></div>
+
+<div class="appbar"><div class="wrap">
+  <div class="brand">
+    <span class="crest" aria-hidden="true"><i class="cres"></i></span>
+    <div><div class="t1"><span class="r">Receipt</span>Sort</div><div class="t2">BY CALAS AUTOMATIONS</div></div>
+    <div class="who"><b>Birchwood Painting Co.</b>On Maya's laptop &middot; nothing uploaded</div>
+  </div>
+  <div class="controls">
+    <a class="getlink" id="getlink" href="/receiptsort/app/">Get this for your business &middot; Free &rarr;</a>
+    <button class="run" id="read">Read my receipts</button>
+    <button class="ghost" id="reset">Start over</button>
+  </div>
+</div></div>
+
+<div class="hello"><div class="wrap">
+  <div>
+    <p class="eyebrow">Receipts &middot; demo &middot; made-up business</p>
+    <h1 id="hi">Six receipts in. One spreadsheet out.</h1>
+    <p>Birchwood Painting's receipts from September. ReceiptSort reads each one and lists the date, vendor, subtotal, GST and total. Anything it isn't sure about is left blank and marked for you to check.</p>
+  </div>
+  <div class="tally" id="tally">
+    <div class="kpi"><span class="v mono" id="kRead">0</span><span class="k">receipts read</span></div>
+    <div class="kpi"><span class="v ok mono" id="kOk">0</span><span class="k">ready</span></div>
+    <div class="kpi"><span class="v warn mono" id="kRev">0</span><span class="k">to check</span></div>
+  </div>
+</div></div>
+
+<div class="why"><div class="wrap">
+  <div class="pil p1"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="3" fill="currentColor" fill-opacity=".18"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><span><b>Private</b><span>Read right on your phone or computer. Nothing is uploaded.</span></span></div>
+  <div class="pil p2"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2" fill="currentColor" fill-opacity=".18"/><path d="M8 20h8M12 16v4"/></svg></span><span><b>Any device</b><span>Windows, Mac, iPhone, iPad and Android. Nothing to install.</span></span></div>
+  <div class="pil p3"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" fill="currentColor" fill-opacity=".18"/><path d="M8 12.5l2.7 2.7L16.5 9.2"/></svg></span><span><b>Never guesses</b><span>Not sure? It leaves the field blank and says so.</span></span></div>
+  <div class="pil p4"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M17 7.5c0-1.9-2.2-3-5-3s-5 1.1-5 3 2 2.6 5 3.4 5 1.6 5 3.6-2.2 3-5 3-5-1.1-5-3" /></svg></span><span><b>Free</b><span>No account, no sign-in, nothing to cancel.</span></span></div>
+</div></div>
+
+<div class="status"><div class="wrap">
+  <span class="pulse" id="pulse"></span><span id="phase">Ready when you are &mdash; press Read my receipts.</span>
+  <div class="bar" id="bar" hidden><i id="barFill"></i></div>
+</div></div>
+
+<main class="wrap">
+  <div class="grid">
+    <div class="card" id="shoebox">
+      <div class="hd"><span class="eyebrow">The shoebox &middot; 6 receipts</span><span class="eyebrow">Click one to find its row</span></div>
+      <div class="tray" id="tray"></div>
+      <div class="drop">
+        <p><b>Photos or PDFs, as many as you like.</b> In the real app you pick them from your phone or computer, or drag them in.</p>
+        <button class="run" id="read2">Read my receipts</button>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="card" id="results">
+        <div class="tools">
+          <button class="run" id="dl" disabled>Download spreadsheet (CSV)</button>
+          <span class="note" id="count"></span>
+        </div>
+        <div class="tw"><table>
+          <thead><tr><th>File</th><th>Date</th><th>Vendor</th><th>Subtotal</th><th>GST</th><th>Total</th><th>Status</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table></div>
+        <p class="why-rev" id="whyRev" hidden></p>
+      </div>
+
+      <div class="card sheet" id="sheet" hidden>
+        <div class="hd"><span class="eyebrow">What's in the spreadsheet</span><span class="fn" id="sheetName">receipts-2026-09-29.csv</span></div>
+        <div class="xl"><table id="xl"></table></div>
+        <p class="foot2">In the real app this downloads as a file that opens in Excel, Google Sheets, Numbers or your accounting software. In this demo nothing downloads; this is what's inside it.</p>
+      </div>
+    </div>
+  </div>
+  <p class="foot"><b>What it does, and doesn't.</b> ReceiptSort lists the date, vendor, subtotal, GST and total for each receipt, and marks anything it isn't sure of. It won't categorize expenses or reconcile a bank statement: one spreadsheet, that's the job. Spot-check the rows before anything goes to the CRA. Receipts, stores and amounts here are made up.</p>
+</main>
+
+<footer class="sitefoot"></footer>
+
+<script src="/demo/_tour/tour.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- ReceiptSort's own reading rules (same as /receiptsort/app/parse.js) ----------
+     Never guess: a field it isn't sure about stays blank and the row is marked needs_review. */
+  var MONEY = /(?<![\d.])\$?\s?(\d{1,3}(?:,\d{3})*(?:\.\d{2})|\d+\.\d{2})(?!\d)/g;
+  var DATE_PATTERNS = [
+    [/\b(\d{4})-(\d{2})-(\d{2})\b/, 'ymd'],
+    [/\b(\d{1,2})\/(\d{1,2})\/(\d{4})\b/, 'mdy_or_dmy'],
+    [/\b(\d{1,2})\/(\d{1,2})\/(\d{2})\b/, 'mdy2'],
+    [/\b([A-Z][a-z]{2,8})\.? (\d{1,2}),? (\d{4})\b/, 'mon_d_y'],
+    [/\b(\d{1,2}) ([A-Z][a-z]{2,8})\.? (\d{4})\b/, 'd_mon_y']
+  ];
+  var MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+  var TOTAL_WORDS = /\b(grand\s*total|total\s*(?:due|paid|amount)?|amount\s*due|balance\s*due)\b/i;
+  var SUBTOTAL_WORDS = /\b(sub\s*-?\s*total|net)\b/i;
+  var GST_WORDS = /\b(gst|hst|gst\/hst|tps)\b/i;
+  var SKIP_VENDOR = /^(receipt|invoice|tax invoice|thank you|welcome|store|customer copy|\W*)$/i;
+  var PHONE = /\d{3}[-. ]\d{3}[-. ]\d{4}/;
+  function money(s) { var v = parseFloat(String(s).replace(/,/g, '')); return isNaN(v) ? null : v; }
+  function allMoney(s) { var out = [], m; MONEY.lastIndex = 0; while ((m = MONEY.exec(s))) { var v = money(m[1]); if (v !== null) out.push(v); } return out; }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function validDate(y, mo, d) { var t = new Date(Date.UTC(y, mo - 1, d)); return t.getUTCFullYear() === y && t.getUTCMonth() === mo - 1 && t.getUTCDate() === d ? y + '-' + pad(mo) + '-' + pad(d) : null; }
+  function parseDate(text) {
+    for (var i = 0; i < DATE_PATTERNS.length; i++) {
+      var m = DATE_PATTERNS[i][0].exec(text), kind = DATE_PATTERNS[i][1];
+      if (!m) continue;
+      var y, mo, d, a, b;
+      if (kind === 'ymd') { y = +m[1]; mo = +m[2]; d = +m[3]; }
+      else if (kind === 'mdy_or_dmy' || kind === 'mdy2') {
+        a = +m[1]; b = +m[2]; y = kind === 'mdy2' ? 2000 + (+m[3]) : +m[3];
+        if (a > 12 && b <= 12) { d = a; mo = b; } else if (b > 12 && a <= 12) { mo = a; d = b; } else return null;
+      } else if (kind === 'mon_d_y') { mo = MONTHS[m[1].slice(0, 3).toLowerCase()]; d = +m[2]; y = +m[3]; if (!mo) continue; }
+      else { d = +m[1]; mo = MONTHS[m[2].slice(0, 3).toLowerCase()]; y = +m[3]; if (!mo) continue; }
+      var ok = validDate(y, mo, d); if (ok) return ok;
+    }
+    return null;
+  }
+  function amountOnLine(line) { var v = allMoney(line); return v.length ? v[v.length - 1] : null; }
+  function parseAmounts(text) {
+    var lines = String(text).split(/\r?\n/).map(function (l) { return l.trim(); }).filter(Boolean);
+    var subtotal = null, gst = null, total = null;
+    lines.forEach(function (ln) {
+      var amt = amountOnLine(ln); if (amt === null) return;
+      if (SUBTOTAL_WORDS.test(ln) && subtotal === null) subtotal = amt;
+      else if (GST_WORDS.test(ln) && gst === null && amt < 10000) gst = amt;
+      else if (TOTAL_WORDS.test(ln) && !SUBTOTAL_WORDS.test(ln)) total = amt;
+    });
+    var ambiguous = false;
+    if (total === null) {
+      var all = allMoney(text);
+      if (all.length) { var mx = Math.max.apply(null, all), count = all.filter(function (v) { return v === mx; }).length;
+        if (count === 1 && (subtotal === null || mx >= subtotal)) total = mx; else ambiguous = true; }
+    }
+    if (total !== null && subtotal !== null && subtotal > total + 0.01) ambiguous = true;
+    return { subtotal: subtotal, gst: gst, total: total, ambiguous: ambiguous };
+  }
+  function parseVendor(text) {
+    var lines = String(text).split(/\r?\n/).slice(0, 8);
+    for (var i = 0; i < lines.length; i++) {
+      var s = lines[i].trim().replace(/^[ #*|\-_]+|[ #*|\-_]+$/g, '');
+      if (s.length < 3 || s.length > 60 || SKIP_VENDOR.test(s)) continue;
+      if (allMoney(s).length || parseDate(s)) continue;
+      if (PHONE.test(s)) continue;
+      return s;
+    }
+    return null;
+  }
+  function extract(text) {
+    var a = parseAmounts(text);
+    var row = { date: parseDate(text), vendor: parseVendor(text), subtotal: a.subtotal, gst: a.gst, total: a.total };
+    var missing = !row.date || !row.vendor || row.total === null;
+    row.status = a.ambiguous || missing ? 'needs_review' : 'ok';
+    return row;
+  }
+  var COLUMNS = ['file', 'date', 'vendor', 'subtotal', 'gst', 'total', 'status'];
+  function csvCell(v) {
+    var s = v === null || v === undefined ? '' : (typeof v === 'number' ? v.toFixed(2) : String(v));
+    if (/^[=+\-@]/.test(s)) s = "'" + s;
+    return s;
+  }
+
+  /* ---------- the made-up shoebox: Birchwood Painting Co., September ----------
+     Each receipt is lines of [left, right]. 'v' = store name, 'c' = centred small print, 'hr' = rule, 'b' = bold line. */
+  var RECEIPTS = [
+    { file: 'IMG_0411.jpg', lines: [['v', 'NORTHGATE PAINT SUPPLY'], ['c', '1180 Keewatin St'], ['c', '(204) 555-0171'], ['c', '2026-09-02  08:14'], ['hr'],
+      ['Eggshell 3.7L x2', '119.98'], ['Roller covers 3pk', '18.49'], ['Painter tape x3', '22.47'], ['hr'],
+      ['SUBTOTAL', '160.94'], ['GST 5%', '8.05'], ['b', 'TOTAL', '168.99'], ['VISA ****4417', '168.99'], ['c', 'THANK YOU']] },
+    { file: 'IMG_0412.jpg', lines: [['v', 'RIVERBEND FUEL & GO'], ['c', 'Pump 4 · Hwy 59 N'], ['c', 'Sep 3, 2026  17:26'], ['hr'],
+      ['Regular 49.66 L', '69.47'], ['hr'], ['SUBTOTAL', '69.47'], ['GST', '3.47'], ['b', 'TOTAL', '72.94'], ['DEBIT', '72.94']] },
+    { file: 'IMG_0415.jpg', warm: true, lines: [['v', 'HOLLOW OAK CAFE'], ['c', 'Table 6 · Server: Jo'], ['c', '09/05/2026  10:42'], ['hr'],
+      ['2 Americano', '7.50'], ['2 Blueberry muffin', '7.90'], ['hr'], ['SUBTOTAL', '15.40'], ['GST', '0.77'], ['b', 'TOTAL', '16.17'], ['c', 'See you soon!']] },
+    { file: 'lumber-0908.pdf', pdf: true, lines: [['v', 'LAKESIDE LUMBER YARD'], ['c', 'Invoice 20931 · Birchwood Painting Co.'], ['c', 'Invoice date: 2026-09-08'], ['hr'],
+      ['2x4x8 SPF x12', '65.88'], ['Canvas drop cloth x2', '49.98'], ['Sanding sponges x6', '23.94'], ['hr'],
+      ['Subtotal', '139.80'], ['GST 5%', '6.99'], ['b', 'Amount due', '146.79']] },
+    { file: 'IMG_0419.jpg', lines: [['v', 'PRAIRIE PRINT & COPY'], ['c', 'Order 5582'], ['c', '14/09/2026  13:05'], ['hr'],
+      ['Door hangers x250', '48.00'], ['hr'], ['SUBTOTAL', '48.00'], ['GST', '2.40'], ['b', 'TOTAL', '50.40'], ['MC ****2290', '50.40']] },
+    { file: 'IMG_0420.jpg', lines: [['v', 'SUNNYSIDE HARDWARE'], ['c', '(204) 555-0193'], ['c', 'Sept 18, 2026  09:51'], ['hr'],
+      ['Caulk white x4', '27.96'], ['Putty knife 2in', '9.99'], ['hr'], ['SUBTOTAL', '37.95'], ['GST', '1.90'], ['b', 'TOTAL', '39.85']] }
+  ];
+  function receiptText(r) {
+    return r.lines.map(function (l) {
+      if (l[0] === 'hr') return '----------';
+      if (l[0] === 'v' || l[0] === 'c') return l[1];
+      if (l[0] === 'b') return l[1] + '  ' + l[2];
+      return l[0] + '  ' + l[1];
+    }).join('\n');
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+  var tray = $('tray'), tbody = $('rows');
+  var rows = [], busy = false, timers = [];
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function fmt(v) { return v === null || v === undefined || v === '' ? '' : Number(v).toFixed(2); }
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+
+  function drawTray() {
+    tray.innerHTML = RECEIPTS.map(function (r, i) {
+      var body = r.lines.map(function (l) {
+        if (l[0] === 'hr') return '<hr>';
+        if (l[0] === 'v') return '<div class="v">' + esc(l[1]) + '</div>';
+        if (l[0] === 'c') return '<div class="c">' + esc(l[1]) + '</div>';
+        if (l[0] === 'b') return '<div class="l b"><span>' + esc(l[1]) + '</span><span>' + esc(l[2]) + '</span></div>';
+        return '<div class="l"><span>' + esc(l[0]) + '</span><span>' + esc(l[1]) + '</span></div>';
+      }).join('');
+      return '<div class="rc" id="rc-' + i + '" data-i="' + i + '" role="button" tabindex="0" aria-label="Receipt ' + esc(r.file) + '">' +
+        '<div class="pp' + (r.pdf ? ' pdf' : '') + (r.warm ? ' warmp' : '') + '">' + body + '<span class="scan"></span></div>' +
+        '<span class="tick" aria-hidden="true">&#10003;</span><span class="fn">' + esc(r.file) + '</span></div>';
+    }).join('');
+  }
+
+  function counts() {
+    var rev = rows.filter(function (r) { return r.status !== 'ok'; }).length;
+    return { n: rows.length, rev: rev, ok: rows.length - rev };
+  }
+  function render() {
+    if (!rows.length) {
+      tbody.innerHTML = '<tr><td colspan="7" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr>';
+    } else {
+      tbody.innerHTML = rows.map(function (r, i) {
+        var ok = r.status === 'ok';
+        function inp(k, cls, ph) {
+          var val = k === 'date' || k === 'vendor' ? r[k] : fmt(r[k]);
+          var blank = !ok && (val === null || val === '');
+          return '<input data-i="' + i + '" data-k="' + k + '" value="' + esc(val) + '"' + (ph ? ' placeholder="' + ph + '"' : '') +
+            (cls ? ' inputmode="decimal"' : '') + ' class="' + (blank ? 'blank' : '') + '" aria-label="' + k + ' for ' + esc(r.file) + '">';
+        }
+        return '<tr id="row-' + r.idx + '" class="' + (r.fixed ? 'fixed' : '') + '"><td class="f">' + esc(r.file) + '</td>' +
+          '<td class="d">' + inp('date', 0, 'YYYY-MM-DD') + '</td><td class="vn">' + inp('vendor') + '</td>' +
+          ['subtotal', 'gst', 'total'].map(function (k) { return '<td class="num">' + inp(k, 1) + '</td>'; }).join('') +
+          '<td><span class="pill ' + (ok ? 'ok' : 'rev') + '">' + (ok ? 'OK' : 'Check this') + '</span></td></tr>';
+      }).join('');
+    }
+    var c = counts();
+    $('count').textContent = c.n ? c.n + ' receipt' + (c.n === 1 ? '' : 's') + (c.rev ? ' · ' + c.rev + ' to check' : ' · all OK') : '';
+    $('kRead').textContent = c.n; $('kOk').textContent = c.ok; $('kRev').textContent = c.rev;
+    $('dl').disabled = !c.n || busy;
+    var cafe = rows.filter(function (r) { return r.status !== 'ok'; })[0];
+    var w = $('whyRev');
+    if (cafe && !busy) { w.hidden = false; w.innerHTML = '<b>Why "Check this"?</b> ' + esc(cafe.file) + ' is dated 09/05/2026. That could be the 5th of September or the 9th of May, so ReceiptSort left the date blank rather than guess. Type the right date in and the row turns OK.'; }
+    else w.hidden = true;
+    RECEIPTS.forEach(function (_, i) {
+      var card = $('rc-' + i), row = rows.filter(function (r) { return r.idx === i; })[0];
+      if (card) card.classList.toggle('rev', !!row && row.status !== 'ok');
+    });
+    if (!$('sheet').hidden) drawSheet();
+  }
+
+  tbody.addEventListener('change', function (e) {
+    var el = e.target; if (!el.dataset || el.dataset.i === undefined) return;
+    var r = rows[+el.dataset.i], k = el.dataset.k, v = el.value.trim();
+    if (k === 'date' || k === 'vendor') r[k] = v || null;
+    else { var n = parseFloat(v.replace(/[$,]/g, '')); r[k] = v === '' || isNaN(n) ? null : n; }
+    if (r.date && r.vendor && r.total !== null && r.total !== undefined && r.status !== 'ok') { r.status = 'ok'; r.fixed = true; phase('Fixed. ' + r.file + ' is now OK.', 'done'); }
+    render();
+  });
+
+  function phase(txt, kind) { $('phase').textContent = txt; $('pulse').className = 'pulse' + (kind ? ' ' + kind : ''); }
+  function setBusy(b) { busy = b; $('read').disabled = $('read2').disabled = b; $('reset').disabled = b; }
+
+  function readAll() {
+    if (busy) return;
+    reset(true);
+    setBusy(true);
+    $('bar').hidden = false;
+    var step = 850;
+    RECEIPTS.forEach(function (r, i) {
+      later(function () {
+        phase('Reading ' + (i + 1) + ' of ' + RECEIPTS.length + ': ' + r.file, 'live');
+        $('rc-' + i).classList.add('reading');
+      }, i * step);
+      later(function () {
+        var card = $('rc-' + i);
+        card.classList.remove('reading'); card.classList.add('done');
+        var row = extract(receiptText(r)); row.file = r.file; row.idx = i; rows.push(row);
+        $('barFill').style.transform = 'scaleX(' + ((i + 1) / RECEIPTS.length) + ')';
+        render();
+      }, i * step + step - 120);
+    });
+    later(function () {
+      setBusy(false); $('bar').hidden = true; $('barFill').style.transform = 'scaleX(0)';
+      var c = counts();
+      phase('Done. ' + c.n + ' receipts read' + (c.rev ? ', ' + c.rev + ' to check. Fix anything marked "Check this", then download.' : '. Download when ready.'), 'done');
+      render();
+    }, RECEIPTS.length * step + 80);
+  }
+
+  function drawSheet() {
+    var data = [COLUMNS].concat(rows.map(function (r) { return COLUMNS.map(function (c) { return csvCell(r[c]); }); }));
+    var letters = 'ABCDEFG'.split('');
+    $('xl').innerHTML = '<thead><tr><th></th>' + letters.map(function (l) { return '<th>' + l + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      data.map(function (cells, ri) {
+        return '<tr' + (ri === 0 ? ' class="h"' : '') + '><td class="rn">' + (ri + 1) + '</td>' + cells.map(function (v, ci) {
+          return '<td' + (ri && ci >= 3 && ci <= 5 ? ' class="n"' : '') + '>' + esc(v) + '</td>';
+        }).join('') + '</tr>';
+      }).join('') + '</tbody>';
+  }
+  function showSheet() {
+    if (!rows.length) return;
+    $('sheet').hidden = false; drawSheet();
+    var c = counts();
+    phase('Spreadsheet ready: ' + c.n + ' rows' + (c.rev ? ', ' + c.rev + ' still marked needs_review.' : '.') + ' (Demo: nothing downloads.)', 'done');
+  }
+
+  function reset(keepPhase) {
+    timers.forEach(clearTimeout); timers = [];
+    rows = []; setBusy(false);
+    $('bar').hidden = true; $('barFill').style.transform = 'scaleX(0)';
+    $('sheet').hidden = true;
+    drawTray(); render();
+    if (!keepPhase) phase('Ready when you are — press Read my receipts.');
+  }
+
+  function focusRow(i) {
+    var tr = $('row-' + i);
+    [].forEach.call(tray.querySelectorAll('.rc'), function (c) { c.classList.toggle('on', +c.dataset.i === i); });
+    [].forEach.call(tbody.querySelectorAll('tr'), function (t) { t.classList.remove('hl'); });
+    if (tr) { tr.classList.add('hl'); try { tr.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (e) {} }
+    else phase('Press Read my receipts first, then click a receipt to find its row.');
+  }
+  tray.addEventListener('click', function (e) { var c = e.target.closest('.rc'); if (c) focusRow(+c.dataset.i); });
+  tray.addEventListener('keydown', function (e) { if (e.key !== 'Enter' && e.key !== ' ') return; var c = e.target.closest('.rc'); if (c) { e.preventDefault(); focusRow(+c.dataset.i); } });
+
+  $('read').addEventListener('click', readAll);
+  $('read2').addEventListener('click', readAll);
+  $('reset').addEventListener('click', function () { reset(); });
+  $('dl').addEventListener('click', showSheet);
+  var now = new Date(); $('sheetName').textContent = 'receipts-' + now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + '.csv';
+
+  reset();
+
+  /* ---------- the guided tour ---------- */
+  function whenDone() {
+    return new Promise(function (res) { (function poll() { if (!busy && rows.length === RECEIPTS.length) return res(); setTimeout(poll, 150); })(); });
+  }
+  var CAFE = 2;
+  if (window.CalasTour) CalasTour.start({
+    lines: ["This is ReceiptSort, a free tool from Calas Automations. Meet Birchwood Painting, a made-up small business with a pile of receipts from September.", "Paint, fuel, lumber, coffee with a client. Phone photos and an emailed invoice. The usual shoebox.", "One button reads them all. It happens right on your own phone or computer. Nothing is uploaded anywhere.", "For every receipt, it writes one row: the date, the vendor, the subtotal, the GST, and the total.", "This one says check this. Its date could mean the fifth of September or the ninth of May, so ReceiptSort leaves it blank instead of guessing.", "You just type the right date in, and the row turns OK. You can fix any field the same way.", "Up top, the count keeps track of how many receipts are ready, and how many still need a look.", "When it all looks right, download one spreadsheet. It opens in Excel, Google Sheets, or your accounting software.", "Here is what's inside. One tidy row per receipt, with the file name, so you can always find the original.", "ReceiptSort is free. No account, no sign in, nothing to cancel. Just open it and pick your receipts.", "That's the tour. Go ahead and click around. Read the receipts again, fix a field, or open the spreadsheet yourself."],
+    durs: [9.43, 6.53, 6.46, 6.14, 7.99, 5.4, 5.06, 6.79, 6.58, 6.6, 6.79],
+    audioBase: 'narration/step-',
+    onReplay: function () { reset(); window.scrollTo(0, 0); },
+    script: function (t) {
+      return t.point('#hi', 0, { px: 0.3 })
+        .then(function () { return t.point('#rc-1', 1); })
+        .then(function () { t.tap('#read2'); return t.point('#read2', 2); })
+        .then(whenDone)
+        .then(function () { return t.point('#row-0', 3, { px: 0.45 }); })
+        .then(function () { return t.point('#row-' + CAFE + ' input[data-k="date"]', 4); })
+        .then(function () {
+          var sel = '#row-' + CAFE + ' input[data-k="date"]';
+          return t.type(sel, '2026-09-05', 70).then(function () {
+            var n = t.q(sel); if (n) n.dispatchEvent(new Event('change', { bubbles: true }));
+            return t.point('#row-' + CAFE, 5, { px: 0.85 });
+          });
+        })
+        .then(function () { return t.point('#tally', 6); })
+        .then(function () { t.tap('#dl'); return t.sleep(500); })
+        .then(function () { return t.point('#sheet', 7, { py: 0.3 }); })
+        .then(function () { return t.point('#xl', 8, { px: 0.2, py: 0.6 }); })
+        .then(function () { return t.point('#getlink', 9); })
+        .then(function () { return t.point('#hi', 10, { px: 0.3 }); });
+    }
+  });
+})();
+</script>
+<script src="/calas-brandbar.js?v=20260929j" defer></script></body></html>

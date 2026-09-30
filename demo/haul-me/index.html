@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Haul Me demo &mdash; is this load worth taking? &middot; Calas Automations</title>
+<meta name="description" content="A working Haul Me demo with a made-up trucking outfit: enter truck costs once, get a green, yellow or red call on any load, the floor rate, deadhead flagged, and totals by broker and lane.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --paper:#FFFFFF;--surface:#FFFFFF;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--ink-3:#6B7883;
+  --rule:#D9E3EA;--rule-2:#E9F0F5;
+  --accent:#155F87;--accent-2:#0E4A6B;--accent-soft:#E6F0F6;--night:#0B2E45;--gold-line:#F0C171;
+  --go:#17794A;--go-soft:#E9F5EE;--warn:#9A6212;--warn-soft:#FBF1DF;--stop:#B3261E;--stop-soft:#FBECEA;
+  --c-fuel:#155F87;--c-driver:#5B8FB0;--c-fixed:#0B2E45;--c-dead:#C98A2E;--c-profit:#17794A;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-line),transparent);z-index:2147483647;pointer-events:none}
+h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif;font-weight:700;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.wrap{max-width:1300px;margin:0 auto;padding:0 28px}
+button,input,select{font-family:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.banner{background:var(--sunk);color:var(--ink-2);font-size:13.5px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.banner .wrap{display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.banner b{color:var(--ink);font-weight:600}
+
+/* app bar */
+.appbar{background:var(--surface);border-bottom:2px solid var(--gold-line);box-shadow:0 2px 14px rgba(11,46,69,.08)}
+.appbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 28px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:13px;perspective:700px}
+.crest{width:30px;height:42px;flex:none;background:var(--accent);-webkit-mask:url(/favicon.png) center/contain no-repeat;mask:url(/favicon.png) center/contain no-repeat;animation:coin 8s linear infinite}
+@keyframes coin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+.t1{font-family:"Libre Baskerville",Georgia,serif;font-size:19px;line-height:1.1;font-weight:700}
+.t1 .r{color:var(--accent)}
+.t2{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.22em;color:var(--ink-3)}
+.who{padding-left:18px;border-left:1px solid var(--rule);font-size:14.5px;color:var(--ink-2)}
+.who b{display:block;color:var(--ink);font-weight:600}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.getlink{font-size:14.5px;color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;font-weight:500}
+.getlink:hover{border-bottom-color:var(--accent)}
+.run{background:linear-gradient(180deg,var(--accent) 0%,var(--accent-2) 100%);color:#fff;border:1px solid var(--accent);padding:12px 24px;font-size:15.5px;font-weight:500;border-radius:4px;cursor:pointer;box-shadow:0 2px 10px rgba(11,46,69,.22);transition:transform .12s,box-shadow .12s}
+.run:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(11,46,69,.3)}
+.ghost{background:transparent;color:var(--ink-2);border:1px solid var(--rule);padding:11px 16px;border-radius:4px;font-size:14.5px;cursor:pointer}
+.ghost:hover{border-color:var(--accent);color:var(--ink)}
+
+/* hello */
+.hello{border-bottom:1px solid var(--rule);padding:26px 0}
+.hello .wrap{display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap;align-items:center}
+.hello h1{font-size:30px}
+.hello p{color:var(--ink-2);font-size:16.5px;margin-top:8px;max-width:60ch}
+.tally{display:flex;gap:30px;flex-wrap:wrap}
+.kpi .v{font-family:"Libre Baskerville",Georgia,serif;font-size:30px;display:block;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .v.go{color:var(--go)}.kpi .v.stop{color:var(--stop)}.kpi .v.ac{color:var(--accent)}
+.kpi .k{font-size:13.5px;color:var(--ink-3)}
+
+/* layout */
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);gap:24px;padding:26px 0 0;align-items:start}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
+.card{border:1px solid var(--rule);background:var(--surface);border-radius:6px;overflow:hidden;box-shadow:0 6px 24px rgba(11,46,69,.08)}
+.card .hd{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:16px 20px;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.card .hd h2{font-size:19px}
+.card .hd .step{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;color:var(--accent)}
+.card .bd{padding:18px 20px}
+
+/* costs */
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}
+@media(max-width:460px){.fields{grid-template-columns:1fr}}
+.f label{display:block;font-size:13px;color:var(--ink-2);margin-bottom:4px}
+.f label small{color:var(--ink-3)}
+.f input,.f select{width:100%;font-size:15px;padding:9px 11px;border:1px solid var(--rule);border-radius:5px;background:var(--surface);color:var(--ink);font-variant-numeric:tabular-nums}
+.f input:focus,.f select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft)}
+.f.wide{grid-column:1/-1}
+.sub-h{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:18px 0 10px;grid-column:1/-1}
+.sub-h:first-child{margin-top:0}
+.cpk{margin-top:18px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:6px;padding:16px 18px}
+.cpk .lbl{font-size:13.5px;color:var(--ink-2)}
+.cpk .num{font-family:"Libre Baskerville",Georgia,serif;font-size:38px;line-height:1.15;color:var(--accent);font-variant-numeric:tabular-nums}
+.cpk .num small{font-family:"IBM Plex Sans",sans-serif;font-size:15px;color:var(--ink-2);font-weight:400}
+.cpk ul{list-style:none;margin:8px 0 0;padding:0;display:flex;gap:6px 16px;flex-wrap:wrap;font-size:13.5px;color:var(--ink-2)}
+.cpk li i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:0}
+.err{color:var(--stop);font-size:13.5px;margin-top:8px}
+
+/* load form */
+.samples{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.samples span{font-size:13px;color:var(--ink-3)}
+.chip{border:1px solid var(--rule);background:var(--surface);color:var(--ink-2);padding:6px 12px;border-radius:20px;font-size:13px;cursor:pointer}
+.chip:hover{border-color:var(--accent);color:var(--ink)}
+.lf{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:12px 14px}
+.lf .f.b{grid-column:span 1}
+@media(max-width:620px){.lf{grid-template-columns:1fr 1fr}.lf .f.b{grid-column:1/-1}}
+.check{margin-top:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.check .run{font-size:16.5px;padding:13px 30px}
+.check .hint{font-size:13.5px;color:var(--ink-3)}
+
+/* result */
+.result{border-top:1px solid var(--rule);background:var(--sunk);padding:20px}
+.empty{color:var(--ink-3);font-size:15px;text-align:center;padding:26px 10px;border:1.5px dashed var(--rule);border-radius:6px;background:var(--surface)}
+.verdict{display:flex;gap:16px;align-items:center;padding:16px 18px;border-radius:6px;border:1px solid;animation:pop .35s ease}
+@keyframes pop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.verdict.go{background:var(--go-soft);border-color:var(--go)}
+.verdict.warn{background:var(--warn-soft);border-color:var(--warn)}
+.verdict.stop{background:var(--stop-soft);border-color:var(--stop)}
+.light{width:54px;height:54px;border-radius:50%;flex:none;box-shadow:inset 0 -4px 8px rgba(0,0,0,.18),0 0 0 5px rgba(255,255,255,.8)}
+.go .light{background:var(--go)}.warn .light{background:#D9A23A}.stop .light{background:var(--stop)}
+.verdict h3{font-size:24px}
+.go h3{color:var(--go)}.warn h3{color:var(--warn)}.stop h3{color:var(--stop)}
+.verdict p{font-size:14.5px;color:var(--ink-2);margin-top:2px}
+.verdict p.lane{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-3);margin-top:4px}
+.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+@media(max-width:620px){.nums{grid-template-columns:1fr 1fr}}
+.nb{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:11px 13px}
+.nb .k{font-size:12.5px;color:var(--ink-3)}
+.nb .v{font-family:"IBM Plex Mono",monospace;font-size:19px;font-weight:500;display:block;margin-top:2px;font-variant-numeric:tabular-nums}
+.nb .s{font-size:12px;color:var(--ink-3)}
+.nb.floor{border-color:var(--accent);background:var(--accent-soft)}
+.nb.floor .v{color:var(--accent)}
+.v.pos{color:var(--go)}.v.neg{color:var(--stop)}
+.where{margin-top:14px;background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:13px 14px}
+.where .k{font-size:13px;color:var(--ink-2);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.bar{position:relative;display:flex;height:22px;border-radius:4px;overflow:hidden;margin-top:9px;background:var(--rule-2)}
+.bar span{height:100%;transition:width .45s ease}
+.bar .mk{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);transition:left .45s ease}
+.legend{list-style:none;margin:9px 0 0;padding:0;display:flex;gap:6px 16px;flex-wrap:wrap;font-size:13px;color:var(--ink-2)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
+.dead{margin-top:12px;display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border:1px solid var(--c-dead);background:var(--warn-soft);border-radius:6px;font-size:14px;color:var(--ink)}
+.dead b{font-weight:600}
+.fuelbox{margin-top:14px;background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:12px 14px}
+.fuelbox .k{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;color:var(--ink-2)}
+.fuelbox .k b{font-family:"IBM Plex Mono",monospace;color:var(--ink);font-weight:500}
+.fuelbox input{width:100%;margin-top:6px;accent-color:var(--accent)}
+.fuelbox .s{font-size:12.5px;color:var(--ink-3)}
+.ract{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.act{border:1px solid var(--accent);background:var(--surface);color:var(--accent);padding:9px 16px;border-radius:5px;font-size:14px;font-weight:500;cursor:pointer}
+.act:hover{background:var(--accent);color:#fff}
+.act.done{background:var(--go);border-color:var(--go);color:#fff;cursor:default}
+.key{font-size:12.5px;color:var(--ink-3);margin-top:12px}
+
+/* log */
+.logcard{margin-top:24px}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--rule);padding:0 12px;flex-wrap:wrap}
+.tab{border:0;background:none;font-size:14.5px;color:var(--ink-3);padding:12px 12px;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--gold-line);font-weight:500}
+.tab:hover{color:var(--ink)}
+.tscroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{text-align:left;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding:10px 16px;border-bottom:1px solid var(--rule);background:var(--sunk);white-space:nowrap}
+td{padding:10px 16px;border-bottom:1px solid var(--rule-2);white-space:nowrap}
+td.n,th.n{text-align:right;font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+tr.new td{background:var(--accent-soft);animation:pop .4s ease}
+.dot{display:inline-flex;align-items:center;gap:7px;font-size:13.5px}
+.dot::before{content:"";width:10px;height:10px;border-radius:50%}
+.dot.go::before{background:var(--go)}.dot.warn::before{background:#D9A23A}.dot.stop::before{background:var(--stop)}
+.pos{color:var(--go)}.neg{color:var(--stop)}
+.logfoot{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;padding:13px 16px;background:var(--sunk);border-top:1px solid var(--rule);font-size:13.5px;color:var(--ink-3)}
+
+/* price card */
+.pricecard{margin:24px 0 10px;border:1px solid var(--rule);border-top:3px solid var(--gold-line);background:var(--surface);border-radius:6px;box-shadow:0 10px 34px rgba(11,46,69,.1);padding:26px 28px;display:grid;grid-template-columns:1.2fr 1fr;gap:26px;align-items:center}
+@media(max-width:820px){.pricecard{grid-template-columns:1fr}}
+.pricecard h2{font-size:25px;margin-top:8px}
+.pricecard p{color:var(--ink-2);margin-top:10px;font-size:15.5px}
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.plan{border:1px solid var(--rule);border-radius:6px;padding:14px 16px;background:var(--sunk)}
+.plan .p{font-family:"Libre Baskerville",Georgia,serif;font-size:26px;color:var(--night)}
+.plan .p small{font-family:"IBM Plex Sans",sans-serif;font-size:14px;color:var(--ink-2)}
+.plan .d{font-size:13.5px;color:var(--ink-2)}
+.offer{display:inline-block;text-decoration:none;margin-top:14px}
+.foot{padding:14px 0 90px;font-size:13.5px;color:var(--ink-3);max-width:90ch}
+
+@media(max-width:620px){
+  .wrap,.appbar .wrap{padding-left:16px;padding-right:16px}
+  .who{border-left:0;padding-left:0;width:100%}
+  .brand{flex-wrap:wrap}
+  .hello h1{font-size:24px}
+  .tally{gap:18px}.kpi .v{font-size:24px}
+  .card .bd,.result{padding:16px}
+  .cpk .num{font-size:32px}
+  .verdict h3{font-size:20px}
+  .light{width:42px;height:42px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="banner"><div class="wrap">
+  <span><b>This is a demo.</b> Made-up trucking outfit, made-up brokers and loads. None of this is anyone's real information.</span>
+  <span class="mono">Calas Automations &middot; Winnipeg</span>
+</div></div>
+
+<div class="appbar" id="appbar"><div class="wrap">
+  <div class="brand" id="brand">
+    <span class="crest" aria-hidden="true"></span>
+    <div><div class="t1">Haul <span class="r">Me</span></div><div class="t2">BY CALAS AUTOMATIONS</div></div>
+    <div class="who"><b>Red Willow Transport</b>Signed in as Kelly &middot; Owner-operator &middot; 1 truck</div>
+  </div>
+  <div class="controls">
+    <a class="getlink" id="getlink" href="/pay/#haulme">Get this for your trucks &middot; C$29/mo &rarr;</a>
+    <button class="run" id="topCheck" type="button">Check a load</button>
+    <button class="ghost" id="reset" type="button">Start over</button>
+  </div>
+</div></div>
+
+<div class="hello"><div class="wrap">
+  <div>
+    <p class="eyebrow">Demo &middot; made-up owner-operator</p>
+    <h1>Is this load worth taking?</h1>
+    <p>Your truck's real costs are entered once, on the left. Type any load's rate, loaded kilometres and deadhead, and get a plain green, yellow or red call before you say yes.</p>
+  </div>
+  <div class="tally">
+    <div class="kpi"><span class="v ac mono" id="kCpk">$0.00</span><span class="k">your cost per km</span></div>
+    <div class="kpi"><span class="v mono" id="kLoads">0</span><span class="k">loads in the log</span></div>
+    <div class="kpi"><span class="v go mono" id="kProfit">$0</span><span class="k">profit logged</span></div>
+    <div class="kpi"><span class="v stop mono" id="kRed">0</span><span class="k">red lights</span></div>
+  </div>
+</div></div>
+
+<div class="wrap">
+  <div class="grid">
+    <!-- STEP 1 + 2: costs -->
+    <section class="card" id="costsCard" aria-labelledby="costsH">
+      <div class="hd"><h2 id="costsH">Your truck's costs</h2><span class="step">ENTER ONCE</span></div>
+      <div class="bd">
+        <div class="fields" id="costFields">
+          <p class="sub-h">Fuel</p>
+          <div class="f"><label for="c_fuel">Fuel price <small>$/L</small></label><input id="c_fuel" type="number" step="0.01" min="0" inputmode="decimal"></div>
+          <div class="f"><label for="c_burn">Fuel burn <small>L/100 km</small></label><input id="c_burn" type="number" step="0.5" min="0" inputmode="decimal"></div>
+          <p class="sub-h">Every month</p>
+          <div class="f"><label for="c_payment">Truck payment <small>$/mo</small></label><input id="c_payment" type="number" step="50" min="0" inputmode="decimal"></div>
+          <div class="f"><label for="c_insurance">Insurance <small>$/mo</small></label><input id="c_insurance" type="number" step="50" min="0" inputmode="decimal"></div>
+          <div class="f"><label for="c_maint">Maintenance &amp; tires <small>$/mo</small></label><input id="c_maint" type="number" step="50" min="0" inputmode="decimal"></div>
+          <div class="f"><label for="c_plates">Plates &amp; permits <small>$/mo</small></label><input id="c_plates" type="number" step="10" min="0" inputmode="decimal"></div>
+          <div class="f"><label for="c_other">Everything else <small>$/mo</small></label><input id="c_other" type="number" step="10" min="0" inputmode="decimal"></div>
+          <div class="f"><label for="c_km">Kilometres a month <small>km</small></label><input id="c_km" type="number" step="500" min="1" inputmode="decimal"></div>
+          <p class="sub-h">Labour</p>
+          <div class="f wide"><label for="c_driver">Driver pay <small>$/km</small></label><input id="c_driver" type="number" step="0.01" min="0" inputmode="decimal"></div>
+        </div>
+        <div class="cpk" id="cpk" aria-live="polite">
+          <div class="lbl">What it really costs you to move this truck</div>
+          <div class="num mono"><span id="cpkNum">$0.00</span> <small>per kilometre</small></div>
+          <ul id="cpkParts"></ul>
+          <p class="err" id="costErr" hidden></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3: check a load -->
+    <section class="card" id="loadCard" aria-labelledby="loadH">
+      <div class="hd"><h2 id="loadH">Check a load</h2><span class="step">EVERY LOAD, IN SECONDS</span></div>
+      <div class="bd" id="loadForm">
+        <div class="samples"><span>Try a sample:</span>
+          <button class="chip" type="button" data-sample="0">Winnipeg &rarr; Regina</button>
+          <button class="chip" type="button" data-sample="1">Winnipeg &rarr; Thunder Bay, with deadhead</button>
+          <button class="chip" type="button" data-sample="2">Brandon &rarr; Saskatoon</button>
+        </div>
+        <div class="lf">
+          <div class="f b"><label for="l_broker">Broker</label>
+            <select id="l_broker"><option>Northgate Freight Brokers</option><option>Prairie Lane Logistics</option><option>Birchwood Load Co.</option></select></div>
+          <div class="f"><label for="l_from">From</label><input id="l_from" type="text" maxlength="40" placeholder="Winnipeg" autocomplete="off"></div>
+          <div class="f"><label for="l_to">To</label><input id="l_to" type="text" maxlength="40" placeholder="Regina" autocomplete="off"></div>
+          <div class="f"><label for="l_rate">Rate offered <small>$ total</small></label><input id="l_rate" type="number" min="0" step="10" placeholder="1450" inputmode="decimal"></div>
+          <div class="f"><label for="l_loaded">Loaded <small>km</small></label><input id="l_loaded" type="number" min="0" step="5" placeholder="575" inputmode="decimal"></div>
+          <div class="f"><label for="l_dead">Deadhead <small>empty km</small></label><input id="l_dead" type="number" min="0" step="5" placeholder="0" inputmode="decimal"></div>
+        </div>
+        <div class="check">
+          <button class="run" id="check" type="button">Check this load</button>
+          <span class="hint" id="formErr">Rate and loaded kilometres are all it needs.</span>
+        </div>
+      </div>
+      <div class="result" id="result" aria-live="polite">
+        <div class="empty" id="resEmpty">Type a load above and press <b>Check this load</b>. The call shows up here.</div>
+        <div id="resBody" hidden>
+          <div class="verdict" id="verdict"><span class="light" aria-hidden="true"></span>
+            <div><h3 id="vTitle"></h3><p id="vSub"></p><p class="lane" id="vLane"></p></div></div>
+          <div class="nums">
+            <div class="nb"><span class="k">Rate offered</span><span class="v" id="rRate"></span><span class="s" id="rRateKm"></span></div>
+            <div class="nb"><span class="k">What the trip costs you</span><span class="v" id="rCost"></span><span class="s" id="rCostKm"></span></div>
+            <div class="nb"><span class="k">Profit</span><span class="v" id="rProfit"></span><span class="s" id="rMargin"></span></div>
+            <div class="nb floor" id="floorBox"><span class="k">Floor rate</span><span class="v" id="rFloor"></span><span class="s">per loaded km &middot; counter down to here, no lower</span></div>
+          </div>
+          <div class="where" id="where">
+            <div class="k"><span>Where the money goes</span><span id="whereNote"></span></div>
+            <div class="bar" id="bar"><span style="background:var(--c-fuel)"></span><span style="background:var(--c-driver)"></span><span style="background:var(--c-fixed)"></span><span style="background:var(--c-dead)"></span><span style="background:var(--c-profit)"></span><i class="mk" id="rateMk" hidden></i></div>
+            <ul class="legend" id="legend"></ul>
+          </div>
+          <div class="dead" id="deadFlag" hidden></div>
+          <div class="fuelbox" id="fuelBox">
+            <div class="k"><label for="fuelSlider">What if fuel changes?</label><b id="fuelVal"></b></div>
+            <input id="fuelSlider" type="range" min="1.20" max="2.40" step="0.01">
+            <div class="s">Drag it and the call, the profit and the floor rate update straight away. Your cost per km on the left moves with it.</div>
+          </div>
+          <div class="ract">
+            <button class="act" id="addLog" type="button">Add to the log</button>
+            <span class="key">Green clears your costs with room to spare &middot; yellow covers them, barely &middot; red loses money.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- STEP 4: the log -->
+  <section class="card logcard" id="logCard" aria-labelledby="logH">
+    <div class="hd"><h2 id="logH">Load log</h2><span class="step">TRACKED BY BROKER AND LANE</span></div>
+    <div class="tabs" role="tablist" aria-label="Log views">
+      <button class="tab" role="tab" aria-selected="true" data-view="loads" id="tabLoads">Every load</button>
+      <button class="tab" role="tab" aria-selected="false" data-view="broker" id="tabBroker">By broker</button>
+      <button class="tab" role="tab" aria-selected="false" data-view="lane" id="tabLane">By lane</button>
+    </div>
+    <div class="tscroll"><table id="logTable"></table></div>
+    <div class="logfoot"><span id="logNote">Totals use the costs you entered when each load was checked.</span>
+      <button class="act" id="csv" type="button">Export CSV</button></div>
+  </section>
+
+  <!-- price -->
+  <section class="pricecard" id="priceCard" aria-labelledby="priceH">
+    <div>
+      <p class="eyebrow">Haul Me &middot; prices in CAD</p>
+      <h2 id="priceH">Know your floor rate before you say yes to the load.</h2>
+      <p>About ten minutes to enter your costs, then seconds per load. Flat, not per truck. No setup fee, no contract. 30-day money-back guarantee, no questions asked.</p>
+      <a class="run offer" id="offer" href="/pay/#haulme">Get this for your trucks &mdash; see pricing &rarr;</a>
+    </div>
+    <div class="plans">
+      <div class="plan"><div class="p">C$29<small>/mo</small></div><div class="d">Owner-operator, up to 3 trucks. Or C$290 a year.</div></div>
+      <div class="plan"><div class="p">C$79<small>/mo</small></div><div class="d">Small fleet, up to 20 trucks. Or C$790 a year.</div></div>
+    </div>
+  </section>
+
+  <p class="foot">Made-up business, brokers, lanes and costs, for the demo only. Haul Me only knows what you tell it: feed it your real numbers, slow months included, or the floor rate will be wrong in the same direction your gut was. It is not a TMS, a load board or an accounting system; it judges the loads you already have.</p>
+</div>
+
+<script src="/demo/_tour/tour.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- made-up starting data ---------- */
+  var DEFAULT_COSTS = { fuel: 1.62, burn: 36, payment: 2400, insurance: 1300, maint: 1100, plates: 350, other: 250, km: 14000, driver: 0.55 };
+  var SAMPLES = [
+    { broker: 'Northgate Freight Brokers', from: 'Winnipeg', to: 'Regina', rate: 1450, loaded: 575, dead: 0 },
+    { broker: 'Birchwood Load Co.', from: 'Winnipeg', to: 'Thunder Bay', rate: 1300, loaded: 700, dead: 190 },
+    { broker: 'Prairie Lane Logistics', from: 'Brandon', to: 'Saskatoon', rate: 1060, loaded: 590, dead: 25 }
+  ];
+  var SEED_LOG = [
+    { date: 'Sep 8',  broker: 'Northgate Freight Brokers', from: 'Winnipeg', to: 'Regina', rate: 1480, loaded: 575, dead: 0 },
+    { date: 'Sep 10', broker: 'Prairie Lane Logistics', from: 'Regina', to: 'Saskatoon', rate: 520, loaded: 240, dead: 35 },
+    { date: 'Sep 12', broker: 'Birchwood Load Co.', from: 'Saskatoon', to: 'Winnipeg', rate: 1180, loaded: 780, dead: 60 },
+    { date: 'Sep 15', broker: 'Northgate Freight Brokers', from: 'Winnipeg', to: 'Thunder Bay', rate: 1690, loaded: 700, dead: 0 },
+    { date: 'Sep 18', broker: 'Prairie Lane Logistics', from: 'Thunder Bay', to: 'Winnipeg', rate: 1150, loaded: 700, dead: 40 },
+    { date: 'Sep 22', broker: 'Birchwood Load Co.', from: 'Winnipeg', to: 'Brandon', rate: 520, loaded: 215, dead: 120 }
+  ];
+  var TODAY = 'Sep 29';
+  var THIN_MARGIN = 0.10; // under this (but not a loss) the call is yellow
+  var COST_KEYS = ['fuel', 'burn', 'payment', 'insurance', 'maint', 'plates', 'other', 'km', 'driver'];
+
+  var costs, log, current, currentLogged, view;
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function num(v) { var n = parseFloat(v); return isFinite(n) && n >= 0 ? n : NaN; }
+  function money(n) { var s = Math.round(Math.abs(n)).toLocaleString('en-CA'); return (n < 0 ? '−$' : '$') + s; }
+  function money2(n) { return (n < 0 ? '−$' : '$') + Math.abs(n).toFixed(2); }
+  function pct(n) { return (n * 100).toFixed(0) + '%'; }
+
+  /* ---------- the maths ---------- */
+  function perKm(c) {
+    var fixed = (c.payment + c.insurance + c.maint + c.plates + c.other) / c.km;
+    var fuel = c.fuel * c.burn / 100;
+    return { fuel: fuel, driver: c.driver, fixed: fixed, total: fuel + c.driver + fixed };
+  }
+  function judge(load, c) {
+    var k = perKm(c);
+    var fuel = load.loaded * k.fuel, driver = load.loaded * k.driver, fixed = load.loaded * k.fixed;
+    var deadCost = load.dead * k.total;
+    var cost = fuel + driver + fixed + deadCost;
+    var profit = load.rate - cost;
+    var margin = load.rate > 0 ? profit / load.rate : -1;
+    var call = profit < 0 ? 'stop' : (margin < THIN_MARGIN ? 'warn' : 'go');
+    return { fuel: fuel, driver: driver, fixed: fixed, deadCost: deadCost, cost: cost, profit: profit, margin: margin,
+      call: call, floor: cost / load.loaded, ratePerKm: load.rate / load.loaded, cpk: k.total };
+  }
+
+  /* ---------- costs panel ---------- */
+  function readCosts() {
+    var next = {}, bad = false;
+    COST_KEYS.forEach(function (key) { var v = num($('c_' + key).value); if (isNaN(v)) bad = true; next[key] = v; });
+    if (bad || next.km <= 0) {
+      $('costErr').textContent = 'Every cost needs a number (zero is fine), and kilometres a month must be more than zero.';
+      $('costErr').hidden = false;
+      return;
+    }
+    $('costErr').hidden = true;
+    costs = next;
+    $('fuelSlider').value = costs.fuel;
+    renderCosts();
+    renderResult();
+  }
+  function renderCosts() {
+    var k = perKm(costs);
+    $('cpkNum').textContent = money2(k.total);
+    $('kCpk').textContent = money2(k.total);
+    $('cpkParts').innerHTML =
+      '<li><i style="background:var(--c-fuel)"></i>Fuel ' + money2(k.fuel) + '</li>' +
+      '<li><i style="background:var(--c-driver)"></i>Driver ' + money2(k.driver) + '</li>' +
+      '<li><i style="background:var(--c-fixed)"></i>Fixed costs ' + money2(k.fixed) + '</li>';
+  }
+  function fillCosts() { COST_KEYS.forEach(function (key) { $('c_' + key).value = costs[key]; }); $('fuelSlider').value = costs.fuel; }
+
+  /* ---------- load check ---------- */
+  function checkLoad() {
+    var load = {
+      broker: $('l_broker').value,
+      from: $('l_from').value.trim() || 'Origin',
+      to: $('l_to').value.trim() || 'Destination',
+      rate: num($('l_rate').value), loaded: num($('l_loaded').value), dead: num($('l_dead').value || 0)
+    };
+    if (isNaN(load.rate) || isNaN(load.loaded) || load.loaded <= 0 || isNaN(load.dead)) {
+      $('formErr').textContent = 'Needs a rate and loaded kilometres above zero. Deadhead can be left blank.';
+      $('formErr').style.color = 'var(--stop)';
+      return;
+    }
+    $('formErr').textContent = 'Rate and loaded kilometres are all it needs.';
+    $('formErr').style.color = '';
+    current = load; currentLogged = false;
+    $('addLog').textContent = 'Add to the log'; $('addLog').className = 'act'; $('addLog').disabled = false;
+    renderResult(true);
+  }
+  var CALL_TEXT = {
+    go: ['Take it', 'Clears everything it costs you to run this trip, with room to spare.'],
+    warn: ['Tight: counter up', 'Covers your costs, but only just. Ask for more before you say yes.'],
+    stop: ['Walk away', 'At this rate the trip costs you more than it pays.']
+  };
+  function renderResult(fresh) {
+    if (!current) { $('resEmpty').hidden = false; $('resBody').hidden = true; return; }
+    var r = judge(current, costs);
+    $('resEmpty').hidden = true; $('resBody').hidden = false;
+    var v = $('verdict');
+    v.className = 'verdict ' + r.call;
+    if (fresh) { v.style.animation = 'none'; void v.offsetWidth; v.style.animation = ''; }
+    $('vTitle').textContent = CALL_TEXT[r.call][0];
+    $('vSub').textContent = CALL_TEXT[r.call][1];
+    $('vLane').textContent = current.from + ' → ' + current.to + ' · ' + current.broker;
+    $('rRate').textContent = money(current.rate);
+    $('rRateKm').textContent = money2(r.ratePerKm) + ' per loaded km';
+    $('rCost').textContent = money(r.cost);
+    $('rCostKm').textContent = (current.loaded + current.dead).toLocaleString('en-CA') + ' km at ' + money2(r.cpk) + '/km';
+    var p = $('rProfit'); p.textContent = money(r.profit); p.className = 'v ' + (r.profit < 0 ? 'neg' : 'pos');
+    $('rMargin').textContent = r.profit < 0 ? 'a loss' : pct(r.margin) + ' margin';
+    $('rFloor').textContent = money2(r.floor);
+    renderBar(r);
+    var dead = $('deadFlag');
+    if (current.dead > 0) {
+      dead.hidden = false;
+      dead.innerHTML = '<span aria-hidden="true">&#9888;</span><span><b>Deadhead: ' + current.dead.toLocaleString('en-CA') + ' empty km cost you ' +
+        money(r.deadCost) + '</b>, ' + pct(r.deadCost / r.cost) + ' of this trip\'s cost. ' +
+        (r.call === 'stop' && current.rate - (r.cost - r.deadCost) > 0 ? 'Without it, this load would have made money.' : 'It\'s already counted in the call above.') + '</span>';
+    } else { dead.hidden = true; }
+    $('fuelVal').textContent = money2(costs.fuel) + '/L';
+  }
+  function renderBar(r) {
+    var parts = [r.fuel, r.driver, r.fixed, r.deadCost, Math.max(r.profit, 0)];
+    var total = Math.max(current.rate, r.cost);
+    var spans = $('bar').querySelectorAll('span');
+    parts.forEach(function (val, i) { spans[i].style.width = (total > 0 ? val / total * 100 : 0) + '%'; });
+    var mk = $('rateMk');
+    if (r.profit < 0) { mk.hidden = false; mk.style.left = 'calc(' + (current.rate / total * 100) + '% - 1px)'; $('whereNote').textContent = 'Line = the rate offered. Short by ' + money(-r.profit); }
+    else { mk.hidden = true; $('whereNote').textContent = 'Out of the ' + money(current.rate) + ' rate'; }
+    var names = ['Fuel', 'Driver', 'Fixed share', 'Deadhead', 'Profit'];
+    var colours = ['--c-fuel', '--c-driver', '--c-fixed', '--c-dead', '--c-profit'];
+    $('legend').innerHTML = parts.map(function (val, i) {
+      if (i === 3 && val === 0) return '';
+      if (i === 4 && r.profit <= 0) return '';
+      return '<li><i style="background:var(' + colours[i] + ')"></i>' + names[i] + ' ' + money(val) + '</li>';
+    }).join('');
+  }
+  function fillLoad(s) {
+    $('l_broker').value = s.broker; $('l_from').value = s.from; $('l_to').value = s.to;
+    $('l_rate').value = s.rate; $('l_loaded').value = s.loaded; $('l_dead').value = s.dead;
+  }
+
+  /* ---------- log ---------- */
+  function logEntry(load, date, c) {
+    var r = judge(load, c);
+    return { date: date, broker: load.broker, from: load.from, to: load.to, rate: load.rate, loaded: load.loaded, dead: load.dead,
+      cost: r.cost, profit: r.profit, call: r.call, isNew: false };
+  }
+  function addToLog() {
+    if (!current || currentLogged) return;
+    log = [Object.assign(logEntry(current, TODAY, costs), { isNew: true })].concat(log.map(function (e) { return Object.assign({}, e, { isNew: false }); }));
+    currentLogged = true;
+    $('addLog').textContent = 'Added to the log ✓'; $('addLog').className = 'act done'; $('addLog').disabled = true;
+    renderLog();
+  }
+  function group(key) {
+    var map = {}, order = [];
+    log.forEach(function (e) {
+      var k = key === 'broker' ? e.broker : e.from + ' → ' + e.to;
+      if (!map[k]) { map[k] = { name: k, loads: 0, rate: 0, cost: 0, profit: 0 }; order.push(k); }
+      map[k].loads++; map[k].rate += e.rate; map[k].cost += e.cost; map[k].profit += e.profit;
+    });
+    return order.map(function (k) { return map[k]; }).sort(function (a, b) { return b.profit - a.profit; });
+  }
+  function dotFor(call) { return '<span class="dot ' + call + '">' + { go: 'Green', warn: 'Yellow', stop: 'Red' }[call] + '</span>'; }
+  function renderLog() {
+    var t = $('logTable'), html;
+    if (view === 'loads') {
+      html = '<thead><tr><th>Date</th><th>Broker</th><th>Lane</th><th class="n">Rate</th><th class="n">Loaded km</th><th class="n">Deadhead</th><th class="n">Profit</th><th>Call</th></tr></thead><tbody>' +
+        log.map(function (e) {
+          return '<tr' + (e.isNew ? ' class="new"' : '') + '><td>' + esc(e.date) + '</td><td>' + esc(e.broker) + '</td><td>' + esc(e.from) + ' &rarr; ' + esc(e.to) +
+            '</td><td class="n">' + money(e.rate) + '</td><td class="n">' + e.loaded.toLocaleString('en-CA') + '</td><td class="n">' + e.dead.toLocaleString('en-CA') +
+            '</td><td class="n ' + (e.profit < 0 ? 'neg' : 'pos') + '">' + money(e.profit) + '</td><td>' + dotFor(e.call) + '</td></tr>';
+        }).join('') + '</tbody>';
+      $('logNote').textContent = 'Newest first. Totals use the costs you had entered when each load was checked.';
+    } else {
+      var rows = group(view);
+      html = '<thead><tr><th>' + (view === 'broker' ? 'Broker' : 'Lane') + '</th><th class="n">Loads</th><th class="n">Revenue</th><th class="n">Cost</th><th class="n">Profit</th><th class="n">Margin</th></tr></thead><tbody>' +
+        rows.map(function (g) {
+          var m = g.rate > 0 ? g.profit / g.rate : 0;
+          return '<tr><td>' + esc(g.name) + '</td><td class="n">' + g.loads + '</td><td class="n">' + money(g.rate) + '</td><td class="n">' + money(g.cost) +
+            '</td><td class="n ' + (g.profit < 0 ? 'neg' : 'pos') + '">' + money(g.profit) + '</td><td class="n ' + (g.profit < 0 ? 'neg' : '') + '">' + pct(m) + '</td></tr>';
+        }).join('') + '</tbody>';
+      $('logNote').textContent = 'Sorted by profit, best first: who actually makes you money over time.';
+    }
+    t.innerHTML = html;
+    var total = log.reduce(function (s, e) { return s + e.profit; }, 0);
+    $('kLoads').textContent = log.length;
+    var kp = $('kProfit'); kp.textContent = money(total); kp.className = 'v mono ' + (total < 0 ? 'stop' : 'go');
+    $('kRed').textContent = log.filter(function (e) { return e.call === 'stop'; }).length;
+  }
+  function setView(v) {
+    view = v;
+    Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (b) { b.setAttribute('aria-selected', b.getAttribute('data-view') === v ? 'true' : 'false'); });
+    renderLog();
+  }
+  function csvCell(v) { var s = String(v); if (/^[=+\-@]/.test(s) && isNaN(+s)) s = "'" + s; return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
+  function exportCsv() {
+    var head = ['date', 'broker', 'origin', 'destination', 'rate_cad', 'loaded_km', 'deadhead_km', 'trip_cost_cad', 'profit_cad', 'call'];
+    var lines = [head.join(',')].concat(log.map(function (e) {
+      return [e.date, e.broker, e.from, e.to, e.rate, e.loaded, e.dead, e.cost.toFixed(2), e.profit.toFixed(2), { go: 'green', warn: 'yellow', stop: 'red' }[e.call]].map(csvCell).join(',');
+    }));
+    var url = URL.createObjectURL(new Blob([lines.join('\n') + '\n'], { type: 'text/csv' }));
+    var a = document.createElement('a'); a.href = url; a.download = 'haul-me-demo-log.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  /* ---------- reset + wiring ---------- */
+  function reset() {
+    costs = Object.assign({}, DEFAULT_COSTS);
+    log = SEED_LOG.map(function (l) { return logEntry(l, l.date, DEFAULT_COSTS); });
+    current = null; currentLogged = false; view = 'loads';
+    fillCosts();
+    ['l_from', 'l_to', 'l_rate', 'l_loaded', 'l_dead'].forEach(function (id) { $(id).value = ''; });
+    $('l_broker').selectedIndex = 0;
+    $('costErr').hidden = true;
+    renderCosts(); renderResult(); setView('loads');
+  }
+
+  COST_KEYS.forEach(function (key) { $('c_' + key).addEventListener('input', readCosts); });
+  $('fuelSlider').addEventListener('input', function () { $('c_fuel').value = parseFloat(this.value).toFixed(2); readCosts(); });
+  $('check').addEventListener('click', checkLoad);
+  $('topCheck').addEventListener('click', function () {
+    $('loadCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(function () { $(current || $('l_rate').value ? 'check' : 'l_from').focus(); }, 400);
+  });
+  $('addLog').addEventListener('click', addToLog);
+  $('csv').addEventListener('click', exportCsv);
+  $('reset').addEventListener('click', reset);
+  Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (b) { b.addEventListener('click', function () { setView(b.getAttribute('data-view')); }); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-sample]'), function (b) {
+    b.addEventListener('click', function () { fillLoad(SAMPLES[+b.getAttribute('data-sample')]); checkLoad(); });
+  });
+  ['l_rate', 'l_loaded', 'l_dead', 'l_from', 'l_to'].forEach(function (id) {
+    $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') checkLoad(); });
+  });
+
+  reset();
+
+  /* ---------- guided tour ---------- */
+  var LINES = [
+    "This is Haul Me, set up for a made-up trucking outfit. It answers one question: is this load worth taking, before you say yes?",
+    "First, you enter your real truck costs, once: fuel, truck payment, insurance, maintenance, plates and driver pay. About ten minutes of setup.",
+    "From that, Haul Me works out your cost per kilometre. That's the number every load gets measured against, not the rate a broker quotes you.",
+    "Now a load comes in. Type the rate, the loaded kilometres and any deadhead, then press Check this load.",
+    "In seconds you get a plain call. This one is green, and it shows where the money goes: fuel, driver and fixed costs.",
+    "Here's a trickier one. The rate looks fine per kilometre, but a hundred and ninety kilometres of empty deadhead turns it into a loss. Red light.",
+    "It also shows your floor rate: the lowest rate per loaded kilometre you can counter down to without losing money.",
+    "Worried about fuel? Drag the fuel slider to see what a price jump does to the call, right away.",
+    "Every load goes into a running log, totalled by broker and by lane, with a one-click CSV export, so you see who actually makes you money.",
+    "Haul Me is $29 a month for up to three trucks, or $79 for up to twenty. Flat, not per truck, with a thirty-day money-back guarantee.",
+    "Now it's your turn. Change the costs, try your own loads, and see what the numbers say."
+  ];
+  var DURS = [8.09, 9.05, 7.8, 6.41, 7.3, 9.05, 7.01, 5.71, 8.9, 10.03, 4.94];
+
+  function typeLoad(t, s, ms) {
+    $('l_broker').value = s.broker;
+    return t.type('#l_from', s.from, ms)
+      .then(function () { return t.type('#l_to', s.to, ms); })
+      .then(function () { return t.type('#l_rate', String(s.rate), ms * 2); })
+      .then(function () { return t.type('#l_loaded', String(s.loaded), ms * 2); })
+      .then(function () { return t.type('#l_dead', String(s.dead), ms * 2); });
+  }
+  function slideFuel(t, from, to, steps, ms) {
+    var i = 0;
+    function next() {
+      if (i > steps) return Promise.resolve();
+      var v = from + (to - from) * (i / steps); i++;
+      var s = $('fuelSlider'); s.value = v.toFixed(2); s.dispatchEvent(new Event('input', { bubbles: true }));
+      return t.sleep(ms).then(next);
+    }
+    return next();
+  }
+
+  // Long smooth scrolls (mostly on phones) can outlast the engine's short settle
+  // pause, so scroll far targets into view first and let the page settle.
+  function go(t, sel, i, opts) {
+    var n = document.querySelector(sel);
+    if (!n) return t.point(sel, i, opts);
+    var r = n.getBoundingClientRect(), mid = r.top + r.height / 2 - window.innerHeight / 2;
+    if (Math.abs(mid) < 300) return t.point(sel, i, opts);
+    try { n.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+    return t.sleep(900).then(function () { return t.point(sel, i, opts); });
+  }
+
+  if (window.CalasTour) {
+    CalasTour.start({
+      lines: LINES,
+      durs: DURS,
+      audioBase: 'narration/step-',
+      onReplay: reset,
+      script: function (t) {
+        return go(t, '#brand', 0, { px: 0.2 })
+          .then(function () { return go(t, '#costFields', 1, { py: 0.35 }); })
+          .then(function () { return go(t, '#cpkNum', 2); })
+          .then(function () {
+            return Promise.all([go(t, '#loadForm', 3, { py: 0.55 }), t.sleep(900).then(function () { return typeLoad(t, SAMPLES[0], 45); })]);
+          })
+          .then(function () { t.tap('#check'); return t.sleep(500); })
+          .then(function () {
+            return go(t, '#verdict', 4, { px: 0.25 });
+          })
+          .then(function () { t.tap('#addLog'); return typeLoad(t, SAMPLES[1], 22); })
+          .then(function () { t.tap('#check'); return t.sleep(500); })
+          .then(function () {
+            return go(t, '#deadFlag', 5, { px: 0.3 });
+          })
+          .then(function () { return go(t, '#floorBox', 6); })
+          .then(function () {
+            return Promise.all([go(t, '#fuelSlider', 7, { px: 0.35 }), t.sleep(900).then(function () { return slideFuel(t, 1.62, 1.95, 22, 110); })]);
+          })
+          .then(function () {
+            return Promise.all([go(t, '#logCard', 8, { py: 0.3 }), t.sleep(4200).then(function () { t.tap('#tabBroker'); })]);
+          })
+          .then(function () { return go(t, '#offer', 9); })
+          .then(function () { return go(t, '#costsCard', 10, { py: 0.2 }); });
+      }
+    });
+  }
+})();
+</script>
+<script src="/calas-brandbar.js?v=20260929j" defer></script>
+</body></html>

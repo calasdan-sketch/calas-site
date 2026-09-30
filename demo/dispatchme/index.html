@@ -1,227 +1,690 @@
-﻿<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dispatch Me — guided walkthrough · Calas Automations</title>
-<meta name="description" content="A 60-second guided walkthrough of Dispatch Me: a property manager's snow request comes in, Cara intakes it, and it's matched to the right crew and dispatched.">
-<link rel="icon" type="image/png" href="/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<!doctype html><html lang="en"><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20260929j">
+<title>Dispatch Me demo · snow clearing dispatch · Calas Automations</title>
+<meta name="description" content="A working demo of Dispatch Me: a made-up Winnipeg property company's lots, matched to vetted snow crews, and one call that sends them all out when the snow comes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
 <style>
-:root{--paper:#fff;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--ink-3:#6B7883;--rule:#D9E3EA;--accent:#155F87;--accent-2:#0E4A6B;--gold:#F0C171;--ok:#17794A;--warm:#B8541F;--serif:"Libre Baskerville",Georgia,serif;--sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace;--shadow:0 1px 2px rgba(18,33,44,.05),0 12px 40px -14px rgba(21,95,135,.2)}
-*{box-sizing:border-box}html,body{margin:0}
-body{background:var(--sunk);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
-a{color:var(--accent)}
-.crestmask{width:30px;height:30px;flex:none;background:#155F87;-webkit-mask:url(/favicon.png) center/contain no-repeat;mask:url(/favicon.png) center/contain no-repeat}
-.topnav{background:var(--paper);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:30}
-.topnav::after{content:"";display:block;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.topnav .row{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:12px}
-.topnav b{font-family:var(--serif);font-size:18px}.topnav .tag{font-size:11px;color:var(--ink-3);font-family:var(--mono)}
-.topnav .sp{margin-left:auto;display:flex;gap:10px}
-.btn{font:inherit;font-weight:700;font-size:14px;padding:10px 18px;border-radius:10px;border:0;background:var(--accent);color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
-.btn:hover{background:var(--accent-2)}.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--rule)}
-.btn[disabled]{background:var(--ok);cursor:default}
-.intro{max-width:1080px;margin:0 auto;padding:26px 20px 6px;text-align:center}
-.intro h1{font-family:var(--serif);font-size:clamp(24px,4vw,34px);margin:0 0 8px}
-.intro p{color:var(--ink-2);max-width:60ch;margin:0 auto 16px}
-.app{max-width:1080px;margin:16px auto 40px;padding:0 20px}
-.frame{background:var(--paper);border:1px solid var(--rule);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
-.appbar{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--rule)}
-.appbar .grp{font-family:var(--mono);font-size:12px;color:var(--ink-3);border:1px solid var(--rule);border-radius:20px;padding:6px 12px}
-.appbar .count{margin-left:auto;font-size:13px;color:var(--ink-3)}
-.tabs{display:flex;gap:2px;padding:0 18px;border-bottom:1px solid var(--rule)}
-.tab{border:0;background:none;font:inherit;font-size:14px;color:var(--ink-3);padding:12px 14px;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer}
-.tab.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
-.body{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.25fr);gap:0}@media(max-width:800px){.body{grid-template-columns:1fr}}
-.list{border-right:1px solid var(--rule);max-height:560px;overflow:auto}@media(max-width:800px){.list{border-right:0;border-bottom:1px solid var(--rule)}}
-.lead{padding:14px 18px;border-bottom:1px solid var(--rule);cursor:pointer;display:flex;gap:12px;align-items:flex-start;transition:background .15s}
-.lead:hover,.lead.sel{background:var(--sunk)}
-.score{flex:none;width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-family:var(--serif);font-size:15px;color:#fff;text-align:center;line-height:1.05}
-.s-warm{background:var(--ok)}.s-mid{background:var(--warm)}.s-cold{background:#8A97A3}
-.lead h4{margin:0 0 2px;font-size:15px}
-.lead .meta{font-size:12.5px;color:var(--ink-3)}
-.badge{display:inline-block;font-size:11px;font-family:var(--mono);color:var(--warm);border:1px solid #EBD3C2;background:#FBF2EC;border-radius:20px;padding:1px 8px;margin-top:6px}
-.badge.new{color:var(--accent);border-color:#C7DEEA;background:#EAF3F8}
-.detail{padding:20px 22px;min-height:300px}
-.detail h3{font-family:var(--serif);font-size:20px;margin:0 0 2px}
-.detail .sub{color:var(--ink-3);font-size:13px;margin-bottom:14px}
-.sec-label{font-size:11px;font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);margin:16px 0 6px}
-.facts{background:var(--sunk);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;font-size:13.5px;margin:0}
-.facts li{margin:3px 0}.facts .src{font-size:12px;color:var(--ink-3);margin-top:8px}
-.crewcard{border:1px solid var(--rule);border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start}
-.crewcard h4{margin:0 0 2px;font-size:15px}.crewcard .meta{font-size:12.5px;color:var(--ink-3)}
-.proof{border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin-top:6px}
-.proof .ph{background:var(--sunk);padding:9px 14px;border-bottom:1px solid var(--rule);font-size:12.5px;color:var(--ink-2)}
-.proof .pb{padding:14px;font-size:13.5px;line-height:1.6}
-.proof .shot{height:120px;border-radius:8px;background:linear-gradient(160deg,#dfeaf1,#c3d4de);display:grid;place-items:center;color:var(--ink-3);font-size:12.5px;margin-bottom:10px}
-.actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center}
-.pill{font-size:12px;color:var(--ink-3);display:inline-flex;align-items:center;gap:6px}
-.results{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--rule)}@media(max-width:640px){.results{grid-template-columns:1fr}}
-.results div{padding:16px 18px;text-align:center;border-right:1px solid var(--rule)}
-.results div:last-child{border-right:0}
-.results b{display:block;font-family:var(--serif);font-size:22px;color:var(--accent)}
-.results span{font-size:12.5px;color:var(--ink-3)}
-.foot{max-width:1080px;margin:0 auto;padding:8px 20px 40px;text-align:center;color:var(--ink-3);font-size:12.5px}
-.demoNote{max-width:1080px;margin:0 auto;padding:0 20px 8px;text-align:center;color:var(--ink-3);font-size:12px}
-.nav-signin{font-weight:600;color:var(--ink) !important;border:1px solid currentColor;padding:8px 14px;border-radius:2px}
-</style><style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20260929i"></head><body>
+:root{
+  --paper:#FFFFFF;--surface:#FFFFFF;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--ink-3:#6B7883;
+  --rule:#D9E3EA;--rule-2:#E9F0F5;
+  --ok:#17794A;--ok-soft:#E9F5EE;--warm:#8A5A12;--warm-soft:#FBF1DF;--bad:#A3361F;--bad-soft:#FBECE8;
+  --accent:#155F87;--accent-2:#0E4A6B;--accent-soft:#E6F0F6;--on-accent:#FFFFFF;
+  --night:#0B2E45;--gold-line:#F0C171;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif;font-weight:700;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.wrap{max-width:1300px;margin:0 auto;padding:0 28px}
+button,input,select{font-family:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
-<nav class="topnav"><div class="row">
-  <span class="crestmask" aria-hidden="true"></span>
-  <div><b>Dispatch Me</b> <span class="tag">by Calas Automations</span></div>
-  <div class="sp">
-    <button class="btn" id="tourBtn" type="button">&#9654; Watch the walkthrough &middot; 60 sec</button>
-    <a class="btn ghost" href="/dispatchme/">Back to Dispatch Me</a>
+.banner{background:var(--sunk);color:var(--ink-2);font-size:13.5px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.banner .wrap{display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.banner b{color:var(--ink);font-weight:600}
+
+/* app bar */
+.appbar{background:var(--surface);border-bottom:2px solid var(--gold-line);box-shadow:0 2px 14px rgba(11,46,69,.08);position:relative;z-index:5}
+.appbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 28px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:13px;text-decoration:none;color:inherit}
+.crest{width:30px;height:42px;flex:none;background:var(--accent);-webkit-mask:url(/favicon.png) center/contain no-repeat;mask:url(/favicon.png) center/contain no-repeat}
+.t1{font-family:"Libre Baskerville",Georgia,serif;font-size:18px;line-height:1.1}
+.t1 .r{color:var(--accent)}
+.t2{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.22em;color:var(--ink-3)}
+.who{padding-left:18px;border-left:1px solid var(--rule);font-size:14.5px;color:var(--ink-2)}
+.who b{display:block;color:var(--ink);font-weight:600}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.getlink{font-size:14px;color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+.getlink:hover{border-bottom-color:var(--accent)}
+.run{background:linear-gradient(180deg,var(--accent) 0%,var(--accent-2) 100%);color:var(--on-accent);border:1px solid var(--accent);border-radius:4px;padding:12px 24px;font-size:15.5px;font-weight:500;box-shadow:0 2px 10px rgba(11,46,69,.22);transition:transform .12s,box-shadow .12s}
+.run:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(11,46,69,.3)}
+.run[disabled]{background:var(--ok);border-color:var(--ok);cursor:default;transform:none;box-shadow:none}
+.ghost{background:transparent;color:var(--ink-2);border:1px solid var(--rule);border-radius:4px;padding:11px 16px;font-size:15px}
+.ghost:hover{border-color:var(--accent);color:var(--ink)}
+
+/* storm strip */
+.storm{background:var(--night);color:#fff}
+.storm .wrap{display:flex;align-items:center;gap:18px 26px;padding:18px 28px;flex-wrap:wrap}
+.storm .eyebrow{color:#9FC3DA}
+.storm h1{font-size:25px;margin-top:4px}
+.storm p{color:#C9DBE7;font-size:15px;margin-top:4px;max-width:60ch}
+.fc{display:flex;align-items:center;gap:10px;margin-left:auto;flex-wrap:wrap}
+.fc .lab{font-size:13.5px;color:#C9DBE7}
+.seg{display:flex;border:1px solid #2F5C7A;border-radius:22px;overflow:hidden}
+.seg button{border:0;background:transparent;color:#C9DBE7;padding:9px 15px;font-size:14px}
+.seg button.on{background:#fff;color:var(--night);font-weight:600}
+.seg button[disabled]{cursor:default;opacity:.6}
+.storm .run{background:var(--gold-line);border-color:var(--gold-line);color:var(--night);font-weight:600}
+.storm .run[disabled]{background:#2B7A55;border-color:#2B7A55;color:#fff}
+
+/* kpis */
+.hello{background:var(--surface);border-bottom:1px solid var(--rule);padding:20px 0}
+.hello .wrap{display:flex;gap:26px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.hello h2{font-size:22px}
+.hello p{color:var(--ink-2);font-size:15px;margin-top:4px;max-width:60ch}
+.tally{display:flex;gap:28px;flex-wrap:wrap}
+.kpi .v{font-family:"Libre Baskerville",Georgia,serif;font-size:29px;display:block;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .v.ok{color:var(--ok)}.kpi .v.ac{color:var(--accent)}.kpi .v.wm{color:var(--warm)}
+.kpi .k{font-size:13px;color:var(--ink-3)}
+
+.done{display:none;background:var(--ok-soft);border-bottom:1px solid var(--ok)}
+.done.on{display:block;animation:slide .4s ease}
+.done .wrap{display:flex;align-items:center;gap:14px;padding:14px 28px;flex-wrap:wrap}
+.done svg{width:24px;height:24px;color:var(--ok);flex:none}
+.done b{font-size:16px}
+.done span{font-size:14.5px;color:var(--ink-2)}
+.done a{margin-left:auto}
+
+/* layout */
+.grid{display:grid;grid-template-columns:1.45fr 1fr;gap:24px;padding:24px 0 40px;align-items:start}
+@media(max-width:1000px){.grid{grid-template-columns:1fr}}
+.stack{display:flex;flex-direction:column;gap:24px;min-width:0}
+.card{border:1px solid var(--rule);background:var(--surface);border-radius:5px;overflow:hidden;box-shadow:0 6px 24px rgba(11,46,69,.08);min-width:0}
+.card .hd{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:15px 20px;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.card .hd h3{font-size:17px}
+
+/* lots */
+.rw{border-bottom:1px solid var(--rule-2)}
+.rw:last-child{border-bottom:0}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;padding:15px 20px;position:relative;cursor:pointer;transition:background .18s}
+.row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent);transition:width .18s}
+.rw:hover .row{background:var(--sunk)}
+.rw.open .row{background:var(--accent-soft)}
+.rw.open .row::before{width:4px}
+.rw.flash .row{animation:flash 1.2s ease}
+@keyframes flash{0%{background:var(--warm-soft)}100%{background:transparent}}
+.nm{font-weight:600;font-size:16.5px}
+.sub2{font-size:13.5px;color:var(--ink-3);margin-top:2px}
+.chips{margin-top:7px;display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12.5px;padding:3px 10px;border:1px solid var(--rule);color:var(--ink-2);border-radius:5px;background:var(--surface)}
+.chip.tr{font-family:"IBM Plex Mono",monospace;border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.crewline{margin-top:7px;font-size:13.5px;color:var(--ink-2)}
+.crewline b{font-weight:600;color:var(--ink)}
+.crewline s{color:var(--ink-3)}
+.right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.pill{font-size:13px;padding:5px 13px;border-radius:20px;white-space:nowrap;font-weight:450;transition:all .3s}
+.p-idle{background:var(--rule-2);color:var(--ink-3)}
+.p-below{background:transparent;border:1px dashed var(--ink-3);color:var(--ink-3)}
+.p-sent{background:var(--accent-soft);color:var(--accent)}
+.p-site{background:var(--warm-soft);color:var(--warm)}
+.p-done{background:var(--ok-soft);color:var(--ok)}
+.p-bad{background:var(--bad-soft);color:var(--bad)}
+.when{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3)}
+.when.ok{color:var(--ok)}
+
+.drawer{display:none;padding:18px 22px 20px;background:var(--sunk);border-top:1px solid var(--rule)}
+.rw.open .drawer{display:block;animation:slide .3s ease}
+@keyframes slide{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.dgrid{grid-template-columns:1fr}}
+.dh{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);font-weight:600;font-family:"IBM Plex Mono",monospace}
+.meta{margin:10px 0 0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14.5px}
+.meta dt{color:var(--ink-3);font-size:13px;padding-top:2px}
+.meta dd{margin:0;color:var(--ink-2)}
+.hist{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.hist li{font-size:13.5px;color:var(--ink-2);background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:8px 11px;display:flex;gap:10px}
+.hist li .t{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);flex:none;padding-top:1px}
+.hist .empty{color:var(--ink-3);border-style:dashed}
+.act{margin-top:14px;border:1px solid var(--bad);background:var(--surface);color:var(--bad);padding:9px 14px;border-radius:5px;font-size:14px;font-weight:500}
+.act:hover{background:var(--bad);color:#fff}
+.act[disabled]{opacity:.45;cursor:default;background:var(--surface);color:var(--bad)}
+.dnote{margin-top:8px;font-size:13px;color:var(--ink-3)}
+
+/* crews */
+.crew{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;padding:13px 20px;border-bottom:1px solid var(--rule-2);align-items:start}
+.crew:last-child{border-bottom:0}
+.av{width:36px;height:36px;border-radius:8px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-family:"Libre Baskerville",Georgia,serif;font-size:14px}
+.crew.busy .av{background:var(--warm-soft);color:var(--warm)}
+.crew .cn{font-weight:600;font-size:15px}
+.crew .cs{font-size:13px;color:var(--ink-3);margin-top:1px}
+.checks{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.ck{font-size:12px;padding:2px 9px;border-radius:20px;background:var(--ok-soft);color:var(--ok)}
+.ck.eq{background:var(--sunk);color:var(--ink-2);border:1px solid var(--rule)}
+
+/* add form */
+.form{padding:16px 20px 20px;display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}
+.form label{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--ink-3)}
+.form .full{grid-column:1/-1}
+.form input[type=text],.form select{font-size:15px;padding:9px 11px;border:1px solid var(--rule);border-radius:5px;background:var(--surface);color:var(--ink);width:100%}
+.form input.err{border-color:var(--bad)}
+.svc{display:flex;gap:8px;flex-wrap:wrap}
+.svc label{flex-direction:row;align-items:center;gap:7px;font-size:14px;color:var(--ink-2);border:1px solid var(--rule);border-radius:20px;padding:6px 12px;cursor:pointer}
+.svc input{accent-color:var(--accent)}
+.form .run{grid-column:1/-1;justify-self:start;padding:11px 20px;font-size:15px}
+.match{grid-column:1/-1;display:none;border:1px solid var(--ok);background:var(--ok-soft);border-radius:5px;padding:12px 14px;font-size:14.5px;color:var(--ink-2)}
+.match.on{display:block;animation:slide .35s ease}
+.match b{color:var(--ink)}
+.match.bad{border-color:var(--bad);background:var(--bad-soft)}
+@media(max-width:560px){.form{grid-template-columns:1fr}}
+
+/* feed */
+.feed{max-height:380px;overflow-y:auto}
+.fe{display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:11px;padding:11px 20px;font-size:14.5px;border-bottom:1px solid var(--rule-2);animation:slide .35s ease;align-items:start}
+.fe .ic{padding-top:1px;color:var(--accent)}
+.fe .tx{color:var(--ink-2)}.fe .tx b{color:var(--ink);font-weight:500}
+.fe .ts{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);padding-top:2px}
+.fe.ok .ic{color:var(--ok)}
+.fe.bad{background:var(--bad-soft)}.fe.bad .ic{color:var(--bad)}
+.fe.you{background:var(--accent-soft)}
+.fe.sys .ic{color:var(--ink-3)}
+.feed .empty{padding:16px 20px;color:var(--ink-3);font-size:14px}
+.feednote{padding:11px 20px;border-top:1px solid var(--rule);background:var(--sunk);font-size:13px;color:var(--ink-3)}
+
+.foot{padding:0 0 40px;font-size:14px;color:var(--ink-3);max-width:80ch}
+.sitefoot{border-top:1px solid var(--rule);background:var(--surface);padding:30px 0 100px}
+.sitefoot .wrap{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.sitefoot .fl{font-size:13.5px;color:var(--ink-3);max-width:52ch;line-height:1.6;margin-top:10px}
+.sitefoot .legal{font-size:13.5px;color:var(--ink-3);text-align:right;max-width:46ch;display:flex;flex-direction:column;gap:6px}
+.sitefoot .legal a{color:var(--accent)}
+
+@media(max-width:620px){
+  .wrap,.appbar .wrap,.storm .wrap,.done .wrap{padding-left:16px;padding-right:16px}
+  .brand{flex-wrap:wrap}
+  .who{border-left:0;padding-left:0;width:100%;font-size:13.5px}
+  .storm h1{font-size:21px}
+  .fc{margin-left:0}
+  .row{grid-template-columns:1fr;gap:8px}
+  .right{align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap}
+  .sitefoot .legal{text-align:left}
+  .tally{gap:18px}
+  .kpi .v{font-size:24px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head><body>
+
+<div class="banner"><div class="wrap">
+  <span><b>This is a demo.</b> Made-up property company, made-up crews and lots. None of this is anyone's real information.</span>
+  <span class="mono">Calas Automations &middot; Winnipeg</span>
+</div></div>
+
+<div class="appbar"><div class="wrap">
+  <div class="brand">
+    <span class="crest" aria-hidden="true"></span>
+    <div><div class="t1"><span class="r">Dispatch</span> Me</div><div class="t2">BY CALAS AUTOMATIONS</div></div>
+    <div class="who" id="who"><b>Riverbend Property Group</b>Signed in as Priya &middot; Property manager</div>
   </div>
-</div></nav>
-
-<div class="intro">
-  <h1>See Dispatch Me work, in one minute</h1>
-  <p>Press play and Cara walks you through it &mdash; a property manager's snow request comes in, gets sized up, and is matched to the right crew and dispatched. Everything below is a sample so you can watch safely.</p>
-</div>
-<div class="demoNote">Sample data for the walkthrough &mdash; names here are made up.</div>
-
-<div class="app"><div class="frame">
-  <div class="appbar">
-    <span class="grp">Winnipeg &amp; Manitoba &middot; Commercial snow</span>
-    <span class="grp">Cara &middot; on the line</span>
-    <span class="count" id="count">3 requests waiting</span>
-  </div>
-  <div class="tabs">
-    <button class="tab on" id="reqTab" type="button">Requests</button>
-    <button class="tab" id="crewsTab" type="button">Crews <span style="color:var(--ok)">&bull;65</span></button>
-    <button class="tab" type="button">Done</button>
-  </div>
-  <div class="body">
-    <div class="list" id="reqlist">
-      <div class="lead sel" id="req0">
-        <div class="score s-warm">NEW</div>
-        <div><h4>Fort Garry Medical Centre</h4>
-          <div class="meta">Parking lot + walks &middot; Winnipeg, MB &middot; 40 stalls</div>
-          <div class="badge new">Just came in &middot; 6:12 a.m.</div></div>
-      </div>
-      <div class="lead" id="req1">
-        <div class="score s-mid">2h</div>
-        <div><h4>Osborne Village Condos</h4>
-          <div class="meta">Lot + sidewalks &middot; Winnipeg, MB &middot; 2 entrances</div></div>
-      </div>
-      <div class="lead" id="req2">
-        <div class="score s-mid">4h</div>
-        <div><h4>Brandon Business Park</h4>
-          <div class="meta">Large lot &middot; Brandon, MB &middot; 100+ stalls</div></div>
-      </div>
-    </div>
-    <div class="detail" id="detail">
-      <h3>Fort Garry Medical Centre</h3>
-      <div class="sub">Winnipeg, MB &middot; requested 6:12 a.m.</div>
-
-      <div class="sec-label">Cara took the intake</div>
-      <ul class="facts" id="intake">
-        <li>Address: 1200 Pembina Hwy, Winnipeg &mdash; main lot + two entrances.</li>
-        <li>Needs: plow, salt, and clear the front walkways.</li>
-        <li>Deadline: cleared before staff arrive at 7 a.m.</li>
-        <div class="src">Captured by Cara on the call &mdash; no form for the manager to fill out.</div>
-      </ul>
-
-      <div class="sec-label">Site readiness</div>
-      <ul class="facts" id="readiness">
-        <li>Lot sized at ~40 stalls &mdash; needs a loader, not just a truck.</li>
-        <li>Salt required: slip-liability at the medical entrance.</li>
-        <li>Priority: high &mdash; healthcare, early open.</li>
-      </ul>
-
-      <div class="sec-label">Matched crew</div>
-      <div class="crewcard" id="crew">
-        <div class="score s-warm">96</div>
-        <div><h4>North End Snow Pros</h4>
-          <div class="meta">4 km away &middot; has a loader + salter &middot; insured &#10003; &middot; free before 7 a.m.</div>
-          <div class="badge new">Best fit for this lot</div></div>
-      </div>
-
-      <div class="actions">
-        <button class="btn" id="dispatchBtn" type="button">&#10003; Dispatch this crew</button>
-        <span class="pill">Crew confirms in minutes &middot; you never make the call</span>
-      </div>
-
-      <div class="proof" id="proof" style="display:none">
-        <div class="ph">Cleared &middot; proof received 6:51 a.m. &middot; before the 7 a.m. deadline</div>
-        <div class="pb">
-          <div class="shot">&#128247; Timestamped photo of the cleared lot</div>
-          Lot and walks cleared, salted at the entrance. Photo + timestamp on file &mdash; forward it straight to the property's insurer.
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="results" id="results">
-    <div><b>14</b><span>property managers in the pipeline</span></div>
-    <div><b>65</b><span>vetted crews ready</span></div>
-    <div><b>You</b><span>own the contract &mdash; the machine coordinates</span></div>
+  <div class="controls">
+    <a class="getlink" href="mailto:dan@calasautomations.com?subject=Dispatch%20Me%20-%2015%20minutes">Get this for your properties &middot; Book 15 minutes &rarr;</a>
+    <button class="ghost" id="reset" type="button">Start over</button>
   </div>
 </div></div>
 
-<div class="foot">Dispatch Me &middot; by <a href="/">Calas Automations</a> &middot; a sample walkthrough &middot; nothing here dispatches a real crew</div>
+<section class="storm" aria-labelledby="stormH"><div class="wrap">
+  <div>
+    <p class="eyebrow" id="stormEye">Tonight &middot; Winnipeg</p>
+    <h1 id="stormH">Snow's coming. One call covers every lot.</h1>
+    <p id="stormP">Pick how much is expected, then call it in. Every lot past its trigger depth gets its crew sent out.</p>
+  </div>
+  <div class="fc">
+    <span class="lab" id="fcLab">Expected snowfall</span>
+    <div class="seg" id="snow" role="group" aria-labelledby="fcLab">
+      <button type="button" data-cm="2" aria-pressed="false">2 cm</button><button type="button" data-cm="6" class="on" aria-pressed="true">6 cm</button><button type="button" data-cm="12" aria-pressed="false">12 cm</button>
+    </div>
+    <button class="run" id="stormBtn" type="button">Call it in &middot; one call</button>
+  </div>
+</div></section>
+
+<div class="hello"><div class="wrap">
+  <div>
+    <h2 id="helloH">Evening, Priya. Your winter, on one screen.</h2>
+    <p id="helloP">Click any lot to see its details and its crew.</p>
+  </div>
+  <div class="tally" id="kpis">
+    <div class="kpi"><span class="v mono" id="kLots">0</span><span class="k">lots on file</span></div>
+    <div class="kpi"><span class="v ac mono" id="kSent">0</span><span class="k">crews sent out</span></div>
+    <div class="kpi"><span class="v ok mono" id="kDone">0</span><span class="k">lots cleared</span></div>
+    <div class="kpi"><span class="v wm mono" id="kBack">0</span><span class="k">backups sent</span></div>
+    <div class="kpi"><span class="v mono" id="kCalls">0</span><span class="k">calls you made</span></div>
+  </div>
+</div></div>
+
+<div class="done" id="doneBar"><div class="wrap">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+  <div><b id="doneB">Every lot that needed it is clear.</b> <span id="doneS">You made one call.</span></div>
+  <a class="getlink" href="mailto:dan@calasautomations.com?subject=Dispatch%20Me%20-%2015%20minutes">Want this for your lots? Book 15 minutes &rarr;</a>
+</div></div>
+
+<div class="wrap" id="main">
+  <div class="grid">
+    <div class="card" id="lotsCard">
+      <div class="hd"><h3>Your lots</h3><span class="eyebrow">Click a lot to open it</span></div>
+      <div id="rows"></div>
+    </div>
+
+    <div class="stack">
+      <div class="card" id="addCard">
+        <div class="hd"><h3>Add a property</h3><span class="eyebrow">Matched to a vetted crew</span></div>
+        <form class="form" id="addForm" novalidate>
+          <label class="full">Property name<input type="text" id="fName" maxlength="60" placeholder="e.g. Grant Avenue Medical Arts" autocomplete="off"></label>
+          <label>Part of town<select id="fArea"></select></label>
+          <label>Lot size<select id="fSize"><option value="S">Small &middot; under 30 stalls</option><option value="M" selected>Medium &middot; 30 to 80 stalls</option><option value="L">Large &middot; 80+ stalls or a yard</option></select></label>
+          <label>Trigger depth<select id="fTrig"><option value="2.5">2.5 cm</option><option value="5" selected>5 cm</option><option value="8">8 cm</option></select></label>
+          <label>Clear by<select id="fBy"><option value="390">6:30 a.m.</option><option value="420" selected>7:00 a.m.</option><option value="480">8:00 a.m.</option></select></label>
+          <div class="full"><span style="font-size:13px;color:var(--ink-3)">What it needs</span>
+            <div class="svc" id="fSvc" style="margin-top:5px">
+              <label><input type="checkbox" value="plow" checked>Plowing</label>
+              <label><input type="checkbox" value="walk">Sidewalks</label>
+              <label><input type="checkbox" value="salt">Salting / sanding</label>
+              <label><input type="checkbox" value="haul">Snow hauling</label>
+            </div>
+          </div>
+          <button class="run" id="matchBtn" type="submit">Add it &amp; match a crew</button>
+          <div class="match" id="matchOut" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <div class="card" id="crewsCard">
+        <div class="hd"><h3>Your crews</h3><span class="eyebrow">Insurance &amp; references checked</span></div>
+        <div id="crews"></div>
+      </div>
+
+      <div class="card" id="feedCard">
+        <div class="hd"><h3>What's happening</h3><span class="eyebrow" id="feedCount">quiet night</span></div>
+        <div class="feed" id="feed"></div>
+        <div class="feednote">One number all winter. We deal with the crews, the scheduling and the storm-night calls; this is the record of what happened.</div>
+      </div>
+    </div>
+  </div>
+  <p class="foot">Made-up times for the demo; the clock runs fast so you can watch a whole night in about half a minute. Real routes, trigger depths and timing are set with you when you sign up, before the first snowfall.</p>
+</div>
+
+<footer class="sitefoot"><div class="wrap">
+  <div>
+    <a class="brand" href="/dispatchme/" aria-label="Dispatch Me by Calas Automations">
+      <span class="crest" aria-hidden="true"></span>
+      <div><div class="t1"><span class="r">Dispatch</span> Me</div><div class="t2">BY CALAS AUTOMATIONS</div></div>
+    </a>
+    <p class="fl">Dispatch Me matches Winnipeg commercial and industrial properties with insured, reference-checked snow crews. One call covers you all winter. Built in Winnipeg by Calas Automations.</p>
+  </div>
+  <div class="legal">
+    <p>Questions? <a href="mailto:dan@calasautomations.com?subject=Dispatch%20Me%20-%2015%20minutes">Book 15 minutes with Dan</a> or read more about <a href="/dispatchme/">Dispatch Me</a>.</p>
+    <p>&copy; 2026 Calas Automations &middot; Winnipeg, Manitoba. Demo only &mdash; made-up company, crews and lots.</p>
+  </div>
+</div></footer>
 
 <script>
-(function(){
-  "use strict";
-  var LINES=["Welcome to Dispatch Me. A property manager just sent in a parking lot that needs clearing. Here is their request.","Cara takes it from here. She captures the address, the lot size, and exactly what they need, with no phone tag and no missed calls.","Dispatch Me sizes up the lot and flags what it takes, the walkways, the salting, and the deadline before the first snowfall.","Then it matches the job to the right crew nearby, chosen by their area and their equipment, from your vetted list.","One tap sends the dispatch. The crew is on it, and you never had to answer a five a.m. phone call.","When it is done, the crew sends photo proof with a timestamp, so you can show the property's insurer the lot was cleared.","You own the contract. The machine runs the coordination. That is the whole idea, you scale without the chaos.","That is the tour. Have a look around."];
-  var DURS=[8.93, 9.31, 7.46, 6.84, 7.68, 7.15, 9.12, 4.08];
-  var AUDIO_BASE="narration/step-";
-  var overlay=null,cursorEl=null,capEl=null,skipBtn=null,muteBtn=null;
-  var tourBtn=document.getElementById("tourBtn");
-  var aborted=false,resolveWait=null,current=null,muted=false;
-  var reduceMotion=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var clips=LINES.map(function(_,i){var a=new Audio(AUDIO_BASE+i+".mp3");a.preload="none";return a});
-  function sleep(ms){return new Promise(function(res){var d=false;function f(){if(d)return;d=true;resolveWait=null;res()}resolveWait=f;setTimeout(f,reduceMotion?Math.min(ms,300):ms)})}
-  function say(i){if(aborted)return Promise.resolve();var a=clips[i];if(!a)return sleep(1300);return new Promise(function(res){var d=false;function f(){if(d)return;d=true;resolveWait=null;a.onended=null;a.onerror=null;res()}resolveWait=f;a.onended=f;a.onerror=f;a.muted=muted;current=a;try{a.currentTime=0}catch(e){}var p;try{p=a.play()}catch(e){}if(p&&p.catch)p.catch(function(){});setTimeout(f,(DURS[i]||4)*1000+600)})}
-  function stopAudio(){if(current){try{current.pause();current.currentTime=0}catch(e){}current=null}}
-  function q(sel){return document.querySelector(sel)}
-  function buildOverlay(){
-    overlay=document.createElement("div");overlay.style.cssText="position:fixed;inset:0;z-index:9998;pointer-events:none";
-    cursorEl=document.createElement("div");
-    cursorEl.style.cssText="position:fixed;left:-40px;top:-40px;width:26px;height:26px;z-index:9999;transition:left .55s cubic-bezier(.4,0,.2,1),top .55s cubic-bezier(.4,0,.2,1),transform .15s ease;filter:drop-shadow(0 3px 8px rgba(0,0,0,.35))";
-    cursorEl.innerHTML='<svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 2l16 7-6.5 2.2L11 18z" fill="#155F87" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>';
-    capEl=document.createElement("div");
-    capEl.style.cssText="position:fixed;left:-999px;top:-999px;z-index:9999;max-width:340px;background:#12212C;color:#fff;font:14.5px 'IBM Plex Sans',-apple-system,sans-serif;padding:11px 15px;border-radius:8px;box-shadow:0 8px 26px rgba(0,0,0,.32);transition:left .55s ease,top .55s ease,opacity .3s ease;line-height:1.45;opacity:0";
-    var b="position:fixed;top:16px;z-index:10000;pointer-events:auto;background:#12212C;color:#fff;border:0;border-radius:20px;padding:9px 16px;font:13.5px 'IBM Plex Sans',-apple-system,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.3)";
-    skipBtn=document.createElement("button");skipBtn.textContent="Skip tour \u2715";skipBtn.style.cssText=b+";right:16px";skipBtn.addEventListener("click",endTour);
-    muteBtn=document.createElement("button");muteBtn.style.cssText=b+";right:132px";setMuteLabel();
-    muteBtn.addEventListener("click",function(){muted=!muted;clips.forEach(function(a){a.muted=muted});setMuteLabel()});
-    document.body.appendChild(overlay);document.body.appendChild(cursorEl);document.body.appendChild(capEl);document.body.appendChild(skipBtn);document.body.appendChild(muteBtn);
+(function () {
+  'use strict';
+
+  /* ---------- made-up data ---------- */
+  var AREAS = ['North End', 'West End', 'St. Vital', 'Fort Garry', 'Transcona'];
+  var SVC = { plow: 'Plowing', walk: 'Sidewalks', salt: 'Salting / sanding', haul: 'Snow hauling' };
+  var SIZE = { S: 'Small lot', M: 'Medium lot', L: 'Large lot' };
+  /* equipment names match the Dispatch Me crew form */
+  var CREWS = [
+    { id: 'ns', name: 'Northstar Snow Co.', areas: ['North End', 'West End'], eq: ['Plow trucks', 'Loader'], phone: '(204) 555-0131', email: 'dispatch@northstar-snow.example' },
+    { id: 'sr', name: 'Seine River Plow & Salt', areas: ['St. Vital', 'Fort Garry'], eq: ['Plow trucks', 'Salt / sand spreader'], phone: '(204) 555-0147', email: 'office@seineriverplow.example' },
+    { id: 'pb', name: 'Prairie Blade Clearing', areas: ['Transcona', 'St. Vital'], eq: ['Plow trucks', 'Loader'], phone: '(204) 555-0162', email: 'crew@prairieblade.example' },
+    { id: 'ks', name: 'Kildonan Snow & Sand', areas: ['North End', 'Transcona'], eq: ['Plow truck', 'Loader', 'Salt / sand spreader'], phone: '(204) 555-0178', email: 'jobs@kildonansnow.example' },
+    { id: 'ay', name: 'Assiniboine Yard Services', areas: ['West End', 'Fort Garry'], eq: ['Loader', 'Skid steer', 'Dump truck (hauling)'], phone: '(204) 555-0186', email: 'yard@assiniboineyard.example' },
+    { id: 'cw', name: 'Crescent Walkway Crew', areas: ['West End', 'St. Vital', 'Fort Garry'], eq: ['Sidewalk crew / blowers', 'Salt / sand spreader'], phone: '(204) 555-0193', email: 'hello@crescentwalkway.example' }
+  ];
+  var START_LOTS = [
+    { id: 'pc', name: 'Pembina Commons Plaza', area: 'Fort Garry', size: 'L', stalls: '120 stalls', trig: 5, by: 420, svc: ['plow', 'salt'], crew: 'ay' },
+    { id: 'sv', name: 'St. Vital Family Clinic', area: 'St. Vital', size: 'S', stalls: '24 stalls + front walks', trig: 2.5, by: 390, svc: ['plow', 'walk', 'salt'], crew: 'sr' },
+    { id: 'tb', name: 'Transcona Business Park', area: 'Transcona', size: 'L', stalls: '3 lots, 160 stalls', trig: 5, by: 420, svc: ['plow', 'salt'], crew: 'pb', noShow: true },
+    { id: 'kw', name: 'Keewatin Street Warehouse', area: 'North End', size: 'L', stalls: 'Truck yard + loading bays', trig: 8, by: 480, svc: ['plow', 'haul'], crew: 'ns' },
+    { id: 'wp', name: 'Wolseley Place Condos', area: 'West End', size: 'M', stalls: 'Shared drive + walks', trig: 5, by: 390, svc: ['plow', 'walk'], crew: 'ns' },
+    { id: 'po', name: 'Portage Office Centre', area: 'West End', size: 'M', stalls: '64 stalls', trig: 5, by: 420, svc: ['plow', 'salt'], crew: 'ay' }
+  ];
+
+  /* ---------- state ---------- */
+  var S, timers = [];
+  var $ = function (id) { return document.getElementById(id); };
+
+  function fresh() {
+    return {
+      lots: START_LOTS.map(function (l) { return Object.assign({}, l, { status: 'idle', hist: [], cleared: null, backup: null }); }),
+      snow: 6, phase: 'idle', calls: 0, open: null, feed: [], seq: 0
+    };
   }
-  function setMuteLabel(){if(muteBtn)muteBtn.textContent=muted?"\uD83D\uDD07 Voice off":"\uD83D\uDD0A Voice on"}
-  function removeOverlay(){[overlay,cursorEl,capEl,skipBtn,muteBtn].forEach(function(el){if(el&&el.parentNode)el.parentNode.removeChild(el)});overlay=cursorEl=capEl=skipBtn=muteBtn=null}
-  function point(el,i,opts){
-    if(aborted)return Promise.resolve();opts=opts||{};
-    if(el){try{el.scrollIntoView({behavior:reduceMotion?"auto":"smooth",block:"center"})}catch(e){}}
-    return sleep(reduceMotion?60:380).then(function(){
-      if(aborted||!cursorEl)return;var cx=window.innerWidth/2,cy=160;
-      if(el){var r=el.getBoundingClientRect();cx=r.left+r.width*(opts.px!=null?opts.px:0.5);cy=r.top+r.height*(opts.py!=null?opts.py:0.5);cursorEl.style.left=(cx-3)+"px";cursorEl.style.top=(cy-3)+"px"}
-      var capW=340,capX=Math.min(Math.max(10,cx-capW/2),window.innerWidth-capW-10);var capY=cy>150?cy-90:cy+34;
-      capEl.style.left=capX+"px";capEl.style.top=capY+"px";capEl.style.opacity="1";capEl.textContent=LINES[i];
-      return say(i);
+  function crewById(id) { for (var i = 0; i < CREWS.length; i++) if (CREWS[i].id === id) return CREWS[i]; return null; }
+  function lotById(id) { for (var i = 0; i < S.lots.length; i++) if (S.lots[i].id === id) return S.lots[i]; return null; }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function initials(n) { return n.split(/\s+/).filter(function (w) { return /^[A-Z]/.test(w); }).slice(0, 2).map(function (w) { return w[0]; }).join(''); }
+
+  /* The demo clock: storm called at 11:40 p.m.; one real second = 15 minutes. */
+  var CALL_AT = 23 * 60 + 40, MIN_PER_SEC = 15;
+  function clockAt(ms) { return fmt(CALL_AT + Math.round(ms / 1000 * MIN_PER_SEC)); }
+  function fmt(mins) {
+    mins = ((mins % 1440) + 1440) % 1440;
+    var h = Math.floor(mins / 60), m = mins % 60, ap = h < 12 ? 'a.m.' : 'p.m.';
+    var hh = h % 12 === 0 ? 12 : h % 12;
+    return hh + ':' + (m < 10 ? '0' : '') + m + ' ' + ap;
+  }
+  function minsAt(ms) { return CALL_AT + Math.round(ms / 1000 * MIN_PER_SEC); }
+
+  /* ---------- rendering ---------- */
+  var PILL = {
+    idle: ['p-idle', 'Ready &middot; waiting for snow'],
+    below: ['p-below', 'Under trigger &middot; not sent'],
+    sent: ['p-sent', 'Crew sent'],
+    conf: ['p-sent', 'Crew confirmed'],
+    site: ['p-site', 'On site, clearing'],
+    noans: ['p-bad', 'No answer from crew'],
+    backup: ['p-sent', 'Backup crew sent'],
+    done: ['p-done', 'Cleared &#10003;']
+  };
+
+  /* Each lot keeps one persistent element (#lot-<id>) so the tour can point at it while its contents update. */
+  function renderLots() {
+    var box = $('rows'), keep = {};
+    S.lots.forEach(function (l) {
+      var c = crewById(l.crew), p = PILL[l.status];
+      var crewTxt = l.backup
+        ? '<s>' + esc(crewById(l.backup.from).name) + '</s> &rarr; <b>' + esc(c.name) + '</b> <span style="color:var(--ink-3)">(backup)</span>'
+        : 'Crew: <b>' + esc(c.name) + '</b>';
+      var when = l.status === 'done'
+        ? '<span class="when ok">' + fmt(l.cleared) + ' &middot; before ' + fmt(l.by) + '</span>'
+        : '<span class="when">clear by ' + fmt(l.by) + '</span>';
+      var el = $('lot-' + l.id);
+      if (!el) { el = document.createElement('div'); el.id = 'lot-' + l.id; box.appendChild(el); }
+      keep[el.id] = true;
+      el.className = 'rw' + (S.open === l.id ? ' open' : '') + (el.classList.contains('flash') ? ' flash' : '');
+      el.innerHTML =
+        '<div class="row" role="button" tabindex="0" aria-expanded="' + (S.open === l.id) + '" data-id="' + l.id + '">' +
+          '<div><div class="nm">' + esc(l.name) + '</div>' +
+          '<div class="sub2">' + esc(l.area) + ' &middot; ' + SIZE[l.size] + ' &middot; ' + esc(l.stalls) + '</div>' +
+          '<div class="chips"><span class="chip tr">trigger ' + l.trig + ' cm</span>' +
+            l.svc.map(function (s) { return '<span class="chip">' + SVC[s] + '</span>'; }).join('') + '</div>' +
+          '<div class="crewline">' + crewTxt + '</div></div>' +
+          '<div class="right"><span class="pill ' + p[0] + '">' + p[1] + '</span>' + when + '</div>' +
+        '</div>' + drawer(l);
     });
+    Array.prototype.slice.call(box.children).forEach(function (c) { if (!keep[c.id]) box.removeChild(c); });
   }
-  function tap(el){if(aborted||!el||!cursorEl)return;cursorEl.style.transform="scale(.8)";setTimeout(function(){if(cursorEl)cursorEl.style.transform="scale(1)"},150);try{el.click()}catch(e){}}
-  function endTour(){if(aborted)return;aborted=true;stopAudio();if(resolveWait)resolveWait();removeOverlay();if(tourBtn){tourBtn.disabled=false;tourBtn.textContent="\u25B6 Watch again \u00B7 60 sec"}}
-  function runTour(){
-    if(!aborted&&overlay)return;aborted=false;clips.forEach(function(a){try{a.load()}catch(e){}});buildOverlay();if(tourBtn)tourBtn.disabled=true;
-    var s=Promise.resolve();
-    s=s.then(function(){return point(q("#req0"),0)});
-    s=s.then(function(){return point(q("#intake"),1,{py:0.3})});
-    s=s.then(function(){return point(q("#readiness"),2,{py:0.3})});
-    s=s.then(function(){return point(q("#crew"),3)});
-    s=s.then(function(){return point(q("#dispatchBtn"),4)});
-    s=s.then(function(){tap(q("#dispatchBtn"))});
-    s=s.then(function(){return sleep(500)});
-    s=s.then(function(){return point(q("#proof"),5,{py:0.25})});
-    s=s.then(function(){return point(q("#results"),6,{py:0.4})});
-    s=s.then(function(){return point(null,7)});
-    s=s.then(function(){return sleep(600)});
-    s=s.then(function(){endTour()});
+
+  function drawer(l) {
+    var c = crewById(l.crew);
+    var canBackup = S.phase !== 'idle' && ['sent', 'conf', 'site', 'noans'].indexOf(l.status) >= 0 && !l.backup;
+    var hist = l.hist.length
+      ? l.hist.map(function (e) { return '<li><span class="t">' + e.t + '</span><span>' + e.x + '</span></li>'; }).join('')
+      : '<li class="empty">Nothing yet tonight. Call in the snow to watch this lot move.</li>';
+    return '<div class="drawer"><div class="dgrid">' +
+      '<div><div class="dh">On file</div><dl class="meta">' +
+        '<dt>Area</dt><dd>' + esc(l.area) + '</dd>' +
+        '<dt>Lot</dt><dd>' + SIZE[l.size] + ' &middot; ' + esc(l.stalls) + '</dd>' +
+        '<dt>Trigger</dt><dd>' + l.trig + ' cm of snow</dd>' +
+        '<dt>Clear by</dt><dd>' + fmt(l.by) + '</dd>' +
+        '<dt>Needs</dt><dd>' + l.svc.map(function (s) { return SVC[s]; }).join(', ') + '</dd>' +
+        '<dt>Crew</dt><dd>' + esc(c.name) + '<br><span class="mono" style="font-size:12.5px">' + c.phone + ' &middot; ' + c.email + '</span></dd>' +
+        '<dt>Checked</dt><dd style="color:var(--ok)">&#10003; Insurance &middot; &#10003; References</dd>' +
+      '</dl></div>' +
+      '<div><div class="dh">Tonight</div><ul class="hist">' + hist + '</ul>' +
+        '<button class="act" type="button" data-noshow="' + l.id + '"' + (canBackup ? '' : ' disabled') + '>Crew didn&#39;t show? Send a backup</button>' +
+        '<p class="dnote">' + (l.backup ? 'A backup is already on it. You didn&#39;t have to chase anyone.' : 'Tell us once and we find another crew and send them.') + '</p>' +
+      '</div></div></div>';
   }
-  if(tourBtn)tourBtn.addEventListener("click",runTour);
-  if(window.location.hash==="#tour"&&tourBtn){window.location.hash="";setTimeout(function(){tourBtn.click()},800)}
-  var db=document.getElementById("dispatchBtn");
-  if(db)db.addEventListener("click",function(){var pr=document.getElementById("proof");if(pr)pr.style.display="";db.textContent="\u2713 Dispatched";db.disabled=true});
-  ["req0","req1","req2"].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener("click",function(){document.querySelectorAll(".lead").forEach(function(l){l.classList.remove("sel")});el.classList.add("sel")})});
+
+  function renderCrews() {
+    var busy = {};
+    S.lots.forEach(function (l) { if (['sent', 'conf', 'site', 'backup'].indexOf(l.status) >= 0) busy[l.crew] = true; });
+    $('crews').innerHTML = CREWS.map(function (c) {
+      var n = S.lots.filter(function (l) { return l.crew === c.id; }).length;
+      return '<div class="crew' + (busy[c.id] ? ' busy' : '') + '"><span class="av">' + initials(c.name) + '</span><div>' +
+        '<div class="cn">' + esc(c.name) + '</div>' +
+        '<div class="cs">' + c.areas.join(' &middot; ') + ' &middot; ' + (n ? n + (n === 1 ? ' of your lots' : ' of your lots') : 'on standby for you') + (busy[c.id] ? ' &middot; <b style="color:var(--warm);font-weight:500">out now</b>' : '') + '</div>' +
+        '<div class="checks"><span class="ck">&#10003; Insurance</span><span class="ck">&#10003; References</span>' +
+          c.eq.map(function (e) { return '<span class="ck eq">' + e + '</span>'; }).join('') + '</div></div></div>';
+    }).join('');
+  }
+
+  function renderFeed() {
+    $('feed').innerHTML = S.feed.length
+      ? S.feed.map(function (f) { return '<div class="fe ' + f.k + '"><span class="ic">' + f.ic + '</span><span class="tx">' + f.x + '</span><span class="ts">' + f.t + '</span></div>'; }).join('')
+      : '<div class="empty">Quiet so far. When the snow comes, every call, confirmation and cleared lot shows up here.</div>';
+    $('feedCount').textContent = S.feed.length ? S.feed.length + (S.feed.length === 1 ? ' entry' : ' entries') : 'quiet night';
+  }
+
+  function renderKpis() {
+    $('kLots').textContent = S.lots.length;
+    $('kSent').textContent = S.lots.filter(function (l) { return ['idle', 'below'].indexOf(l.status) < 0; }).length;
+    $('kDone').textContent = S.lots.filter(function (l) { return l.status === 'done'; }).length;
+    $('kBack').textContent = S.lots.filter(function (l) { return l.backup; }).length;
+    $('kCalls').textContent = S.calls;
+  }
+
+  function renderStorm() {
+    var btn = $('stormBtn');
+    Array.prototype.forEach.call(document.querySelectorAll('#snow button'), function (b) {
+      var on = Number(b.getAttribute('data-cm')) === S.snow;
+      b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.disabled = S.phase !== 'idle';
+    });
+    btn.disabled = S.phase !== 'idle';
+    btn.innerHTML = S.phase === 'idle' ? 'Call it in &middot; one call' : S.phase === 'running' ? 'Called in &middot; crews on it' : 'Storm handled &#10003;';
+    $('stormEye').innerHTML = S.phase === 'idle' ? 'Tonight &middot; Winnipeg' : S.snow + ' cm tonight &middot; called in at ' + fmt(CALL_AT);
+    $('doneBar').classList.toggle('on', S.phase === 'done');
+  }
+
+  function render() { renderLots(); renderCrews(); renderFeed(); renderKpis(); renderStorm(); }
+
+  /* ---------- the storm ---------- */
+  /* ms is measured from the moment the storm was called in (t0). */
+  function later(ms, fn, lotId) { timers.push({ lot: lotId || null, h: setTimeout(fn, Math.max(0, ms - now())) }); }
+  function cancelLot(id) { timers = timers.filter(function (t) { if (t.lot === id) { clearTimeout(t.h); return false; } return true; }); }
+  function log(k, ic, x, t) { S.feed.unshift({ k: k, ic: ic, x: x, t: t }); }
+  function note(l, t, x) { l.hist.push({ t: t, x: x }); }
+  var t0 = 0;
+  function now() { return Date.now() - t0; }
+
+  function step(l, status, ms, lx, fx, kind, ic) {
+    later(ms, function () {
+      var t = clockAt(ms);
+      l.status = status;
+      if (status === 'done') l.cleared = minsAt(ms);
+      note(l, t, lx);
+      log(kind || '', ic || '&#8250;', fx, t);
+      render();
+      checkDone();
+    }, l.id);
+  }
+
+  function runLot(l, at, k) {
+    var crew = crewById(l.crew).name;
+    var name = '<b>' + esc(l.name) + '</b>';
+    step(l, 'sent', at, 'Crew sent: ' + esc(crew), esc(crew) + ' sent to ' + name, 'sys', '&#8594;');
+    if (l.noShow) {
+      step(l, 'noans', at + 9000, 'No answer from ' + esc(crew), 'No answer from ' + esc(crew) + ' for ' + name, 'bad', '!');
+      later(at + 12500, function () { sendBackup(l, at + 12500); }, l.id);
+      return;
+    }
+    step(l, 'conf', at + 1800, 'Crew confirmed', esc(crew) + ' confirmed ' + name, '', '&#10003;');
+    step(l, 'site', at + 4200 + k * 500, 'On site, clearing', esc(crew) + ' on site at ' + name, '', '&#9679;');
+    step(l, 'done', at + 7800 + k * 1100, 'Cleared, crew reported done', name + ' cleared', 'ok', '&#10003;');
+  }
+
+  function pickBackup(l) {
+    var best = null, bestScore = -1;
+    CREWS.forEach(function (c) {
+      if (c.id === l.crew) return;
+      var s = score(c, l.area, l.size, l.svc);
+      if (s > bestScore) { best = c; bestScore = s; }
+    });
+    return best || CREWS.filter(function (c) { return c.id !== l.crew; })[0];
+  }
+
+  function sendBackup(l, at) {
+    cancelLot(l.id);
+    var from = l.crew, b = pickBackup(l);
+    var name = '<b>' + esc(l.name) + '</b>', t = clockAt(at);
+    l.backup = { from: from }; l.crew = b.id; l.status = 'backup';
+    note(l, t, 'Backup sent: ' + esc(b.name));
+    log('you', '&#8634;', 'Backup sent to ' + name + ': <b>' + esc(b.name) + '</b>. No chasing needed.', t);
+    render();
+    step(l, 'conf', at + 1400, 'Backup crew confirmed', esc(b.name) + ' confirmed ' + name, '', '&#10003;');
+    step(l, 'site', at + 4200, 'On site, clearing', esc(b.name) + ' on site at ' + name, '', '&#9679;');
+    step(l, 'done', at + 8000, 'Cleared by the backup crew', name + ' cleared by the backup crew', 'ok', '&#10003;');
+  }
+
+  function callItIn() {
+    if (S.phase !== 'idle') return;
+    t0 = Date.now();
+    S.phase = 'running'; S.calls = 1;
+    var t = clockAt(0);
+    log('you', '&#9742;', '<b>You called it in:</b> ' + S.snow + ' cm expected tonight. One call.', t);
+    var go = S.lots.filter(function (l) { return l.trig <= S.snow; }).sort(function (a, b) { return a.by - b.by || (a.noShow ? 1 : 0) - (b.noShow ? 1 : 0); });
+    S.lots.forEach(function (l) {
+      if (l.trig > S.snow) {
+        l.status = 'below';
+        note(l, t, 'Under its ' + l.trig + ' cm trigger. Not sent this time.');
+        log('sys', '&#8211;', '<b>' + esc(l.name) + '</b> is set for ' + l.trig + ' cm. Not sent this time.', t);
+      }
+    });
+    if (!go.length) {
+      log('sys', '&#8211;', 'Nothing is past its trigger depth, so no crews go out.', t);
+      S.phase = 'done';
+      $('doneB').textContent = 'No lot needed clearing at ' + S.snow + ' cm.';
+      $('doneS').textContent = 'Nobody was sent out. Your lots wait for the next snowfall.';
+      render();
+      return;
+    }
+    go.forEach(function (l, k) { runLot(l, 700 + k * 450, k); });
+    render();
+  }
+
+  function checkDone() {
+    if (S.phase !== 'running') return;
+    var pending = S.lots.some(function (l) { return ['sent', 'conf', 'site', 'noans', 'backup'].indexOf(l.status) >= 0; });
+    if (pending) return;
+    S.phase = 'done';
+    var n = S.lots.filter(function (l) { return l.status === 'done'; }).length;
+    var last = Math.max.apply(null, S.lots.map(function (l) { return l.cleared || 0; }));
+    var t = fmt(last + 5);
+    log('ok you', '&#9993;', '<b>Morning update to Priya:</b> ' + n + ' lot' + (n === 1 ? '' : 's') + ' cleared by ' + fmt(last) + ', each before its deadline.', t);
+    $('doneB').textContent = 'Every lot that needed it is clear, by ' + fmt(last);
+    $('doneS').textContent = 'You made one call. No 5 a.m. chasing.';
+    render();
+  }
+
+  /* ---------- matching a new property ---------- */
+  var NEEDS = { plow: ['Plow truck', 'Plow trucks', 'Loader'], walk: ['Sidewalk crew / blowers', 'Skid steer'], salt: ['Salt / sand spreader'], haul: ['Dump truck (hauling)'] };
+  function score(c, area, size, svc) {
+    if (c.areas.indexOf(area) < 0) return -1;
+    var s = 10;
+    svc.forEach(function (k) { if (NEEDS[k].some(function (e) { return c.eq.indexOf(e) >= 0; })) s += 3; });
+    if (size === 'L' && c.eq.indexOf('Loader') >= 0) s += 2;
+    if (svc.indexOf('plow') >= 0 && !NEEDS.plow.some(function (e) { return c.eq.indexOf(e) >= 0; })) s -= 8;
+    s -= S.lots.filter(function (l) { return l.crew === c.id; }).length * 0.5;
+    return s;
+  }
+
+  function addProperty(e) {
+    e.preventDefault();
+    var nameEl = $('fName'), out = $('matchOut');
+    var name = nameEl.value.trim().replace(/\s+/g, ' ');
+    var svc = Array.prototype.map.call(document.querySelectorAll('#fSvc input:checked'), function (i) { return i.value; });
+    out.className = 'match';
+    if (!name) { nameEl.classList.add('err'); nameEl.focus(); out.className = 'match on bad'; out.textContent = 'Please give the property a name first.'; return; }
+    if (!svc.length) { out.className = 'match on bad'; out.textContent = 'Tick at least one thing the lot needs.'; return; }
+    nameEl.classList.remove('err');
+    var area = $('fArea').value, size = $('fSize').value;
+    var best = null, bs = -1;
+    CREWS.forEach(function (c) { var s = score(c, area, size, svc); if (s > bs) { bs = s; best = c; } });
+    if (!best || bs < 0) { out.className = 'match on bad'; out.textContent = 'No crew on your list covers that area yet. We would find one before the season starts.'; return; }
+    var id = 'n' + (++S.seq);
+    var lot = { id: id, name: name, area: area, size: size, stalls: size === 'S' ? 'Under 30 stalls' : size === 'M' ? '30 to 80 stalls' : '80+ stalls', trig: Number($('fTrig').value), by: Number($('fBy').value), svc: svc, crew: best.id, status: 'idle', hist: [], cleared: null, backup: null };
+    if (S.phase !== 'idle') { lot.hist.push({ t: '', x: 'Added after tonight’s call. Covered from the next snowfall.' }); }
+    S.lots.push(lot);
+    var covered = svc.filter(function (k) { return NEEDS[k].some(function (x) { return best.eq.indexOf(x) >= 0; }); }).map(function (k) { return SVC[k].toLowerCase(); });
+    out.className = 'match on';
+    out.innerHTML = '<b>' + esc(name) + '</b> is on file and matched to <b>' + esc(best.name) + '</b>. They already run ' + esc(area) +
+      (covered.length ? ', and they have the equipment for ' + esc(covered.join(', ')) : '') + '. Insurance and references checked.';
+    log('sys', '+', '<b>' + esc(name) + '</b> added and matched to ' + esc(best.name) + '.', S.phase === 'idle' ? fmt(20 * 60 + 15) : clockAt(now()));
+    S.open = null;
+    nameEl.value = '';
+    render();
+    var row = $('lot-' + id);
+    if (row) { row.classList.add('flash'); }
+  }
+
+  /* ---------- wiring ---------- */
+  function reset() {
+    timers.forEach(function (t) { clearTimeout(t.h); });
+    timers = [];
+    S = fresh();
+    $('fName').value = ''; $('fName').classList.remove('err');
+    $('matchOut').className = 'match'; $('matchOut').textContent = '';
+    $('fArea').value = 'West End'; $('fSize').value = 'M'; $('fTrig').value = '5'; $('fBy').value = '420';
+    Array.prototype.forEach.call(document.querySelectorAll('#fSvc input'), function (i) { i.checked = i.value === 'plow'; });
+    $('doneB').textContent = 'Every lot that needed it is clear.'; $('doneS').textContent = 'You made one call.';
+    render();
+  }
+
+  $('fArea').innerHTML = AREAS.map(function (a) { return '<option>' + a + '</option>'; }).join('');
+  $('rows').addEventListener('click', function (e) {
+    var ns = e.target.closest('[data-noshow]');
+    if (ns) { if (!ns.disabled) sendBackup(lotById(ns.getAttribute('data-noshow')), S.phase === 'running' ? now() : 0); return; }
+    var r = e.target.closest('.row');
+    if (!r) return;
+    var id = r.getAttribute('data-id');
+    S.open = S.open === id ? null : id;
+    renderLots();
+  });
+  $('rows').addEventListener('keydown', function (e) {
+    var r = e.target.closest && e.target.closest('.row');
+    if (r && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); r.click(); }
+  });
+  $('snow').addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b || S.phase !== 'idle') return;
+    S.snow = Number(b.getAttribute('data-cm'));
+    renderStorm();
+  });
+  $('stormBtn').addEventListener('click', callItIn);
+  $('reset').addEventListener('click', reset);
+  $('addForm').addEventListener('submit', addProperty);
+  $('fName').addEventListener('input', function () { this.classList.remove('err'); });
+  reset();
+
+  /* ---------- guided tour (shared engine: /demo/_tour/tour.js) ---------- */
+  window.DispatchDemo = { reset: reset };
 })();
 </script>
-<script src="/calas-brandbar.js?v=20260929i" defer></script></body></html>
+<script src="/demo/_tour/tour.js"></script>
+<script>
+CalasTour.start({
+  lines: [
+    "Welcome to Dispatch Me. This is a made-up property company in Winnipeg, with six lots to keep clear all winter.",
+    "Each property is on file once: the lot size, the trigger depth, what it needs, and the time it has to be clear by.",
+    "Every lot is matched to a vetted crew. Each crew shows proof of insurance and references before they get a single lot.",
+    "Adding a property takes a moment. Tell us about it, and it's matched to a crew that already runs that part of town.",
+    "Now the snow is coming. Six centimetres tonight. Instead of calling three contractors, you make one call.",
+    "That's it. Every lot past its trigger depth gets a crew sent out. The warehouse yard is set for eight, so it waits.",
+    "Watch the board. Crews confirm, head out, and report each lot cleared, one by one, before its deadline.",
+    "Here, a crew hasn't answered. You don't chase anyone. A backup crew is sent instead, and the lot still gets done.",
+    "Everything that happened is written down here, so you can see who cleared what, and when.",
+    "By morning, every lot that needed it is clear, and you made one call. No five a.m. chasing.",
+    "Good crews fill their routes in the fall, so talk to us early. Now it's your turn: add a lot, call in a storm, and click around."
+  ],
+  durs: [7.03, 7.1, 7.37, 6.72, 6.65, 6.74, 6.62, 6.94, 4.66, 5.71, 7.54],
+  audioBase: "narration/step-",
+  onReplay: function () { window.DispatchDemo.reset(); window.scrollTo(0, 0); },
+  script: function (t) {
+    return t.point("#who", 0)
+      .then(function () { t.tap("#lot-pc .row"); return t.sleep(350); })
+      .then(function () { return t.point("#lot-pc", 1, { py: 0.35 }); })
+      .then(function () { t.tap("#lot-pc .row"); return t.point("#crewsCard", 2, { py: 0.3 }); })
+      .then(function () {
+        t.type("#fName", "Grant Avenue Medical Arts", 45).then(function () { return t.sleep(500); }).then(function () { t.tap("#matchBtn"); });
+        return t.point("#addCard", 3, { py: 0.35 });
+      })
+      .then(function () { return t.sleep(1200); })
+      .then(function () { return t.point("#stormBtn", 4); })
+      .then(function () { t.tap("#stormBtn"); return t.sleep(700); })
+      .then(function () { return t.point("#lot-kw", 5, { px: 0.3, py: 0.9 }); })
+      .then(function () { return t.point("#lot-sv", 6, { px: 0.3, py: 0.9 }); })
+      .then(function () { return t.point("#lot-tb", 7, { px: 0.3, py: 0.9 }); })
+      .then(function () { return t.point("#feed", 8, { py: 0.7 }); })
+      .then(function () { return t.sleep(900); })
+      .then(function () { return t.point("#kpis", 9); })
+      .then(function () { return t.point(".appbar .getlink", 10); });
+  }
+});
+</script>
+<script src="/calas-brandbar.js?v=20260929j" defer></script></body></html>

@@ -1,4 +1,4 @@
-<!doctype html><html><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20260929i"></head><body>
+<!doctype html><html><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20260929j"></head><body>
 <title>On File</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1595,9 +1595,9 @@ build();renderPlan();setDay(0);render();
   var AUDIO_BASE='narration/step-';
   var overlay=null,cursorEl=null,capEl=null,skipBtn=null,muteBtn=null;
   var tourBtn=document.getElementById('tourBtn');
-  var aborted=false,resolveWait=null,current=null,muted=false;
+  var aborted=false,resolveWait=null,current=null,muted=true;
   var reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var clips=LINES.map(function(_,i){var a=new Audio(AUDIO_BASE+i+'.mp3');a.preload='none';return a});
+  var clips=LINES.map(function(_,i){var a=new Audio(AUDIO_BASE+i+'.mp3');a.preload='auto';return a});
 
   function sleep(ms){
     return new Promise(function(res){
@@ -1642,15 +1642,15 @@ build();renderPlan();setDay(0);render();
       'background:#12212C;color:#fff;font:14.5px "IBM Plex Sans",-apple-system,sans-serif;padding:11px 15px;'+
       'border-radius:8px;box-shadow:0 8px 26px rgba(0,0,0,.32);transition:left .55s ease,top .55s ease,opacity .3s ease;'+
       'line-height:1.45;opacity:0';
-    var btnCss='position:fixed;top:16px;z-index:10000;pointer-events:auto;'+
+    var btnCss='position:fixed;z-index:10000;pointer-events:auto;'+
       'background:#12212C;color:#fff;border:0;border-radius:20px;padding:9px 16px;'+
       'font:13.5px "IBM Plex Sans",-apple-system,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.3)';
     skipBtn=document.createElement('button');
     skipBtn.textContent='Skip tour ✕';
-    skipBtn.style.cssText=btnCss+';right:16px';
+    skipBtn.style.cssText=btnCss+';bottom:18px;left:18px';
     skipBtn.addEventListener('click',endTour);
     muteBtn=document.createElement('button');
-    muteBtn.style.cssText=btnCss+';right:132px';
+    muteBtn.style.cssText=btnCss+';bottom:64px;left:18px';
     muteBtn.setAttribute('aria-label','Mute or unmute the voice');
     setMuteLabel();
     muteBtn.addEventListener('click',function(){muted=!muted;clips.forEach(function(a){a.muted=muted});setMuteLabel()});
@@ -1660,7 +1660,7 @@ build();renderPlan();setDay(0);render();
     document.body.appendChild(skipBtn);
     document.body.appendChild(muteBtn);
   }
-  function setMuteLabel(){if(muteBtn)muteBtn.textContent=muted?'🔇 Voice off':'🔊 Voice on'}
+  function setMuteLabel(){if(muteBtn)muteBtn.textContent=muted?'🔇 Turn on voice':'🔊 Voice on'}
   function removeOverlay(){
     [overlay,cursorEl,capEl,skipBtn,muteBtn].forEach(function(el){if(el&&el.parentNode)el.parentNode.removeChild(el)});
     overlay=cursorEl=capEl=skipBtn=muteBtn=null;
@@ -1740,9 +1740,25 @@ build();renderPlan();setDay(0);render();
     s=s.then(function(){endTour()});
   }
   if(tourBtn)tourBtn.addEventListener('click',runTour);
+  // 2026-09-29 Dan: the tour starts by itself, no play button. Browsers allow
+  // no sound until the visitor touches the page, so it opens with captions and
+  // the first click or key press anywhere turns the voice on.
+  function voiceOn(e){
+    if(skipBtn&&e.target===skipBtn)return;
+    if(muted){muted=false;clips.forEach(function(a){a.muted=false});setMuteLabel();
+      if(current&&current.paused){try{var p=current.play();if(p&&p.catch)p.catch(function(){})}catch(err){}}}
+    window.removeEventListener('pointerdown',voiceOn,true);window.removeEventListener('keydown',voiceOn,true);
+  }
+  window.addEventListener('pointerdown',voiceOn,true);window.addEventListener('keydown',voiceOn,true);
+  function autoStart(){
+    var loaded=clips.map(function(a){return new Promise(function(r){if(a.readyState>=4)return r();
+      a.addEventListener('canplaythrough',r,{once:true});a.addEventListener('error',r,{once:true});try{a.load()}catch(e){r()}})});
+    Promise.race([Promise.all(loaded),new Promise(function(r){setTimeout(r,6000)})]).then(function(){setTimeout(runTour,900)});
+  }
+  if(document.readyState==='complete')autoStart();else window.addEventListener('load',autoStart);
 })();
 </script>
 
 
 
-<script src="/calas-brandbar.js?v=20260929i" defer></script></body></html>
+<script src="/calas-brandbar.js?v=20260929j" defer></script></body></html>

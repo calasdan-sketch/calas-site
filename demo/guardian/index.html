@@ -1,0 +1,534 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guardian demo · free scam checker · Calas Automations</title>
+<meta name="description" content="Try Guardian with made-up messages: pick a suspicious text and see the scam signs it flags, right on the phone. Free. Nothing is uploaded.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style>
+<link rel="stylesheet" href="/calas-ui.css?v=20260929j">
+<style>
+:root{
+  --paper:#FFFFFF;--surface:#FFFFFF;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--ink-3:#6B7883;
+  --rule:#D9E3EA;--rule-2:#E9F0F5;
+  --ok:#17794A;--ok-soft:#E9F5EE;--warm:#8A5A12;--warm-soft:#FBF1DF;--bad:#B23B2E;--bad-soft:#FBECEA;
+  --accent:#155F87;--accent-2:#0E4A6B;--accent-soft:#E6F0F6;--on-accent:#FFFFFF;
+  --night:#0B2E45;--gold-line:#F0C171;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif;font-weight:700;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* demo strip */
+.banner{background:var(--sunk);color:var(--ink-2);font-size:13.5px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.banner .wrap{display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.banner b{color:var(--ink);font-weight:600}
+
+/* app bar */
+.appbar{background:var(--surface);border-bottom:2px solid var(--gold-line);box-shadow:0 2px 14px rgba(11,46,69,.08)}
+.appbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 28px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:13px;perspective:700px;color:inherit;text-decoration:none}
+.gcrest{width:30px;height:42px;flex:none;display:inline-block;background:var(--accent);-webkit-mask:url(/favicon.png) center/contain no-repeat;mask:url(/favicon.png) center/contain no-repeat;animation:coin 8s linear infinite}
+@keyframes coin{from{transform:rotateY(0deg)}to{transform:rotateY(360deg)}}
+.t1{font-family:"Libre Baskerville",Georgia,serif;font-size:19px;line-height:1.1;color:var(--accent)}
+.t2{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.22em;color:var(--ink-3)}
+.who{padding-left:18px;border-left:1px solid var(--rule);font-size:14.5px;color:var(--ink-2);line-height:1.4}
+.who b{display:block;color:var(--ink);font-weight:600}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.getlink{font-size:14.5px;color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;font-weight:500}
+.getlink:hover{border-bottom-color:var(--accent)}
+.run{background:linear-gradient(180deg,var(--accent) 0%,var(--accent-2) 100%);color:#fff;border:1px solid var(--accent);padding:12px 24px;font-size:15px;font-weight:500;box-shadow:0 2px 10px rgba(11,46,69,.22);transition:transform .12s,box-shadow .12s}
+.run:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(11,46,69,.3)}
+.ghost{background:transparent;color:var(--ink-2);border:1px solid var(--rule);padding:11px 16px;font-size:15px}
+.ghost:hover{border-color:var(--accent);color:var(--ink)}
+
+/* intro */
+.hello{background:var(--surface);border-bottom:1px solid var(--rule);padding:30px 0 26px}
+.hello .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:end}
+.hello h1{font-size:33px;margin-top:8px;line-height:1.2}
+.hello p.lede{color:var(--ink-2);font-size:16.5px;margin-top:10px;max-width:56ch}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.steps li{border:1px solid var(--rule);border-top:3px solid var(--accent);border-radius:5px;padding:12px 14px;background:var(--sunk);font-size:14px;color:var(--ink-2);line-height:1.45}
+.steps b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
+.steps .n{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--accent);letter-spacing:.1em}
+@media(max-width:900px){.hello .wrap{grid-template-columns:1fr;gap:20px}}
+@media(max-width:560px){.steps{grid-template-columns:1fr}.hello h1{font-size:26px}}
+
+/* stage with two phones */
+.stage{background:radial-gradient(1200px 500px at 50% 0%,#EAF3F9 0%,var(--paper) 70%);padding:34px 0 30px}
+.phones{display:flex;justify-content:center;align-items:flex-start;gap:44px;flex-wrap:wrap}
+.pcol{display:flex;flex-direction:column;align-items:center;gap:12px}
+.plabel{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.plabel b{color:var(--accent);font-weight:500}
+.phone{width:360px;height:720px;border-radius:44px;background:#0F1B24;padding:12px;box-shadow:0 30px 60px -20px rgba(11,46,69,.45),0 0 0 1px #2A3A46 inset;position:relative}
+.phone::before{content:"";position:absolute;top:20px;left:50%;transform:translateX(-50%);width:92px;height:24px;border-radius:14px;background:#05090C;z-index:5}
+.screen{width:100%;height:100%;border-radius:33px;background:#fff;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.sbar{flex:none;display:flex;justify-content:space-between;padding:14px 26px 6px;font-size:13px;font-weight:600;color:var(--ink)}
+.sbar i{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3)}
+.scroll{flex:1;overflow-y:auto;min-height:0;overscroll-behavior:contain}
+
+/* Messages app */
+.mhead{padding:10px 18px 12px;border-bottom:1px solid var(--rule-2)}
+.mhead h3{font-family:"IBM Plex Sans",sans-serif;font-size:26px;font-weight:700}
+.mhead p{font-size:12.5px;color:var(--ink-3)}
+.mlist{list-style:none;margin:0;padding:0}
+.mitem{display:grid;grid-template-columns:42px 1fr;gap:11px;width:100%;text-align:left;background:#fff;border:0;border-bottom:1px solid var(--rule-2);padding:13px 16px;border-radius:0!important;transition:background .15s}
+.mitem:hover{background:var(--sunk)}
+.mitem.seen{background:#fff}
+.av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:15px;color:#fff;background:#8FA1AE}
+.mtop{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.mfrom{font-weight:600;font-size:15px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mtime{font-size:12px;color:var(--ink-3);flex:none}
+.mprev{font-size:13.5px;color:var(--ink-2);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mtag{display:inline-block;margin-top:5px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px}
+.mtag.bad{background:var(--bad-soft);color:var(--bad)} .mtag.ok{background:var(--ok-soft);color:var(--ok)}
+.thread{display:flex;flex-direction:column;height:100%}
+.thead{flex:none;display:flex;align-items:center;gap:10px;padding:6px 12px 10px;border-bottom:1px solid var(--rule-2)}
+.back{background:none;border:0;color:var(--accent);font-size:15px;padding:6px 8px 6px 2px}
+.thead .av{width:34px;height:34px;font-size:13px}
+.thead b{font-size:14.5px;display:block;line-height:1.2}
+.thead span{font-size:11.5px;color:var(--ink-3)}
+.thead .av{color:#fff;font-size:13px}
+.tbody{flex:1;overflow-y:auto;padding:16px 14px;background:#F7F9FB;min-height:0}
+.tday{text-align:center;font-size:11.5px;color:var(--ink-3);margin-bottom:10px}
+.bubble{background:#E9EEF2;color:var(--ink);border-radius:18px 18px 18px 5px;padding:11px 14px;font-size:15px;line-height:1.5;max-width:92%;white-space:pre-line;word-break:break-word}
+.bubble a,.bubble .lnk{color:#1766A8;text-decoration:underline}
+.tfoot{flex:none;border-top:1px solid var(--rule-2);padding:12px 14px 16px;background:#fff}
+.gcheck{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;background:var(--accent);color:#fff;border:0;padding:13px;font-size:15.5px;font-weight:600;box-shadow:0 3px 12px rgba(21,95,135,.3)}
+.gcheck:hover{background:var(--accent-2)}
+.gcheck svg{width:18px;height:18px}
+.tfoot p{font-size:11.5px;color:var(--ink-3);text-align:center;margin-top:7px}
+
+/* Guardian app */
+.gscreen{background:var(--sunk)}
+.ghead{flex:none;display:flex;align-items:center;gap:10px;padding:6px 18px 12px;border-bottom:1px solid var(--rule);background:#fff}
+.ghead .gcrest{width:20px;height:28px;animation:none}
+.ghead b{font-family:"Libre Baskerville",Georgia,serif;font-size:16px;color:var(--accent);display:block;line-height:1.1}
+.ghead span{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.22em;color:var(--ink-3)}
+.gbody{padding:14px 16px 18px}
+.gbody h4{font-family:"Libre Baskerville",Georgia,serif;font-size:17px;margin:0;line-height:1.3}
+.gbody .gl{font-size:13px;color:var(--ink-2);margin-top:4px}
+.gbtns{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+.gbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;border:0;padding:13px 10px;font-size:15.5px;font-weight:600;background:var(--accent);color:#fff}
+.gbtn svg{width:18px;height:18px;flex:none}
+.gbtn.alt{background:#fff;color:var(--accent);border:2px solid var(--accent)}
+.gbtn.share{background:#fff;color:var(--ink);border:2px solid var(--rule);font-size:14.5px}
+.gbtn:hover{filter:brightness(1.05)}
+.pastebox textarea{width:100%;min-height:96px;font:15px/1.45 "IBM Plex Sans",sans-serif;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:#fff;color:var(--ink);resize:vertical}
+.pastebox .gbtn{margin-top:8px}
+.shotpick{background:#fff;border:1px dashed #9DB8CC;border-radius:10px;padding:10px}
+.shotpick p{font-size:12.5px;color:var(--ink-2);margin-bottom:8px}
+.shots{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.shot{border:1px solid var(--rule);background:#F7F9FB;padding:6px 5px;font-size:9.5px;line-height:1.3;color:var(--ink-2);text-align:left;height:74px;overflow:hidden;border-radius:6px!important}
+.shot b{display:block;font-size:10px;color:var(--ink)}
+.shot:hover{border-color:var(--accent)}
+.gnote{font-size:12.5px;color:var(--ink-2);margin-top:8px;padding:8px 10px;background:#fff;border-radius:8px;border:1px solid var(--rule)}
+.busy{display:flex;align-items:center;gap:10px;margin-top:14px;padding:14px;background:#fff;border:1px solid var(--rule);border-radius:12px;font-size:14px;color:var(--ink-2)}
+.spin{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--accent-soft);border-top-color:var(--accent);animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+.result{margin-top:14px;background:#fff;border:1px solid var(--rule);border-radius:14px;overflow:hidden;animation:rise .35s ease}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.verdict{padding:13px 14px;display:flex;flex-direction:column;gap:6px;border-bottom:1px solid var(--rule-2)}
+.verdict .vh{font-weight:700;font-size:17px;line-height:1.3;display:flex;align-items:center;gap:8px}
+.verdict .vh svg{width:20px;height:20px;flex:none}
+.verdict.safe{background:var(--ok-soft)} .verdict.safe .vh{color:var(--ok)}
+.verdict.risk{background:var(--bad-soft)} .verdict.risk .vh{color:var(--bad)}
+.badge{align-self:flex-start;font-weight:700;font-size:13px;color:#fff;padding:4px 11px;border-radius:999px}
+.rsec{padding:12px 14px;border-bottom:1px solid var(--rule-2)}
+.rsec:last-child{border-bottom:0}
+.rh{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.quote{font-size:13.5px;line-height:1.6;color:var(--ink-2);white-space:pre-line;word-break:break-word;background:var(--sunk);border-radius:8px;padding:9px 11px}
+mark{background:#FDE3A7;color:var(--ink);padding:1px 2px;border-radius:3px;box-shadow:inset 0 -2px 0 #E0A43A}
+mark sup{font-family:"IBM Plex Mono",monospace;font-size:9px;font-weight:600;color:var(--bad);margin-left:1px}
+.flags{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;counter-reset:f}
+.flags li{position:relative;padding:8px 10px 8px 34px;background:var(--sunk);border-left:3px solid var(--bad);border-radius:6px;font-size:13.5px;line-height:1.45;color:var(--ink-2)}
+.flags li::before{counter-increment:f;content:counter(f);position:absolute;left:9px;top:8px;width:18px;height:18px;border-radius:50%;background:var(--bad);color:#fff;font:600 10.5px/18px "IBM Plex Mono",monospace;text-align:center}
+.flags li b{display:block;color:var(--ink);font-size:13px;font-weight:600}
+.flags li.none{padding-left:10px;border-left-color:var(--ok)}
+.flags li.none::before{display:none}
+.advice{font-weight:600;font-size:14px;line-height:1.5;color:var(--ink)}
+.gave{font-size:13px;color:var(--ink-2);word-break:break-all;line-height:1.5}
+.rbtn{width:100%;margin-top:8px;border:0;padding:11px;font-size:14px;font-weight:600;background:#8b1a1a;color:#fff}
+.rbtn.warn{background:#fff;color:var(--ink);border:1.5px solid var(--rule)}
+.small{font-size:11.5px;color:var(--ink-3);margin-top:6px;text-align:center}
+.privacy{font-size:12.5px;color:var(--ink-2);text-align:center;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:6px}
+.privacy svg{width:13px;height:13px}
+
+/* share sheet */
+.sheetwrap{position:absolute;inset:0;background:rgba(11,26,38,.38);display:flex;align-items:flex-end;z-index:6;animation:fade .2s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.sheet{width:100%;background:#fff;border-radius:22px 22px 0 0;padding:10px 16px 20px;animation:up .28s ease}
+@keyframes up{from{transform:translateY(40px)}to{transform:none}}
+.sheet .grab{width:38px;height:5px;border-radius:3px;background:var(--rule);margin:0 auto 12px}
+.sheet h5{margin:0;font-size:15px}
+.sprev{margin-top:10px;display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--rule);border-radius:12px;background:var(--sunk)}
+.sprev .gcrest{width:22px;height:30px;animation:none}
+.sprev b{display:block;font-size:13.5px}
+.sprev span{font-size:12px;color:var(--ink-2);line-height:1.35;display:block}
+.sprev i{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--accent)}
+.people{display:flex;gap:12px;margin-top:14px;justify-content:space-between}
+.person{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11.5px;color:var(--ink-2);flex:1;padding:0}
+.person .av{width:46px;height:46px}
+.sdone{margin-top:12px;font-size:13px;color:var(--ok);text-align:center;min-height:20px}
+.sclose{width:100%;margin-top:6px;border:1px solid var(--rule);background:#fff;padding:10px;font-size:14px;color:var(--ink-2)}
+
+/* rules card */
+.rules{padding:10px 0 50px}
+.card{border:1px solid var(--rule);background:var(--surface);border-radius:5px;overflow:hidden;box-shadow:0 6px 24px rgba(11,46,69,.08)}
+.card .hd{padding:18px 22px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:baseline}
+.card .hd h2{font-size:21px}
+.card .hd p{font-size:14px;color:var(--ink-3);max-width:60ch}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+.rule{padding:14px 22px;border-bottom:1px solid var(--rule-2);border-right:1px solid var(--rule-2);font-size:14px;color:var(--ink-2);line-height:1.5}
+.rule b{display:flex;justify-content:space-between;gap:10px;color:var(--ink);font-size:14.5px;font-weight:600;margin-bottom:3px}
+.rule b em{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--accent);font-weight:500;white-space:nowrap}
+.scale{display:flex;flex-wrap:wrap;gap:8px;padding:14px 22px;background:var(--sunk);font-size:13px;color:var(--ink-2);align-items:center}
+.scale span.b{color:#fff;font-weight:600;padding:3px 10px;border-radius:999px;font-size:12px}
+.foot{padding:16px 0 0;font-size:14px;color:var(--ink-3);max-width:80ch}
+.foot a{color:var(--accent)}
+
+@media(max-width:820px){.phones{gap:30px}}
+@media(max-width:560px){
+  .wrap{padding:0 16px}.appbar .wrap{padding:12px 16px}.who{display:none}
+  .phone{width:min(360px,calc(100vw - 24px));height:auto;border-radius:36px;padding:10px}
+  .screen{border-radius:28px;height:auto;min-height:560px}
+  .scroll{overflow:visible}
+  .thread{height:auto}.tbody{overflow:visible}
+  .rule{padding:12px 16px}.card .hd{padding:16px}.scale{padding:12px 16px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+
+<div class="banner"><div class="wrap">
+  <span><b>This is a demo.</b> Made-up person, made-up messages, fake links. None of this is anyone's real information.</span>
+  <span class="mono">Calas Automations &middot; Winnipeg</span>
+</div></div>
+
+<div class="appbar"><div class="wrap">
+  <div class="brand">
+    <span class="gcrest" aria-hidden="true"></span>
+    <div><div class="t1">Guardian</div><div class="t2">BY CALAS AUTOMATIONS</div></div>
+    <div class="who"><b>Pat Moreau's phone</b>Made-up person &middot; four new messages</div>
+  </div>
+  <div class="controls">
+    <a class="getlink" href="/guardian/">Use Guardian now, free &rarr;</a>
+    <button class="run" id="checkTop" type="button">Check a message</button>
+    <button class="ghost" id="reset" type="button">Start over</button>
+  </div>
+</div></div>
+
+<section class="hello"><div class="wrap">
+  <div>
+    <p class="eyebrow">Free scam checker &middot; demo &middot; made-up messages</p>
+    <h1>Is that text real? Check it before you tap.</h1>
+    <p class="lede">Paste a suspicious text or email, or check a screenshot. Guardian flags the scam signs in plain words, right on the phone. It's free, and nothing is uploaded.</p>
+  </div>
+  <ol class="steps">
+    <li><span class="n">01</span><b>Pick a message</b>Open one of Pat's four made-up texts.</li>
+    <li><span class="n">02</span><b>Check it</b>Guardian reads it on the phone. Nothing leaves.</li>
+    <li><span class="n">03</span><b>See why</b>Each red flag is marked in the message and explained.</li>
+  </ol>
+</div></section>
+
+<section class="stage"><div class="wrap">
+  <div class="phones">
+    <div class="pcol">
+      <div class="plabel">Pat's <b>Messages</b></div>
+      <div class="phone" id="phoneMsgs"><div class="screen">
+        <div class="sbar"><span>9:41</span><i>LTE &middot; 82%</i></div>
+        <div class="scroll" id="msgView"></div>
+      </div></div>
+    </div>
+    <div class="pcol">
+      <div class="plabel">The <b>Guardian</b> app</div>
+      <div class="phone" id="phoneGuard"><div class="screen gscreen">
+        <div class="sbar" style="background:#fff"><span>9:41</span><i>LTE &middot; 82%</i></div>
+        <div class="ghead"><span class="gcrest" aria-hidden="true"></span><div><b>Guardian</b><span>BY CALAS AUTOMATIONS</span></div></div>
+        <div class="scroll" id="gScroll"><div class="gbody">
+          <h4>Check a message before you trust it.</h4>
+          <p class="gl">Paste a suspicious text, or check a screenshot.</p>
+          <div class="gbtns">
+            <button class="gbtn" id="shotBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Check a screenshot</button>
+            <div class="shotpick" id="shotPick" hidden>
+              <p>Pick one of Pat's screenshots (made-up). Guardian reads the words on this phone.</p>
+              <div class="shots" id="shots"></div>
+            </div>
+            <button class="gbtn alt" id="pasteBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4h6v3H9z"/></svg>Paste a message</button>
+            <div class="pastebox" id="pasteBox" hidden>
+              <textarea id="msg" placeholder="Paste the message here&hellip;" aria-label="Message to check"></textarea>
+              <button class="gbtn" id="check" type="button">Check it</button>
+            </div>
+          </div>
+          <p class="gnote" id="shotNote" hidden></p>
+          <div id="gOut"></div>
+          <div class="gbtns" style="margin-top:14px">
+            <button class="gbtn share" id="shareBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 12v8h14v-8"/></svg>Send Guardian to someone</button>
+          </div>
+          <p class="privacy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Free. Your messages stay on your phone.</p>
+        </div></div>
+        <div id="shareLayer"></div>
+      </div></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="rules"><div class="wrap">
+  <div class="card">
+    <div class="hd"><h2>What Guardian looks for</h2><p>These are the real Guardian's rules, copied as-is into this demo, so the results above are the ones the free tool gives. Each sign adds points; the total sets the risk level.</p></div>
+    <div class="rgrid" id="ruleGrid"></div>
+    <div class="scale" id="scale"></div>
+  </div>
+  <p class="foot">The real Guardian also reads screenshots on the phone (the picture is never uploaded), can check links and numbers against ones other Guardian users reported (it sends only a scrambled fingerprint, never your message), and helps you report a scam to the Canadian authorities. In this demo nothing is sent anywhere. <a href="/guardian/">Open the free Guardian</a> and add it to your home screen.</p>
+</div></section>
+
+<script>
+(function(){
+'use strict';
+
+/* ================= The real Guardian rules =================
+   Copied from /guardian/index.html (2026-09-29). RULES, ADVICE, LABEL, COLOR,
+   level() and extractIdentifiers() are unchanged. scoreMessage() is the same
+   loop; the only addition is that it remembers WHERE each match was, so the
+   demo can highlight it in the message. */
+const RULES=[
+ ["moved_platform",2,"Asked to move off the app to WhatsApp/Telegram/Signal fast — a known scam move to get off a platform that can ban them.",[/whatsapp/i,/telegram/i,/signal app/i,/add me on (whatsapp|telegram|hangouts)/i,/text me on my (personal|other) (number|phone)/i]],
+ ["cant_video",3,"Gave an excuse to avoid a live video call — the strongest catfish tell; a stolen photo can't hold a real-time chat.",[/camera('?s)? (broken|not working)/i,/can'?t (video ?call|facetime|do video)/i,/my webcam is broken/i,/no signal for video/i]],
+ ["overseas_worker_story",2,"Overseas military / oil rig / ship engineer / doctor-on-a-mission story — a common cover that pre-explains why they can't meet or video.",[/stationed in/i,/peacekeeping mission/i,/oil rig/i,/on a (cargo|container) ship/i,/deployed overseas/i,/military base overseas/i]],
+ ["financial_hardship_story",3,"A sudden emergency (hospital bill, customs fee, stuck traveler) right as money is asked for — the classic pressure point.",[/customs (fee|hold)/i,/hospital bill/i,/stuck at the airport/i,/my (account|card) is frozen/i,/can'?t access my (money|funds|account) (right now|currently)/i]],
+ ["crypto_investment",4,"Steering toward a crypto investment or trading platform — the 'pig-butchering' pattern: build trust, then move to fake investing.",[/crypto (platform|exchange|trading)/i,/invest(ing)? in (crypto|bitcoin|usdt|ethereum)/i,/my (broker|mentor|uncle) taught me (crypto|trading)/i,/guaranteed (returns|profit)/i,/double your (money|investment)/i]],
+ ["gift_card_request",4,"Asked for gift cards — no legitimate partner, official, or business is ever paid in gift cards.",[/gift card/i,/itunes card/i,/google play card/i,/steam card/i,/amazon gift/i]],
+ ["wire_or_crypto_request",4,"Asked to send money by wire or crypto — both are effectively unrecoverable once sent, which is why scammers prefer them.",[/wire (me|transfer)/i,/western union/i,/moneygram/i,/send (bitcoin|usdt|crypto|eth) to/i,/my wallet address/i]],
+ ["secrecy_request",2,"Asked to keep the relationship or money secret from friends/family/bank — isolation is a control tactic.",[/don'?t tell (your|anyone)/i,/keep this between us/i,/our little secret/i,/the bank (won'?t|wouldn'?t) understand/i]],
+ ["love_bombing_pace",1,"Declared strong love or marriage within days — real relationships rarely move this fast; scammers do it to short-circuit caution.",[/i (love|adore) you/i,/marry me/i,/soulmate/i,/i'?ve never felt this way/i,/destiny brought us together/i]]
+];
+const ADVICE={
+0:"Nothing matched our rules. Still: never send money, gift cards, or crypto to someone you haven't met in person.",
+1:"A little caution is warranted. Ask for a live video call on your terms (a random gesture, a specific word) before this goes further.",
+2:"Several common tactics showed up. Do not send money, gift cards, or crypto. Ask for a live, unscripted video call today.",
+3:"This matches a well-documented scam pattern closely. Stop sending anything of value now. Reverse-image-search their photos and search their exact wording — scam scripts get reused word-for-word.",
+4:"This is a strong match for a known romance or crypto scam. Do not send or invest anything else. If money already moved, tell your bank, and report at antifraudcentre-centreantifraude.ca (Canada)."
+};
+const LABEL=["No signal","Low","Moderate","High","Critical"];
+const COLOR=["#17794A","#8a6d1a","#b5651d","#b23b2e","#8b1a1a"];
+function level(s){if(s<=0)return 0;if(s<=3)return 1;if(s<=6)return 2;if(s<=10)return 3;return 4;}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function scoreMessage(t){
+ t=(t||"").trim();
+ if(!t)return {score:0,lvl:0,signals:[],hits:[],text:t};
+ var score=0,signals=[],hits=[];
+ for(var i=0;i<RULES.length;i++){
+  var w=RULES[i][1],why=RULES[i][2],pats=RULES[i][3];
+  for(var j=0;j<pats.length;j++){var m=t.match(pats[j]);if(m){signals.push(why);hits.push({why:why,w:w,at:m.index,len:m[0].length,word:m[0]});score+=w;break;}}
+ }
+ return {score:score,lvl:level(score),signals:signals,hits:hits,text:t};
+}
+function extractIdentifiers(t){var out=[];function add(l,a){if(a){var u=[];a.forEach(function(x){x=x.trim();if(x&&u.indexOf(x)<0)u.push(x);});if(u.length)out.push(l+": "+u.join(", "));}}add("Email",t.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g));add("Phone",t.match(/\+?\d[\d\s().-]{7,}\d/g));add("Crypto wallet",t.match(/\b(0x[a-fA-F0-9]{40}|bc1[a-z0-9]{20,60}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})\b/g));add("Handle",t.match(/@[A-Za-z0-9_]{2,}/g));add("Link",t.match(/https?:\/\/[^\s]+/g));return out;}
+
+/* ================= Made-up messages (fake links on example.invalid, 555 numbers) ================= */
+var MSGS=[
+ {id:"parcel",from:"+1 204-555-0148",av:"P",col:"#B5651D",time:"9:12 AM",
+  text:"Parcel Services Canada: Your package is on customs hold. A $2.99 customs fee is due before we can deliver. Pay the fee with a Google Play card code at https://parcel-release.example.invalid within 24 hours. Questions? Message our agent on WhatsApp."},
+ {id:"bank",from:"PrairieTrust Alerts",av:"PT",col:"#155F87",time:"8:47 AM",
+  text:"PrairieTrust ALERT: Unusual sign-in on your account and your card has been locked. Our fraud team is investigating staff at your branch, so don't tell your branch about this. To protect your savings, do a wire transfer to the safe account listed at https://prairietrust-secure.example.invalid today. An agent will follow up on WhatsApp."},
+ {id:"cra",from:"+1 204-555-0193",av:"C",col:"#8B1A1A",time:"Yesterday",
+  text:"CRA: You are owed a tax refund of $486.20. To release it, a $50 processing fee must be paid today with an Apple gift card, or send bitcoin to the wallet at https://cra-refund.example.invalid and don't tell anyone until the refund clears. Reply to your officer on Telegram."},
+ {id:"safe",from:"Riverbend Dental",av:"RD",col:"#17794A",time:"Yesterday",
+  text:"Hi Pat, it's Maria at Riverbend Dental. Just a reminder that your cleaning is on Thursday at 2:30 pm. Reply C to confirm, or call us at 204-555-0172 if you need to move it. See you soon!"}
+];
+function byId(id){for(var i=0;i<MSGS.length;i++)if(MSGS[i].id===id)return MSGS[i];return null;}
+
+var $=function(id){return document.getElementById(id);};
+var checked={}; // id -> level, to tag the inbox after a check
+var timers=[];
+function later(fn,ms){var t=setTimeout(fn,ms);timers.push(t);return t;}
+function clearTimers(){timers.forEach(clearTimeout);timers=[];}
+
+/* ---------- Messages phone ---------- */
+function linkify(s){return esc(s).replace(/https?:\/\/[^\s]+?(?=[.,)]?(\s|$))/g,function(u){return '<span class="lnk">'+u+'</span>';});}
+function showInbox(){
+ var h='<div class="mhead"><h3>Messages</h3><p>4 new &middot; made-up for this demo</p></div><ul class="mlist">';
+ MSGS.forEach(function(m){
+  var tag='';
+  if(checked[m.id]!=null){var l=checked[m.id];tag=l>0?'<span class="mtag bad">Guardian: '+LABEL[l]+' risk</span>':'<span class="mtag ok">Guardian: looks safe</span>';}
+  h+='<li><button class="mitem" id="m-'+m.id+'" type="button" data-id="'+m.id+'"><span class="av" style="background:'+m.col+'">'+esc(m.av)+'</span><span><span class="mtop"><span class="mfrom">'+esc(m.from)+'</span><span class="mtime">'+esc(m.time)+'</span></span><span class="mprev">'+esc(m.text)+'</span>'+tag+'</span></button></li>';
+ });
+ h+='</ul>';
+ $("msgView").innerHTML=h;
+ Array.prototype.forEach.call(document.querySelectorAll(".mitem"),function(b){b.addEventListener("click",function(){openThread(b.getAttribute("data-id"));});});
+}
+function openThread(id){
+ var m=byId(id);if(!m)return;
+ $("msgView").innerHTML='<div class="thread"><div class="thead"><button class="back" id="threadBack" type="button">&lsaquo; Back</button><span class="av" style="background:'+m.col+'">'+esc(m.av)+'</span><div><b>'+esc(m.from)+'</b><span>Text message</span></div></div>'+
+  '<div class="tbody"><div class="tday">'+esc(m.time)+'</div><div class="bubble">'+linkify(m.text)+'</div></div>'+
+  '<div class="tfoot"><button class="gcheck" id="threadCheck" type="button" data-id="'+m.id+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Check with Guardian</button><p>Copies the words into Guardian on this phone. Nothing is uploaded.</p></div></div>';
+ $("threadBack").addEventListener("click",showInbox);
+ $("threadCheck").addEventListener("click",function(){checkText(m.text,m.id,"");});
+}
+
+/* ---------- Guardian phone ---------- */
+function openPaste(show){$("pasteBox").hidden=!show;}
+function checkText(text,id,note){
+ clearTimers();
+ openPaste(true);
+ $("msg").value=text;
+ $("shotPick").hidden=true;
+ setNote(note);
+ $("gOut").innerHTML='<div class="busy"><span class="spin"></span>Checking on this phone&hellip;</div>';
+ scrollGuardTo($("gOut"));
+ later(function(){render(text,id);},650);
+}
+function setNote(t){var n=$("shotNote");n.hidden=!t;n.textContent=t||"";}
+function scrollGuardTo(el){
+ var sc=$("gScroll");
+ if(window.innerWidth>560){sc.scrollTop=Math.max(0,el.offsetTop-sc.offsetTop-10);}
+ else{try{$("phoneGuard").scrollIntoView({behavior:"smooth",block:"start"});}catch(e){}}
+}
+function highlight(r){
+ var t=r.text,hs=r.hits.map(function(h,i){return {at:h.at,len:h.len,n:i+1};}).sort(function(a,b){return a.at-b.at;});
+ var out="",pos=0;
+ hs.forEach(function(h){if(h.at<pos)return;out+=esc(t.slice(pos,h.at))+'<mark>'+esc(t.substr(h.at,h.len))+'<sup>'+h.n+'</sup></mark>';pos=h.at+h.len;});
+ return out+esc(t.slice(pos));
+}
+var ICON_OK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>';
+var ICON_BAD='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/></svg>';
+function render(text,id){
+ var r=scoreMessage(text);
+ if(!r.text){$("gOut").innerHTML='<p class="gnote">Paste a message first, then tap Check it.</p>';return;}
+ var ids=extractIdentifiers(r.text);
+ var safe=r.score===0;
+ var h='<div class="result" id="gResult">';
+ h+='<div class="verdict '+(safe?'safe':'risk')+'" id="gVerdict"><div class="vh">'+(safe?ICON_OK+'Looks safe: no scam signs found':ICON_BAD+r.hits.length+' scam sign'+(r.hits.length===1?'':'s')+' found')+'</div>'+
+    '<span class="badge" style="background:'+COLOR[r.lvl]+'">'+LABEL[r.lvl]+' &middot; '+r.score+' pts</span></div>';
+ h+='<div class="rsec" id="gMarks"><div class="rh">The message'+(safe?'':', with the red flags marked')+'</div><div class="quote">'+highlight(r)+'</div></div>';
+ h+='<div class="rsec" id="gFlags"><div class="rh">'+(safe?'What Guardian found':'Why it’s flagged')+'</div><ol class="flags">';
+ if(safe){h+='<li class="none">No known scam patterns matched. That is not proof of safety — it only means nothing tripped our rules.</li>';}
+ r.hits.forEach(function(x){h+='<li><b>“'+esc(x.word)+'”</b>'+esc(x.why)+'</li>';});
+ h+='</ol></div>';
+ h+='<div class="rsec"><div class="rh">What to do</div><p class="advice">'+esc(ADVICE[r.lvl])+'</p></div>';
+ if(r.score>0){
+  if(ids.length)h+='<div class="rsec" id="gGave"><div class="rh">What the scammer gave away</div><p class="gave">'+esc(ids.join(" · "))+'</p></div>';
+  h+='<div class="rsec"><button class="rbtn" id="reportBtn" type="button">Report this scam to authorities</button><p class="small" id="repNote">Copies a ready-made report and opens Canada’s official reporting form. You choose what to send.</p>'+
+     '<button class="rbtn warn" id="warnBtn" type="button">Warn other Guardian users about this link</button><p class="small" id="warnNote">Sends only the link or number, never your message.</p></div>';
+ }
+ h+='</div>';
+ $("gOut").innerHTML=h;
+ var rb=$("reportBtn");if(rb)rb.addEventListener("click",function(){$("repNote").textContent="Demo: in the real app your report is now copied and Canada’s reporting form opens. Nothing was sent from this demo.";});
+ var wb=$("warnBtn");if(wb)wb.addEventListener("click",function(){wb.disabled=true;wb.textContent="✓ Demo: others would be warned";$("warnNote").textContent="Nothing was sent from this demo.";});
+ if(id){checked[id]=r.lvl;}
+ scrollGuardTo($("gOut"));
+}
+
+/* screenshots: in the real app Guardian reads the picture's words on the phone (never uploaded).
+   Here the "screenshots" are the same made-up messages, so the words are already known. */
+function buildShots(){
+ $("shots").innerHTML=MSGS.map(function(m){return '<button class="shot" type="button" id="shot-'+m.id+'" data-id="'+m.id+'"><b>'+esc(m.from)+'</b>'+esc(m.text.slice(0,70))+'&hellip;</button>';}).join("");
+ Array.prototype.forEach.call(document.querySelectorAll(".shot"),function(b){b.addEventListener("click",function(){readShot(b.getAttribute("data-id"));});});
+}
+function readShot(id){
+ var m=byId(id);if(!m)return;
+ clearTimers();
+ $("shotPick").hidden=true;
+ setNote("Reading the screenshot on your phone…");
+ $("gOut").innerHTML='<div class="busy"><span class="spin"></span>Reading the words in the picture&hellip;</div>';
+ later(function(){checkText(m.text,m.id,"Read "+m.text.split(/\s+/).length+" words from the screenshot. Check them below, then see the result.");},1100);
+}
+
+/* share sheet (mock of "Send Guardian to someone") */
+function openShare(){
+ $("shareLayer").innerHTML='<div class="sheetwrap" id="shareWrap"><div class="sheet" id="shareSheet" role="dialog" aria-label="Send Guardian to someone"><div class="grab"></div><h5>Send Guardian to someone</h5>'+
+  '<div class="sprev"><span class="gcrest" aria-hidden="true"></span><div><b>Watchpost Guardian</b><span>Check a text or email before you trust it. Free, and it stays on your phone.</span><i>calasautomations.com/guardian/</i></div></div>'+
+  '<div class="people">'+[["Mom","#155F87"],["Uncle Ray","#B5651D"],["Jess (work)","#17794A"],["Copy link","#6B7883"]].map(function(p,i){return '<button class="person" type="button" data-p="'+esc(p[0])+'"><span class="av" style="background:'+p[1]+'">'+(i===3?'&#8942;':esc(p[0].charAt(0)))+'</span>'+esc(p[0])+'</button>';}).join("")+'</div>'+
+  '<p class="sdone" id="sdone"></p><button class="sclose" id="sclose" type="button">Close</button></div></div>';
+ Array.prototype.forEach.call(document.querySelectorAll(".person"),function(b){b.addEventListener("click",function(){var p=b.getAttribute("data-p");$("sdone").textContent=p==="Copy link"?"Link copied. Paste it in a text to anyone. (Demo: nothing copied.)":"Demo: this would open a text to "+p+" with the link. Nothing was sent.";});});
+ $("sclose").addEventListener("click",closeShare);
+ $("shareWrap").addEventListener("click",function(e){if(e.target.id==="shareWrap")closeShare();});
+}
+function closeShare(){$("shareLayer").innerHTML="";}
+
+/* rules card */
+function buildRules(){
+ $("ruleGrid").innerHTML=RULES.map(function(r){var why=r[2].split(" — ");return '<div class="rule"><b>'+esc(why[0])+'<em>+'+r[1]+' pts</em></b>'+(why[1]?esc(why[1].charAt(0).toUpperCase()+why[1].slice(1)):'')+'</div>';}).join("");
+ var ranges=["0","1–3","4–6","7–10","11+"];
+ $("scale").innerHTML='<span>Risk level:</span>'+LABEL.map(function(l,i){return '<span class="b" style="background:'+COLOR[i]+'">'+l+' &middot; '+ranges[i]+'</span>';}).join("");
+}
+
+function reset(){
+ clearTimers();checked={};closeShare();
+ $("msg").value="";openPaste(false);$("shotPick").hidden=true;setNote("");$("gOut").innerHTML="";
+ $("gScroll").scrollTop=0;showInbox();
+}
+
+/* wiring */
+$("check").addEventListener("click",function(){var t=$("msg").value;checkText(t,null,"");});
+$("pasteBtn").addEventListener("click",function(){var b=$("pasteBox");b.hidden=!b.hidden;if(!b.hidden)$("msg").focus();});
+$("shotBtn").addEventListener("click",function(){$("shotPick").hidden=!$("shotPick").hidden;});
+$("shareBtn").addEventListener("click",openShare);
+$("reset").addEventListener("click",reset);
+$("checkTop").addEventListener("click",function(){openPaste(true);try{$("phoneGuard").scrollIntoView({behavior:"smooth",block:"center"});}catch(e){}setTimeout(function(){$("msg").focus({preventScroll:true});},400);});
+buildShots();buildRules();reset();
+
+window.GuardianDemo={reset:reset,closeShare:closeShare};
+})();
+</script>
+
+<script src="/demo/_tour/tour.js"></script>
+<script>
+(function(){
+var lines=[
+"This is Guardian, a free scam checker from Calas Automations. Here is a phone with four made-up texts, the kind that reach you, your staff, and your parents every week.",
+"First, a parcel notice asking for a small customs fee. Open it, and tap Check with Guardian.",
+"Guardian reads it right on the phone. It marks each warning sign in the message itself: the customs fee story, the gift card, the push over to WhatsApp.",
+"Below that, each red flag is explained in plain words, with a clear next step. Nothing you paste is sent anywhere.",
+"Next, a bank alert telling you to wire your savings to a safe account, and to keep it from your branch. Guardian rates that one high.",
+"This one claims to be a tax refund from the CRA. Pay a fee with a gift card, send bitcoin, tell no one. Guardian rates it critical.",
+"It also lists what the scammer gave away, like the fake link, and helps you report it.",
+"And this is an ordinary reminder from the dentist. No scam signs, so Guardian marks it as looking safe.",
+"Got a screenshot instead? Guardian reads the picture on the phone too. It's never uploaded.",
+"Know someone who might click the wrong link? Send Guardian to them. It's free, and they can add it to their home screen.",
+"That's the tour. Pick a message, or paste one of your own, and see what Guardian finds."
+];
+var durs=[10.37,6.19,9.31,7.42,7.92,8.81,4.90,6.94,5.64,6.60,4.82];
+function open(t,id){
+ t.tap("#threadBack");
+ return t.sleep(450).then(function(){t.tap("#m-"+id);return t.sleep(800);})
+  .then(function(){t.tap("#threadCheck");return t.sleep(1300);});
+}
+CalasTour.start({
+ lines:lines,durs:durs,audioBase:"narration/step-",
+ onReplay:function(){GuardianDemo.reset();},
+ script:function(t){
+  GuardianDemo.reset();
+  return t.point("#phoneMsgs",0,{py:.35})
+   .then(function(){return t.point("#m-parcel",1);})
+   .then(function(){t.tap("#m-parcel");return t.sleep(900);})
+   .then(function(){t.tap("#threadCheck");return t.sleep(1300);})
+   .then(function(){return t.point("#gMarks",2,{py:0});})
+   .then(function(){return t.point("#gFlags",3,{py:0});})
+   .then(function(){return open(t,"bank");})
+   .then(function(){return t.point("#gVerdict",4,{py:0});})
+   .then(function(){return open(t,"cra");})
+   .then(function(){return t.point("#gVerdict",5,{py:0});})
+   .then(function(){return t.point("#gGave",6,{py:0});})
+   .then(function(){return open(t,"safe");})
+   .then(function(){return t.point("#gVerdict",7,{py:0});})
+   .then(function(){document.getElementById("gScroll").scrollTop=0;t.tap("#shotBtn");return t.sleep(700);})
+   .then(function(){return t.point("#shotPick",8,{py:0});})
+   .then(function(){t.tap("#shareBtn");return t.sleep(700);})
+   .then(function(){return t.point("#shareSheet",9,{py:0});})
+   .then(function(){GuardianDemo.closeShare();t.tap("#threadBack");return t.sleep(400);})
+   .then(function(){return t.point("#m-parcel",10);});
+ }
+});
+})();
+</script>
+<script src="/calas-brandbar.js?v=20260929j" defer></script>
+</body></html>

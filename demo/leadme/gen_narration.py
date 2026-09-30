@@ -1,60 +1,52 @@
-"""Narration for the Lead Me walkthrough (/demo/leadme/).
+"""Narration for the Lead Me demo (/demo/leadme/).
 
-Voice: Kokoro af_heart from the local Kokoro server (http://127.0.0.1:8880),
-free and far less robotic than the old edge-tts voice. To use an ElevenLabs
-voice instead, set ELEVENLABS_API_KEY and ELEVENLABS_VOICE_ID and rerun.
-Prints DURS for the page's step timings.
+Reads the tour lines straight from index.html (window.LEADME_TOUR.lines), so the
+captions and the voice can never drift apart. Voice: Kokoro af_heart from the
+local Kokoro server (http://127.0.0.1:8880). Prints the durs array to paste
+into index.html.
 """
 import json
 import os
+import re
 import subprocess
 import urllib.request
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "narration")
-LINES = [
-    "This is Lead Me, the real app. Your day starts here: hot, warm and cold leads counted at a glance, and how many emails have gone out.",
-    "Press Find leads, and Lead Me searches map data and the web across your territory, for businesses in your industry.",
-    "Every company it finds is scored out of a hundred. The warmest sit at the top, with the reasons shown right on the card.",
-    "Open a lead to see what Lead Me learned from their own website, the opener it picked and why, and a first email already written from those facts.",
-    "It all starts in Settings. Add your company name, phone, email and mailing address, and Lead Me finds companies that fit your business.",
-    "Nothing sends until you approve it. That's Lead Me: the right businesses, found and warmed up, ready for you to call.",
-]
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(HERE, "narration")
 
 
-def say_kokoro(text: str) -> bytes:
+def lines():
+    html = open(os.path.join(HERE, "index.html"), encoding="utf-8").read()
+    block = html.split("lines: [", 1)[1].split("],", 1)[0]
+    return [m[1:-1] for m in re.findall(r'"[^"]*"', block)]
+
+
+def say(text):
     body = json.dumps({"model": "kokoro", "input": text, "voice": "af_heart", "speed": 1.0,
                        "response_format": "mp3"}).encode()
     req = urllib.request.Request("http://127.0.0.1:8880/v1/audio/speech", data=body,
                                  headers={"Content-Type": "application/json"})
-    return urllib.request.urlopen(req, timeout=120).read()
+    return urllib.request.urlopen(req, timeout=180).read()
 
 
-def say_elevenlabs(text: str) -> bytes:
-    vid = os.environ["ELEVENLABS_VOICE_ID"]
-    body = json.dumps({"text": text, "model_id": "eleven_multilingual_v2"}).encode()
-    req = urllib.request.Request(f"https://api.elevenlabs.io/v1/text-to-speech/{vid}", data=body,
-                                 headers={"Content-Type": "application/json",
-                                          "xi-api-key": os.environ["ELEVENLABS_API_KEY"]})
-    return urllib.request.urlopen(req, timeout=120).read()
-
-
-def duration(path: str) -> float:
+def duration(path):
     out = subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
-                                   "-of", "default=noprint_wrappers=1:nokey=1", path])
+                                   "-of", "csv=p=0", path])
     return round(float(out.strip()), 2)
 
 
-def main() -> None:
+def main():
     os.makedirs(OUT, exist_ok=True)
-    say = say_elevenlabs if os.environ.get("ELEVENLABS_API_KEY") else say_kokoro
+    for f in os.listdir(OUT):
+        if f.endswith(".mp3"):
+            os.remove(os.path.join(OUT, f))
     durs = []
-    for i, line in enumerate(LINES):
+    for i, line in enumerate(lines()):
         path = os.path.join(OUT, f"step-{i}.mp3")
         with open(path, "wb") as f:
             f.write(say(line))
         durs.append(duration(path))
-        print(f"step-{i}: {durs[-1]}s")
-    print("DURS=" + json.dumps(durs))
+    print("durs: " + json.dumps(durs), "total", round(sum(durs), 1))
 
 
 if __name__ == "__main__":

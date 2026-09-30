@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Watchpost demo &middot; Calas Automations</title>
+<meta name="description" content="A working demo of Watchpost: decoy doors in a made-up dental office, a simulated break-in attempt, the text alert, the plain-English details and the monthly one-page report.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
+<style>
+:root{
+  --paper:#FFFFFF;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--ink-3:#6B7883;
+  --rule:#D9E3EA;--rule-2:#E9F0F5;
+  --ok:#17794A;--ok-soft:#E9F5EE;--warm:#8A5A12;--warm-soft:#FBF1DF;--bad:#A8321E;--bad-soft:#FBECE8;
+  --accent:#155F87;--accent-2:#0E4A6B;--accent-soft:#E6F0F6;--night:#0B2E45;--gold-line:#F0C171;
+  --serif:"Libre Baskerville",Georgia,serif;--sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--sunk);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:700;margin:0;letter-spacing:-.01em}
+p{margin:0}
+a{color:var(--accent)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+
+/* demo strip */
+.banner{background:var(--paper);color:var(--ink-2);font-size:13.5px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.banner .wrap{display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+.banner b{color:var(--ink);font-weight:600}
+
+/* app bar */
+.appbar{background:var(--paper);border-bottom:2px solid var(--gold-line);box-shadow:0 2px 14px rgba(11,46,69,.08)}
+.appbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:13px}
+.seal{width:30px;height:40px;flex:none;background:var(--accent);-webkit-mask:url(/favicon.png) center/contain no-repeat;mask:url(/favicon.png) center/contain no-repeat}
+.t1{font-family:var(--serif);font-size:19px;line-height:1.1}
+.t1 .r{color:var(--accent)}
+.t2{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:var(--ink-3)}
+.who{padding-left:16px;margin-left:4px;border-left:1px solid var(--rule);font-size:14px;color:var(--ink-2);line-height:1.4}
+.who b{display:block;color:var(--ink);font-weight:600}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.getlink{font-size:14px;color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+.getlink:hover{border-bottom-color:var(--accent)}
+button{font-family:inherit;cursor:pointer}
+.ghost{background:transparent;color:var(--ink-2);border:1px solid var(--rule);padding:9px 14px;border-radius:4px;font-size:14px}
+.ghost:hover{border-color:var(--accent);color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* hero / status */
+.hello{background:var(--paper);border-bottom:1px solid var(--rule);padding:22px 0 24px}
+.hello .wrap{display:grid;grid-template-columns:1.35fr 1fr;gap:28px;align-items:center}
+.hello h1{font-size:28px;line-height:1.2}
+.hello .lede{color:var(--ink-2);margin-top:8px;max-width:60ch}
+.status{display:flex;gap:14px;align-items:center;padding:16px 18px;border:1px solid var(--ok);background:var(--ok-soft);border-radius:8px;transition:background .4s,border-color .4s}
+.status .lamp{width:14px;height:14px;border-radius:50%;background:var(--ok);flex:none;box-shadow:0 0 0 5px rgba(23,121,74,.15);animation:pl 2.4s infinite}
+.status b{display:block;font-size:17px}
+.status span{font-size:14px;color:var(--ink-2)}
+.status.alarm{border-color:var(--bad);background:var(--bad-soft)}
+.status.alarm .lamp{background:var(--bad);box-shadow:0 0 0 5px rgba(168,50,30,.18);animation:pl .8s infinite}
+@keyframes pl{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* simulate bar */
+.simbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.sim{background:linear-gradient(180deg,var(--accent) 0%,var(--accent-2) 100%);color:#fff;border:1px solid var(--accent);padding:13px 24px;font-size:16px;font-weight:500;border-radius:4px;box-shadow:0 2px 10px rgba(11,46,69,.22);transition:transform .12s,box-shadow .12s,opacity .2s}
+.sim:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(11,46,69,.3)}
+.sim[disabled]{opacity:.5;cursor:default;transform:none;box-shadow:none}
+.simtag{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--warm);background:var(--warm-soft);border:1px dashed var(--warm);padding:5px 10px;border-radius:4px}
+
+/* layout */
+.grid{display:grid;grid-template-columns:1.45fr 1fr;gap:24px;padding:24px 0 12px;align-items:start}
+.card{border:1px solid var(--rule);background:var(--paper);border-radius:6px;overflow:hidden;box-shadow:0 6px 24px rgba(11,46,69,.08)}
+.card .hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:15px 20px;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.card .hd h2{font-size:18px}
+.card .hd .note{font-size:13px;color:var(--ink-3)}
+.stack{display:flex;flex-direction:column;gap:24px}
+
+/* doors */
+.doors{list-style:none;margin:0;padding:0}
+.door{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;padding:15px 20px;border-bottom:1px solid var(--rule-2);position:relative;cursor:pointer;transition:background .25s}
+.door:last-child{border-bottom:0}
+.door::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:var(--bad);transition:width .2s}
+.door:hover{background:var(--sunk)}
+.door .ic{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.door .ic svg{width:22px;height:22px}
+.door .nm{font-weight:600;font-size:16px}
+.door .ds{font-size:13.5px;color:var(--ink-3);margin-top:1px}
+.door .where{display:inline-block;margin-top:5px;font-size:12px;color:var(--ink-2);border:1px solid var(--rule);border-radius:12px;padding:1px 9px}
+.pill{font-size:13px;padding:5px 12px;border-radius:20px;white-space:nowrap;background:var(--ok-soft);color:var(--ok);display:inline-flex;align-items:center;gap:6px}
+.pill i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.door.tripped{background:var(--bad-soft)}
+.door.tripped::before{width:4px}
+.door.tripped .ic{background:var(--bad);color:#fff;animation:shake .5s ease 2}
+.door.tripped .pill{background:var(--bad);color:#fff}
+@keyframes shake{0%,100%{transform:none}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.door .more{grid-column:2/4;display:none;font-size:14px;color:var(--ink-2);background:var(--sunk);border:1px solid var(--rule-2);border-radius:5px;padding:10px 12px}
+.door.open .more{display:block;animation:slide .25s ease}
+@keyframes slide{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+.noise{display:flex;gap:14px;align-items:center;padding:14px 20px;background:var(--sunk);border-top:1px solid var(--rule);font-size:14px;color:var(--ink-2);flex-wrap:wrap}
+.noise b{color:var(--ink);font-weight:600}
+.noise .n{font-family:var(--serif);font-size:24px;color:var(--ink-3);line-height:1}
+
+/* activity */
+.feed{max-height:300px;overflow-y:auto}
+.fe{display:grid;grid-template-columns:78px 1fr;gap:12px;padding:11px 20px;font-size:14.5px;border-bottom:1px solid var(--rule-2);animation:slide .35s ease}
+.fe:last-child{border-bottom:0}
+.fe .ts{font-family:var(--mono);font-size:12.5px;color:var(--ink-3);padding-top:2px}
+.fe .tx{color:var(--ink-2)}
+.fe .tx b{color:var(--ink);font-weight:600}
+.fe.bad{background:var(--bad-soft)} .fe.bad .tx b{color:var(--bad)}
+.fe.sent{background:var(--accent-soft)}
+
+/* phone */
+.phonewrap{padding:22px;display:grid;place-items:center;background:linear-gradient(180deg,var(--sunk),#E4EDF3)}
+.phone{width:100%;max-width:300px;border-radius:34px;background:#12212C;padding:12px;box-shadow:0 18px 40px -12px rgba(11,46,69,.45)}
+.screen{border-radius:24px;background:#F7FAFC;min-height:360px;overflow:hidden;display:flex;flex-direction:column}
+.sbar{display:flex;justify-content:space-between;padding:10px 18px 4px;font:600 12px var(--sans);color:#12212C}
+.lockclock{text-align:center;padding:14px 0 10px;color:#12212C}
+.lockclock .tm{font:300 46px/1 var(--sans);letter-spacing:-.02em}
+.lockclock .dt{font-size:13px;color:#4E5B66;margin-top:4px}
+.idle{margin:auto 18px 24px;text-align:center;font-size:13px;color:#6B7883}
+.sms{margin:6px 12px 16px;background:#fff;border-radius:16px;padding:12px 14px;box-shadow:0 6px 18px rgba(11,46,69,.18);cursor:pointer;animation:drop .5s cubic-bezier(.2,.9,.3,1.2);text-align:left;border:0;font:inherit;color:inherit;width:calc(100% - 24px)}
+.sms:hover{box-shadow:0 8px 22px rgba(11,46,69,.26)}
+@keyframes drop{from{opacity:0;transform:translateY(-24px) scale(.96)}to{opacity:1;transform:none}}
+.sms .from{display:flex;align-items:center;gap:8px;font-size:12px;color:#6B7883}
+.sms .from .av{width:22px;height:22px;border-radius:6px;background:#155F87;color:#fff;display:grid;place-items:center;font:700 11px var(--serif)}
+.sms .from b{color:#12212C;font-weight:600;font-size:13px}
+.sms .from .ago{margin-left:auto}
+.sms .body{font-size:14px;line-height:1.45;margin-top:8px;color:#12212C}
+.sms .body .sev{color:#A8321E;font-weight:600}
+.bundle{margin:0 12px 16px;font-size:12px;color:#4E5B66;background:#EAF0F4;border-radius:10px;padding:8px 11px;animation:slide .4s ease}
+.bundle b{color:#12212C}
+.phonecap{padding:12px 20px;font-size:13px;color:var(--ink-3);border-top:1px solid var(--rule);background:var(--paper)}
+
+/* detail */
+.detail .empty{padding:22px 20px;color:var(--ink-3);font-size:14.5px}
+.facts{margin:0;padding:6px 20px 4px;display:grid;grid-template-columns:150px 1fr;gap:0}
+.facts dt,.facts dd{padding:12px 0;border-bottom:1px solid var(--rule-2);margin:0}
+.facts dt{font-size:13px;color:var(--ink-3);padding-top:14px}
+.facts dd{font-size:15px;color:var(--ink-2)}
+.facts dd b{color:var(--ink);font-weight:600}
+.facts dd .sev{color:var(--bad);font-weight:600}
+.facts dt:nth-last-of-type(1),.facts dd:last-child{border-bottom:0}
+.todo{margin:6px 20px 18px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:6px;padding:14px 16px}
+.todo h4{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--accent)}
+.todo ol{margin:8px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-2)}
+.todo li+li{margin-top:4px}
+.never{margin:0 20px 20px;display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ink-2);padding:12px 14px;border:1px dashed var(--rule);border-radius:6px}
+.never svg{width:18px;height:18px;flex:none;color:var(--ok);margin-top:2px}
+.flash{animation:flash 1.4s ease}
+@keyframes flash{0%{box-shadow:0 0 0 0 rgba(21,95,135,.55)}100%{box-shadow:0 0 0 14px rgba(21,95,135,0)}}
+
+/* report */
+.rep{padding:20px;background:var(--sunk)}
+.paper{background:#fff;color:#12212C;border:1px solid #D9E3EA;border-radius:3px;padding:26px 28px;box-shadow:0 2px 6px rgba(18,33,44,.08);max-width:760px;margin:0 auto}
+.paper .lh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:2px solid #155F87;flex-wrap:wrap}
+.paper .fn{font-family:var(--serif);font-size:17px}
+.paper .fn span{color:#155F87}
+.paper .dt{font-family:var(--mono);font-size:12px;color:#66717B}
+.paper .for{font-size:13px;color:#66717B;margin-top:10px}
+.paper .bl{margin-top:14px;font-family:var(--serif);font-size:21px;line-height:1.3}
+.paper .bl.q{color:#17794A}
+.paper .bl.a{color:#A8321E}
+.paper .sum{font-size:15px;color:#4E5B66;margin-top:8px}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.num{border:1px solid #E9F0F5;border-radius:5px;padding:12px}
+.num .v{font-family:var(--serif);font-size:24px;display:block;line-height:1.1}
+.num .k{font-size:12.5px;color:#6B7883}
+.paper h4{font-family:var(--sans);font-size:14px;font-weight:600;margin-top:18px}
+.paper ol,.paper ul{margin:6px 0 0;padding-left:20px;font-size:14.5px;color:#4E5B66}
+.paper .dont{margin-top:16px;border-top:1px solid #D9E3EA;padding-top:12px;font-size:13.5px;color:#4E5B66}
+.paper .sign{margin-top:12px;font-size:13px;color:#6B7883}
+.repnote{padding:12px 20px;font-size:13px;color:var(--ink-3);border-top:1px solid var(--rule);background:var(--paper)}
+
+/* plans */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.plan{padding:18px 20px;border-right:1px solid var(--rule-2)}
+.plan:last-child{border-right:0}
+.plan .pn{font-weight:600;font-size:16px}
+.plan .pp{font-family:var(--serif);font-size:24px;margin-top:4px}
+.plan .pp small{font-family:var(--sans);font-size:13px;color:var(--ink-3)}
+.plan p{font-size:14px;color:var(--ink-2);margin-top:6px}
+.plan a{display:inline-block;margin-top:10px;font-size:14px}
+.fine{padding:14px 20px;background:var(--sunk);border-top:1px solid var(--rule);font-size:13.5px;color:var(--ink-3)}
+.foot{padding:18px 0 110px;font-size:13.5px;color:var(--ink-3);max-width:80ch}
+
+@media(max-width:980px){.grid,.hello .wrap{grid-template-columns:1fr}.plans{grid-template-columns:1fr}.plan{border-right:0;border-bottom:1px solid var(--rule-2)}}
+@media(max-width:620px){
+  .wrap{padding:0 16px}
+  .who{display:none}
+  .hello h1{font-size:23px}
+  .facts{grid-template-columns:1fr}
+  .facts dt{border-bottom:0;padding-bottom:0}
+  .nums{grid-template-columns:repeat(2,1fr)}
+  .paper{padding:20px 18px}
+  .door{grid-template-columns:40px 1fr;padding:14px 16px}
+  .door .ic{width:40px;height:40px}
+  .door .st{grid-column:2}
+  .door .more{grid-column:1/3}
+  .sim{width:100%}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style>
+<link rel="stylesheet" href="/calas-ui.css?v=20260929j">
+</head>
+<body>
+
+<div class="banner"><div class="wrap">
+  <span><b>This is a demo.</b> Made-up dental office, made-up break-in attempt. None of this is anyone's real information.</span>
+  <span class="mono">Calas Automations &middot; Winnipeg</span>
+</div></div>
+
+<div class="appbar"><div class="wrap">
+  <div class="brand">
+    <span class="seal" aria-hidden="true"></span>
+    <div><div class="t1"><span class="r">Watch</span>post</div><div class="t2">BY CALAS AUTOMATIONS</div></div>
+    <div class="who"><b>Juniper Street Dental</b>Signed in as Dr. Mara Olsen &middot; Owner</div>
+  </div>
+  <div class="controls">
+    <a class="getlink" id="getlink" href="/pay/#watchpost">Get this for your business &middot; C$79/mo, first month free &rarr;</a>
+    <button class="ghost" id="reset" type="button">Start over</button>
+  </div>
+</div></div>
+
+<section class="hello"><div class="wrap">
+  <div>
+    <p class="eyebrow">Your decoy doors &middot; demo &middot; made-up business</p>
+    <h1 id="hi">Good morning, Mara. Nobody has touched your decoy doors.</h1>
+    <p class="lede">We put fake doors in your business that your staff and patients never use. If anyone opens one, you get a text within minutes. Press the button to see what that looks like.</p>
+    <div class="simbar">
+      <button class="sim" id="sim" type="button">Simulate a break-in attempt</button>
+      <span class="simtag">Simulated &middot; nothing real happens</span>
+    </div>
+  </div>
+  <div class="status" id="status" role="status" aria-live="polite">
+    <span class="lamp" aria-hidden="true"></span>
+    <div><b id="stTitle">All quiet</b><span id="stSub">All 4 decoy doors are up and answering. Nothing has touched them this month.</span></div>
+  </div>
+</div></section>
+
+<main class="wrap">
+  <div class="grid">
+    <div class="stack">
+      <section class="card" id="doorsCard" aria-labelledby="doorsH">
+        <div class="hd"><h2 id="doorsH">Your decoy doors</h2><span class="note">Click a door to see what it is</span></div>
+        <ul class="doors" id="doors"></ul>
+        <div class="noise" id="noise">
+          <span class="n mono" id="noiseN">212</span>
+          <span><b>Everyday internet noise filtered out this month.</b> Automatic scanners knock on every address online. We keep them out of your texts and count them in your report.</span>
+        </div>
+      </section>
+
+      <section class="card detail" id="detail" aria-labelledby="detailH">
+        <div class="hd"><h2 id="detailH">What happened</h2><span class="note" id="detailNote">No alerts yet</span></div>
+        <div class="empty" id="detailEmpty">Nothing to show. When a decoy door is touched, the full story appears here in plain words.</div>
+        <div id="detailBody" hidden>
+          <dl class="facts">
+            <dt>What was touched</dt><dd><b>The fake admin panel.</b> It looks like the control page for your website. It isn't real, and nobody at Juniper Street has a reason to open it.</dd>
+            <dt>What they tried</dt><dd>They tried <b>38 different passwords</b>, one after another. Then they went looking for files that usually hold passwords and settings.</dd>
+            <dt>When</dt><dd><b>Tonight at 2:14 AM.</b> The office was closed. Your text arrived at 2:16 AM.</dd>
+            <dt>From where</dt><dd>A computer <b>outside your business</b>, somewhere on the internet, at address <span class="mono">203.0.113.47</span>. Not one of your staff.</dd>
+            <dt>How serious</dt><dd><span class="sev">Serious.</span> This is someone hunting on purpose, not a passing automatic scanner.</dd>
+          </dl>
+          <div class="todo">
+            <h4>What to do about it</h4>
+            <ol>
+              <li>Make sure your real website doesn't have password or backup files lying around where anyone can open them.</li>
+              <li>Turn on two-step sign-in for your real admin account.</li>
+              <li>Nothing else. Keep the decoys running.</li>
+            </ol>
+          </div>
+          <div class="never" id="never">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Watchpost only watches and reports. We never contact or strike back at that address, and nothing touched your real computers or patient files.</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="stack">
+      <section class="card" id="phoneCard" aria-labelledby="phoneH">
+        <div class="hd"><h2 id="phoneH">Mara's phone</h2><span class="note mono">(204) 555-0142</span></div>
+        <div class="phonewrap">
+          <div class="phone" id="phone">
+            <div class="screen" id="screen">
+              <div class="sbar"><span id="sbTime">2:13</span><span>&#9679;&#9679;&#9679; 5G</span></div>
+              <div class="lockclock"><div class="tm" id="lockTime">2:13</div><div class="dt">Tuesday, overnight</div></div>
+              <div class="idle" id="idle">No alerts. Watchpost only texts when a decoy door is touched.</div>
+              <div id="inbox"></div>
+            </div>
+          </div>
+        </div>
+        <p class="phonecap">Alerts go straight to your phone by text or push. Tap the text to see the details.</p>
+      </section>
+
+      <section class="card" aria-labelledby="actH">
+        <div class="hd"><h2 id="actH">Today's activity</h2><span class="note">Newest at the top</span></div>
+        <div class="feed" id="feed"></div>
+      </section>
+    </div>
+  </div>
+
+  <section class="card" id="report" aria-labelledby="repH" style="margin-top:0">
+    <div class="hd"><h2 id="repH">Your monthly one-page report</h2><span class="note">Preview &middot; made-up numbers</span></div>
+    <div class="rep">
+      <div class="paper" id="paper"></div>
+    </div>
+    <p class="repnote">One page, bottom line first. Hand it to your accountant or your insurer. A quiet month says "nothing touched these doors", never "you're secure".</p>
+  </section>
+
+  <section class="card" id="plans" aria-labelledby="plH" style="margin-top:24px">
+    <div class="hd"><h2 id="plH">Plans</h2><span class="note">Prices in Canadian dollars</span></div>
+    <div class="plans">
+      <div class="plan">
+        <div class="pn">Watch</div>
+        <div class="pp">C$79 <small>/ month, or C$790/year</small></div>
+        <p>One location. Alerts go straight to your phone and you read the monthly report yourself. First month free.</p>
+        <a href="/pay/#watchpost">Start with a free month &rarr;</a>
+      </div>
+      <div class="plan">
+        <div class="pn">Watch Pro</div>
+        <div class="pp">C$199 <small>/ month, or C$1,990/year</small></div>
+        <p>Alerts come to us first and we call you only when it's real. More traps, website safety checks, and we write the incident report if something trips.</p>
+        <a href="/watchpost/">See what's included &rarr;</a>
+      </div>
+      <div class="plan">
+        <div class="pn">Watchpost Family</div>
+        <div class="pp">C$9.99 <small>/ month, or C$99/year per family</small></div>
+        <p>Protect an aging parent: Guardian on their phone, a shared family "safe word", and our help line they can call when something feels off.</p>
+        <a href="/watchpost/">About Family &rarr;</a>
+      </div>
+    </div>
+    <p class="fine">Detection and reporting only. No 24/7 monitoring, no antivirus, no blocking or clean-up: it's the alarm, not the locks. We never hack back. Cancel with one email. If a month goes by and we can't show you the decoys were up and answering, that month is free.</p>
+  </section>
+
+  <p class="foot">Made-up business, made-up times, made-up address from the range set aside for examples. The break-in attempt on this page is simulated in your browser; nothing is sent anywhere.</p>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  var ICONS = {
+    login: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+    admin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 9h4M7 13h10"/><path d="M8 21h8"/></svg>',
+    db: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>',
+    inside: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>'
+  };
+
+  var DOORS = [
+    { id: 'login', name: 'Fake staff login page', desc: 'Looks like where your team signs in.', where: 'On our decoy box, in your name',
+      more: 'A sign-in page that leads nowhere. Your real team signs in somewhere else, so nobody honest ever types a password here.' },
+    { id: 'admin', name: 'Fake admin panel', desc: 'Looks like the control page for your website.', where: 'On our decoy box, in your name',
+      more: 'An open-looking control panel, the kind of "easy target" people hunt for. It controls nothing.' },
+    { id: 'db', name: 'Fake records database', desc: 'Looks like a place where patient files are kept.', where: 'On our decoy box, in your name',
+      more: 'A database that answers when asked, but holds nothing real. No actual patient information is ever in it.' },
+    { id: 'inside', name: 'Decoy inside your office network', desc: 'Sits quietly among your office computers.', where: 'Inside your office',
+      more: 'The one that matters most. If anyone gets inside your office network and pokes around, this is where they trip. Nothing changes on your real computers.' }
+  ];
+
+  var START_FEED = [
+    { t: '1:00 AM', cls: '', html: '<b>Decoys checked:</b> all 4 doors up and answering.' },
+    { t: '12:40 AM', cls: '', html: '<b>14 automatic scans</b> filtered out as everyday internet noise. No text sent.' },
+    { t: '12:00 AM', cls: '', html: '<b>Decoys checked:</b> all 4 doors up and answering.' }
+  ];
+
+  var $ = function (id) { return document.getElementById(id); };
+  var timers = [];
+  var tripped = false;
+
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+
+  function renderDoors() {
+    $('doors').innerHTML = DOORS.map(function (d) {
+      return '<li class="door" id="door-' + d.id + '" tabindex="0" role="button" aria-expanded="false">' +
+        '<span class="ic">' + ICONS[d.id] + '</span>' +
+        '<div><div class="nm">' + d.name + '</div><div class="ds">' + d.desc + '</div><span class="where">' + d.where + '</span></div>' +
+        '<span class="st"><span class="pill"><i></i><span class="pt">Quiet</span></span></span>' +
+        '<div class="more">' + d.more + '</div>' +
+        '</li>';
+    }).join('');
+    Array.prototype.forEach.call(document.querySelectorAll('.door'), function (el) {
+      function toggle() {
+        var open = el.classList.toggle('open');
+        el.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+      el.addEventListener('click', toggle);
+      el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    });
+  }
+
+  function addFeed(item, top) {
+    var row = document.createElement('div');
+    row.className = 'fe ' + (item.cls || '');
+    row.innerHTML = '<span class="ts">' + item.t + '</span><span class="tx">' + item.html + '</span>';
+    var feed = $('feed');
+    if (top && feed.firstChild) feed.insertBefore(row, feed.firstChild); else feed.appendChild(row);
+  }
+
+  function setClock(txt) { $('sbTime').textContent = txt; $('lockTime').textContent = txt; }
+
+  function renderReport(isAlarm) {
+    var p = $('paper');
+    var head = '<div class="lh"><div class="fn"><span>Watch</span>post security report</div><div class="dt">This month &middot; sample</div></div>' +
+      '<p class="for">Prepared for Juniper Street Dental (made-up) &middot; last 30 days &middot; reviewed by Dan before it&rsquo;s sent</p>';
+    var dont = '<p class="dont"><b>What we don&rsquo;t see:</b> we only watch the decoy doors. We don&rsquo;t watch your real computers, email or card terminal, and we can&rsquo;t promise nobody got in some other way.</p>' +
+      '<p class="sign">Questions? dan@calasautomations.com &middot; Watchpost never hacks back.</p>';
+    if (!isAlarm) {
+      p.innerHTML = head +
+        '<p class="bl q">Bottom line: all quiet. Nothing touched these doors.</p>' +
+        '<p class="sum">No one tried the decoys this month. That tells you the doors were watched and nobody knocked. It doesn&rsquo;t mean you&rsquo;re unhackable.</p>' +
+        '<div class="nums">' +
+          num('0', 'outside addresses tried the decoys') + num('0', 'attempts recorded') +
+          num('None', 'worst seriousness') + num('212', 'everyday scans filtered out') +
+        '</div>' +
+        '<h4>What we recommend</h4><ol><li>Nothing this month. Keep the decoys running.</li></ol>' + dont;
+    } else {
+      p.innerHTML = head +
+        '<p class="bl a">Bottom line: 2 things to do this week.</p>' +
+        '<p class="sum">One outside address tried the fake admin panel, 38 attempts in all, then hunted for password and settings files. That is the serious kind. You were texted within minutes.</p>' +
+        '<div class="nums">' +
+          num('1', 'outside address tried the decoys') + num('38', 'attempts recorded') +
+          num('Serious', 'worst seriousness') + num('212', 'everyday scans filtered out') +
+        '</div>' +
+        '<h4>What we recommend</h4><ol>' +
+          '<li>Make sure your real website has no password or backup files anyone can open.</li>' +
+          '<li>Turn on two-step sign-in for your real admin account.</li>' +
+          '<li>Nothing else. Keep the decoys running.</li></ol>' + dont;
+    }
+  }
+  function num(v, k) { return '<div class="num"><span class="v">' + v + '</span><span class="k">' + k + '</span></div>'; }
+
+  function reset() {
+    timers.forEach(clearTimeout); timers = [];
+    tripped = false;
+    renderDoors();
+    $('feed').innerHTML = '';
+    START_FEED.forEach(function (f) { addFeed(f, false); });
+    $('status').classList.remove('alarm');
+    $('stTitle').textContent = 'All quiet';
+    $('stSub').textContent = 'All 4 decoy doors are up and answering. Nothing has touched them this month.';
+    $('hi').textContent = 'Good morning, Mara. Nobody has touched your decoy doors.';
+    $('sim').disabled = false;
+    $('sim').textContent = 'Simulate a break-in attempt';
+    $('inbox').innerHTML = '';
+    $('idle').hidden = false;
+    setClock('2:13');
+    $('detailEmpty').hidden = false;
+    $('detailBody').hidden = true;
+    $('detailNote').textContent = 'No alerts yet';
+    renderReport(false);
+  }
+
+  function simulate() {
+    if (tripped) return;
+    tripped = true;
+    var sim = $('sim');
+    sim.disabled = true;
+    sim.textContent = 'Simulating…';
+    setClock('2:14');
+
+    later(function () {
+      var d = $('door-admin');
+      d.classList.add('tripped');
+      d.querySelector('.pt').textContent = 'Touched';
+      $('status').classList.add('alarm');
+      $('stTitle').textContent = 'A decoy door was touched';
+      $('stSub').textContent = 'Someone tried the fake admin panel. Real staff never use it.';
+      $('hi').textContent = 'Mara, someone tried one of your decoy doors.';
+      addFeed({ t: '2:14 AM', cls: 'bad', html: '<b>Fake admin panel touched</b> by an outside computer. They are trying passwords.' }, true);
+    }, 300);
+
+    later(function () {
+      addFeed({ t: '2:15 AM', cls: 'bad', html: '<b>Same computer</b> went looking for password and settings files. Marked serious.' }, true);
+    }, 1500);
+
+    later(function () {
+      setClock('2:16');
+      $('idle').hidden = true;
+      $('inbox').innerHTML =
+        '<button class="sms" id="sms" type="button">' +
+          '<span class="from"><span class="av">W</span><b>Watchpost</b><span class="ago">now</span></span>' +
+          '<span class="body" style="display:block">Juniper Street Dental: someone outside your business tried the <b>fake admin panel</b> at 2:14 AM. ' +
+          'They tried 38 passwords, then looked for password files. <span class="sev">Serious.</span> Nothing real was touched. Tap for details.</span>' +
+        '</button>';
+      $('sms').addEventListener('click', openDetail);
+      addFeed({ t: '2:16 AM', cls: 'sent', html: '<b>Text sent</b> to Mara at (204) 555-0142.' }, true);
+      showDetail();
+      renderReport(true);
+    }, 2600);
+
+    later(function () {
+      var b = document.createElement('div');
+      b.className = 'bundle';
+      b.id = 'bundle';
+      b.innerHTML = '<b>+37 more tries</b> from the same computer were added to this one text, so your phone doesn’t buzz 38 times.';
+      $('inbox').appendChild(b);
+      sim.textContent = 'Simulated. Press Start over to run it again';
+    }, 4200);
+  }
+
+  function showDetail() {
+    $('detailEmpty').hidden = true;
+    $('detailBody').hidden = false;
+    $('detailNote').textContent = 'Alert sent 2:16 AM';
+  }
+
+  function openDetail() {
+    showDetail();
+    var card = $('detail');
+    try { card.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
+    card.classList.remove('flash'); void card.offsetWidth; card.classList.add('flash');
+  }
+
+  $('sim').addEventListener('click', simulate);
+  $('reset').addEventListener('click', reset);
+  reset();
+
+  window.WatchpostDemo = { reset: reset };
+})();
+</script>
+
+<script src="/demo/_tour/tour.js"></script>
+<script>
+CalasTour.start({
+  lines: [
+    "Welcome to Watchpost. This is a made-up dental office, and these are its decoy doors: a fake login page, a fake admin panel, and a fake records database.",
+    "Real staff and real customers never touch these doors, because they have no reason to. So right now, the dashboard says all quiet.",
+    "Everyday internet noise gets filtered out, so your phone doesn't buzz for the harmless stuff.",
+    "Now let's pretend someone tries to break in. This attempt is simulated. Nothing real is happening.",
+    "Someone just tried a pile of passwords on the fake admin panel. That door lights up right away.",
+    "Within minutes, the owner's phone gets a text in plain words: which door was touched, and how serious it is.",
+    "And one person can't flood you with hundreds of texts. Their repeat tries get bundled into a single alert.",
+    "The details are laid out simply: what was touched, when it happened, where it came from, and what to do next.",
+    "Watchpost only watches and reports. It never hacks back, and it never touches your real computers.",
+    "Once a month, you get a one-page report you can hand to your accountant, or your insurer.",
+    "The Watch plan is seventy-nine dollars a month for one location, and your first month is free.",
+    "That's the tour. Press the break-in button yourself, and click around."
+  ],
+  durs: [10.37, 8.18, 5.33, 6.22, 5.5, 6.48, 6.58, 5.93, 6.1, 5.02, 5.54, 3.77],
+  audioBase: "narration/step-",
+  onStart: function () { window.WatchpostDemo.reset(); },
+  onReplay: function () { window.WatchpostDemo.reset(); window.scrollTo(0, 0); },
+  script: function (t) {
+    return t.point("#doors", 0, { py: 0.3 })
+      .then(function () { return t.point("#status", 1); })
+      .then(function () { return t.point("#noise", 2); })
+      .then(function () { return t.point("#sim", 3); })
+      .then(function () { t.tap("#sim"); return t.sleep(900); })
+      .then(function () { return t.point("#door-admin", 4); })
+      .then(function () { return t.point("#sms", 5, { py: 0.08 }); })
+      .then(function () { return t.point("#bundle", 6); })
+      .then(function () { t.tap("#sms"); return t.sleep(900); })
+      .then(function () { return t.point("#detailBody .facts", 7, { py: 0.25 }); })
+      .then(function () { return t.point("#never", 8); })
+      .then(function () { return t.point("#paper", 9, { py: 0.2 }); })
+      .then(function () { window.scrollTo({ top: 0, behavior: "smooth" }); return t.sleep(1100); })
+      .then(function () { return t.point("#getlink", 10); })
+      .then(function () { return t.point(null, 11); });
+  }
+});
+</script>
+<script src="/calas-brandbar.js?v=20260929j" defer></script>
+</body>
+</html>
