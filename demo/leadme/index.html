@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Lead Me demo &middot; Calas Automations</title>
-<meta name="description" content="Try Lead Me with made-up data: find warm B2B leads in your territory, see each one scored out of 100 with reasons, read the first email it drafted, and send only what you approve.">
+<meta name="description" content="Try Lead Me with made-up data: find local businesses in your territory that fit what you sell, see each one given a fit score out of 100 with reasons, read the first email it drafted, and send only what you approve.">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -236,7 +236,7 @@ details.howto p{margin:.6rem 0 0}
     <div class="lm-who"><b>Northgate Business Services</b>Signed in as Pat Morgan &middot; Sales</div>
   </div>
   <div class="appnav">
-    <a class="getlink" id="getlink" href="/pay/#leadme">Get this for your business &middot; C$500/mo, no setup fee &rarr;</a>
+    <a class="getlink" id="getlink" href="/pay/#leadme">Get this for your business &middot; from C$199/mo, no setup fee &rarr;</a>
     <button type="button" id="nav-leads" class="on" data-view="leads">Leads</button>
     <button type="button" id="nav-settings" data-view="settings">Settings</button>
     <button type="button" class="reset" id="reset">Start over</button>
@@ -265,7 +265,7 @@ details.howto p{margin:.6rem 0 0}
 <main id="main"><div class="wrap">
 
   <section class="tiles" id="tiles" aria-label="At a glance">
-    <div class="tile"><span class="tile-num" id="t-hot">0</span><span class="tile-label">Hot leads ready</span></div>
+    <div class="tile"><span class="tile-num" id="t-hot">0</span><span class="tile-label">Best-fit leads ready</span></div>
     <div class="tile"><span class="tile-num" id="t-rep">0</span><span class="tile-label" id="t-rep-l">Replies / booked</span></div>
     <div class="tile"><span class="tile-num" id="t-rev">0</span><span class="tile-label">To review</span></div>
   </section>
@@ -295,7 +295,7 @@ details.howto p{margin:.6rem 0 0}
     <p class="muted"><strong>Demo mode</strong> &mdash; sends here are pretend. In the real app, the emails you approve go out from your own inbox once it is connected in Settings.</p>
     <p class="muted small">Sending window: Mon&ndash;Fri 08:00&ndash;17:00 &middot; at most 30 emails a day</p>
     <div class="toolbar">
-      <button class="btn btn-ghost" type="button" id="approve-btn">Approve all warm with a verified contact</button>
+      <button class="btn btn-ghost" type="button" id="approve-btn">Approve all good fits with a verified contact</button>
       <button class="btn btn-primary" type="button" id="batch-btn">Send approved batch</button>
     </div>
     <p id="batch-count" aria-live="polite"></p>
@@ -304,9 +304,9 @@ details.howto p{margin:.6rem 0 0}
 
   <div class="tabs" role="tablist" aria-label="Lead lists" id="tabs">
     <button type="button" class="tab on" role="tab" data-tab="all">All <span class="num" data-count="all">0</span></button>
-    <button type="button" class="tab" role="tab" data-tab="hot">Hot <span class="num" data-count="hot">0</span></button>
-    <button type="button" class="tab" role="tab" data-tab="warm">Warm <span class="num" data-count="warm">0</span></button>
-    <button type="button" class="tab" role="tab" data-tab="cold">Cold <span class="num" data-count="cold">0</span></button>
+    <button type="button" class="tab" role="tab" data-tab="hot">Best fit <span class="num" data-count="hot">0</span></button>
+    <button type="button" class="tab" role="tab" data-tab="warm">Good fit <span class="num" data-count="warm">0</span></button>
+    <button type="button" class="tab" role="tab" data-tab="cold">Weaker fit <span class="num" data-count="cold">0</span></button>
     <button type="button" class="tab" role="tab" data-tab="replied" id="tab-replied">Replied <span class="num" data-count="replied">0</span><span class="newtag" id="replyNew" hidden>1 new</span></button>
   </div>
 
@@ -335,7 +335,7 @@ details.howto p{margin:.6rem 0 0}
 
   <details class="howto">
     <summary>How this works</summary>
-    <p>Every lead is scored out of 100 from your industry's signals. <strong>Warm is 60 or more</strong>; <strong>hot starts at 85</strong>. The warmest leads sit at the top. The batch only emails leads you have approved, so one tap after a big find never mails thirty companies nobody reviewed. Every email carries your mailing address and an easy way to say no, and a reply pauses the follow-ups.</p>
+    <p>Every lead gets a fit score out of 100 from your industry's signals, showing how well it fits what you sell. <strong>A good fit is 60 or more</strong>; <strong>a best fit starts at 85</strong>. The best fits sit at the top. The batch only emails leads you have approved, so one tap after a big find never mails thirty companies nobody reviewed. Every email carries your mailing address and an easy way to say no, and a reply pauses the follow-ups.</p>
   </details>
 
 </div></main>
@@ -557,6 +557,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
   function later(fn, ms) { var t = setTimeout(fn, ms); S.timers.push(t); return t; }
 
   function heat(l) { return l.score >= 85 ? 'hot' : l.score >= 60 ? 'warm' : 'cold'; }
+  var HEAT_LABEL = { hot: 'best fit', warm: 'good fit', cold: 'weaker fit' };
   function subject(l) { return heat(l) === 'cold' ? 'IT support for ' + l.name + ', worth a look?' : 'Who fixes it when the server is down at ' + l.name + '?'; }
   function body(l) { return heat(l) === 'cold' ? coldBody(l.name, l.opener) : warmBody(l.name, l.opener); }
   function byId(id) { for (var i = 0; i < S.leads.length; i++) if (S.leads[i].id === id) return S.leads[i]; return null; }
@@ -574,7 +575,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
     var h = heat(l), done = l.state === 'sent' || l.state === 'skipped' || l.state === 'unsub';
     var html = '<article class="card row-card heat-' + h + (done ? ' is-done' : '') + '" id="lead-' + l.id + '" data-id="' + l.id + '">';
     html += '<div class="rc-who"><div class="card-top"><span class="score-pill" aria-label="Lead score ' + l.score + ' out of 100">' + l.score + '</span>' +
-      '<h3>' + esc(l.name) + '</h3>' + (l.isNew ? '<span class="new-label">new</span>' : '') + '<span class="heat-label">' + h + '</span></div>';
+      '<h3>' + esc(l.name) + '</h3>' + (l.isNew ? '<span class="new-label">new</span>' : '') + '<span class="heat-label">' + HEAT_LABEL[h] + '</span></div>';
     html += '<p class="meta">' + (l.email ? '<span>' + esc(l.email) + '</span>' : '') + '<span>' + esc(l.city) + '</span><span>' + esc(l.ind) + '</span></p>';
     var line = l.state === 'sent' ? 'Email 1 of 3 sent ' + TODAY + ' &middot; next one in 3 days unless they reply' : 'Next email due ' + TODAY;
     html += '<p class="rc-line">' + (l.verify ? '<span class="verify-flag">Needs verification</span>' : '') + line + '</p>';
@@ -655,7 +656,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
     $('t-rep').textContent = S.replyIn ? 1 : 0;
     $('t-rep-l').innerHTML = S.booked ? 'Replies / booked &middot; <strong>1 booked</strong>' : S.replyNew ? 'Replies / booked &middot; <strong>1 new</strong>' : 'Replies / booked';
     var warmReady = S.leads.filter(function (l) { return heat(l) !== 'cold' && (l.state === 'new' || l.state === 'approved'); }).length;
-    $('heroLine').innerHTML = warmReady ? '<strong>' + warmReady + ' warm</strong> leads ready for you today.' : '<strong>All caught up.</strong> Every warm lead has been handled today.';
+    $('heroLine').innerHTML = warmReady ? '<strong>' + warmReady + ' good-fit</strong> leads ready for you today.' : '<strong>All caught up.</strong> Every good-fit lead has been handled today.';
     $('batch-count').textContent = approved + ' approved · ' + review + ' waiting on your approval · ' + sent + ' sent today';
     $('batch-btn').disabled = S.batching || approved === 0;
     $('batch-btn').textContent = approved ? 'Send approved batch (' + approved + ')' : 'Send approved batch';
@@ -764,7 +765,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
     var n = 0;
     S.leads.forEach(function (l) { if (heat(l) !== 'cold' && l.state === 'new' && l.email && !l.verify) { l.state = 'approved'; n++; } });
     renderCards();
-    toast(n ? n + ' warm leads approved for the batch' : 'Nothing new to approve');
+    toast(n ? n + ' good-fit leads approved for the batch' : 'Nothing new to approve');
   }
   function runBatch() {
     var q = sorted().filter(function (l) { return l.state === 'approved'; });
@@ -826,17 +827,17 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
   /* ---------- guided tour (shared engine) ---------- */
   window.LEADME_TOUR = {
     lines: [
-      "This is Lead Me. Each morning opens on today's leads: your name, your company, and how many warm businesses are ready.",
-      "These tiles are your day at a glance: hot leads ready, replies and bookings, and drafts waiting for your okay.",
+      "This is Lead Me. Each morning opens on today's leads: your name, your company, and how many good-fit businesses are ready.",
+      "These tiles are your day at a glance: best-fit leads ready, replies and bookings, and drafts waiting for your okay.",
       "Press Find forty more, and Lead Me searches maps and the web across your territory for businesses that fit what you sell.",
-      "Each one is scored out of a hundred. Sixty is warm, eighty-five is hot, and the warmest sit at the top.",
+      "Each one gets a fit score out of a hundred. Sixty is a good fit, eighty-five is a best fit, and the best fits sit at the top.",
       "Open a lead to see what their own website says, and why Lead Me chose that opening line.",
       "The first email is already written from those facts. Nothing guessed, no made-up names.",
       "Press Send when you're happy with it. In this demo it's only marked sent, so nothing is really emailed.",
-      "Or approve every warm lead with a verified contact at once, and send them as one batch, within your daily limit.",
+      "Or approve every good-fit lead with a verified contact at once, and send them as one batch, within your daily limit.",
       "When someone writes back, it lands in Replied and the follow-ups stop. This vet hospital wants to talk next week.",
       "Settings is where you begin: add your name, company, phone and mailing address, and connect your email so replies come back to you.",
-      "Lead Me is five hundred dollars a month, no setup fee. Forty warm companies in fourteen days, or you owe nothing.",
+      "Lead Me starts at a hundred and ninety-nine dollars a month, with no setup fee. Forty checked, ready-to-email businesses in fourteen days, or you owe nothing.",
       "That's the tour. Now click around: find leads, open a card, send a few. It's all made up, so nothing leaves this page."
     ],
     reset: reset,
@@ -853,7 +854,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
   function first(sel) { return document.querySelector('#cards .row-card:not([hidden]) ' + (sel || '')); }
   CalasTour.start({
     lines: T.lines,
-    durs: [7.44, 6.84, 6.96, 6.38, 5.11, 5.35, 6.19, 7.2, 7.1, 7.87, 7.32, 7.37],
+    durs: [7.58, 7.15, 6.96, 7.78, 5.11, 5.35, 6.19, 7.37, 7.1, 7.87, 9.84, 7.37],
     audioBase: 'narration/step-',
     onReplay: function () { T.reset(); window.scrollTo(0, 0); },
     script: function (t) {

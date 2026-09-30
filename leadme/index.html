@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lead Me — warm B2B leads, found and warmed for you · Calas Automations</title>
-<meta name="description" content="Lead Me finds real businesses in your territory, reads their own websites to learn what they do, scores how warm each one is, and drafts honest first-contact emails you approve before anything sends. Done-for-you from C$500/mo, no setup fee. Built by Calas Automations, Winnipeg.">
+<title>Lead Me — local business leads that fit what you sell · Calas Automations</title>
+<meta name="description" content="Lead Me finds real businesses in your territory, reads their own websites to learn what they do, scores how well each one fits what you sell, checks their email address works, and drafts honest first-contact emails. Plans from C$199/mo, no setup fee. Built by Calas Automations, Winnipeg.">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
@@ -59,6 +59,10 @@ nav a:hover{color:var(--accent)}
 @media(max-width:680px){.tier-grid{grid-template-columns:1fr}}
 .tier-card{border:1px solid var(--rule);border-radius:18px;padding:30px 26px;background:var(--paper);box-shadow:var(--shadow);position:relative;display:flex;flex-direction:column}
 .tier-card .btn{margin-top:auto}
+.tier-grid.three{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1120px;align-items:stretch}
+@media(max-width:920px){.tier-grid.three{grid-template-columns:minmax(0,520px);justify-content:center}}
+.tier-act{margin-top:auto;display:flex;flex-direction:column;gap:10px}.tier-act .btn{margin-top:0;text-align:center}
+.faq+.honest{margin-top:22px}
 .tier-featured{border-color:var(--accent);border-width:2px;background:linear-gradient(150deg,#EDF5FB 0%,#fff 60%)}
 .tier-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;padding:5px 16px;border-radius:99px;white-space:nowrap}
 .tier-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:10px}
@@ -125,19 +129,19 @@ footer a{color:var(--ink-3)}
 </header>
 
 <section class="hero"><div class="wrap">
- <div class="eyebrow">Warm B2B lead finder + outreach · Winnipeg</div>
+ <div class="eyebrow">B2B lead finder + outreach · Winnipeg</div>
  <a class="of-lockup" href="/" aria-label="Lead Me by Calas Automations"><span class="crest" aria-hidden="true"></span><span class="of-lk-text"><span class="of-lk-name">Lead <span class="r">Me</span></span><span class="of-lk-sub">BY CALAS AUTOMATIONS</span></span></a>
- <h1>It finds the businesses worth calling, and warms them up for you.</h1>
+ <h1>It finds the local businesses that fit what you sell, and helps you reach out properly.</h1>
  <p>Lead Me searches your territory for real companies, reads each one's own website to learn what they do and how big they are, scores how good a fit they are, and drafts an honest first email built only from facts it found. You approve every message before a single one sends. Nothing guessed, nothing spammy.</p>
  <div class="btns" id="open">
- <a class="btn" id="openApp" href="/pay/#leadme">Get started &mdash; C$500/mo</a>
+ <a class="btn" id="openApp" href="#pricing">Get started &mdash; from C$199/mo</a>
  <a class="btn ghost" href="/demo/leadme/">▶ Watch the walkthrough</a>
  <a class="btn ghost" href="#pricing">Compare plans</a>
  <a class="btn ghost" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
  </div>
     <a class="hero-signin" href="https://leadme.calasautomations.com/login">Already a customer? Sign in &rarr;</a>
  <div class="fine" style="margin-top:14px;font-size:13.5px;color:var(--ink-2)">
- <b>C$500/mo, no setup fee</b> — 40 warm companies in 14 days, or you owe nothing
+ <b>From C$199/mo, no setup fee</b> — 40 checked, ready-to-email businesses in 14 days, or you owe nothing
  &nbsp;·&nbsp; <a href="#pricing" style="color:var(--accent);font-weight:600">see what's included ↓</a>
  </div>
  <div class="fine">Runs on our own machine · you review before anything is sent · unsubscribe honoured, Canadian anti-spam (CASL) built in</div>
@@ -146,38 +150,91 @@ footer a{color:var(--ink-3)}
 <!-- ── Pricing ──────────────────────────────────────────────────── -->
 <section class="section" id="pricing"><div class="wrap">
  <h2>We&rsquo;ll lead you there.</h2>
- <p class="sub">One plan, done for you. We configure Lead Me for your territory, run the finder, and deliver warm companies with ready-to-send first emails &mdash; Canadian-built, CASL-safe, and 100% honest outreach.</p>
+ <p class="sub">Three plans, all monthly in Canadian dollars, with no setup fee and 30 days&rsquo; notice to cancel. Every plan finds the local businesses that fit what you sell and checks that you can actually reach them &mdash; the difference is who presses send, and how many of you share the list.</p>
 
- <div class="tier-grid" style="grid-template-columns:minmax(0,480px);justify-content:center">
+ <div class="tier-grid three">
 
- <!-- Managed (Premium) -->
- <div class="tier-card tier-featured">
- <div class="tier-badge">✦ RECOMMENDED</div>
- <span class="tier-label">Managed &mdash; Done For You</span>
- <div class="tier-price">C$500<span>/mo</span></div>
- <div class="tier-setup">No setup fee</div>
+ <!-- Starter -->
+ <div class="tier-card">
+ <span class="tier-label">Lead Me Starter</span>
+ <div class="tier-price">C$199<span>/mo</span></div>
+ <div class="tier-setup">No setup fee &middot; one person</div>
  <ul class="tier-list">
- <li class="yes">✓ The full Lead Me engine &mdash; finder, scorer, sequences</li>
- <li class="yes">✓ We configure and run it for you</li>
- <li class="yes">✓ Multiple verticals &amp; territories</li>
- <li class="yes">✓ Custom vertical builder</li>
- <li class="yes">✓ Deep-read: full website + hiring analysis</li>
- <li class="yes">✓ Sequence management &amp; reply handling</li>
- <li class="yes">✓ Monthly 1-on-1 strategy calls</li>
- <li class="yes">✓ Priority support (same business day)</li>
- <li class="gold">🔥 40 warm companies in 14 days — guaranteed</li>
- <li class="gold">✓ Setup fee refunded if we miss the target</li>
+ <li class="yes">✓ Finds businesses in your territory that fit what you sell</li>
+ <li class="yes">✓ Checks every email address works, and keeps a record of where it was found</li>
+ <li class="yes">✓ Explains why each one fits, with a fit score out of 100</li>
+ <li class="yes">✓ Writes an honest first email for each one</li>
+ <li class="yes">✓ You send them yourself, from your own email, with one click (&ldquo;Open in my email&rdquo;) &mdash; up to 30 a day</li>
+ <li class="gold">🛡️ 40 checked, ready-to-email businesses in 14 days, or you owe nothing</li>
  </ul>
- <a class="btn" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20Managed%20%E2%80%94%2015%20minutes">Book 15 minutes &mdash; let&rsquo;s start</a>
+ <div class="tier-act">
+ <a class="btn" data-pay="leadme_starter" href="/pay/#leadme" hidden style="display:none">Start Starter &mdash; C$199/mo</a>
+ <a class="btn" data-pay-fallback="leadme_starter" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20Starter%20%E2%80%94%20getting%20started">Talk to us about Starter</a>
+ </div>
+ </div>
+
+ <!-- Lead Me (most popular) -->
+ <div class="tier-card tier-featured">
+ <div class="tier-badge">✦ MOST POPULAR</div>
+ <span class="tier-label">Lead Me</span>
+ <div class="tier-price">C$500<span>/mo</span></div>
+ <div class="tier-setup">No setup fee &middot; one person</div>
+ <ul class="tier-list">
+ <li class="yes">✓ Everything in Starter, plus:</li>
+ <li class="yes">✓ Lead Me sends for you, from your own email address, on a gentle schedule</li>
+ <li class="yes">✓ A first email, a follow-up on day 3 and a last one on day 7 &mdash; then it stops</li>
+ <li class="yes">✓ Stops by itself the moment someone replies or unsubscribes</li>
+ <li class="yes">✓ Pauses by itself if emails start bouncing, so your address stays trusted</li>
+ <li class="gold">🛡️ 40 checked, ready-to-email businesses in 14 days, or you owe nothing</li>
+ </ul>
+ <div class="tier-act">
+ <a class="btn" data-pay="leadme_monthly" href="/pay/#leadme" hidden style="display:none">Start Lead Me &mdash; C$500/mo</a>
+ <a class="btn" data-pay-fallback="leadme_monthly" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20%E2%80%94%20getting%20started">Talk to us about Lead Me</a>
+ <a class="btn ghost" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20%E2%80%94%2015%20minutes">Book 15 minutes first</a>
+ </div>
+ </div>
+
+ <!-- Team -->
+ <div class="tier-card">
+ <span class="tier-label">Lead Me Team</span>
+ <div class="tier-price">C$800<span>/mo</span></div>
+ <div class="tier-setup">No setup fee &middot; up to 4 people</div>
+ <ul class="tier-list">
+ <li class="yes">✓ Everything in Lead Me, for up to 4 people</li>
+ <li class="yes">✓ One shared lead list, so two people never email the same company</li>
+ <li class="yes">✓ Export to your CRM: a spreadsheet file that HubSpot, Pipedrive, Salesforce and Excel all open</li>
+ <li class="gold">🛡️ 40 checked, ready-to-email businesses in 14 days, or you owe nothing</li>
+ </ul>
+ <div class="tier-act">
+ <a class="btn" data-pay="leadme_team" href="/pay/#leadme" hidden style="display:none">Start Team &mdash; C$800/mo</a>
+ <a class="btn" data-pay-fallback="leadme_team" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20Team%20%E2%80%94%20getting%20started">Talk to us about Team</a>
+ </div>
  </div>
 
  </div><!-- /tier-grid -->
+
+ <div class="compare-wrap" style="max-width:920px;margin:0 auto 34px">
+ <table class="compare">
+ <thead><tr><th>What you get</th><th>Starter<br>C$199/mo</th><th class="th-prem">Lead Me<br>C$500/mo</th><th>Team<br>C$800/mo</th></tr></thead>
+ <tbody>
+ <tr><td>Finds businesses that fit what you sell, with a fit score and plain reasons</td><td class="yes-cell">✓</td><td class="yes-cell">✓</td><td class="yes-cell">✓</td></tr>
+ <tr><td>A checked, working email address and a record of where it was found</td><td class="yes-cell">✓</td><td class="yes-cell">✓</td><td class="yes-cell">✓</td></tr>
+ <tr><td>Honest first emails written for you</td><td class="yes-cell">✓</td><td class="yes-cell">✓</td><td class="yes-cell">✓</td></tr>
+ <tr><td>Who sends the emails</td><td>You, with one click, up to 30 a day</td><td>Lead Me, from your own address</td><td>Lead Me, from each person&rsquo;s own address</td></tr>
+ <tr><td>A follow-up on day 3 and a last one on day 7, then it stops</td><td class="dimcell">&mdash;</td><td class="yes-cell">✓</td><td class="yes-cell">✓</td></tr>
+ <tr><td>Stops on a reply or unsubscribe, pauses if emails bounce</td><td class="dimcell">&mdash;</td><td class="yes-cell">✓</td><td class="yes-cell">✓</td></tr>
+ <tr><td>People</td><td>1</td><td>1</td><td>Up to 4, sharing one list</td></tr>
+ <tr><td>Export to your CRM (HubSpot, Pipedrive, Salesforce, Excel)</td><td class="dimcell">&mdash;</td><td class="dimcell">&mdash;</td><td class="yes-cell">✓</td></tr>
+ <tr><td>The 40-in-14-days guarantee</td><td class="yes-cell">✓</td><td class="yes-cell">✓</td><td class="yes-cell">✓</td></tr>
+ </tbody>
+ </table>
+ </div>
 
  <!-- Guarantee callout -->
  <div class="guarantee" style="margin-bottom:40px">
  <div class="g-icon">🛡️</div>
  <div class="guarantee-text">
- <b>The Managed guarantee:</b> within 14 days of go-live, Lead Me will have found and warm-scored at least 40 businesses in your territory that genuinely match your vertical. And every email is built to land in the inbox, not the spam folder: we set your sending domain up properly (SPF, DKIM, DMARC), warm it up, and pace the sends so your name stays trusted. If we miss that number, you walk away owing nothing. No fine print, no "we tried our best." Results or your money back.
+ <b>The guarantee, on every plan:</b> 40 businesses in your territory that fit what you sell, each with a checked, working email address and a record of where we found it, within 14 days of going live &mdash; or you walk away owing nothing. No fine print, and no &ldquo;we tried our best.&rdquo;
  </div>
  </div>
 
@@ -190,8 +247,8 @@ footer a{color:var(--ink-3)}
  <p class="sub">Find the right businesses, learn the truth about each, reach out like a person — not a spammer.</p>
  <div class="grid3">
  <div class="card"><div class="ic">🔎</div><h3>Finds the businesses</h3><p>Searches your whole territory (Manitoba, Saskatchewan, NW Ontario to start) using open business listings and maps. No paid lead lists, no "dollar a lead" — Calas's own finder does it.</p></div>
- <div class="card"><div class="ic">📖</div><h3>Reads their website</h3><p>For each company it reads their own pages — what they do, whether they're hiring or expanding, how many locations — and gives each a warmth score out of 100 with plain reasons.</p></div>
- <div class="card"><div class="ic">✉️</div><h3>Warms them up</h3><p>Drafts a first email using only facts it found, with the source shown. You approve it. Replies are read back in, so a sequence stops the moment someone answers.</p></div>
+ <div class="card"><div class="ic">📖</div><h3>Reads their website</h3><p>For each company it reads their own pages — what they do, whether they're hiring or expanding, how many locations — and gives each a fit score out of 100, with plain reasons for how well it fits what you sell.</p></div>
+ <div class="card"><div class="ic">✉️</div><h3>Reaches out properly</h3><p>Checks the email address actually works, then drafts a short first email using only facts it found, with the source shown. You approve it, and the follow-ups stop the moment someone answers.</p></div>
  </div>
 </div></section>
 
@@ -200,14 +257,14 @@ footer a{color:var(--ink-3)}
  <p class="sub">Set the industry and territory once. It does the digging; you make the calls.</p>
  <div class="steps">
  <div class="step"><h3>You pick the target</h3><p>Choose the trade (forklifts, fleet vehicles, HVAC, and more) and the territory. It finds every matching business it can and lists them.</p></div>
- <div class="step"><h3>It scores and drafts</h3><p>Each company gets a warmth score and a ready-to-review email built from real facts about them — no guessed names, no filler.</p></div>
- <div class="step"><h3>You approve, it sends</h3><p>Only the warm ones you approve go out, within a daily cap, with an unsubscribe footer. Replies land in a Replies tab and pause the follow-ups automatically.</p></div>
+ <div class="step"><h3>It scores and drafts</h3><p>Each company gets a fit score and a ready-to-review email built from real facts about them — no guessed names, no filler.</p></div>
+ <div class="step"><h3>You approve, it sends</h3><p>Only the ones you approve go out, within a daily cap and with an unsubscribe footer &mdash; sent by you with one click on Starter, or sent for you on a gentle schedule on Lead Me and Team. A reply pauses the follow-ups automatically.</p></div>
  </div>
 </div></section>
 
 <section class="section"><div class="wrap" style="text-align:center">
  <a class="btn" href="/demo/leadme/">&#9654; Watch the walkthrough</a>
- <div class="honest" style="margin-top:22px"><b>What Lead Me is, and isn't.</b> It finds and researches businesses from what they publish about themselves — it does not dig into anyone's private life, and it never sends without your approval. It drafts good first emails; it does not promise anyone will reply. It's honest outreach at speed, not a spam machine. A warm score is a fit estimate, not a guarantee.</div>
+ <div class="honest" style="margin-top:22px"><b>What Lead Me is, and isn't.</b> It finds and researches businesses from what they publish about themselves — it does not dig into anyone's private life, and it never sends without your approval. It drafts good first emails; it does not promise anyone will reply. It's honest outreach at speed, not a spam machine. These are cold contacts &mdash; businesses that haven't heard from you yet &mdash; so every email is short, true and easy to say no to. A fit score is an estimate of how well a business matches what you sell, not a promise that they'll buy.</div>
 </div></section>
 
 <section class="section" id="industries"><div class="wrap">
@@ -221,15 +278,16 @@ footer a{color:var(--ink-3)}
  <div class="faq">
  <details><summary>Where do the leads come from?</summary><p>Open business listings and maps, plus each company's own public website. No purchased lists, no scraping of people's personal information — just businesses that have chosen to be findable.</p></details>
 
- <details><summary>What does the C$500/mo cover?</summary><p>There's no setup fee. It covers a full onboarding session, custom vertical configuration for your exact product, territory mapping, the initial finder run, and active management — we're not just handing you software, we're delivering a pipeline. The guarantee is the proof of that.</p></details>
+ <details><summary>Which plan is right for me?</summary><p>If you'd like to send each email yourself, <b>Starter</b> (C$199/mo) finds and checks the businesses, explains why each one fits, and writes the emails &mdash; you send them from your own email with one click. If you'd rather it ran in the background, <b>Lead Me</b> (C$500/mo) sends for you on a gentle schedule and stops by itself when someone replies. If a few of you sell into the same territory, <b>Team</b> (C$800/mo) gives up to four people one shared list, so nobody emails the same company twice, and exports to your CRM. None of the plans has a setup fee, and all three come with the same guarantee.</p></details>
  <details><summary>Will this get me in trouble with anti-spam rules?</summary><p>It's built around Canada's anti-spam law (CASL): an unsubscribe link in every email, a daily send cap, a suppression list, and your real mailing address on the footer. You approve each message before it sends.</p></details>
- <details><summary>Does it email people automatically?</summary><p>No. It drafts; you approve. It will only send the ones you've reviewed and marked ready, and it stops a sequence the moment someone replies.</p></details>
- <details><summary>Can it do my industry, not just forklifts?</summary><p>Yes. It ships with seven trades and a builder to add your own. The Managed plan includes a custom vertical built for your exact product and buyer.</p></details>
+ <details><summary>Does it email people automatically?</summary><p>Only on the plans that do, and only the emails you've approved. On Starter, nothing goes out until you press &ldquo;Open in my email&rdquo; and send it yourself. On Lead Me and Team, it sends the ones you've approved from your own address &mdash; a first email, a follow-up on day 3 and a last one on day 7 &mdash; and it stops the moment someone replies or unsubscribes, and pauses if emails start bouncing.</p></details>
+ <details><summary>Can it do my industry, not just forklifts?</summary><p>Yes. It ships with seven ready-made trades and a builder to add your own, set up with you for your exact product and buyer.</p></details>
 
  </div>
+ <div class="honest" id="responsibilities"><b>Your responsibilities, in plain words.</b> For each business, Lead Me explains why it&rsquo;s likely fine to email under Canada&rsquo;s anti-spam law (CASL), keeps a record of where each address was found, and skips businesses whose websites say they don&rsquo;t want unsolicited email. That&rsquo;s helpful information, not legal advice. You&rsquo;re the sender, so you&rsquo;re responsible for what you send and who you send it to &mdash; and if you&rsquo;re ever unsure about a business, it&rsquo;s always fine to skip it or ask us.</div>
 </div></section>
 
-<footer><div class="wrap">Calas Automations &middot; Winnipeg &middot; prices in CAD plus GST/RST where applicable<br>Lead Me · <a href="mailto:dan@calasautomations.com">dan@calasautomations.com</a> · 204-227-5308 · Find the right businesses. Warm them up. You make the calls.</div></footer>
+<footer><div class="wrap">Calas Automations &middot; Winnipeg &middot; prices in CAD plus GST/RST where applicable<br>Lead Me · <a href="mailto:dan@calasautomations.com">dan@calasautomations.com</a> · 204-227-5308 · Find the right businesses. Reach out properly. You make the calls.</div></footer>
 <script>
 (function(){
  var hdr=document.getElementById('hdr');

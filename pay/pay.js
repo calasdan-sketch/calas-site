@@ -3,7 +3,10 @@
  * On load: fetch /pay/links.json, then for every element with data-pay="<key>":
  *   - if links[key] is a non-empty https:// URL  -> set href and show the element
  *   - otherwise                                  -> hide it
- * No dependencies. Never throws. If the fetch fails, every data-pay element is hidden.
+ * And for every element with data-pay-fallback="<key>" (e.g. a "Talk to us" mailto button):
+ *   - shown when that key has no link yet, hidden once it has one
+ * No dependencies. Never throws. If the fetch fails, every data-pay element is hidden
+ * and every data-pay-fallback element is shown, so a plan is always choosable.
  *
  * Elements are hidden with both the `hidden` attribute and an inline display:none,
  * because some pages style .btn with display:inline-block, which would beat `hidden`.
@@ -40,6 +43,18 @@
         }
       } catch (e) {
         hide(el);
+      }
+    }
+    var fbs;
+    try { fbs = document.querySelectorAll('[data-pay-fallback]'); } catch (e) { return; }
+    for (var j = 0; j < fbs.length; j++) {
+      var fb = fbs[j];
+      try {
+        var fkey = (fb.getAttribute('data-pay-fallback') || '').trim();
+        var furl = links && Object.prototype.hasOwnProperty.call(links, fkey) ? links[fkey] : '';
+        if (fkey && isHttps(furl)) hide(fb); else show(fb);
+      } catch (e) {
+        show(fb);
       }
     }
   }
