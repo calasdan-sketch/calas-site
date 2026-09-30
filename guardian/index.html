@@ -77,6 +77,11 @@ const RULES=[
  ["gift_card_request",4,"Asked for gift cards — no legitimate partner, official, or business is ever paid in gift cards.",[/gift card/i,/itunes card/i,/google play card/i,/steam card/i,/amazon gift/i]],
  ["wire_or_crypto_request",4,"Asked to send money by wire or crypto — both are effectively unrecoverable once sent, which is why scammers prefer them.",[/wire (me|transfer)/i,/western union/i,/moneygram/i,/send (bitcoin|usdt|crypto|eth) to/i,/my wallet address/i]],
  ["secrecy_request",2,"Asked to keep the relationship or money secret from friends/family/bank — isolation is a control tactic.",[/don'?t tell (your|anyone)/i,/keep this between us/i,/our little secret/i,/the bank (won'?t|wouldn'?t) understand/i]],
+ ["parcel_fee",3,"A 'your package is on hold' text asking for a fee or new details — Canada Post, Purolator and couriers don't ask for payment or card details by text.",[/(package|parcel|shipment|delivery)[^.]{0,80}(on hold|held|undeliverable|could not be delivered|failed|suspended)/i,/(redelivery|re-delivery|shipping|delivery|customs) (fee|charge|payment)/i,/update your (delivery|shipping) (address|details|information)/i]],
+ ["bank_impersonation",4,"Claims your bank account or card is locked and wants you to act now — real banks never ask you to confirm details from a text link.",[/unusual (sign-?in|login|activity)/i,/(card|account) (has been |is |was )?(locked|suspended|frozen|restricted|disabled)/i,/verify your (account|identity|card)/i,/confirm your (banking|card|account) (details|information)/i]],
+ ["government_impersonation",4,"Pretends to be the CRA or Service Canada about a refund, debt or arrest — the CRA doesn't text payment demands, threats or refund links.",[/\b(CRA|canada revenue agency|service canada|revenue canada)\b[^.]{0,100}(refund|owe|owing|arrest|warrant|penalt|benefit|deposit|audit)/i,/(arrest warrant|police will|legal action) [^.]{0,40}(unless|if you (do not|don'?t))/i]],
+ ["odd_link",2,"A link to an unusual web address (.top, .click, .live, .xyz and similar) — real banks, couriers and the CRA use their own well-known websites.",[/https?:\/\/[^\s\/]+\.(top|click|live|xyz|info|shop|icu|buzz|online|site|vip|cfd|sbs)(?=[\/\s:?#]|$)/i]],
+ ["pressure_deadline",1,"A tight deadline (24 hours, final notice) — pressure is used so you don't stop and check.",[/within (24|48|12) hours/i,/final (notice|warning)/i,/act (now|immediately|today)/i,/(immediately|right away) or/i]],
  ["love_bombing_pace",1,"Declared strong love or marriage within days — real relationships rarely move this fast; scammers do it to short-circuit caution.",[/i (love|adore) you/i,/marry me/i,/soulmate/i,/i'?ve never felt this way/i,/destiny brought us together/i]]
 ];
 const ADVICE={
@@ -84,7 +89,7 @@ const ADVICE={
 1:"A little caution is warranted. Ask for a live video call on your terms (a random gesture, a specific word) before this goes further.",
 2:"Several common tactics showed up. Do not send money, gift cards, or crypto. Ask for a live, unscripted video call today.",
 3:"This matches a well-documented scam pattern closely. Stop sending anything of value now. Reverse-image-search their photos and search their exact wording — scam scripts get reused word-for-word.",
-4:"This is a strong match for a known romance or crypto scam. Do not send or invest anything else. If money already moved, tell your bank, and report at antifraudcentre-centreantifraude.ca (Canada)."
+4:"This is a strong match for a known scam. Do not send or invest anything else. If money already moved, tell your bank, and report at antifraudcentre-centreantifraude.ca (Canada)."
 };
 const LABEL=["No signal","Low","Moderate","High","Critical"];
 const COLOR=["#17794A","#8a6d1a","#b5651d","#b23b2e","#8b1a1a"];
