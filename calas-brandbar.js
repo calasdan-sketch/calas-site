@@ -8,7 +8,7 @@
     /* masthead */
     '.cbar{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #DCE6ED;font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
     '.cbar::after{content:"";display:block;height:2px;background:linear-gradient(90deg,transparent,#F0C171,transparent)}' +
-    '.cbar .cbar-in{max-width:1240px;margin:0 auto;padding:12px 30px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;box-sizing:border-box}' +
+    '.cbar .cbar-in{max-width:1400px;margin:0 auto;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;box-sizing:border-box}' +
     '.cbar .lock{display:flex;align-items:center;gap:12px;text-decoration:none}' +
     '.cbar .crest{width:26px;height:36px;flex:none;display:inline-block;background:#155F87;' +
       '-webkit-mask:url(/favicon.png) center/contain no-repeat;mask:url(/favicon.png) center/contain no-repeat;' +
@@ -17,12 +17,15 @@
     '@media(prefers-reduced-motion:reduce){.cbar .crest,.cfoot .crest{animation:none}}' +
     '.cbar .name{font-family:"Libre Baskerville",Georgia,serif;font-size:19px;font-weight:700;color:#155F87;line-height:1;letter-spacing:-.01em}' +
     '.cbar .sub{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:8px;letter-spacing:.24em;color:#6B7883;margin-top:3px;border-top:1.5px solid #155F87;padding-top:3px}' +
-    '.cbar nav{display:flex;align-items:center;gap:15px;font-size:15.5px;flex-wrap:wrap}' +
+    '.cbar nav{display:flex;align-items:center;gap:16px;font-size:17.5px;flex-wrap:wrap}' +
+    '.cbar nav a{white-space:nowrap}' +
+    '.cbar .nav-signin{font-weight:600;color:#12212C;border:1px solid currentColor;padding:8px 14px;border-radius:6px}' +
     '.cbar nav a{text-decoration:none;color:#4E5B66}' +
     '.cbar nav a:hover{color:#155F87}' +
-    '.cbar .nav-cta{background:#155F87;color:#fff;padding:9px 16px;border-radius:6px;font-weight:600}' +
+    '.cbar .nav-cta{background:#155F87;color:#fff;padding:9px 16px;border-radius:6px;font-weight:600;font-size:16px}' +
     '.cbar .nav-cta:hover{background:#0E4A6B}' +
-    '@media(max-width:760px){.cbar .cbar-in{padding:10px 16px}.cbar nav{gap:14px;font-size:15px}}' +
+    '@media(max-width:1400px){.cbar .cbar-in{padding:16px 22px;gap:14px}.cbar nav{gap:11px}.cbar .nav-cta{padding:9px 12px}}' +
+    '@media(max-width:760px){.cbar .cbar-in{padding:10px 16px}.cbar nav{gap:14px;font-size:16px}}' +
     /* footer */
     '.cfoot{margin-top:48px;background:#fff;border-top:2px solid #F0C171;font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#4E5B66}' +
     '.cfoot .cfoot-in{max-width:1240px;margin:0 auto;padding:30px 30px 34px;box-sizing:border-box}' +
@@ -69,7 +72,7 @@
           '<span class="crest" aria-hidden="true"></span>' +
           '<span><span class="name">Calas</span><span class="sub">AUTOMATIONS</span></span>' +
         '</a>' +
-        '<nav>' + NAV +
+        '<nav>' + NAV + '<a class="nav-signin" href="/signin/">Sign in</a>' +
           '<a class="nav-cta" href="mailto:dan@calasautomations.com?subject=Calas%20Automations%20%E2%80%94%2015%20minutes">Book 15 minutes</a>' +
         '</nav>' +
       '</div>';
