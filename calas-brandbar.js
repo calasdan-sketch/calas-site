@@ -19,7 +19,7 @@
     '.cbar .sub{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:8px;letter-spacing:.24em;color:#6B7883;margin-top:3px;border-top:1.5px solid #155F87;padding-top:3px}' +
     '.cbar nav{display:flex;align-items:center;gap:16px;font-size:17.5px;flex-wrap:wrap}' +
     '.cbar nav a{white-space:nowrap}' +
-    '.cbar .nav-signin{font-weight:600;color:#12212C;border:1px solid currentColor;padding:8px 14px;border-radius:6px}' +
+    '.cbar nav{flex:1}.cbar nav>a:first-child{margin-left:auto}.cbar .nav-signin{margin-left:auto;font-weight:600;color:#12212C;border:1px solid currentColor;padding:8px 14px;border-radius:6px}' +
     '.cbar nav a{text-decoration:none;color:#4E5B66}' +
     '.cbar nav a:hover{color:#155F87}' +
     '.cbar .nav-cta{background:#155F87;color:#fff;padding:9px 16px;border-radius:6px;font-weight:600;font-size:16px}' +
