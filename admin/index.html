@@ -15,17 +15,17 @@ header b{font:700 18px "Libre Baskerville",Georgia,serif}header button{width:aut
 main{max-width:1240px;margin:0 auto;padding:16px}
 .card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:18px;margin-bottom:16px}
 h1,h2{font-family:"Libre Baskerville",Georgia,serif;margin:0 0 10px}h1{font-size:22px}h2{font-size:18px}
-label{display:block;font-size:13px;font-weight:600;color:var(--ink2);margin:0 0 4px}
+label{display:block;font-size:16px;font-weight:600;color:var(--ink2);margin:0 0 4px}
 input,select{width:100%;font:inherit;padding:10px;border:1px solid var(--rule);border-radius:8px;background:var(--card);color:var(--ink)}
 button{font:600 15px "IBM Plex Sans",sans-serif;padding:11px 16px;border:0;border-radius:8px;background:var(--blue);color:#fff;cursor:pointer}
-button.ghost{background:transparent;color:var(--blue);border:1px solid var(--rule);padding:6px 10px;font-size:13px}
+button.ghost{background:transparent;color:var(--blue);border:1px solid var(--rule);padding:6px 10px;font-size:16px}
 button:disabled{opacity:.45;cursor:not-allowed}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;align-items:end}
-.check{display:flex;gap:8px;align-items:center;font-size:14px;margin-top:10px}.check input{width:auto}
-.notice{padding:10px 12px;border-radius:8px;margin:0 0 12px;font-size:14px}.warn{background:var(--midbg);color:var(--mid)}.good{background:var(--okbg);color:var(--ok)}.err{background:var(--badbg);color:var(--bad)}
+.check{display:flex;gap:8px;align-items:center;font-size:16px;margin-top:10px}.check input{width:auto}
+.notice{padding:10px 12px;border-radius:8px;margin:0 0 12px;font-size:16px}.warn{background:var(--midbg);color:var(--mid)}.good{background:var(--okbg);color:var(--ok)}.err{background:var(--badbg);color:var(--bad)}
 .made{font:500 18px "IBM Plex Mono",monospace;letter-spacing:1px}
-.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:8px;border-bottom:1px solid var(--rule);white-space:nowrap}th{font-size:12px;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em}
-td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:12px;font-weight:600}
+.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:16px}th,td{text-align:left;padding:8px;border-bottom:1px solid var(--rule);white-space:nowrap}th{font-size:15px;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em}
+td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:15px;font-weight:600}
 .on{background:var(--okbg);color:var(--ok)}.off{background:var(--badbg);color:var(--bad)}.soon{background:var(--midbg);color:var(--mid)}
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.filters select,.filters input{width:auto;min-width:150px}
 #login{max-width:380px;margin:60px auto}
@@ -138,7 +138,7 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
       <h2>Dispatch Me · recruit crews by email</h2>
       <div id="rc-top"></div>
       <details style="margin:10px 0"><summary style="cursor:pointer;font-weight:600">See the email exactly as crews get it</summary><div id="rc-prev" style="border:1px solid var(--rule);border-radius:8px;padding:12px;margin-top:8px;background:#fff;color:#14202b"></div></details>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><label for="rc-n" style="margin:0">How many to send now</label><input id="rc-n" type="number" min="1" max="25" value="10" style="width:90px"><button id="rc-send" type="button">Send</button><span id="rc-msg" style="font-size:14px"></span></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><label for="rc-n" style="margin:0">How many to send now</label><input id="rc-n" type="number" min="1" max="25" value="10" style="width:90px"><button id="rc-send" type="button">Send</button><span id="rc-msg" style="font-size:16px"></span></div>
       <details style="margin-top:12px"><summary style="cursor:pointer;font-weight:600">The crew list</summary><div class="tablewrap"><table><thead><tr><th>Crew</th><th>City</th><th>Email</th><th>Can email?</th><th>Status</th></tr></thead><tbody id="rrows"></tbody></table></div></details>
     </section>
 
