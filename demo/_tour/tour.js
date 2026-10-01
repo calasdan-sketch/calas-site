@@ -43,6 +43,7 @@
     clips = cfg.lines.map(function (_, i) {
       var a = new Audio();
       a.preload = 'auto';
+      a.volume = 0.55;            // 2026-10-01 Dan: medium volume — audible but won't shock
       a.src = cfg.audioBase + i + '.mp3';
       return a;
     });
@@ -175,7 +176,7 @@
 
   function run() {
     if (state && !state.stopped) return;
-    state = { stopped: false, voice: !!(state && state.voice), cancel: [], current: null, speaking: false, done: -1 };
+    state = { stopped: false, voice: true, cancel: [], current: null, speaking: false, done: -1 }; // 2026-10-01 Dan: voice ON by default (browser still needs the first click before sound can play)
     buildOverlay();
     if (cfg.onStart) try { cfg.onStart(); } catch (e) {}
     var api = { point: point, tap: tap, sleep: sleep, type: type, q: q };
@@ -214,7 +215,10 @@
   function armVoice() {
     function on(e) {
       if (ui.skip && (e.target === ui.skip)) return;
-      if (state && !state.stopped && !state.voice) setVoice(true);
+      if (state && !state.stopped) {
+        if (!state.voice) setVoice(true);
+        else { var a = state.current; if (a && a.paused && state.speaking) { try { a.currentTime = 0; var p = a.play(); if (p && p.catch) p.catch(function () {}); } catch (e2) {} } }
+      }
       window.removeEventListener('pointerdown', on, true);
       window.removeEventListener('keydown', on, true);
     }

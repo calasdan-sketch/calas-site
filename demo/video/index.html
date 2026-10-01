@@ -64,7 +64,7 @@ video{width:100%;display:block;background:#000}
   <p class="sub">A real walk-through of the document chase &mdash; requests going out, clients answering, and Cara handling the questions that don't need a person. About a minute and a half.</p>
 
   <div class="vwrap">
-    <video controls playsinline preload="metadata" poster="" src="onfile-demo.mp4"></video>
+    <video id="demovid" controls playsinline preload="metadata" poster="" src="onfile-demo.mp4"></video>
   </div>
 
   <div class="links">
@@ -75,4 +75,5 @@ video{width:100%;display:block;background:#000}
   <p class="foot">Calas Automations &middot; Winnipeg</p>
 </main>
 
+<script>/* 2026-10-01 Dan: start the demo video at a medium volume, not full — won't shock people */(function(){var v=document.getElementById('demovid');if(v){v.volume=0.55;v.addEventListener('loadedmetadata',function(){v.volume=0.55});}})();</script>
 <script src="/calas-brandbar.js?v=20260929j" defer></script></body></html>

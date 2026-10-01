@@ -1613,9 +1613,9 @@ build();renderPlan();setDay(0);render();
   var AUDIO_BASE='narration/step-';
   var overlay=null,cursorEl=null,capEl=null,skipBtn=null,muteBtn=null;
   var tourBtn=document.getElementById('tourBtn');
-  var aborted=false,resolveWait=null,current=null,muted=true;
+  var aborted=false,resolveWait=null,current=null,muted=false;
   var reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var clips=LINES.map(function(_,i){var a=new Audio(AUDIO_BASE+i+'.mp3');a.preload='auto';return a});
+  var clips=LINES.map(function(_,i){var a=new Audio(AUDIO_BASE+i+'.mp3');a.preload='auto';a.volume=0.55;return a});
 
   function sleep(ms){
     return new Promise(function(res){
@@ -1763,8 +1763,8 @@ build();renderPlan();setDay(0);render();
   // the first click or key press anywhere turns the voice on.
   function voiceOn(e){
     if(skipBtn&&e.target===skipBtn)return;
-    if(muted){muted=false;clips.forEach(function(a){a.muted=false});setMuteLabel();
-      if(current&&current.paused){try{var p=current.play();if(p&&p.catch)p.catch(function(){})}catch(err){}}}
+    if(muted){muted=false;clips.forEach(function(a){a.muted=false});setMuteLabel();}
+    if(current&&current.paused){try{var p=current.play();if(p&&p.catch)p.catch(function(){})}catch(err){}}
     window.removeEventListener('pointerdown',voiceOn,true);window.removeEventListener('keydown',voiceOn,true);
   }
   window.addEventListener('pointerdown',voiceOn,true);window.addEventListener('keydown',voiceOn,true);
