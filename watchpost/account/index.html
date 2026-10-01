@@ -29,7 +29,7 @@ table{width:100%;border-collapse:collapse;font-size:16px}td,th{text-align:left;p
 .word{font:600 22px "IBM Plex Mono",monospace;letter-spacing:1px;background:#f2f5f8;padding:10px 14px;border-radius:8px;display:inline-block}
 [hidden]{display:none!important}
 </style>
-<style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20260929j"></head><body>
+<style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"></head><body>
 <header><div class="w"><a href="/watchpost/">Watchpost</a><button id="out" type="button" hidden>Sign out</button></div></header>
 <main>
   <div id="msg" role="status" aria-live="polite"></div>
@@ -188,4 +188,4 @@ table{width:100%;border-collapse:collapse;font-size:16px}td,th{text-align:left;p
   $('#fm-leave').addEventListener('click',function(){if(!confirm('Leave this family? Alerts stop right away.'))return;api('/api/family/me',{leave:true}).then(function(){say('You left the family.');load()})});
 })();
 </script>
-<script src="/calas-brandbar.js?v=20260929j" defer></script></body></html>
+<script src="/calas-brandbar.js?v=20261001a" defer></script></body></html>

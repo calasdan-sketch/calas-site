@@ -155,3 +155,24 @@ body .cbar nav a:not(.nav-signin):not(.nav-cta):hover,
   background:rgba(95,179,221,.18) !important;
   color:#155F87 !important;
 }
+
+/* 2026-10-01 Dan: on phones the header links stacked into a tall column on
+   every page with its own .mast header. Now: logo on top, then one row of
+   links you swipe left/right. Wide tables scroll inside their own box
+   instead of pushing the page wider than the screen. */
+@media(max-width:760px){
+  header .mast{flex-wrap:wrap;padding:10px 14px 0;gap:4px}
+  header .mast nav{flex:1 1 100%;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+    gap:2px;font-size:15px;padding:2px 28px 10px 18px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 88%,transparent)}
+  header .mast nav::-webkit-scrollbar{display:none}
+  header .mast nav a{flex:none}
+  header .mast nav > a:first-child,header .mast nav .nav-signin{margin-left:0}
+  header .mast nav .nav-signin,header .mast nav .nav-cta{padding:6px 12px;font-size:14.5px}
+  section table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* Pricing cards: let a long price line wrap instead of widening the card */
+  .plans{grid-template-columns:minmax(0,1fr)}
+  .plans .price{flex-wrap:wrap}
+  /* long web addresses in body text break instead of running off the screen */
+  main p a{overflow-wrap:anywhere}
+}

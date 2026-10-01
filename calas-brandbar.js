@@ -137,6 +137,14 @@
     ensureStyle();
     injectMasthead();
     injectFooter();
+    showCurrentLink();
+  }
+
+  // Phones swipe the header links sideways; start with this page's link in view.
+  function showCurrentLink() {
+    var nav = document.querySelector('header .mast nav');
+    var on = nav && nav.querySelector('a.on');
+    if (on && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = on.offsetLeft - nav.offsetLeft - 40;
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
