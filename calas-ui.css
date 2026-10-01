@@ -132,11 +132,26 @@ body .cbar nav{flex:1;flex-wrap:nowrap}
 @media(max-width:1400px){body .cbar .cbar-in{padding:16px 22px;gap:14px}}
 @media(max-width:1240px){body .cbar .cbar-in,body .cbar nav{flex-wrap:wrap}}
 
-/* 2026-09-30 Dan: light-blue (On File crest #5FB3DD) highlight when the cursor
-   is over a header menu link, on every page. The Sign in and Book 15 minutes
-   buttons keep their own look. Covers both the marketing header and the
-   injected .cbar app/utility header. */
+/* 2026-09-30 Dan: soft rounded light-blue (#5FB3DD) hover "pill" behind the
+   header AND footer menu links, every page. Sign in / Book 15 minutes keep
+   their own look. Links carry the padding + radius at rest (transparent) so the
+   box appears on hover with no layout shift; a small negative margin keeps the
+   row width tight. Covers the marketing header, the injected .cbar header, and
+   the shared .cfoot footer. */
+header nav a:not(.nav-signin):not(.nav-cta),
+body .cbar nav a:not(.nav-signin):not(.nav-cta){
+  padding:5px 7px;border-radius:9px;
+  transition:background .15s ease,color .15s ease;
+}
+.cfoot nav a{
+  padding:5px 10px;border-radius:9px;
+  transition:background .15s ease,color .15s ease;
+}
+/* close the row gap so the pills' own padding doesn't push the menu wider */
+header nav,body .cbar nav{gap:1px}
 header nav a:not(.nav-signin):not(.nav-cta):hover,
-body .cbar nav a:not(.nav-signin):not(.nav-cta):hover{
-  color:#5FB3DD !important;
+body .cbar nav a:not(.nav-signin):not(.nav-cta):hover,
+.cfoot nav a:hover{
+  background:rgba(95,179,221,.18) !important;
+  color:#155F87 !important;
 }
