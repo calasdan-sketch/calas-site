@@ -1,0 +1,19 @@
+/* Dark navy app bar for every demo, matching the Lead Me demo and the
+   product-page heroes: first word light gray, second word white.
+   Linked after each page's own styles, so every rule is scoped to .appbar. */
+.appbar{background:linear-gradient(135deg,#0B2E45,#123C57);border-bottom:2px solid #C9963E;color:#fff;box-shadow:none}
+.appbar .t1{color:#B9CFDD}
+.appbar .t1 .r{color:#fff}
+.appbar .t2{color:#F0C171}
+.appbar .crest{color:#5FB3DD}
+.appbar .seal,.appbar .gcrest,.appbar .crest:not(:has(.cres)),.appbar .coin i{background:#5FB3DD}
+.appbar .crest .cres{background:#5FB3DD}
+.appbar .who{color:#B9CFDD;border-left-color:rgba(255,255,255,.22)}
+.appbar .who b{color:#fff}
+.appbar .getlink{color:#F0C171}
+.appbar .getlink:hover{border-bottom-color:#F0C171}
+.appbar .ghost{color:#fff;border-color:rgba(255,255,255,.4)}
+.appbar .ghost:hover{border-color:#fff;color:#fff}
+.appbar .spd{border-color:rgba(255,255,255,.3)}
+.appbar .spd button{color:#B9CFDD}
+.appbar .spd button.on{background:#fff;color:#0B2E45}
