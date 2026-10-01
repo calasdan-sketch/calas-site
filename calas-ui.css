@@ -131,3 +131,12 @@ body .cbar .cbar-in{max-width:1400px;padding:16px 40px;box-sizing:border-box;fle
 body .cbar nav{flex:1;flex-wrap:nowrap}
 @media(max-width:1400px){body .cbar .cbar-in{padding:16px 22px;gap:14px}}
 @media(max-width:1240px){body .cbar .cbar-in,body .cbar nav{flex-wrap:wrap}}
+
+/* 2026-09-30 Dan: light-blue (On File crest #5FB3DD) highlight when the cursor
+   is over a header menu link, on every page. The Sign in and Book 15 minutes
+   buttons keep their own look. Covers both the marketing header and the
+   injected .cbar app/utility header. */
+header nav a:not(.nav-signin):not(.nav-cta):hover,
+body .cbar nav a:not(.nav-signin):not(.nav-cta):hover{
+  color:#5FB3DD !important;
+}
