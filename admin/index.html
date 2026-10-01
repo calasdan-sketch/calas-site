@@ -38,8 +38,8 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
 <header><div class="w"><b>Calas · People &amp; access</b><button id="out" hidden>Sign out</button></div></header>
 <main>
   <section id="login" class="card">
-    <h1>Owner sign-in</h1>
-    <p style="color:var(--ink2);margin-top:0">Only for Dan. Enter the admin password you set.</p>
+    <h1>Administrator sign-in</h1>
+    <p style="color:var(--ink2);margin-top:0">Administrator access only. Enter your admin password.</p>
     <form id="lf"><label for="pw">Admin password</label><input id="pw" type="password" autocomplete="current-password">
     <button style="margin-top:12px;width:100%">Sign in</button></form>
     <div id="lmsg" class="notice err" hidden></div>
@@ -97,7 +97,7 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
         <div class="grid">
           <div><label for="app-sel">App</label><select id="app-sel"></select></div>
           <div><label for="exp">Works until (end of this day)</label><input id="exp" type="date" required></div>
-          <div><label for="note">Who is it for?</label><input id="note" placeholder="e.g. Dan Pratt"></div>
+          <div><label for="note">Who is it for?</label><input id="note" placeholder="e.g. Pat Smith"></div>
           <div><label for="email">Their email (optional)</label><input id="email" type="email" placeholder="friend@example.com"></div>
           <div><label for="count">How many codes</label><input id="count" type="number" min="1" max="500" value="1"></div>
         </div>
