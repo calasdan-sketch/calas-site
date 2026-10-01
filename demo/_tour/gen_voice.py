@@ -30,6 +30,8 @@ import narration_lines  # noqa: E402
 SARAH_VOICE_ID = "EXAVITQu4vr4xnSDxMaL"  # ElevenLabs premade "Sarah"
 EL_MODEL = "eleven_flash_v2_5"
 EL_CREDITS_PER_CHAR = 0.5
+# spelled for the ear only; the captions keep the real wording
+SAY_AS = [(re.compile(r"\bLead Me\b"), "Leed Me")]
 DURS_RE = re.compile(r"\b(durs|DURS)(\s*[:=]\s*)\[[^\]]*\]")
 
 
@@ -52,6 +54,8 @@ def el_credits_left() -> int:
 
 def say_elevenlabs(text: str) -> bytes:
     voice = os.environ.get("ELEVENLABS_VOICE_ID") or SARAH_VOICE_ID
+    for pattern, spoken in SAY_AS:
+        text = pattern.sub(spoken, text)
     return _el_request(f"/v1/text-to-speech/{voice}?output_format=mp3_44100_128",
                        {"text": text, "model_id": EL_MODEL,
                         "voice_settings": {"stability": 0.6, "similarity_boost": 0.8, "style": 0.0,

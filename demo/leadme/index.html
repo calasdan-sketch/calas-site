@@ -52,6 +52,7 @@ p{margin:0 0 .8rem;max-width:68ch}
 .coin i.back{transform:rotateY(180deg)}
 @keyframes lmspin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
 .lm-name{font-family:var(--font-display);font-size:1.2rem;font-weight:700;line-height:1.05;display:block;color:#fff}
+.lm-lead{color:#A3AEB8}.lm-me{color:#fff}
 .lm-sub{display:block;font-family:var(--font-mono);font-size:.58rem;font-weight:500;letter-spacing:.2em;color:var(--gold);margin-top:3px}
 .lm-who{padding-left:1rem;border-left:1px solid rgba(207,227,239,.35);font-size:.82rem;color:#CFE3EF;line-height:1.35}
 .lm-who b{display:block;color:#fff;font-weight:600;font-size:.88rem}
@@ -232,7 +233,7 @@ details.howto p{margin:.6rem 0 0}
 <div class="appbar"><div class="appbar-in">
   <div class="lm-brand">
     <span class="coin" aria-hidden="true"><i></i><i class="back"></i></span>
-    <div><span class="lm-name">Lead Me</span><span class="lm-sub">BY CALAS AUTOMATIONS</span></div>
+    <div><span class="lm-name"><span class="lm-lead">Lead</span> <span class="lm-me">Me</span></span><span class="lm-sub">BY CALAS AUTOMATIONS</span></div>
     <div class="lm-who"><b>Northgate Business Services</b>Signed in as Pat Morgan &middot; Sales</div>
   </div>
   <div class="appnav">
@@ -345,7 +346,7 @@ details.howto p{margin:.6rem 0 0}
 <div id="view-settings" hidden>
 <section class="lm-hero">
   <div class="wrap">
-    <p class="eyebrow">Lead Me</p>
+    <p class="eyebrow"><span class="lm-lead">Lead</span> <span class="lm-me">Me</span></p>
     <h1>Settings</h1>
     <p>Your details, your email, what you sell and where.</p>
   </div>
@@ -860,7 +861,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
   function first(sel) { return document.querySelector('#cards .row-card:not([hidden]) ' + (sel || '')); }
   CalasTour.start({
     lines: T.lines,
-    durs: [8.08, 7.34, 6.36, 7.2, 5.02, 4.83, 10.91, 6.92, 6.18, 13.75, 9.29, 7.24],
+    durs: [6.83, 7.34, 6.78, 7.2, 4.88, 4.83, 10.91, 6.92, 6.18, 14.16, 8.41, 7.24],
     audioBase: 'narration/step-',
     onReplay: function () { T.reset(); window.scrollTo(0, 0); },
     script: function (t) {
