@@ -1,7 +1,8 @@
 <!doctype html><html><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.nav-signin{font-weight:600;color:var(--ink) !important;border:1px solid currentColor;padding:8px 14px;border-radius:2px}
 </style><style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"></head><body>
 
-<title>Calas Automations</title>
+<title>Calas Automations — Business Automation in Winnipeg</title>
+<meta name="description" content="Calas Automations removes repetitive business work for Winnipeg companies — chase documents, send quotes, find leads and catch scams automatically. Free trials.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
@@ -175,6 +176,72 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 .foot-row{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:16px;color:var(--ink-3)}
 </style>
 <style>#hdr{position:relative}#hdr::after{content:"";display:block;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}</style>
+<style>
+/* ===== New homepage body (everything ln-prefixed + #lean scoped so it cannot collide with the site CSS) ===== */
+#lean{--navy:var(--night);--navy2:var(--night-2);--blue:var(--red);--blue2:var(--red-2);--sky:#5FB3DD;--ink1:var(--ink);--ink2:var(--ink-2);--ink3:var(--ink-3);--card:var(--surface);--line:var(--rule)}
+#lean .lnmask{-webkit-mask:url(data:image/png;base64,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) center/contain no-repeat;mask:url(data:image/png;base64,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) center/contain no-repeat}
+#lean .lnwrap{max-width:1120px;margin:0 auto;padding:0 24px}
+#lean .lneyebrow{font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue)}
+#lean h1,#lean h2,#lean h3{font-family:"Libre Baskerville",Georgia,serif;font-weight:700;letter-spacing:-.01em;line-height:1.12}
+#lean a{color:inherit;text-decoration:none}
+#lean .lnhero{position:relative;overflow:hidden;background:var(--navy);color:#fff}
+#lean .lngold{position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:5}
+#lean .lnaurora{position:absolute;inset:-20%;z-index:0;filter:blur(10px);background:radial-gradient(42% 46% at 72% 24%,rgba(95,179,221,.42),transparent 62%),radial-gradient(40% 44% at 20% 88%,rgba(21,95,135,.5),transparent 60%),radial-gradient(36% 40% at 50% 50%,rgba(14,58,85,.5),transparent 70%);animation:lnDrift 18s ease-in-out infinite alternate}
+@keyframes lnDrift{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-4%,3%,0) scale(1.12)}}
+#lean .lnhwm{position:absolute;right:-8%;bottom:-18%;width:560px;height:772px;background:var(--sky);opacity:.08;transform:rotate(-8deg);z-index:0;animation:lnFloat 9s ease-in-out infinite alternate}
+@keyframes lnFloat{0%{transform:rotate(-8deg) translateY(0)}100%{transform:rotate(-8deg) translateY(-26px)}}
+#lean .lnhero .lnwrap{position:relative;z-index:2;padding:86px 24px 92px}
+#lean .lnhero .lneyebrow{color:var(--sky)}
+#lean .lnhero h1{font-size:clamp(34px,5.2vw,58px);color:#fff;margin:18px 0 0;max-width:15ch}
+#lean .lnrot{color:var(--sky);display:inline-block;min-width:4ch}
+#lean .lnrot .w{display:inline-block;animation:lnRin .5s ease}
+@keyframes lnRin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+#lean .lnlead{font-size:clamp(17px,2vw,20px);color:#D4E4EE;margin:22px 0 0;max-width:60ch}
+#lean .lntag{font-family:"Libre Baskerville",serif;font-style:italic;color:#9FBBCD;font-size:15px;margin-top:14px}
+#lean .lnhbtns{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+#lean .lnbtn{display:inline-block;background:var(--blue);color:#fff;font-weight:600;padding:13px 22px;border-radius:11px;border:1px solid #3B86B0;transition:.2s;box-shadow:0 10px 30px -14px rgba(11,46,69,.6);cursor:pointer}
+#lean .lnbtn:hover{transform:translateY(-2px);box-shadow:0 16px 34px -14px rgba(11,46,69,.7)}
+#lean .lnbtn.lng{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);box-shadow:none}
+#lean .lnbtn.lng:hover{border-color:var(--sky);background:rgba(95,179,221,.14)}
+#lean .lnchips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:22px 0}
+#lean .lnchip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:14px;color:var(--ink2);font-weight:500}
+#lean .lnchip b{color:var(--blue)}
+#lean section{padding:62px 0;margin:0}
+#lean .lnsech{text-align:center;max-width:720px;margin:0 auto 38px}
+#lean .lnsech h2{font-size:clamp(26px,3.4vw,38px);color:var(--ink1)}
+#lean .lnsech p{color:var(--ink2);margin-top:12px;font-size:17px}
+#lean .lnsech h2::after{content:"";display:block;width:56px;height:3px;background:var(--gold);border-radius:3px;margin:16px auto 0}
+#lean .lngrid{display:grid;gap:18px}
+#lean .lng2{grid-template-columns:1fr 1fr}
+#lean .lng4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){#lean .lng4{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){#lean .lng4,#lean .lng2{grid-template-columns:1fr}}
+#lean .lncard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;transition:.22s;position:relative;display:block}
+#lean .lncard:hover{transform:translateY(-6px);border-color:var(--sky);box-shadow:0 22px 44px -26px rgba(11,46,69,.5)}
+#lean .lnwho .lncard{border-top:3px solid var(--gold)}
+#lean .lncard .lnic{width:34px;height:46px;background:var(--blue);margin-bottom:14px;display:block}
+#lean .lncard h3{font-size:20px;color:var(--ink1)}
+#lean .lncard p{color:var(--ink2);font-size:15px;margin-top:8px}
+#lean .lnbadge{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;color:var(--ink3);text-transform:uppercase}
+#lean .lnapps{margin-top:17px;display:flex;flex-wrap:wrap;gap:9px}
+#lean .lnapps a{font-family:"IBM Plex Sans",sans-serif;font-size:15.5px;font-weight:600;color:var(--blue);background:var(--red-soft);border:1px solid #CBE4F1;border-radius:11px;padding:7px 14px;transition:.18s;display:inline-block;text-decoration:none}
+#lean .lnapps a:hover{background:var(--sky);color:#06293D;border-color:var(--sky)}
+#lean .lnband{background:linear-gradient(120deg,var(--navy),var(--navy2));color:#fff;border-radius:22px;padding:46px;text-align:center;position:relative;overflow:hidden}
+#lean .lnband h2{color:#fff;font-size:clamp(24px,3vw,34px)}
+#lean .lnband p{color:#CFE1EC;margin:12px auto 24px;max-width:52ch}
+#lean .lnspinwrap{position:absolute;right:7%;top:50%;transform:translateY(-50%);z-index:1;perspective:1100px;pointer-events:none}
+#lean .lnspincrest{width:160px;height:221px;background:var(--sky);opacity:.92;transform-style:preserve-3d;animation:lnDime 8.5s linear infinite;filter:drop-shadow(0 18px 40px rgba(0,0,0,.35))}
+@keyframes lnDime{to{transform:rotateY(360deg)}}
+@media(max-width:820px){#lean .lnspinwrap{display:none}}
+#lean .lnflourish{text-align:center;padding:52px 0 8px}
+#lean .lnflourish .lnfc{width:66px;height:91px;margin:24px auto 0;background:var(--blue);display:inline-block;transform-style:preserve-3d;animation:lnDime 8s linear infinite}
+#lean hr.lngline{height:2px;border:0;margin:0;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+#lean .lnrv{transition:opacity .7s ease,transform .7s ease}
+.js #lean .lnrv{opacity:0;transform:translateY(22px)}
+.js #lean .lnrv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){#lean .lnspincrest,#lean .lnaurora,#lean .lnhwm,#lean .lnflourish .lnfc{animation:none}}
+</style>
+
 <header id="hdr">
   <div class="mast">
     <a class="lockup" href="/" aria-label="Calas Automations, home">
@@ -193,138 +260,75 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
       <a href="/guardian/">Guardian</a>
       <a href="/pay/">Pricing</a>
       <a href="/signin/" class="nav-signin">Sign in</a>
-      <a class="nav-cta" href="mailto:dan@calasautomations.com?subject=Calas%20Automations%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
+      <a class="nav-cta" href="/pay/">Try a tool free</a>
     </nav>
   </div>
 </header>
-<main>
 
-<div class="hero">
-  <div class="hero-art" aria-hidden="true"></div>
-  <div class="hero-overlay" aria-hidden="true"></div>
-  <div class="wrap">
-    <p class="eyebrow">Winnipeg, Manitoba &middot; Est. 2026</p>
-    <a class="of-lockup" href="/" aria-label="Calas Automations"><span class="crest" aria-hidden="true"></span><span class="of-lk-text"><span class="of-lk-name">Calas <span class="r">Automations</span></span><span class="of-lk-sub">SMALL AUTOMATIONS, BUILT PROPERLY</span></span></a>
-    <h1>The paperwork you're still waiting on, chased for you &mdash; kindly, and on time.</h1>
-    <p class="lede">Certificates, receipts, sign-offs &mdash; the documents your staff shouldn't have to chase by hand. Pick the page that's actually yours; each one gets straight to your pricing and your guarantee, no detour through the other two.</p>
+<main id="lean">
+<div class="lnhero"><div class="lngold"></div><div class="lnaurora"></div><div class="lnhwm lnmask"></div>
+  <div class="lnspinwrap"><div class="lnspincrest lnmask"></div></div>
+  <div class="lnwrap">
+    <div class="lneyebrow lnrv">Winnipeg · Business Automation</div>
+    <h1 class="lnrv">We remove the <span class="lnrot"><span class="w">repetitive</span></span><br>work in your business.</h1>
+    <p class="lnlead lnrv">Automation for Winnipeg companies — chase paperwork, send quotes, find leads, and catch scams, automatically. Less admin, more time on what makes money.</p>
+    <p class="lntag lnrv">The paperwork you're still waiting on, chased for you — kindly, and on time.</p>
+    <div class="lnhbtns lnrv"><a class="lnbtn" href="/pay/">Try a tool free</a><a class="lnbtn lng" href="#who">See what we do</a></div>
   </div>
 </div>
-<div class="wrap">
-  <section>
-    <div class="sec-head">
-      <p class="eyebrow">Choose your segment</p>
-      <h2>One product, three ways it's used.</h2>
-    </div>
-    <div class="doors">
-      <div class="door">
-        <h3>Accounting &amp; bookkeeping</h3>
-        <p>Client documents chased automatically every filing season, so your staff stop sending the same email three times.</p>
-        <a href="/accounting/">See how it works for accounting &rarr;</a>
-      </div>
-      <div class="door">
-        <h3>Trades</h3>
-        <p>Subcontractor insurance, WCB clearance, permits and lien waivers &mdash; chased before they lapse, not after something goes wrong on site.</p>
-        <a href="/trades/">See how it works for trades &rarr;</a>
-      </div>
-      <div class="door">
-        <h3>IT companies &amp; MSPs</h3>
-        <p>White-label On File and sell it under your own name. You keep the client and the invoice; we do the chasing behind your brand.</p>
-        <a href="/it-msp/">See the reseller program &rarr;</a>
-      </div>
-    </div>
-  </section>
-<section id="free-tools" aria-labelledby="ft-h" style="max-width:1240px;margin:28px auto;padding:0 20px">
-  <p style="font:600 12px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin:0 0 6px">Free &middot; no sign-in</p>
-  <h2 id="ft-h" style="margin:0 0 14px">Two free tools, yours to keep</h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
-    <a href="/receiptsort/" style="display:block;padding:18px 20px;border:1px solid var(--rule,#dce5eb);border-top:4px solid var(--red);text-decoration:none;color:var(--ink);background:#fff">
-      <b style="font-size:20px">ReceiptSort</b><br><span style="color:var(--ink-2)">Pick receipt photos or PDFs, get one clean spreadsheet. Works on any phone or computer; nothing is uploaded.</span><br><strong style="color:var(--red)">Open ReceiptSort free &rarr;</strong></a>
-    <a href="/guardian/" style="display:block;padding:18px 20px;border:1px solid var(--rule,#dce5eb);border-top:4px solid var(--red);text-decoration:none;color:var(--ink);background:#fff">
-      <b style="font-size:20px">Guardian</b><br><span style="color:var(--ink-2)">Paste a text or email and see if it's a scam. Works on your phone or computer &mdash; add it to your home screen.</span><br><strong style="color:var(--red)">Open Guardian free &rarr;</strong></a>
-  </div>
-</section>
+<div class="lnwrap"><div class="lnchips lnrv">
+  <span class="lnchip"><b>Less</b> admin work</span><span class="lnchip"><b>Faster</b> follow-ups</span>
+  <span class="lnchip"><b>Fewer</b> missed documents</span><span class="lnchip"><b>Less</b> scam risk</span>
+  <span class="lnchip"><b>More</b> time for revenue</span>
+</div></div>
 
-  <section>
-    <div class="sec-head">
-      <p class="eyebrow">How it works, in short</p>
-      <h2>One hour to watch the task. Two weeks running beside the old way, free. Then you decide.</h2>
-      <p>No setup fee — a free two-week trial. If it doesn't return at least 6 hours a week, you walk away owing nothing. Flat monthly after that, 30 days' notice to leave, always. Full pricing and guarantee are on your segment's page.</p>
-    </div>
-  </section>
-</div>
-
-<div class="apps-sec">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Also from Calas</p>
-      <h2>A couple of smaller tools, separate from On File.</h2>
-      <p>These aren't part of On File and they're not why you'd hire us &mdash; they're their own small products, for their own specific job.</p>
-    </div>
-    <div class="doors small">
-      <div class="door">
-        <h3>Lead Me</h3>
-        <p>Finds the local businesses that fit what you sell, reads their own websites to score how well each one fits, checks their email address works, and drafts honest first-contact emails you approve. From C$199/mo, no setup fee. Forklifts first; any B2B trade.</p>
-        <a href="/leadme/">See Lead Me &rarr;</a>
-      </div>
-      <div class="door">
-        <h3>Quote Me</h3>
-        <p>A trades voice note becomes a priced quote off your own rate card, with the deposit collected on the spot. Early access, C$99/mo per shop.</p>
-        <a href="/quote-me/">See Quote Me &rarr;</a>
-      </div>
-      <div class="door">
-        <h3>Haul Me</h3>
-        <p>Cost-per-mile and floor-rate calculator for owner-operators and small fleets &mdash; a green-light/red-light call on every load, before you take it. From C$29/mo, 30-day money-back.</p>
-        <a href="/haul-me/">See Haul Me &rarr;</a>
-      </div>
-    </div>
+<section id="who"><div class="lnwrap">
+  <div class="lnsech lnrv"><h2>Find the right fit for your business</h2><p>Pick what you do — we'll point you to the tools that save you the most time.</p></div>
+  <div class="lngrid lng4 lnwho">
+    <div class="lncard lnrv"><span class="lnic lnmask"></span><div class="lnbadge">Accounting</div><h3>Accountants &amp; bookkeepers</h3><p>Stop chasing documents and retyping receipts.</p><div class="lnapps"><a href="/accounting/">On File</a><a href="/receiptsort/">Receipt Sort</a></div></div>
+    <div class="lncard lnrv"><span class="lnic lnmask"></span><div class="lnbadge">Trades</div><h3>Trades &amp; contractors</h3><p>Quote on the spot, get paid, never miss paperwork.</p><div class="lnapps"><a href="/accounting/">On File</a><a href="/quote-me/">Quote Me</a><a href="/dispatchme/">Dispatch Me</a></div></div>
+    <div class="lncard lnrv"><span class="lnic lnmask"></span><div class="lnbadge">Logistics</div><h3>Logistics &amp; trucking</h3><p>Know your real cost per mile before you say yes.</p><div class="lnapps"><a href="/haul-me/">Haul Me</a></div></div>
+    <div class="lncard lnrv"><span class="lnic lnmask"></span><div class="lnbadge">Cybersecurity</div><h3>Cybersecurity</h3><p>Catch scams and fake invoices before they cost you.</p><div class="lnapps"><a href="/watchpost/">Watchpost</a><a href="/watchpost/">Watch Pro</a><a href="/guardian/">Guardian</a><a href="/it-msp/">+ more</a></div></div>
   </div>
-</div>
+</div></section>
 
-<div class="cta" id="contact">
-  <div class="wrap cta-in">
-    <div>
-      <p class="eyebrow">Get in touch</p>
-      <h2 style="margin-top:12px;font-size:22px">Try it live. Then fifteen minutes with us.</h2>
-      <p>See it run in a couple of minutes. Fifteen minutes on the phone to say plainly whether a pilot makes sense for you.</p>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <a class="btn" href="/demo/accounting/" target="_blank" rel="noopener">Try a live demo &mdash; accounting</a>
-      <a class="btn ghost light" href="mailto:dan@calasautomations.com?subject=On%20File%20%E2%80%94%2015%20minutes" style="text-align:center;border:1px solid var(--rule);color:var(--ink)">Book 15 minutes</a>
-      <span class="eyebrow" style="text-align:center">Replies within one business day</span>
-    </div>
+<section id="pricing" style="background:var(--sunk);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)"><div class="lnwrap">
+  <div class="lnsech lnrv"><h2>Simple, honest pricing</h2><p>Start free. Pay only for the tools that save you real time — and try every paid one free first.</p></div>
+  <div class="lngrid lng2">
+    <div class="lncard lnrv"><div class="lnbadge" style="color:var(--ok)">Free · forever</div><h3>Free tools</h3><p>No signup games. Nothing uploaded. Yours to keep.</p><div class="lnapps"><a href="/guardian/">Guardian</a><a href="/receiptsort/">Receipt Sort</a></div></div>
+    <div class="lncard lnrv"><div class="lnbadge">Paid · free trial on each</div><h3>The working tools</h3><p>Free trial on every one. 30 days' notice to cancel, always.</p><div class="lnapps"><a href="/accounting/">On File</a><a href="/leadme/">Lead Me</a><a href="/quote-me/">Quote Me</a><a href="/haul-me/">Haul Me</a><a href="/watchpost/">Watchpost</a><a href="/dispatchme/">Dispatch Me</a></div></div>
   </div>
-</div>
+  <div style="text-align:center;margin-top:28px"><a class="lnbtn" href="/pay/">See full pricing &amp; start free</a></div>
+</div></section>
+
+<section id="start"><div class="lnwrap"><hr class="lngline" style="margin-bottom:46px"><div class="lnband lnrv">
+  <div class="lnaurora" style="opacity:.5"></div>
+  <div style="position:relative;z-index:2">
+  <h2>Pick a tool. Get your time back today.</h2>
+  <p>No call. No setup project. Try any tool free — and the free ones stay free. You're running in about five minutes.</p>
+  <a class="lnbtn" href="/pay/">Browse the tools</a>
+  </div>
+</div></div></section>
+
+<div class="lnwrap"><div class="lnflourish lnrv">
+  <hr class="lngline">
+  <div style="perspective:1000px"><div class="lnfc lnmask"></div></div>
+</div></div>
+</main>
+
 <footer>
   <div class="wrap foot-row">
     <span>Calas Automations &middot; Winnipeg &middot; prices in CAD plus GST/RST where applicable</span>
     <span>Small automations, built properly &middot; <a href="/accounting/">On File</a> &middot; <a href="/leadme/">Lead Me</a> &middot; <a href="/quote-me/">Quote Me</a> &middot; <a href="/haul-me/">Haul Me</a> &middot; <a href="/watchpost/">Watchpost</a> &middot; <a href="/dispatchme/">Dispatch Me</a> &middot; <a href="/pay/">Pricing</a> &middot; 30 days&#39; notice to cancel, always</span>
   </div>
 </footer>
-</main>
+
 <script>
 (function(){
-  var hdr=document.getElementById('hdr');
-  addEventListener('scroll',function(){hdr.classList.toggle('stuck',window.scrollY>10)},{passive:true});
-
-  var hrs=document.getElementById('hrs'), rate=document.getElementById('rate');
-  if(hrs && rate){
-    var money=function(n){return '$'+Math.round(n).toLocaleString('en-CA')};
-    function calc(){
-      var h=+hrs.value, r=+rate.value, build=2500, yearly=6000;
-      var saved=h*0.85*46, gross=saved*r, cost=build+yearly, net=gross-cost;
-      document.getElementById('hrsv').textContent=h;
-      document.getElementById('ratev').textContent=r;
-      document.getElementById('oHrs').textContent=Math.round(saved).toLocaleString('en-CA');
-      document.getElementById('oGross').textContent=money(gross);
-      document.getElementById('oCost').textContent='\u2212'+money(cost);
-      var el=document.getElementById('oNet');
-      el.textContent=(net<0?'\u2212':'')+money(Math.abs(net));
-    }
-    [hrs,rate].forEach(function(i){i.addEventListener('input',calc)});
-    calc();
-  }
+ document.documentElement.classList.add('js');
+ var words=["repetitive","boring","manual","tedious","time-sucking","busy"];var i=0;var el=document.querySelector('#lean .lnrot');
+ if(el){setInterval(function(){i=(i+1)%words.length;el.innerHTML='<span class="w">'+words[i]+'</span>';},2100);}
+ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});
+ document.querySelectorAll('#lean .lnrv').forEach(function(n,k){n.style.transitionDelay=(Math.min(k,6)*60)+'ms';io.observe(n);});
 })();
-</script>
-
-<script src="/cara/cara.js" data-app="site" defer></script>
-<script src="/calas-brandbar.js?v=20261001a" defer></script></body></html>
+</script></body></html>
