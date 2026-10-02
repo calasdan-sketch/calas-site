@@ -40,5 +40,5 @@ All prices in Canadian dollars, plus GST/RST where applicable. This file is the 
 
 - On File has **no build fee** (dropped 2026-09-27) — the old "waived for the first three trades contractors" offer is moot. Everyone now gets the free two-week trial and C$500/mo.
 - Trades page: Cara text-back **first three months at C$19**. In Stripe, a coupon (C$10 off, repeating for 3 months) on the C$29 price, not a second price.
-- Watchpost: **first month free** — a 30-day free trial on the `watchpost_watch` Payment Link.
+- Watchpost: **first month free on both plans** — a 30-day free trial on the `watchpost_watch` and `watchpost_guarded` (Watch Pro) Payment Links (Watch Pro trial added by Dan 2026-10-01, verified on the live checkout).
 - Haul Me / Watchpost annual prices (C$290, C$790): a second Stripe price on the same product, or offer by email; the site keys are the monthly ones.
