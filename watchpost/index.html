@@ -3,87 +3,84 @@
 <meta name="description" content="Watchpost puts fake doors in your business network. Nobody legitimate touches them, so when someone does you get a text within minutes and a plain-English monthly report. Detection and reporting only — never hack back. Winnipeg.">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preload" as="image" href="/hero-bg.jpg">
+<script>document.documentElement.classList.add('rv-on')</script>
+<link rel="stylesheet" href="/calas-editorial.css?v=20261002a">
 <style>
-:root{--paper:#fff;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--ink-3:#6B7883;--rule:#D9E3EA;--accent:#155F87;--accent-2:#0E4A6B;--gold:#F0C171;--ok:#17794A;--shadow:0 1px 2px rgba(18,33,44,.05),0 12px 40px -14px rgba(21,95,135,.2);--serif:"Libre Baskerville",Georgia,serif;--sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
-*{box-sizing:border-box}html,body{margin:0}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
-a{color:var(--accent)}code{font-family:var(--mono);font-size:.88em;background:var(--sunk);padding:1px 5px;border-radius:5px}
-.wrap{max-width:1240px;margin:0 auto;padding:0 22px}
-header{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid transparent}
-header.stuck{border-bottom-color:var(--rule)}
-header::after{content:"";display:block;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.mast{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 40px;max-width:1240px;margin:0 auto}
-.lockup{display:flex;align-items:center;gap:14px;text-decoration:none;perspective:400px}
-.crest{width:26px;height:36px;flex:none;background:var(--accent);
-  -webkit-mask:url(data:image/png;base64,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) center/contain no-repeat;
-  mask:url(data:image/png;base64,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) center/contain no-repeat}
-@keyframes spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
-.crestflip{display:inline-block;position:relative;width:26px;height:36px;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;animation:spin 6s linear infinite}.crestflip .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}.crestflip .back{transform:rotateY(180deg)}
-@media(prefers-reduced-motion:reduce){.crestflip{animation:none}}
-.lk-name{font-family:"Libre Baskerville",Georgia,serif;font-size:17px;font-weight:700;line-height:1.05;display:block;color:var(--ink)}
-.lk-name .r{color:var(--accent)}
-.lk-rule{display:block;height:2px;background:var(--accent);width:100%;margin:4px 0 3px}
-.lk-sub{font-family:var(--mono);font-size:12px;letter-spacing:.24em;color:var(--ink-3);display:block}
-nav{display:flex;align-items:center;gap:14px;font-size:16px;flex-wrap:wrap}
-nav a{text-decoration:none;color:var(--ink-2)}
-nav a.on{color:var(--accent);font-weight:600}
-nav a:hover{color:var(--accent)}
-.nav-cta{background:var(--accent);color:#fff !important;padding:9px 16px;border-radius:2px}
-@media(max-width:760px){.mast{flex-wrap:wrap;padding:14px 22px}nav{gap:14px;font-size:15.5px}}
-.btn{display:inline-block;font:inherit;font-weight:700;font-size:17px;padding:11px 20px;border-radius:11px;border:0;background:var(--accent);color:#fff;cursor:pointer;text-decoration:none;box-shadow:0 6px 18px -6px rgba(21,95,135,.6)}
-.btn:hover{background:var(--accent-2)}.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--rule);box-shadow:none}
-.hero{padding:64px 0 40px;text-align:center}
-.hero .eyebrow{font-family:var(--mono);font-size:15.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
-.hero h1{font-family:var(--serif);font-size:clamp(30px,5vw,46px);line-height:1.12;margin:0 auto 18px;max-width:18ch}
-.hero p{font-size:19px;color:var(--ink-2);max-width:60ch;margin:0 auto 26px}
-.hero .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.hero .fine{margin-top:16px;font-size:16px;color:var(--ink-3)}
-.band{background:var(--sunk);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:44px 0}
-.band h2,.section h2{font-family:var(--serif);font-size:clamp(22px,3vw,30px);text-align:center;margin:0 0 8px}
-.band .sub,.section .sub{text-align:center;color:var(--ink-2);max-width:60ch;margin:0 auto 30px}
-.section{padding:52px 0}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}@media(max-width:820px){.grid3{grid-template-columns:1fr}}
-.card{background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:22px;box-shadow:var(--shadow)}
-.card .ic{font-size:26px;margin-bottom:10px}.card h3{font-family:var(--serif);font-size:19px;margin:0 0 7px}.card p{margin:0;color:var(--ink-2);font-size:16.5px}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}@media(max-width:820px){.steps{grid-template-columns:1fr}}
-.step{position:relative;padding:22px;border:1px solid var(--rule);border-radius:14px;background:var(--paper)}
-.step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--serif);font-size:17px;margin-bottom:12px}
-.step h3{font-family:var(--serif);font-size:18px;margin:0 0 6px}.step p{margin:0;color:var(--ink-2);font-size:16.5px}
-.report{max-width:760px;margin:0 auto;border:1px solid var(--rule);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);background:#fff}
-.report .rh{display:flex;gap:12px;align-items:center;padding:14px 18px;border-bottom:2px solid var(--gold)}
-.report .rh b{font-family:var(--sans);color:var(--accent);font-size:17px}.report .rh span{font-size:15px;color:var(--ink-3)}
-.report .rb{padding:16px 18px;font-size:16px}
-.report .line{font-weight:600;font-size:17px;margin-bottom:8px}
-.report .kp{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}.report .kp div{border:1px solid var(--rule);border-radius:8px;padding:8px 10px}
-.report .kp b{display:block;font-size:20px;color:var(--accent)}.report .kp span{font-size:15px;color:var(--ink-3)}
-@media(max-width:640px){.report .kp{grid-template-columns:repeat(2,1fr)}}
-.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1080px;margin:0 auto}@media(max-width:980px){.tiers{grid-template-columns:1fr;max-width:520px}}
-.tier{background:var(--paper);border:1px solid var(--rule);border-radius:16px;padding:22px;box-shadow:var(--shadow);display:flex;flex-direction:column}
-.tier.hi{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset,var(--shadow)}
-.tier h3{font-family:var(--serif);font-size:20px;margin:0 0 4px}.tier .who{color:var(--ink-3);font-size:16.5px;min-height:40px}
-.tier ul{margin:12px 0 18px;padding-left:18px;color:var(--ink-2);font-size:16.5px;line-height:1.65;flex:1}
-.tier .price{font-family:var(--serif);font-size:22px;margin:0 0 4px}.tier .price small{font-family:var(--sans);font-size:16px;color:var(--ink-3)}
-.tier .btn{text-align:center}
-.guarantee{max-width:720px;margin:28px auto 0;padding:18px 20px;border:1px solid var(--rule);border-left:4px solid var(--ok);border-radius:12px;background:#fff}
-.guarantee b{font-family:var(--serif)}
-.honest{max-width:70ch;margin:36px auto 0;padding:16px 18px;border:1px solid var(--rule);border-left:3px solid var(--gold);border-radius:10px;background:var(--sunk);font-size:16.5px;color:var(--ink-2);line-height:1.6}
-.honest b{color:var(--ink)}
-.faq{max-width:760px;margin:0 auto}.faq details{border:1px solid var(--rule);border-radius:10px;padding:12px 16px;margin-bottom:10px;background:#fff}
-.faq summary{font-weight:600;cursor:pointer}.faq p{margin:8px 0 0;color:var(--ink-2);font-size:16.5px}
-footer{border-top:1px solid var(--rule);padding:28px 0;text-align:center;color:var(--ink-3);font-size:16px}
-footer a{color:var(--ink-3)}
+/* Watchpost-only pieces */
+.panel .core{padding:0}
+.panel .top{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--mist);border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.panel .top b{color:var(--accent);font-weight:500}
+.alert{margin:18px;border-radius:16px;padding:16px 16px 14px;background:var(--night);color:#fff;box-shadow:0 18px 40px -20px rgba(11,46,69,.8)}
+.alert .ah{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--ice)}
+.alert .ah .crest{width:16px;height:22px;background:var(--sky)}
+.alert .ah b{color:#fff;font-weight:600}
+.alert .ah span{margin-left:auto;font-family:var(--mono);font-size:12px}
+.alert p{margin:10px 0 0;font-size:15.5px;line-height:1.45}
+.alert p em{font-style:normal;color:var(--gold)}
+.doors{list-style:none;margin:0;padding:4px 18px 8px}
+.doors li{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--rule);font-size:15.5px}
+.doors li:first-child{border-top:0}
+.doors li svg{width:22px;height:22px;color:var(--ink-3);flex:none}
+.doors li .st{margin-left:auto;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:8px}
+.doors li .st i{width:8px;height:8px;border-radius:50%;background:var(--rule-2)}
+.doors li.hit svg{color:var(--accent)}
+.doors li.hit .st{color:var(--gold-2)}
+.doors li.hit .st i{background:var(--gold);position:relative}
+.doors li.hit .st i::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1.5px solid var(--gold);animation:ring 2.4s var(--ease) infinite}
+@keyframes ring{0%{transform:scale(.4);opacity:.9}100%{transform:scale(1.6);opacity:0}}
+@media(prefers-reduced-motion:reduce){.doors li.hit .st i::after{animation:none;opacity:.5}}
+.panel .foot{padding:12px 18px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-3)}
+.hero-vis{position:relative}
+.hero-vis .bezel{transform:rotate(1.2deg)}
+@media(max-width:900px){.hero-vis .bezel{transform:none}}
 
-/* hero uniformity: match the dark navy hero used on the other pages */
-.hero{background:#0B2E45;color:#fff}
-.hero .eyebrow{color:#4FA3D1}
-.hero h1{color:#fff}
-.hero p{color:#C6D6E4}
-.hero .fine{color:#9FB6C9}
-.nav-signin{font-weight:600;color:var(--ink) !important;border:1px solid currentColor;padding:8px 14px;border-radius:2px}
-.hero-signin{display:flex;width:fit-content;margin-left:auto;margin-right:auto;align-items:center;gap:8px;margin-top:18px;font-weight:600;font-size:17px;text-decoration:none;color:inherit;border-bottom:2px solid currentColor;padding-bottom:2px}.hero-signin:hover,.hero-signin:focus-visible{opacity:.8}
-</style><style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"></head><body>
+/* sample report as a paper object with margin notes */
+.report-x{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,3fr);gap:clamp(20px,4vw,56px);align-items:start}
+.paper{background:#fff;border-radius:6px;padding:clamp(22px,3.4vw,46px);box-shadow:0 1px 0 var(--rule),0 2px 0 #fff,0 3px 0 var(--rule),0 50px 80px -40px rgba(11,46,69,.35);border-top:3px solid var(--gold)}
+.paper .ph{display:flex;gap:14px;align-items:center;padding-bottom:18px;border-bottom:1px solid var(--rule)}
+.paper .ph .crest{width:24px;height:33px}
+.paper .ph b{display:block;font-family:var(--serif);font-size:19px;color:var(--ink)}
+.paper .ph span{font-size:14px;color:var(--ink-3)}
+.paper .bl{font-family:var(--serif);font-size:clamp(22px,2.4vw,30px);line-height:1.25;margin:24px 0 10px}
+.paper .bl mark{background:linear-gradient(transparent 62%,rgba(240,193,113,.5) 62%);color:inherit;padding:0 2px}
+.paper .tx{color:var(--ink-2);margin:0 0 22px}
+.paper .kp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin:0 0 22px}
+.paper .kp div{padding:16px 14px 14px 0}
+.paper .kp div+div{padding-left:14px;border-left:1px solid var(--rule)}
+.paper .kp b{display:block;font-family:var(--serif);font-size:clamp(22px,2.4vw,30px);color:var(--accent);line-height:1.1}
+.paper .kp span{font-size:13.5px;color:var(--ink-3);line-height:1.35;display:block;margin-top:4px}
+.paper .rec{font-size:16px;color:var(--ink-2);margin:0}
+.paper .rec b{color:var(--ink)}
+.margin{list-style:none;margin:0;padding:0;counter-reset:m}
+.margin li{position:relative;padding:18px 0 18px 40px;border-top:1px solid var(--rule);font-size:15.5px;color:var(--ink-2)}
+.margin li::before{counter-increment:m;content:counter(m);position:absolute;left:0;top:18px;width:24px;height:24px;border-radius:50%;background:var(--gold);color:var(--night);font-family:var(--mono);font-size:12px;display:grid;place-items:center}
+.margin li b{display:block;color:var(--ink);font-family:var(--serif);font-size:17px;margin-bottom:2px}
+@media(max-width:900px){.report-x{grid-template-columns:1fr}}
+@media(max-width:600px){.paper .kp{grid-template-columns:repeat(2,minmax(0,1fr))}.paper .kp div:nth-child(3){padding-left:0;border-left:0;border-top:1px solid var(--rule)}.paper .kp div:nth-child(4){border-top:1px solid var(--rule)}}
 
-<style>#hdr{position:relative}#hdr::after{content:"";display:block;height:2px;background:linear-gradient(90deg,transparent,var(--gold,#F0C171),transparent)}</style>
+/* partner strip + family band */
+.partner{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center;margin-top:22px;padding:24px clamp(22px,3vw,40px);border:1px dashed var(--rule-2);border-radius:24px}
+.partner h3{font-family:var(--serif);font-size:22px;margin:0 0 4px}
+.partner p{margin:0;color:var(--ink-2);font-size:16px}
+@media(max-width:700px){.partner{grid-template-columns:1fr}}
+.family{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(28px,5vw,80px);align-items:center}
+.family .price-line{font-family:var(--serif);font-size:clamp(34px,4vw,48px);line-height:1;margin:22px 0 8px}
+.family .price-line small{font-family:var(--sans);font-size:16px;color:var(--ink-3);margin-left:6px}
+.family .code{display:inline-block;font-family:var(--mono);font-size:14px;letter-spacing:.12em;background:var(--night);color:var(--gold);padding:4px 10px;border-radius:6px}
+.family .acts{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-top:26px}
+.trio{list-style:none;margin:0;padding:0}
+.trio li{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 0;border-top:1px solid var(--rule)}
+.trio li:last-child{border-bottom:1px solid var(--rule)}
+.trio svg{width:30px;height:30px;color:var(--accent)}
+.trio b{display:block;font-family:var(--serif);font-size:19px;margin-bottom:3px}
+.trio span{color:var(--ink-2);font-size:16px}
+.guardian-line{margin-top:22px;font-size:16px;color:var(--ink-2)}
+@media(max-width:900px){.family{grid-template-columns:1fr}}
+</style>
+<style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"></head><body>
+
 <header id="hdr">
   <div class="mast">
     <a class="lockup" href="/" aria-label="Calas Automations, home">
@@ -107,84 +104,191 @@ footer a{color:var(--ink-3)}
   </div>
 </header>
 
-<section class="hero"><div class="wrap">
-  <div class="eyebrow">Intrusion detection for small business · Winnipeg</div>
-  <a class="of-lockup" href="/" aria-label="Watchpost by Calas Automations"><span class="crest" aria-hidden="true"></span><span class="of-lk-text"><span class="of-lk-name">Watch<span class="r">post</span></span><span class="of-lk-sub">BY CALAS AUTOMATIONS</span></span></a>
-<h1>A silent alarm on the doors nobody's supposed to use.</h1>
-  <p>We put fake doors in your business — a fake login, a fake admin panel, a fake database. Real staff and real customers never touch them, because there's no reason to. So when someone does, you get a text within minutes, and every month you get a one-page report you can hand to your accountant or your insurer.</p>
-  <div class="btns"><a class="btn" href="#start">Start with a free month</a>
-<a class="btn ghost" href="/demo/watchpost/">&#9654; Watch the demo</a><a class="btn ghost" href="#how">See how it works</a></div>
-    <a class="hero-signin" href="/watchpost/account/">Already a customer? Sign in &rarr;</a>
-  <p style="margin-top:16px;font-size:17px;max-width:60ch;margin-left:auto;margin-right:auto;text-align:left"><b>Just want scam protection on your phone?</b> <a href="/guardian/">Guardian</a> is our <b>free</b> scam-message checker &mdash; it flags romance and crypto ("pig-butchering") scams, deepfake-catfish tells, and gift-card and wire demands, then lets you report them to the authorities in one tap. <a href="/guardian/" style="font-weight:700">Get Guardian free &rarr;</a></p>
-  <div style="margin-top:14px;padding:14px 16px;border:1px solid var(--rule,#D9E3EA);border-radius:12px;background:rgba(21,95,135,.06);max-width:62ch;margin-left:auto;margin-right:auto;text-align:left">
-    <b>New &mdash; Watchpost Family.</b> Protect an aging parent: Guardian on their phone, a shared family "safe word," and our help line (Cara) they can call the moment something feels off. <b>C$9.99/mo</b> or <b>C$99/yr</b> per family &mdash; and the first 20 founding families lock in <b>C$5/mo for 3 years.</b> Use code <b>FOUNDINGFAMILY</b> at monthly checkout.
-    <div style="margin-top:8px"><a href="#" data-pay="watchpost_family" style="font-weight:700">Start Watchpost Family &rarr;</a> &nbsp;&middot;&nbsp; <a href="#" data-pay="watchpost_family_yr">or C$99/yr</a></div>
+<main>
+<section class="x-hero" aria-labelledby="wp-h1"><div class="wrap">
+  <div>
+    <a class="of-lockup" href="/" aria-label="Watchpost by Calas Automations"><span class="crest" aria-hidden="true"></span><span class="of-lk-text"><span class="of-lk-name">Watch<span class="r">post</span></span><span class="of-lk-sub">BY CALAS AUTOMATIONS</span></span></a>
+    <div><span class="eyebrow"><i></i>Intrusion decoys for small business · Winnipeg</span></div>
+    <h1 id="wp-h1">A silent alarm on the doors <em>nobody's supposed to use.</em></h1>
+    <p class="lede">We put fake doors in your business — a fake login, a fake admin panel, a fake database. Real staff and real customers never touch them, because there's no reason to. So when someone does, you get a text within minutes, and every month a one-page report you can hand to your accountant or your insurer.</p>
+    <div class="ctas">
+      <a class="btn x gold" href="#start">Start with a free month <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+      <a class="x-link" href="/demo/watchpost/"><span class="play" aria-hidden="true">&#9654;</span>Watch the demo</a>
+    </div>
+    <div class="fine"><span>Watch C$79/mo</span><span>First month free</span><span>Detection and reporting only</span><span>No 24/7 monitoring</span><span>We never hack back</span></div>
+    <a class="signin" href="/watchpost/account/">Already a customer? Sign in &rarr;</a>
   </div>
-  <div class="fine">C$79&ndash;199/mo depending on tier, first month free on Watch · detection and reporting only, no 24/7 monitoring · we never hack back · cancel with one email</div>
-</div></section>
 
-<section class="band"><div class="wrap">
-  <h2>Three tripwires, one alarm</h2>
-  <p class="sub">Each piece is a decoy with no real purpose, so anything that touches it is a warning worth hearing.</p>
-  <div class="grid3">
-    <div class="card"><div class="ic">🛡️</div><h3>The decoys</h3><p>A fake "easy target": a phony login, an open-looking admin panel, a database that answers. One lives on a small box we run; where it makes sense, one sits inside your own office network. That inside one matters most.</p></div>
-    <div class="card"><div class="ic">📱</div><h3>The alert</h3><p>The moment something serious touches a decoy, your phone buzzes: who, what they tried, how bad. Flood-proof: one attacker can't page you 500 times, and an attacker can't switch it off.</p></div>
-    <div class="card"><div class="ic">📋</div><h3>The report</h3><p>Once a month, one page in plain English: who came knocking, what they were after, what to do about it, and what we <em>don't</em> see. A quiet month says "nothing touched these doors", never "you're secure".</p></div>
-  </div>
-</div></section>
-
-<section class="section" id="how"><div class="wrap">
-  <h2>How it works</h2>
-  <p class="sub">No jargon, no babysitting. We set it up once and it watches for you.</p>
-  <div class="steps">
-    <div class="step"><h3>We set the traps</h3><p>A small decoy box on the internet with your business's name on it, and where it fits, one decoy inside your network. Nothing changes on your real computers.</p></div>
-    <div class="step"><h3>You get told</h3><p>Serious hits reach your phone within minutes. Background scanner noise is filtered so you only hear what matters.</p></div>
-    <div class="step"><h3>You get the page</h3><p>Every month, a one-page PDF with the bottom line first: "all quiet" or "2 things to do this week", then the details.</p></div>
+  <div class="hero-vis rv" style="--d:2">
+    <div class="bezel panel"><div class="core">
+      <div class="top"><b>Your decoys</b><span>Sample · not a real client</span></div>
+      <div class="alert" role="img" aria-label="Sample text alert: someone tried the fake admin panel">
+        <div class="ah"><span class="crest" aria-hidden="true"></span><b>Watchpost</b> text alert<span>2:14 pm</span></div>
+        <p>Someone tried your <em>fake admin panel</em>. One outside address, it went looking for password files. Serious. Details are in your report.</p>
+      </div>
+      <ul class="doors">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="5" y="3" width="14" height="18" rx="1"/><circle cx="15.5" cy="12" r=".9" fill="currentColor"/></svg>Fake login page<span class="st"><i></i>Quiet</span></li>
+        <li class="hit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="5" y="3" width="14" height="18" rx="1"/><circle cx="15.5" cy="12" r=".9" fill="currentColor"/></svg>Fake admin panel<span class="st"><i></i>Touched</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="5" y="3" width="14" height="18" rx="1"/><circle cx="15.5" cy="12" r=".9" fill="currentColor"/></svg>Fake database<span class="st"><i></i>Quiet</span></li>
+      </ul>
+      <div class="foot">Real staff have no reason to open these. That's the whole idea.</div>
+    </div></div>
   </div>
 </div></section>
 
-<section class="band"><div class="wrap">
-  <h2>What the monthly page looks like</h2>
-  <p class="sub">Sample report. This is the real report layout with made-up numbers for a made-up business, not a mock-up of features we haven't built.</p>
-  <div class="report">
-    <div class="rh"><span class="crest" style="width:26px;height:26px" aria-hidden="true"></span><div><b>Watchpost security report · sample</b><br><span>Prepared for Sample Co. (fictional) · last 30 days · sample numbers</span></div></div>
-    <div class="rb">
-      <div class="line">Bottom line: 2 things to do this week.</div>
-      <div>3 outside addresses tried the decoys, 41 attempts in total. One of them hunted for password and configuration files, which is the serious kind.</div>
-      <div class="kp"><div><b>3</b><span>outside addresses</span></div><div><b>41</b><span>attempts recorded</span></div><div><b>Critical</b><span>worst severity</span></div><div><b>1,440</b><span>proof the decoys were answering</span></div></div>
-      <div><b>What we recommend:</b> 1. Confirm no real web server exposes <code>.env</code> or backup files. 2. Turn on two-factor login for the admin account. 3. Nothing else; keep the decoys running.</div>
+<section class="sec tight mist" aria-label="What Watchpost does and doesn't do"><div class="wrap">
+  <div class="ledger rv">
+    <div class="yes">
+      <h3>What it does</h3>
+      <ul>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10.5l4 4 8-9"/></svg>Sets decoys nobody legitimate has a reason to touch</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10.5l4 4 8-9"/></svg>Texts you within minutes when one is touched</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10.5l4 4 8-9"/></svg>Sends a one-page monthly report, reviewed by Dan</li>
+      </ul>
+    </div>
+    <div class="no">
+      <h3>What it doesn't</h3>
+      <ul>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 10h10"/></svg>No 24/7 monitoring or on-call</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 10h10"/></svg>No antivirus, no blocking, no clean-up</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 10h10"/></svg>Never hacks back. It's the alarm, not the locks.</li>
+      </ul>
     </div>
   </div>
 </div></section>
 
-<section class="section" id="start"><div class="wrap">
-  <h2>Two plans, one alarm</h2>
-  <p class="sub">First month free on either plan, no setup fee for founding clients, cancel with one email. Both save about 2 months if you pay for the year. Prices in Canadian dollars.</p>
-  <div class="tiers">
-    <div class="tier hi"><h3>Watch</h3><div class="who">One-location business. Alerts go straight to your phone; you read the report yourself every month.</div>
-      <ul><li><b>Included:</b> decoy set on our box, in your name; one decoy inside your network where it fits</li><li>Alerts to your phone within minutes (text or push), flood-proof</li><li>Monthly one-page PDF, reviewed by Dan before it's sent</li><li>Email support in business hours (Winnipeg, Central Time)</li><li><b>Not included:</b> no 24/7 monitoring or on-call, no antivirus or endpoint protection, no blocking or clean-up. It's the alarm, not the locks.</li></ul>
-      <div class="price">$79 <small>/ month CAD · first month free · or $790/year &mdash; save 17% (about 2 months free)</small></div>
-      <a class="btn" href="#" data-pay="watchpost_watch">Start Watchpost</a>
-      <a class="btn ghost" style="margin-top:8px" href="mailto:dan@calasautomations.com?subject=Watchpost%20%E2%80%94%2015%20minutes&body=Hi%20Dan%2C%20I%27d%20like%2015%20minutes%20to%20talk%20about%20Watchpost.%20Business%3A%20">Book 15 minutes</a></div>
-    <div class="tier"><h3>Watch Pro</h3><div class="who">You'd rather someone else watched. We take the alerts first, check websites for you, and handle the paperwork if something happens.</div>
-      <ul><li><b>Everything in Watch, plus:</b></li><li><b>More traps.</b> Extra bait planted across your files and shares, not just the basic set &mdash; more corners watched.</li><li><b>We watch first.</b> Alerts come to us and we call you only when it's real, not for every scanner.</li><li><b>Website safety checks.</b> Send us a link and we'll tell you if a site looks like a scam before you trust it.</li><li><b>We handle the paperwork.</b> If something trips, we write the filing-ready incident report and point it at the right authority.</li><li>Monthly one-page PDF plus a 15-minute call to walk through it &middot; priority email support in business hours.</li><li><b>Not included:</b> no 24/7 monitoring or on-call, no antivirus or endpoint protection, no blocking or clean-up. It's the alarm, not the locks.</li></ul>
-      <div class="price">$199 <small>/ month CAD · or $1,990/year &mdash; save 17% (about 2 months free)</small></div>
-      <a class="btn" href="#" data-pay="watchpost_guarded">Start Watch Pro</a>
-      <a class="btn ghost" style="margin-top:8px" href="mailto:dan@calasautomations.com?subject=Watchpost%20%E2%80%94%2015%20minutes&body=Hi%20Dan%2C%20I%27d%20like%2015%20minutes%20to%20talk%20about%20Watchpost.%20Business%3A%20">Book 15 minutes</a></div>
-    <div class="tier"><h3>Partner</h3><div class="who">IT shops and MSPs who want this for their own clients.</div>
-      <ul><li>Per client site, your name on the report</li><li>Alerts to your desk, not the client's</li><li>From five sites; no free month, the guarantee applies instead</li></ul>
-      <div class="price">Per site <small>· let's talk</small></div>
-      <a class="btn ghost" href="tel:+14312449026">Call Kara</a></div>
+<section class="sec" aria-labelledby="trip-h"><div class="wrap">
+  <div class="sec-head">
+    <div class="rv"><p class="kicker"><span class="n">01</span> The idea</p><h2 class="h2" id="trip-h">Three tripwires, <em>one alarm.</em></h2></div>
+    <p class="lede rv" style="--d:1">Each piece is a decoy with no real purpose, so anything that touches it is a warning worth hearing.</p>
   </div>
-  <div class="guarantee"><b>The guarantee, in plain words.</b> First month free. After that, if a month goes by and we can't show you the decoys were up and answering, that month is free too. Cancel any time with one email. What we guarantee is that the alarm was on, which we can prove. Nobody can guarantee "no break-in", and we won't pretend to.</div>
-  <div class="honest"><b>Early access.</b> Watchpost is in early access with no marketing push. We're taking on a small number of businesses so we can learn from real decoys at real clients before we say anything louder than this page.</div>
-  <div class="honest"><b>How we compare, honestly.</b> Checked 2026-09-21 against the vendors' own pages: Thinkst Canary does decoys better than we do and costs roughly ten times more; Huntress, Todyl, Guardz and Defendify sell 24/7 detection and response with endpoint software, which we don't; Microsoft Defender for Business (CAD $4.10/user/month) protects your computers, which we don't. Watchpost is the alarm on the fake doors, at a price a one-location business can approve without a meeting. Keep your antivirus.</div>
-  <div class="honest"><b>What Watchpost is, and isn't.</b> It's <b>detection</b>, not a lock. It tells you fast when someone's poking at doors they shouldn't, so you can act. It doesn't by itself stop a determined attacker, it doesn't replace passwords, updates, backups and a firewall, and no service on earth makes a business unhackable. It only watches decoys we placed, reports what it sees, and never touches or strikes back at anyone. Ask and we'll show you exactly how the decoys work; there's nothing hidden in them.</div>
+  <div class="rows">
+    <div class="row rv"><span class="no">01</span><h3><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="8" y="4" width="16" height="24" rx="1"/><path d="M4 28h24"/><circle cx="20" cy="16" r="1" fill="currentColor"/></svg>The decoys</h3><p>A fake "easy target": a phony login, an open-looking admin panel, a database that answers. One lives on a small box we run; where it makes sense, one sits inside your own office network. That inside one matters most.</p></div>
+    <div class="row rv"><span class="no">02</span><h3><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="10" y="3" width="12" height="26" rx="2.5"/><path d="M14 25h4"/><path d="M4 12c1.5-2 1.5-4 0-6M28 12c-1.5-2-1.5-4 0-6"/></svg>The alert</h3><p>The moment something serious touches a decoy, your phone buzzes: who, what they tried, how bad. Flood-proof: one attacker can't page you 500 times, and an attacker can't switch it off.</p></div>
+    <div class="row rv"><span class="no">03</span><h3><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M7 3h13l5 5v21H7z"/><path d="M20 3v5h5M11 14h10M11 18h10M11 22h6"/></svg>The report</h3><p>Once a month, one page in plain English: who came knocking, what they were after, what to do about it, and what we <em>don't</em> see. A quiet month says "nothing touched these doors", never "you're secure".</p></div>
+  </div>
 </div></section>
 
-<section class="band"><div class="wrap">
-  <h2>Questions people ask</h2>
-  <div class="faq">
+<section class="sec dark" id="how" aria-labelledby="how-h"><div class="wrap">
+  <div class="sec-head">
+    <div class="rv"><p class="kicker"><span class="n">02</span> How it works</p><h2 class="h2" id="how-h">Set once. <em>Then it listens.</em></h2></div>
+    <p class="lede rv" style="--d:1">No jargon, no babysitting. Nothing changes on your real computers.</p>
+  </div>
+  <div class="steps">
+    <div class="step rv"><span class="dot">1</span><h3>We set the traps</h3><p>A small decoy box on the internet with your business's name on it, and where it fits, one decoy inside your network. Nothing changes on your real computers.</p></div>
+    <div class="step rv" style="--d:1"><span class="dot">2</span><h3>You get told</h3><p>Serious hits reach your phone within minutes. Background scanner noise is filtered so you only hear what matters.</p></div>
+    <div class="step rv" style="--d:2"><span class="dot">3</span><h3>You get the page</h3><p>Every month, a one-page PDF with the bottom line first: "all quiet" or "2 things to do this week", then the details.</p></div>
+  </div>
+</div></section>
+
+<section class="sec mist" aria-labelledby="rep-h"><div class="wrap">
+  <div class="sec-head">
+    <div class="rv"><p class="kicker"><span class="n">03</span> The monthly page</p><h2 class="h2" id="rep-h">One page. <em>Bottom line first.</em></h2></div>
+    <p class="lede rv" style="--d:1">Sample report. This is the real report layout with made-up numbers for a made-up business, not a mock-up of features we haven't built.</p>
+  </div>
+  <div class="report-x">
+    <article class="paper rv" aria-label="Sample Watchpost report">
+      <div class="ph"><span class="crest" aria-hidden="true"></span><div><b>Watchpost security report · sample</b><span>Prepared for Sample Co. (fictional) · last 30 days · sample numbers</span></div></div>
+      <p class="bl">Bottom line: <mark>2 things to do this week.</mark></p>
+      <p class="tx">3 outside addresses tried the decoys, 41 attempts in total. One of them hunted for password and configuration files, which is the serious kind.</p>
+      <div class="kp"><div><b>3</b><span>outside addresses</span></div><div><b>41</b><span>attempts recorded</span></div><div><b>Critical</b><span>worst severity</span></div><div><b>1,440</b><span>proof the decoys were answering</span></div></div>
+      <p class="rec"><b>What we recommend:</b> 1. Confirm no real web server exposes <code>.env</code> or backup files. 2. Turn on two-factor login for the admin account. 3. Nothing else; keep the decoys running.</p>
+    </article>
+    <ol class="margin rv" style="--d:2">
+      <li><b>Plain English</b>Written so you can hand it to your accountant or your insurer.</li>
+      <li><b>What to do, not just what happened</b>Each month ends with the short list of things worth doing.</li>
+      <li><b>Proof the alarm was on</b>The report shows the decoys were up and answering. That's what the guarantee rests on.</li>
+    </ol>
+  </div>
+</div></section>
+
+<section class="sec" id="start" aria-labelledby="plans-h"><div class="wrap">
+  <div class="sec-head">
+    <div class="rv"><p class="kicker"><span class="n">04</span> Plans</p><h2 class="h2" id="plans-h">Two plans. <em>One alarm.</em></h2></div>
+    <p class="lede rv" style="--d:1">First month free on either plan, no setup fee for founding clients, cancel with one email. Both save about 2 months if you pay for the year. Prices in Canadian dollars.</p>
+  </div>
+  <div class="plans-x">
+    <div class="plan-x feat rv">
+      <span class="tag">First month free</span>
+      <h3>Watch</h3>
+      <p class="who">One-location business. Alerts go straight to your phone; you read the report yourself every month.</p>
+      <div class="amt"><b><sup>C$</sup>79</b><span>/ month CAD · first month free<br>or $790/year &mdash; save 17% (about 2 months free)</span></div>
+      <ul>
+        <li>Decoy set on our box, in your name; one decoy inside your network where it fits</li>
+        <li>Alerts to your phone within minutes (text or push), flood-proof</li>
+        <li>Monthly one-page PDF, reviewed by Dan before it's sent</li>
+        <li>Email support in business hours (Winnipeg, Central Time)</li>
+        <li class="not">Not included: no 24/7 monitoring or on-call, no antivirus or endpoint protection, no blocking or clean-up. It's the alarm, not the locks.</li>
+      </ul>
+      <div class="acts">
+        <a class="btn x gold" href="#" data-pay="watchpost_watch">Start Watchpost <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+        <a class="x-link" style="color:#fff" href="mailto:dan@calasautomations.com?subject=Watchpost%20%E2%80%94%2015%20minutes&body=Hi%20Dan%2C%20I%27d%20like%2015%20minutes%20to%20talk%20about%20Watchpost.%20Business%3A%20">Or book 15 minutes first</a>
+      </div>
+    </div>
+    <div class="plan-x rv" style="--d:1">
+      <h3>Watch Pro</h3>
+      <p class="who">You'd rather someone else watched. We take the alerts first, check websites for you, and handle the paperwork if something happens.</p>
+      <div class="amt"><b><sup>C$</sup>199</b><span>/ month CAD · first month free<br>or $1,990/year &mdash; save 17% (about 2 months free)</span></div>
+      <ul>
+        <li><b>Everything in Watch, plus:</b></li>
+        <li><b>More traps.</b> Extra bait planted across your files and shares, not just the basic set &mdash; more corners watched.</li>
+        <li><b>We watch first.</b> Alerts come to us and we call you only when it's real, not for every scanner.</li>
+        <li><b>Website safety checks.</b> Send us a link and we'll tell you if a site looks like a scam before you trust it.</li>
+        <li><b>We handle the paperwork.</b> If something trips, we write the filing-ready incident report and point it at the right authority.</li>
+        <li>Monthly one-page PDF plus a 15-minute call to walk through it &middot; priority email support in business hours.</li>
+        <li class="not">Not included: no 24/7 monitoring or on-call, no antivirus or endpoint protection, no blocking or clean-up. It's the alarm, not the locks.</li>
+      </ul>
+      <div class="acts">
+        <a class="btn x" href="#" data-pay="watchpost_guarded">Start Watch Pro <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+        <a class="x-link" href="mailto:dan@calasautomations.com?subject=Watchpost%20%E2%80%94%2015%20minutes&body=Hi%20Dan%2C%20I%27d%20like%2015%20minutes%20to%20talk%20about%20Watchpost.%20Business%3A%20">Or book 15 minutes first</a>
+      </div>
+    </div>
+  </div>
+  <div class="partner rv">
+    <div><h3>Partner &mdash; for IT shops and MSPs</h3><p>Per client site, your name on the report. Alerts to your desk, not the client's. From five sites; no free month, the guarantee applies instead. Priced per site &mdash; let's talk.</p></div>
+    <a class="btn ghost" href="tel:+14312449026">Call Kara</a>
+  </div>
+  <div class="pledge rv">
+    <span class="seal" aria-hidden="true">THE<br>GUARANTEE</span>
+    <div><p><b>First month free.</b> After that, if a month goes by and we can't show you the decoys were up and answering, that month is free too.</p>
+    <small>Cancel any time with one email. What we guarantee is that the alarm was on, which we can prove. Nobody can guarantee "no break-in", and we won't pretend to.</small></div>
+  </div>
+</div></section>
+
+<section class="sec mist" id="family" aria-labelledby="fam-h"><div class="wrap family">
+  <div class="rv">
+    <p class="kicker">New · Watchpost Family</p>
+    <h2 class="h2" id="fam-h">For an aging parent, <em>someone to call.</em></h2>
+    <p class="lede">Guardian on their phone, a shared family "safe word," and our help line (Cara) they can call the moment something feels off.</p>
+    <p class="price-line">C$9.99<small>/ month per family, or C$99/yr</small></p>
+    <p style="margin:0;color:var(--ink-2)">The first 20 founding families lock in <b>C$5/mo for 3 years.</b> Use code <span class="code">FOUNDINGFAMILY</span> at monthly checkout.</p>
+    <div class="acts">
+      <a class="btn x" href="#" data-pay="watchpost_family">Start Watchpost Family <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+      <a class="x-link" href="#" data-pay="watchpost_family_yr">or C$99/yr</a>
+    </div>
+  </div>
+  <div class="rv" style="--d:1">
+    <ul class="trio">
+      <li><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="10" y="3" width="12" height="26" rx="2.5"/><path d="M14 25h4M13 11l2 2 4-4"/></svg><div><b>Guardian on their phone</b><span>Flags scam signs in a text or screenshot: romance, crypto "pig-butchering", gift-card and wire demands.</span></div></li>
+      <li><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M6 10h20v14H6z"/><path d="M10 15h12M10 19h7"/><path d="M11 10V7a5 5 0 0 1 10 0v3"/></svg><div><b>A family safe word</b><span>One word only your family knows, so a fake "it's me, I need money" call has an easy test.</span></div></li>
+      <li><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M8 5h5l2 6-3 2a14 14 0 0 0 7 7l2-3 6 2v5a3 3 0 0 1-3 3A20 20 0 0 1 5 8a3 3 0 0 1 3-3z"/></svg><div><b>Cara, the help line</b><span>Someone they can call the moment something feels off.</span></div></li>
+    </ul>
+    <p class="guardian-line">Just want a scam checker on your own phone? <a href="/guardian/">Guardian</a> is free &mdash; it runs on the phone and uploads nothing. <a href="/guardian/" style="font-weight:600">Get Guardian free &rarr;</a></p>
+  </div>
+</div></section>
+
+<section class="sec" aria-labelledby="plain-h"><div class="wrap notes">
+  <div class="stick rv"><p class="kicker"><span class="n">05</span> Said plainly</p><h2 class="h2" id="plain-h">What we <em>won't</em> pretend.</h2></div>
+  <div>
+    <div class="note rv"><h3>Early access</h3><p>Watchpost is in early access with no marketing push. We're taking on a small number of businesses so we can learn from real decoys at real clients before we say anything louder than this page.</p></div>
+    <div class="note rv"><h3>How we compare, honestly</h3><p>Checked 2026-09-21 against the vendors' own pages: Thinkst Canary does decoys better than we do and costs roughly ten times more; Huntress, Todyl, Guardz and Defendify sell 24/7 detection and response with endpoint software, which we don't; Microsoft Defender for Business (CAD $4.10/user/month) protects your computers, which we don't. Watchpost is the alarm on the fake doors, at a price a one-location business can approve without a meeting. Keep your antivirus.</p></div>
+    <div class="note rv"><h3>What Watchpost is, and isn't</h3><p>It's <b>detection</b>, not a lock. It tells you fast when someone's poking at doors they shouldn't, so you can act. It doesn't by itself stop a determined attacker, it doesn't replace passwords, updates, backups and a firewall, and no service on earth makes a business unhackable. It only watches decoys we placed, reports what it sees, and never touches or strikes back at anyone. Ask and we'll show you exactly how the decoys work; there's nothing hidden in them.</p></div>
+  </div>
+</div></section>
+
+<section class="sec mist" aria-labelledby="faq-h"><div class="wrap notes">
+  <div class="stick rv"><p class="kicker"><span class="n">06</span> Questions</p><h2 class="h2" id="faq-h">Questions people ask.</h2></div>
+  <div class="faq-x rv">
     <details><summary>I've got nothing worth stealing.</summary><p>Your card terminal, your staff's logins, your bank connection, and your reputation on Google when customers find out. Attackers don't pick targets; their scripts try every address on the internet. The report shows you how many tried yours.</p></details>
     <details><summary>My IT guy or MSP already handles security.</summary><p>Keep them. This gives them one thing they usually don't have: a tripwire that only rings when something is actually wrong. We'll send them the report too, or they can run it for you on the Partner plan.</p></details>
     <details><summary>Isn't this just antivirus?</summary><p>No. Antivirus watches your computers for bad files. This watches for someone hunting for doors. They're different jobs, and most businesses have the first and not the second.</p></details>
@@ -194,11 +298,22 @@ footer a{color:var(--ink-3)}
   </div>
 </div></section>
 
+<section class="sec dark close" aria-labelledby="close-h"><div class="wrap">
+  <h2 class="h2 rv" id="close-h">Put the fake doors up. <em>The first month is on us.</em></h2>
+  <div class="side rv" style="--d:1">
+    <p>Watch, C$79/mo after the free month. Cancel with one email.</p>
+    <a class="btn x gold" href="#start">See the plans <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+  </div>
+</div></section>
+</main>
+
 <footer><div class="wrap">Calas Automations &middot; Winnipeg &middot; prices in CAD plus GST/RST where applicable<br>Watchpost · <a href="mailto:dan@calasautomations.com">dan@calasautomations.com</a> · 431-244-9026 · Detect, alert, report. Never hack back.</div></footer>
 <script>
 (function(){
-  var hdr=document.getElementById('hdr');
-  if(hdr)addEventListener('scroll',function(){hdr.classList.toggle('stuck',window.scrollY>10)},{passive:true});
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){for(var i=0;i<els.length;i++)els[i].classList.add('in');return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px',threshold:.06});
+  for(var j=0;j<els.length;j++)io.observe(els[j]);
 })();
 </script>
 <script src="/pay/pay.js" defer></script>

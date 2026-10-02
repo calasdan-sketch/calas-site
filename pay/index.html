@@ -1,203 +1,59 @@
-<!doctype html><html lang="en"><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.nav-signin{font-weight:600;color:var(--ink) !important;border:1px solid currentColor;padding:8px 14px;border-radius:2px}
-</style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="/favicon.png">
 <title>Pricing &middot; Calas Automations</title>
 <meta name="description" content="Plain prices for On File, Lead Me, Quote Me and the Cara missed-call text-back, in Canadian dollars, with the guarantee on each. Pay by card or bank debit through Stripe, or book fifteen minutes first.">
 <link rel="canonical" href="https://calasautomations.com/pay/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preload" as="image" href="/hero-bg.jpg">
+<script>document.documentElement.classList.add('rv-on')</script>
+<link rel="stylesheet" href="/calas-editorial.css?v=20261002a">
 <style>
-:root{
-  --paper:#FFFFFF; --surface:#FFFFFF; --sunk:#F1F6F9;
-  --ink:#12212C; --ink-2:#4E5B66; --ink-3:#66717B;
-  --rule:#D9E3EA; --rule-2:#EAF0F4;
-  --red:#155F87; --red-2:#0E4A6B; --red-soft:#E6F0F6; --ok:#17794A; --ok-soft:#E9F5EE; --ok-line:#B7E0C7;
-  --night:#0B2E45; --night-2:#0E3A55; --night-ink:#FFFFFF; --night-ink-2:#B9CFDD;
-  --night-rule:#1E4A66;
-}
-@media(prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --paper:#0B1A26; --surface:#102434; --sunk:#0D1F2C;
-    --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
-    --rule:#1F3A4D; --rule-2:#183041;
-    --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0B1A26; --surface:#102434; --sunk:#0D1F2C;
-  --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
-  --rule:#1F3A4D; --rule-2:#183041;
-  --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);
-  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:16px;line-height:1.55}
-h1,h2,h3{font-family:"Libre Baskerville",Baskerville,Georgia,serif;font-weight:700;text-wrap:balance;margin:0;letter-spacing:-.01em}
-p{margin:0 0 12px}
-a{color:inherit}
-.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
-@media(max-width:640px){.wrap{padding:0 20px}}
-.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:14.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
-.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+/* price index in the hero */
+.pidx .core{padding:6px 0}
+.pidx a{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:13px 22px;text-decoration:none;color:var(--ink);border-top:1px solid var(--rule);transition:background .3s var(--ease)}
+.pidx a:first-of-type{border-top:0}
+.pidx a:hover{background:var(--mist)}
+.pidx .n{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.pidx .nm{font-family:var(--serif);font-size:17.5px}
+.pidx .nm small{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-3)}
+.pidx .pr{font-family:var(--serif);font-size:17px;color:var(--accent);white-space:nowrap}
+.pidx .pr small{font-family:var(--sans);font-size:12.5px;color:var(--ink-3)}
 
-header{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid transparent}
-header.stuck{border-bottom-color:var(--rule)}
-.mast{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 40px;max-width:1240px;margin:0 auto}
-.lockup{display:flex;align-items:center;gap:14px;text-decoration:none;perspective:400px}
-.crest{width:26px;height:36px;flex:none;background:var(--red);
-  -webkit-mask:url(data:image/png;base64,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) center/contain no-repeat;
-  mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAACQCAYAAADk3S7VAAATdklEQVR42u2de9wcZXXHvzu7b27SAEkFsdyDBgUhQpEaLyC19UJRrFq0CUlaLGhvWG0xFqilxIq1SAVbCDcrCG3V0nxQAQGJFNSqFRFaCRqwUBMlaiJNAjHZd5/+cc757Mk4uzs7O7Mz8ybP57Of982+2dmZ53cuv3Oe85ynEUKgxiPS1yTgH2RP4AjghcALgOcC+wN7A039+XXgDcB6/UwlJ6JVY2AaCkxH35sPnAT8GnCcAtJrrAZ+F1in16mslNYNoKYCYqD8EnAqcBrw4oTn6ejkTwLT9L0VwPn6e6XBAWjUxMQ1dZJtvBQ4E3idmjMbbZ1007CO07g1wB8CX9C/+b/vBmhEjbGbfAPwx8CJ7v9MxsweTmtMoy4DzgU263vtupiMqgLkfQzAG4E/A453AHRioHjAmvr7A8CfAHf10MTdAA17PzqJJuEnAe8DXh7zKc2Ez3qt2Q58ALgI2KbvTVbd31QdIC/dzwEuAN7qtMJ8S9LouL/dA7wTuK+uWhM3JVXQGpPwCWA58A0Fp+NMVq97bevftutnT1BwWjEzWctRtgZ56X4ZcAlwbIIvoQ84LeBB4AwNPmvD0KquQaY1M4APAncrOO0+fibJ33wCWKjgtByBmBKjDA3yEn48cAWwQCc2pBCajrvGecD7p4KvqQpAfhLfpUxrmjNVpADHcm+/A1yfECtNqdEa83e1gbnASo1tbNKHAedp4M3A55RU7GAKj9aYwXkRcANwmP67mdIPGjhbgN9QfzXlwRkHSfCB5xLgiw6cVkIWoB84W4HX7krgFA1Q5OjyhcDHgZlDmDScX9kOvF6D0F0GnCJNXOSAuBpYqkBFQwiF0eWmBq1f2NXAKQogA+cZwKeBVw/B0vywOOcs4KZdEZwiADIaPQf4LLKItkMnd5hhgF4EXLmrgpN3HGSaMxf4vMsKZNGcJnCz+p3aZqKrBJCBszdwJ3BMRnCMsX0HqSvY4t7fJUeU0zUCsAdwywjgWKrnZ0iNwf8xhZKeZfkgy4lF6sh/JSM4nhT8EXA/NVuarqKJ80HoJ4BFGQmB9zurkLqD3eDkAJBN4gqkICMrOGbCfoIUGW7YbdpG90Etl745V3+fyHgtW2I4G3jCEY7dI6MGWaxzDPBlBSupumYY03YrkmfbbdpGBMhIwR7Iuv88di7YyMrajgIe2W3aRjdxtji2UsFpj2AmDdiLgbXu2rtHRg0y07YM+NgIdNrAaSDF688DnnIatXtk0CBz3AcDH6GbZc46ggL0V5otiCoITuT8a+U1yLTnNuBVpCuJGqQ931Hf066Q9thySLuH/w1V1CADZ6mC085Je1YgC3Fla0/kTHXHgfN8zWqsBv6awaVgpWiQAbg38G3gF0eMn0x7vgscSTdLPW6AGk4wPDE5GjhFX8c6QDYoKdoybk1qpXiQSfUV+4xIDHxQ+mHNPIw77vEmzMq/DkEqjN6EFLX4eK6tAO6DLDz+KzsX95eqQSZhz0eSl40RAlJPq3+I7Bnd4kAbBzC+TnuGBsZLkC2Ts2KgRC7ms6X6W5CKorFmOloDtKeDrGraolljhO8ygK5jfBup4sAcCJyuwDzX/b8dTrtaPa7xq8BBwGPjBCkaQAxeolKTB61u6kRc4wAr8rks8J1UtrgS2dC1QsHpKEkBySM2ewhgQwVpBrJONYoPzg0gMzsX5GSGjBzcrfS6KAlsxIA5DrgR2c5yJrKf1fxKByk7/jGyxHEH3aL8XvO0mG7p8XhGCCH+aurPhUHGZBh9tPXn4hBCI4TQSvjeUV9N9/uRIYTrY/e+I4TQcb+HEMI9IYR5+pk3xe41PuxaCxO+r7BXvwe9OfYwWYdNysYQwhy9diPHh4jc9fYJIfxdCGFbTDg67l4MgGtCCBP6uVYIYVoIYW0fobR5WFkmQJH+fF5M4kYZ9mCfLODBvCb+XghhXYLWekGxiT/PCUrkrnNOH6G0udgQQphdgKAlvqIetvYdjrnl4RcA/s1R17wCzTbS8uUOpH7u2SRvAPN7j85SouCzB/acH0eKVZoJftfY4DOVODXGkllwaJk07KVSEnLQIPv85hDCvjlJndfAs0MIWxJMWS/NWayfm+hz3av6aJF9x+0xizMWE2dqvnSAs8xCDlbn9EB2j/uFED7Tx5yFBJ+zqA84HqAFCmgvsDshhJ85chGNy8QZ7V2SY3Rv17krh/jBAtsTgK+qmem3nzW4rPsZyL6kfiXEljG4H9kmk7RD3N6bRrdFQDSOOMjiknnIbmtysq92/X8fIZ7y5V1nIZWrBzB4j5HV2b0HuJZ09d12v5em+D+LcvTTqQACaU40kdOXmlN+EtkmnyV74PNhH0Q2HFsg2i9NZeBdAfwN6YvvLZ11q2bck5bhTZgP10xLocsQUWziTo0xr1GzByBdpjZmSNP73eDXAue43F00YJJbalb/YMjss032dk0N9RIqe2/puNLvHTUbL8rRrhoYD2YwmQ0H6D8jO7p3MHjbpCVk16mPCBnWm8x6XKfan0S57Vler2tlkzkJdU+AAF6hCcG8v+y/MsY4HXXsp5GuatUDsVgX2bLk/EyLfqTC0Y8szFG3QFFmzmvKK3NenzGQvzvkdS2TvlK1IG1JsTG29ysLG8WB273+PYPrL5YVmp13scEjOSZH/ThqiHjB4py/1M9uHzLeuk+v0cwhILb7vb1PrNXRgHZ+UTGRadA8pKQqb//zlKbz02iQxTlvQXrEpV1eD465vc0RgpCTBbgsBSFZVFRMZBc8tqB1js2a20pzH21dWLvWmZW0fRSaSL3efTnGJuaLbwMe7kO5UVM8UQRZ8ADl6X+8Bm1LydhmqVOeOQTV96ztggKEzFaBr+jhZ4yEHKYZjty1yC52dI7xjx/bUsQgRgouRsqAh6m7sxq781Vb866xM424HtjUg3L7mCgUYeJmqg8qAqB2glbFwWkjBZFvZ7iyLsudPaAxSxEm2ij3T5Cl8yTKbcJ0ClI3mKuZi5BKl2cVBFBjwN8C0vDiH0jXKy7pGu9zk1JECZdd8/IelNtA2xOpbcg1JoqQwr3pzlzkOSbcNRs97Pdy4FCnEcNoz/1IP4UiCznsu/4bWRjs1wd1ad4xUeTMWxGB1oweQaaBcwjwbrKVdTU0EZp1A1kWX31ZHz8akF3uR+R5T5GLf4owbbMUpF7m7UK6HbDSaq+B+T1k6/84OvvakQO3Aw/1oNxm/hbnyeYiTZIWNX4BmB0DzbTnBRqUDtOezGv61cj2ySbjKR82QnN5H8qNPtP0vMhCVBBBaDgTN7eH9ixn+G2PQcF8WqlvcTmw3pT7BmT5pBUTDL/J7aS8tChKmMA8Hwik0saAMWd+KLKjYNjFLrvmncD/Mt59rXavG5HGHSSYVmtuuywvrY7UDBVBse0GD40BBLJ0ncUM2P+9gfxKuIYZHUe5kwJqS0+9Ftg3DzMXaRxS5DjATW4b2cK/JIMJMAnepM46MP4+2cbO1ug9xAmKf8Y35hETRXRPpioaIAPjZPV7k0MCZBOxuk/aZRzDNOLSHpbH/r0kDx/p98PkbS5s8g+PmbzFI07sLSWZtzhZuBNZLY6v2prgHId01B9p605U4IMaWztCA9LtyPr9K+h/1Ew/9rYD2cJS9vkMluC9PCZ88ezD6aMKf5E7xawiZzrwUeRYs/PV53WGvGmbgIeBRym/ZYxp0Y3IgmQzgXID/JYG4u2sIEV068VCQZKGsprVyHFlWZKiBsZXGX23X56U+6cuHpuMzeskclTorzNCoX3E4AW1vNhPJwfa+R9UZ5jQXKFC3kwAMdBdJwpZAdo6hoex8q7miJr4rQK1PQtATWRL522OYsdjolch571OZrAcRKqmVXnoXuakgRQRPjLm9E7acWlCXGeAzUJOayErQD+m2sME53GNf6okTGay70JWdpMCV5TNZcq6R8APaqBBAP9DSf1yUpjfDlLk2Ojxt2OAX85y/xGSdKyDBj1WUECdlxb9C1JuHKfcHadFQ99/pHFFFR88PtZVWICa6iOv60G5QXoBPWPYmMgDFFUcoCcqfG+mJSs1Y+K1yGKi/YDXDBsTRcjS8eYK+yGTto0Vvkej3GuRs/XihMDioGXDxkRGEtbXAKAtVH806BaWRAlxnDVkSh0TWU30wxVncowp4zEqWQBJ5n4zpkX2+9ANmaIKRui9NKgOh9j2o9yZGjLZh75eEyZHDbSoAXxSSU2cLFg10/FpYyKvQdspb5UyTRw0UQOAbNI3A/+YoPnxzceNNAA1NFhdU3E/NLMmWmQgXMnP1+2ZxvwmUi84MCaK3AXujX1B1TRodk3MsFHuR5GDFpPIwjOR2oyBMZFnEndUdAIMoLnUazRIznITi4k6gwAydO+ldyuuKoxn1ZAs3IO04/RaZGCdSIrTY2xHmi073Ev5BRm9xoE10yCb24/GrJJvyPSWQTFRvFfPzZR0RkGKOOjgivrIQVr0ac3W+DLl1A2Z4r16Pots/G1VCCQP0ATDVwSVTbm3IMf5EAOog+zJXdgvJvIA2W7pL1bMzBkY+7NzIX6dKPdVSKrK+3f727K0LM5+v75iE2A1cNPoVqnWCaAmshp8c4wspGrIFMVsJki6fEPF2JxJ23E1A8gLWTzLnaohUxSzmS1NU9yYkKaogpl7Sc2IgicLXwK+RnLxSM/Nx1GfNMWoBznlTVlNg2bXiCgMotxmpV4GzE+KiaIeNvMhkovxyvZDc5FMcN/YocJadJMSMU+5rSHTbyc9V7+HvLhiE2EPdHIN/ZDR6K38/OkvfRsyRT3QjpRuf4lxn/Yx2MydTH6Nb8sQsGuQTdBNl8XpAM8BXh7HJRrglC+smB23zlIv7sV6akC5HwdWxciCj4lCGhNnWvR5JOHXrIjEFtF8vQqUu2dDpigFtT2vQg/nF7zmUGC33YLJwleQrTQN9541ZDrVP+ug/tNNpGv8qopokbHKvem25m/WTIN8358k4dopJkpzjmpQB/YA3aOTy5RavxX+KPLrUTruoHsGUu52gHsmy4EejXTXakYpJsM2Kf1tRbTIWOXhaupCzbTI7vdppN8QsZjIN2RqpDnL27a8z0Cqf+aRbZ9p3rbcergtoLqLjIMY6f6qRTMdeBGyk2M+sD1KiXgDWSf6fcrfYY2LxI9EFr2G7ZhVFcr9fXZuqWbAHYS0Kxiqw2ELKSy5ivEf8dxLs63nXJat/VWi3N4iWUOm04EQZTAr70Z2RLRK1iSTtgOBP6ca2/OzUO6vAV92WuQbMu03bLePBrIcsdTZ/VAySJPAnyJnjrdrBlIS5Tag9gJOS0MS4sPM23lqXoZppVyUJDZVCl/qmGYdaLeBMl3DhoOcqQ7AY1mYmAGyAikyKdsfWavKhcB7a6ZFRrm3qW/3PigC1mfRIK+ae6oNPYzBx7gU/aDmD09AsvBVyR+m9aXP1nhzlr7/I+CYrLGMqeEmDRa3UGxjprSxWhP4J6T2eRztmvOk3OuBTzlf/3Zg3SgPYNT7QboVkpl70uRIGA6ge3JWmX3lsgjZR/Q5Poac3NwaVcLMH30O6UNatoM2f3QSsuN6mGNuyqbcAemkfzlyoGIDmMzqg+LDjsFcDnzAOeqyJsYE50LgL0h/TGcVtGgnQPICyNPvFcC5FaDf9v3nAB+qSPZjGOod8gbInxh8EXICcJmaFJyffBdwCd1C9dqsxkYFTchy1aRWidmGhvOJH9Z0kG05rE3JVp4alKRJ71Ft6hQgEMPGSHbO3TsdoZjcFQGK+6QzkErVqORg1nzSZ5Bc4qY6+KUiAfIgvQap996rZPJg370GWbX8Bt21pUr6pWhME3IrUpT3bQdaGRNi3304UgzzNkcaWrsiQB6kB5Fs8yo3GZ2SQOogOa+rkJNM9nGMM9rVAMI9/CbkIL730s3Ytkt6bmOdi9TUnab/tuXzSmQfivZBSQzPahpO0HTM/JJZnicuN2mQvcZpW6lx07gBivuCPZGDAs+Madq4pddT8aeQBhSXIDsNSwWqLIDiccgpGkweliDVZWnTDxWoK5GDbu2ex1riVSZAsPOxabORwzfOprvdvgyz5zMiIBuurkQOgf9+QpYiTGWAkrRpAXJw+uucVDcqANRPkXWma+n218NpXCGxVFUAimsTSNnR+cjhsVUCCmRLzo2alVgXY4eRAytMJYDi1N9M3FuRJYMFMUkddxF/ElBPIsWcq5DjAX6Q8CyR+3wYFrgqApRk9lrIARVn091EbKwvKkGr4s0oDKyvIJuv70Zqrp/uI4SRA6tTR4CSgAJ4NfAOJL83UQGt6iSABdLF8lGNqR7S16NKNLaleM7aAJTkn0AqSRdpBmBeTLpDCZrlK21bfTIq65Dyqm8C/6k/19ZZg5IkzUvuLKRh+JuR48j2TfAbjRK0K04UegnMVtWyTyFL8zv5qDoCFLfjPpc3B+lkeIqmkg7p4eh92qno0qwQ0zAf33lNu4zuYmJnKgAUN3/ETOAMZX4nKlgvjGlXL18COxey0wfA0OMnKUOC7yn7u5rupuJQdxOXBSw0UzEfOWxpAdJM7xAFbXqB9/SUBrlPIDvn1iJLL99SprfNaVRnKvigYcFqxEyLH3sg2xAP1dfBSI30fkj58F7I5rAJpF9dy4G/Q2n0VgVgo8ZBjysQ65F83gYkl/dkj/ts0edc8v8HSWH2d5qpbSsAAAAASUVORK5CYII=) center/contain no-repeat}
-@keyframes spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
-.crestflip{display:inline-block;position:relative;width:26px;height:36px;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;animation:spin 6s linear infinite}.crestflip .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}.crestflip .back{transform:rotateY(180deg)}
-.crest.big{width:56px;height:78px;background:#fff}
-@media(prefers-reduced-motion:reduce){.crestflip{animation:none}}
-.lk-name{font-family:"Libre Baskerville",Georgia,serif;font-size:17px;font-weight:700;line-height:1.05;display:block;color:var(--ink)}
-.lk-name .r{color:var(--red)}
-.lk-rule{display:block;height:2px;background:var(--red);width:100%;margin:4px 0 3px}
-.lk-sub{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.24em;color:var(--ink-3);display:block}
-nav{display:flex;align-items:center;gap:14px;font-size:16px;flex-wrap:wrap}
-nav a{text-decoration:none;color:var(--ink-2)}
-nav a.on{color:var(--red);font-weight:600}
-nav a:hover{color:var(--red)}
-.nav-cta{background:var(--red);color:#fff !important;padding:9px 16px;border-radius:2px}
-@media(max-width:760px){.mast{flex-wrap:wrap}nav{gap:14px;font-size:15.5px}}
+/* product entries */
+.entry{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,5vw,80px);padding:clamp(56px,7vw,96px) 0;border-top:1px solid var(--rule);scroll-margin-top:20px}
+.entry:first-child{border-top:0;padding-top:0}
+.entry .side{position:sticky;top:30px;align-self:start}
+.entry .num{font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--ink-3);display:flex;align-items:center;gap:14px;text-transform:uppercase;margin:0 0 18px}
+.entry .num::before{content:"";width:34px;height:1px;background:var(--gold-2)}
+.entry h2{font-family:var(--serif);font-size:clamp(34px,4vw,52px);line-height:1.05;letter-spacing:-.02em;margin:0 0 16px}
+.entry .who{font-size:17.5px;color:var(--ink-2);margin:0 0 26px;max-width:46ch}
+.entry .acts{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center}
+.entry .acts .btn.ghost{font-size:15.5px;padding:10px 16px}
+.entry .det{display:block;margin-top:18px;font-size:15px;color:var(--ink-3)}
+.ledger-p{border-top:1px solid var(--ink);margin:0 0 30px}
+.ledger-p .ln{display:flex;align-items:baseline;gap:14px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.ledger-p .lbl{font-size:16.5px;color:var(--ink-2);flex:0 1 auto}
+.ledger-p .dots{flex:1 1 30px;min-width:20px;border-bottom:1px dotted var(--rule-2);transform:translateY(-5px)}
+.ledger-p .amt{font-family:var(--serif);font-size:clamp(24px,2.4vw,32px);line-height:1;white-space:nowrap;text-align:right}
+.ledger-p .amt small{font-family:var(--sans);font-size:14.5px;color:var(--ink-3);margin-left:3px}
+.ledger-p .save{display:inline-block;margin-left:10px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:rgba(240,193,113,.28);color:#7A5512;padding:3px 7px;border-radius:5px;vertical-align:middle}
+.entry h3{font-family:var(--mono);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:500;margin:0 0 12px}
+.entry ul.inc{list-style:none;margin:0 0 30px;padding:0}
+.entry ul.inc li{position:relative;padding:9px 0 9px 26px;font-size:17px;color:var(--ink-2);line-height:1.55}
+.entry ul.inc li::before{content:"";position:absolute;left:2px;top:17px;width:12px;height:7px;border-left:1.5px solid var(--accent);border-bottom:1.5px solid var(--accent);transform:rotate(-45deg)}
+.entry .gq{position:relative;margin:0;padding:22px 24px 22px 26px;background:var(--mist);border-radius:18px;border-left:3px solid var(--gold);font-size:17px;line-height:1.55;color:var(--ink)}
+.entry .gq b{font-family:var(--serif)}
+@media(max-width:900px){.entry{grid-template-columns:minmax(0,1fr)}.entry .side{position:static}}
+@media(max-width:520px){.ledger-p .ln{flex-wrap:wrap;gap:4px 10px}.ledger-p .dots{display:none}.ledger-p .lbl{flex:1 1 100%}.ledger-p .amt{text-align:left}}
 
-.hero{position:relative;background-color:var(--night);color:var(--night-ink);overflow:hidden;border-bottom:1px solid var(--night-rule)}
-.hero .wrap{position:relative;z-index:3;display:flex;flex-direction:column;gap:14px;padding-top:64px;padding-bottom:52px}
-.hero .eyebrow{color:var(--night-ink-2)}
-.hero h1{color:#fff;font-size:clamp(28px,4vw,40px);line-height:1.12;margin-top:4px}
-.hero p.lede{color:var(--night-ink-2);font-size:17px;max-width:640px}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
-.btn{display:inline-block;padding:12px 22px;border-radius:2px;background:var(--red);color:#fff;
-  text-decoration:none;font-size:16.5px;font-weight:600;border:1px solid var(--red)}
-.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff}
-.btn.ghost.light{border-color:var(--rule);color:var(--ink)}
-
-main{padding:8px 0 0}
-section{padding:44px 0;border-top:1px solid var(--rule)}
-section:first-of-type{border-top:0}
-.sec-head{max-width:640px;margin-bottom:22px}
-.sec-head h2{font-size:24px;margin-top:8px}
-.sec-head p{margin-top:8px;color:var(--ink-2)}
-
-.panel{display:grid;grid-template-columns:1.3fr 1fr;gap:0;border:1px solid var(--rule);background:var(--surface)}
-.panel>div{padding:26px}
-.panel>div:first-child{border-right:1px solid var(--rule)}
-.panel .spec{background:var(--sunk)}
-@media(max-width:760px){.panel{grid-template-columns:1fr}.panel>div:first-child{border-right:0;border-bottom:1px solid var(--rule)}}
-.panel h3{font-size:19px;margin-bottom:8px}
-.panel .who{color:var(--ink-3);font-size:16px;margin-bottom:14px}
-.quote{font-family:"Libre Baskerville",Georgia,serif;font-style:italic;color:var(--ink-2);font-size:16px;
-  border-left:2px solid var(--red);padding-left:14px;margin:16px 0 4px}
-dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:16px}
-dt{color:var(--ink-3);font-family:"IBM Plex Mono",monospace;font-size:15px;letter-spacing:.06em;text-transform:uppercase;padding-top:2px}
-dd{margin:0;color:var(--ink)}
-dd.big{font-family:"Libre Baskerville",Georgia,serif;font-size:22px;font-weight:700}
-
-.ledger{border:1px solid var(--rule);background:var(--surface)}
-.ledger-head{display:flex;justify-content:space-between;padding:14px 20px;background:var(--sunk);border-bottom:1px solid var(--rule)}
-table{width:100%;border-collapse:collapse;font-size:16px}
-th{text-align:left;font-family:"IBM Plex Mono",monospace;font-size:14.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding:10px 20px;border-bottom:1px solid var(--rule)}
-td{padding:10px 20px;border-bottom:1px solid var(--rule-2)}
-td.num{text-align:right;font-family:"IBM Plex Mono",monospace}
-tr.auto td.task s{color:var(--ink-3)}
-tr.auto .after{color:var(--ok);font-weight:600}
-.ledger-foot{display:flex;justify-content:space-between;padding:14px 20px;background:var(--ok-soft);border-top:1px solid var(--ok-line)}
-.caption{color:var(--ink-3);font-size:16px;margin-top:14px}
-
-.steps{display:flex;flex-direction:column;gap:2px}
-.step{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule-2)}
-.step:last-child{border-bottom:0}
-.step .n{font-family:"IBM Plex Mono",monospace;font-size:14.5px;color:var(--red);flex:none;width:64px;padding-top:3px}
-.step h3{font-size:17.5px;display:inline}
-.step p{display:inline;color:var(--ink-2);margin:0}
-
-.fit{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.fit h3{font-size:17px;margin-bottom:10px}
-.fit ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:16px}
-.fit li{margin-bottom:6px}
-.fit .no{color:var(--ink-3)}
-@media(max-width:640px){.fit{grid-template-columns:1fr}}
-
-.sql{background:var(--night);color:#cfe6f5;border-radius:2px;padding:16px;font-family:"IBM Plex Mono",monospace;font-size:15.5px;overflow-x:auto;margin:14px 0}
-.sql pre{margin:0;white-space:pre}
-.sql .kw{color:#7CC4EA}
-.sql .cm{color:#6E8EA0}
-.sql-cap{font-size:15.5px;color:var(--ink-3);margin-top:6px}
-
-.demo-video{width:100%;border-radius:5px;border:1px solid var(--night-rule);display:block;background:#000}
-.demo-wrap{margin-top:16px}
-.demo-cap{color:var(--night-ink-2);font-size:16px;margin-top:8px}
-
-.calc{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.calc>div{background:var(--surface);padding:26px}
-.calc .field{margin-bottom:18px}
-.calc label{display:flex;justify-content:space-between;font-size:16px;color:var(--ink-2);margin-bottom:8px}
-.calc input[type=range]{width:100%}
-.calc .out{background:var(--sunk);display:flex;flex-direction:column;justify-content:center;gap:10px}
-.calc .row{display:flex;justify-content:space-between;font-size:17px}
-.calc .row .k{color:var(--ink-2)}
-.calc .row .v{font-family:"IBM Plex Mono",monospace;font-weight:600}
-.calc .row.net{border-top:1px solid var(--rule);padding-top:10px;font-size:17px}
-.calc .row.net .v{color:var(--red)}
-@media(max-width:760px){.calc{grid-template-columns:1fr}}
-
-.doors{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.door{border:1px solid var(--rule);background:var(--surface);padding:24px;display:flex;flex-direction:column;gap:10px}
-.door h3{font-size:17px}
-.door p{color:var(--ink-2);font-size:16px;flex:1}
-.door a{font-size:16.5px;font-weight:600;color:var(--red);text-decoration:none}
-@media(max-width:760px){.doors{grid-template-columns:1fr}}
-
-.cta{background:var(--sunk);border-top:1px solid var(--rule);padding:40px 0}
-.cta-in{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:center}
-.cta-in>div:first-child{max-width:480px}
-@media(max-width:760px){.cta-in{flex-direction:column;align-items:stretch}}
-
-footer{padding:20px 0;border-top:1px solid var(--rule)}
-.foot-row{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:16px;color:var(--ink-3)}
-
-header::after{content:"";display:block;height:2px;background:linear-gradient(90deg,transparent,#F0C171,transparent)}
-
-/* pricing page */
-.hero .wrap{padding-top:56px;padding-bottom:44px}
-.hero .fine{color:var(--night-ink-2);font-size:16px;margin-top:4px}
-.plans{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-@media(max-width:820px){.plans{grid-template-columns:1fr}}
-.plan{border:1px solid var(--rule);background:var(--surface);display:flex;flex-direction:column}
-.plan>div{padding:24px}
-.plan .head{border-bottom:1px solid var(--rule)}
-.plan .head h2{font-size:21px;margin-top:6px}
-.plan .head .who{color:var(--ink-3);font-size:16.5px;margin:8px 0 0}
-.plan .body{flex:1;display:flex;flex-direction:column;gap:14px}
-.prices{display:grid;grid-template-columns:1fr;gap:8px}
-.price{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 14px;background:var(--sunk);border:1px solid var(--rule-2)}
-.price .lbl{color:var(--ink-2);font-size:16px}
-.price .amt{font-family:"Libre Baskerville",Georgia,serif;font-size:20px;font-weight:700;white-space:nowrap}
-.price .amt small{font-family:"IBM Plex Sans",sans-serif;font-size:15.5px;font-weight:400;color:var(--ink-3)}
-.price .amt .save{display:inline-block;background:#F2C94C;color:#3a2a00;font-family:"IBM Plex Sans",sans-serif;font-size:14px;font-weight:700;line-height:1;padding:3px 6px;border-radius:6px;margin-left:8px;vertical-align:super;white-space:nowrap;letter-spacing:.02em}
-.plan h3{font-size:16px;font-family:"IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:500;margin-bottom:6px}
-.plan ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:16px}
-.plan li{margin-bottom:5px}
-.guar{border-left:2px solid var(--red);padding:2px 0 2px 14px;color:var(--ink-2);font-size:16px}
-.guar b{color:var(--ink)}
-.plan .act{border-top:1px solid var(--rule);background:var(--sunk);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.btn.ghost.light{text-align:center}
-.plan .act .eyebrow{flex-basis:100%;margin-top:2px}
-.byreq .prices .amt{font-size:16px}
-.legal{color:var(--ink-3);font-size:16.5px;max-width:720px;margin-top:22px}
-.legal b{color:var(--ink-2)}
+.legal-x{margin:0;padding:clamp(28px,3vw,40px) 0 0;border-top:1px solid var(--ink);font-size:16.5px;color:var(--ink-2);max-width:80ch}
+.legal-x b{color:var(--ink)}
+.close .mail{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--ice-2)}
 </style>
-<style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"><style>/* 2026-09-30 Dan: pricing page writing a touch bigger */
-.plan .head .who{font-size:18px}
-.price .lbl{font-size:17.5px}
-.plan ul,.plan li{font-size:17.5px}
-.guar{font-size:17.5px}
-.legal{font-size:17.5px}
-.price .amt small{font-size:16.5px}</style></head>
+<style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"></head>
 <body>
-<style>#hdr{position:relative}#hdr::after{content:"";display:block;height:2px;background:linear-gradient(90deg,transparent,var(--gold,#F0C171),transparent)}</style>
+
 <header id="hdr">
   <div class="mast">
     <a class="lockup" href="/" aria-label="Calas Automations, home">
@@ -220,269 +76,254 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
     </nav>
   </div>
 </header>
+
 <main>
-
-<div class="hero">
-  <div class="wrap">
-    <p class="eyebrow">Pricing</p>
+<section class="x-hero" aria-labelledby="pr-h1"><div class="wrap">
+  <div>
     <a class="of-lockup" href="/" aria-label="Calas Automations pricing"><span class="crest" aria-hidden="true"></span><span class="of-lk-text"><span class="of-lk-name"><span class="r">Pricing</span></span><span class="of-lk-sub">BY CALAS AUTOMATIONS</span></span></a>
-<h1>Every price on one page. Pay here, or talk to us first.</h1>
+    <div><span class="eyebrow"><i></i>Every price · every guarantee · CAD</span></div>
+    <h1 id="pr-h1">Every price on one page. <em>Pay here, or talk to us first.</em></h1>
     <p class="lede">Fixed prices in Canadian dollars, each with its guarantee written next to it. If a Pay button is showing, it goes to a secure Stripe checkout. We accept Visa, Mastercard, American Express, Apple Pay, Link, and Klarna. If it isn&rsquo;t showing yet, book fifteen minutes and we&rsquo;ll set it up with you.</p>
-    <p class="fine">Fifteen minutes first is always fine. Nobody is charged without having talked to Dan.</p>
-  </div>
-</div>
-
-<div class="wrap">
-  <section>
-    <div class="plans">
-
-      <!-- On File -->
-      <article class="plan" id="onfile">
-        <div class="head">
-          <p class="eyebrow">On File &middot; accounting &amp; trades</p>
-          <h2>On File</h2>
-          <p class="who">Chases missing documents and certificates so your staff don&rsquo;t have to. For accounting firms and trades contractors.</p>
-        </div>
-        <div class="body">
-          <div class="prices">
-            <div class="price"><span class="lbl">Setup fee</span><span class="amt">$0 &mdash; free 2-week trial</span></div>
-            <div class="price"><span class="lbl">Monthly plan, flat all year</span><span class="amt">C$500<small>/mo</small></span></div>
-          </div>
-          <div>
-            <h3>What&rsquo;s included</h3>
-            <ul>
-              <li>Set-up against your own file list and your own wording, in about two weeks.</li>
-              <li>A two-week measured run on your real files before the monthly plan starts.</li>
-              <li>Automatic reminders by email (text where you want it), a daily one-page status, and the audit trail of who was asked what and when.</li>
-              <li>Maintenance, fixes and small changes through the year. 30 days&rsquo; notice to cancel, always.</li>
-            </ul>
-          </div>
-          <p class="guar"><b>Guarantee.</b> If the two-week run doesn&rsquo;t return at least 6 staff hours a week, you have paid nothing.</p>
-        </div>
-        <div class="act">
-          <a class="btn ghost light" data-pay="onfile_monthly" href="#" hidden style="display:none">Monthly plan &mdash; C$500/mo</a>
-          <a class="btn ghost light" href="mailto:dan@calasautomations.com?subject=On%20File%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
-          <span class="eyebrow">Details: <a href="/accounting/">accounting</a> &middot; <a href="/trades/">trades</a></span>
-        </div>
-      </article>
-
-      <!-- Lead Me -->
-      <article class="plan" id="leadme">
-        <div class="head">
-          <p class="eyebrow">Lead Me &middot; B2B lead finder + outreach</p>
-          <h2>Lead Me</h2>
-          <p class="who">Finds the local businesses in your territory that fit what you sell, checks each email address works, explains why each one fits, and writes an honest first email. Three plans, depending on who presses send and how many of you share the list.</p>
-        </div>
-        <div class="body">
-          <div class="prices">
-            <div class="price"><span class="lbl">Setup fee, any plan</span><span class="amt">C$0</span></div>
-            <div class="price"><span class="lbl">Lead Me Starter &middot; you send, with one click</span><span class="amt">C$199<small>/mo</small></span></div>
-            <div class="price"><span class="lbl">Lead Me &middot; sends for you <b>(most popular)</b></span><span class="amt">C$500<small>/mo</small></span></div>
-            <div class="price"><span class="lbl">Lead Me Team &middot; up to 4 people</span><span class="amt">C$800<small>/mo</small></span></div>
-          </div>
-          <div>
-            <h3>What&rsquo;s included</h3>
-            <ul>
-              <li><b>Starter:</b> your industry and territory profile, built with you; the finder, the website reader and a fit score out of 100 with plain reasons; every email address checked, with a record of where it was found; honest first emails written for you. You send them from your own email with one click (&ldquo;Open in my email&rdquo;), up to 30 a day. One person.</li>
-              <li><b>Lead Me:</b> everything in Starter, plus it sends for you from your own email address on a gentle schedule &mdash; a first email, a follow-up on day 3 and a last one on day 7, then it stops. It stops by itself when someone replies or unsubscribes, and pauses if emails start bouncing. One person.</li>
-              <li><b>Team:</b> everything in Lead Me for up to 4 people sharing one lead list, so two people never email the same company, plus export to your CRM (a spreadsheet file that HubSpot, Pipedrive, Salesforce and Excel all open).</li>
-              <li>Ongoing runs, fixes and profile tuning on every plan. 30 days&rsquo; notice to cancel, always.</li>
-            </ul>
-          </div>
-          <p class="guar"><b>Guarantee, on every plan.</b> 40 businesses in your territory that fit what you sell, each with a checked, working email address and a record of where we found it, within 14 days of going live &mdash; or you walk away owing nothing.</p>
-        </div>
-        <div class="act">
-          <a class="btn ghost light" data-pay="leadme_starter" href="#" hidden style="display:none">Starter &mdash; C$199/mo</a>
-          <a class="btn ghost light" data-pay-fallback="leadme_starter" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20Starter%20%E2%80%94%20getting%20started">Starter &mdash; talk to us</a>
-          <a class="btn ghost light" data-pay="leadme_monthly" href="#" hidden style="display:none">Lead Me &mdash; C$500/mo</a>
-          <a class="btn ghost light" data-pay-fallback="leadme_monthly" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20%E2%80%94%20getting%20started">Lead Me &mdash; talk to us</a>
-          <a class="btn ghost light" data-pay="leadme_team" href="#" hidden style="display:none">Team &mdash; C$800/mo</a>
-          <a class="btn ghost light" data-pay-fallback="leadme_team" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20Team%20%E2%80%94%20getting%20started">Team &mdash; talk to us</a>
-          <a class="btn ghost light" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
-          <span class="eyebrow">Details and plan comparison: <a href="/leadme/#pricing">Lead Me</a></span>
-        </div>
-      </article>
-
-      <!-- Quote Me -->
-      <article class="plan" id="quoteme">
-        <div class="head">
-          <p class="eyebrow">Quote Me &middot; trades quoting + deposit</p>
-          <h2>Quote Me</h2>
-          <p class="who">A 90-second voice note on site becomes a priced quote from your rate card. The customer accepts by typing their name and pays the deposit by bank debit or card.</p>
-        </div>
-        <div class="body">
-          <div class="prices">
-            <div class="price"><span class="lbl">Per shop, early access</span><span class="amt">C$99<small>/mo</small></span></div>
-            <div class="price"><span class="lbl">Setup fee</span><span class="amt">C$0</span></div>
-          </div>
-          <div>
-            <h3>What&rsquo;s included</h3>
-            <ul>
-              <li>Your rate card loaded for you; voice note in, priced quote out, reviewed by you before it goes anywhere.</li>
-              <li>One link to the customer, acceptance by typed name, deposit by pre-authorized debit or card into your own Stripe account.</li>
-              <li>A copy of every quote and acceptance. No contract, cancel any time.</li>
-              <li>Stripe&rsquo;s own processing fees on deposits are Stripe&rsquo;s, not ours; Calas never holds client funds.</li>
-            </ul>
-          </div>
-          <p class="guar"><b>Guarantee.</b> If Quote Me hasn&rsquo;t collected a real deposit for you in your first 60 days, those two months are refunded.</p>
-        </div>
-        <div class="act">
-          <a class="btn" data-pay="quoteme_monthly" href="#" hidden style="display:none">Subscribe &mdash; C$99/mo</a>
-          <a class="btn ghost light" href="mailto:dan@calasautomations.com?subject=Quote%20Me%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
-          <span class="eyebrow">Details: <a href="/quote-me/">Quote Me</a> &middot; shops already in the app can subscribe from inside it</span>
-        </div>
-      </article>
-
-      <!-- Cara text-back -->
-      <article class="plan" id="textback">
-        <div class="head">
-          <p class="eyebrow">Cara &middot; missed-call text-back</p>
-          <h2>Missed-call text-back</h2>
-          <p class="who">A call you can&rsquo;t answer gets a text back within seconds, in your words and your hours. Replies are saved as leads and you get a one-line alert.</p>
-        </div>
-        <div class="body">
-          <div class="prices">
-            <div class="price"><span class="lbl">Flat, per business line</span><span class="amt">C$29<small>/mo</small></span></div>
-            <div class="price"><span class="lbl">Setup fee</span><span class="amt">C$0</span></div>
-          </div>
-          <div>
-            <h3>What&rsquo;s included</h3>
-            <ul>
-              <li>A text-back number in your area code, forwarding set up with you.</li>
-              <li>In-hours and after-hours wording you approve, a lead log, and an alert text to you when someone replies.</li>
-              <li>Not a receptionist: it is the safety net for the calls that get missed.</li>
-            </ul>
-          </div>
-          <p class="guar"><b>Said plainly.</b> This price is a hypothesis we are testing against real recovered calls. The first three months are C$19 while we validate it; if the number changes, existing customers keep the price they signed up at.</p>
-        </div>
-        <div class="act">
-          <a class="btn" data-pay="textback_monthly" href="#" hidden style="display:none">Subscribe &mdash; C$29/mo</a>
-          <a class="btn ghost light" href="mailto:dan@calasautomations.com?subject=Missed-call%20text-back%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
-          <span class="eyebrow">Details: <a href="/trades/">trades page, add-on section</a></span>
-        </div>
-      </article>
-
-      <!-- Haul Me -->
-      <article class="plan" id="haulme">
-        <div class="head">
-          <p class="eyebrow">Haul Me &middot; owner-operator load check</p>
-          <h2>Haul Me</h2>
-          <p class="who">Your real cost per mile, so you know whether a load is worth taking before you say yes. Flat price, not per truck.</p>
-        </div>
-        <div class="body">
-          <div class="prices">
-            <div class="price"><span class="lbl">Owner-operator, up to 3 trucks</span><span class="amt">C$29<small>/mo &middot; or C$290/yr</small><span class="save">Save 17%</span></span></div>
-            <div class="price"><span class="lbl">Small fleet, up to 20 trucks</span><span class="amt">C$79<small>/mo &middot; or C$790/yr</small><span class="save">Save 17%</span></span></div>
-          </div>
-          <div>
-            <h3>What&rsquo;s included</h3>
-            <ul>
-              <li>Your truck&rsquo;s actual costs in, a cost-per-km (or mile) out, and a green / yellow / red call on any load with the floor rate.</li>
-              <li>Deadhead flagged before it eats the trip; totals by broker and by lane; CSV export of the log.</li>
-              <li>No setup fee, no contract. 30 days&rsquo; notice to cancel, always; your history downloads as CSV or JSON.</li>
-            </ul>
-          </div>
-          <p class="guar"><b>Guarantee.</b> 30 days, money back, no questions asked.</p>
-        </div>
-        <div class="act">
-          <a class="btn" data-pay="greenmile_small" href="#" hidden style="display:none">Start &mdash; C$29/mo</a>
-          <a class="btn ghost light" data-pay="greenmile_fleet" href="#" hidden style="display:none">Fleet &mdash; C$79/mo</a>
-          <a class="btn ghost light" data-pay="greenmile_small_yr" href="#" hidden style="display:none">Owner-op yearly &mdash; C$290/yr</a>
-          <a class="btn ghost light" data-pay="greenmile_fleet_yr" href="#" hidden style="display:none">Fleet yearly &mdash; C$790/yr</a>
-          <a class="btn ghost light" href="mailto:dan@calasautomations.com?subject=Haul%20Me%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
-          <span class="eyebrow">Details: <a href="/haul-me/">Haul Me</a></span>
-        </div>
-      </article>
-
-      <!-- Watchpost -->
-      <article class="plan" id="watchpost">
-        <div class="head">
-          <p class="eyebrow">Watchpost &middot; intrusion decoys</p>
-          <h2>Watchpost</h2>
-          <p class="who">Decoys on your network that raise an alarm the moment someone who shouldn&rsquo;t be there touches them. Detection and reporting only.</p>
-        </div>
-        <div class="body">
-          <div class="prices">
-            <div class="price"><span class="lbl">Watch plan, one location</span><span class="amt">C$79<small>/mo &middot; or C$790/yr</small><span class="save">Save 17%</span></span></div>
-            <div class="price"><span class="lbl">Watch Pro, managed</span><span class="amt">C$199<small>/mo &middot; or C$1,990/yr</small><span class="save">Save 17%</span></span></div>
-            <div class="price"><span class="lbl">First month</span><span class="amt">Free</span></div>
-          </div>
-          <div>
-            <h3>What&rsquo;s included</h3>
-            <ul>
-              <li>Decoy set on our box in your name, one decoy inside your network where it fits, alerts to your phone within minutes, flood-proof.</li>
-              <li>A one-page monthly report, reviewed by Dan before it&rsquo;s sent. Email support in business hours (Winnipeg, Central Time).</li>
-              <li>Not included: no 24/7 monitoring or on-call, no antivirus, no blocking or clean-up. It&rsquo;s the alarm, not the locks. Partner plan for IT shops is per site; ask.</li>
-            </ul>
-          </div>
-          <p class="guar"><b>Guarantee.</b> First month free. After that, any month we can&rsquo;t show you the decoys were up and answering is free too. Cancel with one email.</p>
-        </div>
-        <div class="act">
-          <a class="btn" data-pay="watchpost_watch" href="#" hidden style="display:none">Start Watchpost &mdash; C$79/mo</a>
-          <a class="btn ghost light" href="mailto:dan@calasautomations.com?subject=Watchpost%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
-          <span class="eyebrow">Details: <a href="/watchpost/">Watchpost</a></span>
-        </div>
-      </article>
-
-      <!-- Dispatch Me -->
-      <article class="plan" id="dispatchme">
-        <div class="head">
-          <p class="eyebrow">Dispatch Me &middot; crews on demand</p>
-          <h2>Dispatch Me</h2>
-          <p class="who">Vetted snow, lawn, and trade crews in Winnipeg, dispatched with one call. You pay a share of each filled contract &mdash; nothing upfront.</p>
-        </div>
-        <div class="body">
-          <div class="prices">
-            <div class="price"><span class="lbl">Per filled contract</span><span class="amt">15&ndash;30%<small> of the contracted job</small></span></div>
-            <div class="price"><span class="lbl">To talk to us</span><span class="amt">Free</span></div>
-          </div>
-          <div>
-            <h3>What&rsquo;s included</h3>
-            <ul>
-              <li>Crews vetted for reliability and quality of work, matched to your properties and their routes.</li>
-              <li>One number all season: Cara, our dispatcher, answers and dispatches &mdash; with backup crews if someone can&rsquo;t make it.</li>
-              <li>Commercial, industrial, and large residential. Snow in winter; lawn care and other trades in summer.</li>
-            </ul>
-          </div>
-          <p class="guar"><b>How you pay.</b> A percentage of each filled contract, agreed in writing before any introduction. No retainer, no upfront fees.</p>
-        </div>
-        <div class="act">
-          <a class="btn" href="tel:+14312449026">Call Cara to dispatch a crew for you</a>
-          <span class="eyebrow">Details: <a href="/dispatchme/">Dispatch Me</a></span>
-        </div>
-      </article>
-
+    <div class="ctas">
+      <a class="btn x gold" href="mailto:dan@calasautomations.com?subject=Calas%20Automations%20%E2%80%94%2015%20minutes">Book 15 minutes <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
     </div>
+    <div class="fine"><span>Fifteen minutes first is always fine</span><span>Nobody is charged without having talked to Dan</span></div>
+  </div>
+  <div class="hero-vis rv" style="--d:2" role="navigation" aria-label="Jump to a product">
+    <div class="bezel pidx"><div class="core">
+      <div class="samp-top"><b>Price index</b><span>CAD + GST/RST</span></div>
+      <a href="#onfile"><span class="n">01</span><span class="nm">On File<small>Document chasing</small></span><span class="pr">C$500<small>/mo</small></span></a>
+      <a href="#leadme"><span class="n">02</span><span class="nm">Lead Me<small>B2B leads + outreach</small></span><span class="pr"><small>from </small>C$199<small>/mo</small></span></a>
+      <a href="#quoteme"><span class="n">03</span><span class="nm">Quote Me<small>Trades quoting + deposit</small></span><span class="pr">C$99<small>/mo</small></span></a>
+      <a href="#textback"><span class="n">04</span><span class="nm">Missed-call text-back<small>Cara, trades add-on</small></span><span class="pr">C$29<small>/mo</small></span></a>
+      <a href="#haulme"><span class="n">05</span><span class="nm">Haul Me<small>Owner-operator load check</small></span><span class="pr"><small>from </small>C$29<small>/mo</small></span></a>
+      <a href="#watchpost"><span class="n">06</span><span class="nm">Watchpost<small>Intrusion decoys</small></span><span class="pr"><small>from </small>C$79<small>/mo</small></span></a>
+      <a href="#dispatchme"><span class="n">07</span><span class="nm">Dispatch Me<small>Crews on demand</small></span><span class="pr">15&ndash;30%</span></a>
+    </div></div>
+  </div>
+</div></section>
 
-    <p class="legal"><b>All prices CAD, plus GST/RST where applicable; you&rsquo;ll see the exact amount on the Stripe page before paying.</b> Payments are processed by Stripe; Calas Automations does not see or store your card or bank details. Monthly plans can be cancelled with 30 days&rsquo; notice, always. Refunds under a guarantee are made to the payment method used.</p>
-  </section>
-</div>
+<section class="sec" aria-label="Products and prices"><div class="wrap">
 
-<div class="cta" id="contact">
-  <div class="wrap cta-in">
+  <article class="entry rv" id="onfile">
+    <div class="side">
+      <p class="num">01 &middot; Accounting &amp; trades</p>
+      <h2>On File</h2>
+      <p class="who">Chases missing documents and certificates so your staff don&rsquo;t have to. For accounting firms and trades contractors.</p>
+      <div class="acts">
+        <a class="btn x" data-pay="onfile_monthly" href="#" hidden style="display:none">Monthly plan &mdash; C$500/mo <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+        <a class="x-link" href="mailto:dan@calasautomations.com?subject=On%20File%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
+      </div>
+      <span class="det">Details: <a href="/accounting/">accounting</a> &middot; <a href="/trades/">trades</a></span>
+    </div>
     <div>
-      <p class="eyebrow">Not sure which</p>
-      <h2 style="margin-top:12px;font-size:22px">Fifteen minutes, and we&rsquo;ll tell you plainly.</h2>
-      <p>Including whether one of these is a bad fit for you. Replies within one business day.</p>
+      <div class="ledger-p">
+        <div class="ln"><span class="lbl">Setup fee</span><span class="dots"></span><span class="amt">$0 <small>&mdash; free 2-week trial</small></span></div>
+        <div class="ln"><span class="lbl">Monthly plan, flat all year</span><span class="dots"></span><span class="amt">C$500<small>/mo</small></span></div>
+      </div>
+      <h3>What&rsquo;s included</h3>
+      <ul class="inc">
+        <li>Set-up against your own file list and your own wording, in about two weeks.</li>
+        <li>A two-week measured run on your real files before the monthly plan starts.</li>
+        <li>Automatic reminders by email (text where you want it), a daily one-page status, and the audit trail of who was asked what and when.</li>
+        <li>Maintenance, fixes and small changes through the year. 30 days&rsquo; notice to cancel, always.</li>
+      </ul>
+      <p class="gq"><b>Guarantee.</b> If the two-week run doesn&rsquo;t return at least 6 staff hours a week, you have paid nothing.</p>
     </div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <a class="btn" href="mailto:dan@calasautomations.com?subject=Calas%20Automations%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
-      <span class="eyebrow" style="text-align:center">dan@calasautomations.com &middot; 431-244-9026</span>
+  </article>
+
+  <article class="entry rv" id="leadme">
+    <div class="side">
+      <p class="num">02 &middot; B2B lead finder + outreach</p>
+      <h2>Lead Me</h2>
+      <p class="who">Finds the local businesses in your territory that fit what you sell, checks each email address works, explains why each one fits, and writes an honest first email. Three plans, depending on who presses send and how many of you share the list.</p>
+      <div class="acts">
+        <a class="btn ghost" data-pay="leadme_starter" href="#" hidden style="display:none">Starter &mdash; C$199/mo</a>
+        <a class="btn ghost" data-pay-fallback="leadme_starter" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20Starter%20%E2%80%94%20getting%20started">Starter &mdash; talk to us</a>
+        <a class="btn x" data-pay="leadme_monthly" href="#" hidden style="display:none">Lead Me &mdash; C$500/mo <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+        <a class="btn x" data-pay-fallback="leadme_monthly" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20%E2%80%94%20getting%20started">Lead Me &mdash; talk to us</a>
+        <a class="btn ghost" data-pay="leadme_team" href="#" hidden style="display:none">Team &mdash; C$800/mo</a>
+        <a class="btn ghost" data-pay-fallback="leadme_team" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20Team%20%E2%80%94%20getting%20started">Team &mdash; talk to us</a>
+        <a class="x-link" href="mailto:dan@calasautomations.com?subject=Lead%20Me%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
+      </div>
+      <span class="det">Details and plan comparison: <a href="/leadme/#pricing">Lead Me</a></span>
     </div>
+    <div>
+      <div class="ledger-p">
+        <div class="ln"><span class="lbl">Setup fee, any plan</span><span class="dots"></span><span class="amt">C$0</span></div>
+        <div class="ln"><span class="lbl">Lead Me Starter &middot; you send, with one click</span><span class="dots"></span><span class="amt">C$199<small>/mo</small></span></div>
+        <div class="ln"><span class="lbl">Lead Me &middot; sends for you <b>(most popular)</b></span><span class="dots"></span><span class="amt">C$500<small>/mo</small></span></div>
+        <div class="ln"><span class="lbl">Lead Me Team &middot; up to 4 people</span><span class="dots"></span><span class="amt">C$800<small>/mo</small></span></div>
+      </div>
+      <h3>What&rsquo;s included</h3>
+      <ul class="inc">
+        <li><b>Starter:</b> your industry and territory profile, built with you; the finder, the website reader and a fit score out of 100 with plain reasons; every email address checked, with a record of where it was found; honest first emails written for you. You send them from your own email with one click (&ldquo;Open in my email&rdquo;), up to 30 a day. One person.</li>
+        <li><b>Lead Me:</b> everything in Starter, plus it sends for you from your own email address on a gentle schedule &mdash; a first email, a follow-up on day 3 and a last one on day 7, then it stops. It stops by itself when someone replies or unsubscribes, and pauses if emails start bouncing. One person.</li>
+        <li><b>Team:</b> everything in Lead Me for up to 4 people sharing one lead list, so two people never email the same company, plus export to your CRM (a spreadsheet file that HubSpot, Pipedrive, Salesforce and Excel all open).</li>
+        <li>Ongoing runs, fixes and profile tuning on every plan. 30 days&rsquo; notice to cancel, always.</li>
+      </ul>
+      <p class="gq"><b>Guarantee, on every plan.</b> 40 businesses in your territory that fit what you sell, each with a checked, working email address and a record of where we found it, within 14 days of going live &mdash; or you walk away owing nothing.</p>
+    </div>
+  </article>
+
+  <article class="entry rv" id="quoteme">
+    <div class="side">
+      <p class="num">03 &middot; Trades quoting + deposit</p>
+      <h2>Quote Me</h2>
+      <p class="who">A 90-second voice note on site becomes a priced quote from your rate card. The customer accepts by typing their name and pays the deposit by bank debit or card.</p>
+      <div class="acts">
+        <a class="btn x" data-pay="quoteme_monthly" href="#" hidden style="display:none">Subscribe &mdash; C$99/mo <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+        <a class="x-link" href="mailto:dan@calasautomations.com?subject=Quote%20Me%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
+      </div>
+      <span class="det">Details: <a href="/quote-me/">Quote Me</a> &middot; shops already in the app can subscribe from inside it</span>
+    </div>
+    <div>
+      <div class="ledger-p">
+        <div class="ln"><span class="lbl">Per shop, early access</span><span class="dots"></span><span class="amt">C$99<small>/mo</small></span></div>
+        <div class="ln"><span class="lbl">Setup fee</span><span class="dots"></span><span class="amt">C$0</span></div>
+      </div>
+      <h3>What&rsquo;s included</h3>
+      <ul class="inc">
+        <li>Your rate card loaded for you; voice note in, priced quote out, reviewed by you before it goes anywhere.</li>
+        <li>One link to the customer, acceptance by typed name, deposit by pre-authorized debit or card into your own Stripe account.</li>
+        <li>A copy of every quote and acceptance. No contract, cancel any time.</li>
+        <li>Stripe&rsquo;s own processing fees on deposits are Stripe&rsquo;s, not ours; Calas never holds client funds.</li>
+      </ul>
+      <p class="gq"><b>Guarantee.</b> If Quote Me hasn&rsquo;t collected a real deposit for you in your first 60 days, those two months are refunded.</p>
+    </div>
+  </article>
+
+  <article class="entry rv" id="textback">
+    <div class="side">
+      <p class="num">04 &middot; Cara &middot; missed-call text-back</p>
+      <h2>Missed-call text-back</h2>
+      <p class="who">A call you can&rsquo;t answer gets a text back within seconds, in your words and your hours. Replies are saved as leads and you get a one-line alert.</p>
+      <div class="acts">
+        <a class="btn x" data-pay="textback_monthly" href="#" hidden style="display:none">Subscribe &mdash; C$29/mo <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+        <a class="x-link" href="mailto:dan@calasautomations.com?subject=Missed-call%20text-back%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
+      </div>
+      <span class="det">Details: <a href="/trades/">trades page, add-on section</a></span>
+    </div>
+    <div>
+      <div class="ledger-p">
+        <div class="ln"><span class="lbl">Flat, per business line</span><span class="dots"></span><span class="amt">C$29<small>/mo</small></span></div>
+        <div class="ln"><span class="lbl">Setup fee</span><span class="dots"></span><span class="amt">C$0</span></div>
+      </div>
+      <h3>What&rsquo;s included</h3>
+      <ul class="inc">
+        <li>A text-back number in your area code, forwarding set up with you.</li>
+        <li>In-hours and after-hours wording you approve, a lead log, and an alert text to you when someone replies.</li>
+        <li>Not a receptionist: it is the safety net for the calls that get missed.</li>
+      </ul>
+      <p class="gq"><b>Said plainly.</b> This price is a hypothesis we are testing against real recovered calls. The first three months are C$19 while we validate it; if the number changes, existing customers keep the price they signed up at.</p>
+    </div>
+  </article>
+
+  <article class="entry rv" id="haulme">
+    <div class="side">
+      <p class="num">05 &middot; Owner-operator load check</p>
+      <h2>Haul Me</h2>
+      <p class="who">Your real cost per mile, so you know whether a load is worth taking before you say yes. Flat price, not per truck.</p>
+      <div class="acts">
+        <a class="btn x" data-pay="greenmile_small" href="#" hidden style="display:none">Start &mdash; C$29/mo <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+        <a class="btn ghost" data-pay="greenmile_fleet" href="#" hidden style="display:none">Fleet &mdash; C$79/mo</a>
+        <a class="btn ghost" data-pay="greenmile_small_yr" href="#" hidden style="display:none">Owner-op yearly &mdash; C$290/yr</a>
+        <a class="btn ghost" data-pay="greenmile_fleet_yr" href="#" hidden style="display:none">Fleet yearly &mdash; C$790/yr</a>
+        <a class="x-link" href="mailto:dan@calasautomations.com?subject=Haul%20Me%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
+      </div>
+      <span class="det">Details: <a href="/haul-me/">Haul Me</a></span>
+    </div>
+    <div>
+      <div class="ledger-p">
+        <div class="ln"><span class="lbl">Owner-operator, up to 3 trucks</span><span class="dots"></span><span class="amt">C$29<small>/mo &middot; or C$290/yr</small><span class="save">Save 17%</span></span></div>
+        <div class="ln"><span class="lbl">Small fleet, up to 20 trucks</span><span class="dots"></span><span class="amt">C$79<small>/mo &middot; or C$790/yr</small><span class="save">Save 17%</span></span></div>
+      </div>
+      <h3>What&rsquo;s included</h3>
+      <ul class="inc">
+        <li>Your truck&rsquo;s actual costs in, a cost-per-km (or mile) out, and a green / yellow / red call on any load with the floor rate.</li>
+        <li>Deadhead flagged before it eats the trip; totals by broker and by lane; CSV export of the log.</li>
+        <li>No setup fee, no contract. 30 days&rsquo; notice to cancel, always; your history downloads as CSV or JSON.</li>
+      </ul>
+      <p class="gq"><b>Guarantee.</b> 30 days, money back, no questions asked.</p>
+    </div>
+  </article>
+
+  <article class="entry rv" id="watchpost">
+    <div class="side">
+      <p class="num">06 &middot; Intrusion decoys</p>
+      <h2>Watchpost</h2>
+      <p class="who">Decoys on your network that raise an alarm the moment someone who shouldn&rsquo;t be there touches them. Detection and reporting only.</p>
+      <div class="acts">
+        <a class="btn x" data-pay="watchpost_watch" href="#" hidden style="display:none">Start Watchpost &mdash; C$79/mo <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+        <a class="x-link" href="mailto:dan@calasautomations.com?subject=Watchpost%20%E2%80%94%2015%20minutes">Book 15 minutes</a>
+      </div>
+      <span class="det">Details: <a href="/watchpost/">Watchpost</a></span>
+    </div>
+    <div>
+      <div class="ledger-p">
+        <div class="ln"><span class="lbl">Watch plan, one location</span><span class="dots"></span><span class="amt">C$79<small>/mo &middot; or C$790/yr</small><span class="save">Save 17%</span></span></div>
+        <div class="ln"><span class="lbl">Watch Pro, managed</span><span class="dots"></span><span class="amt">C$199<small>/mo &middot; or C$1,990/yr</small><span class="save">Save 17%</span></span></div>
+        <div class="ln"><span class="lbl">First month</span><span class="dots"></span><span class="amt">Free</span></div>
+      </div>
+      <h3>What&rsquo;s included</h3>
+      <ul class="inc">
+        <li>Decoy set on our box in your name, one decoy inside your network where it fits, alerts to your phone within minutes, flood-proof.</li>
+        <li>A one-page monthly report, reviewed by Dan before it&rsquo;s sent. Email support in business hours (Winnipeg, Central Time).</li>
+        <li>Not included: no 24/7 monitoring or on-call, no antivirus, no blocking or clean-up. It&rsquo;s the alarm, not the locks. Partner plan for IT shops is per site; ask.</li>
+      </ul>
+      <p class="gq"><b>Guarantee.</b> First month free. After that, any month we can&rsquo;t show you the decoys were up and answering is free too. Cancel with one email.</p>
+    </div>
+  </article>
+
+  <article class="entry rv" id="dispatchme">
+    <div class="side">
+      <p class="num">07 &middot; Crews on demand</p>
+      <h2>Dispatch Me</h2>
+      <p class="who">Vetted snow, lawn, and trade crews in Winnipeg, dispatched with one call. You pay a share of each filled contract &mdash; nothing upfront.</p>
+      <div class="acts">
+        <a class="btn x" href="tel:+14312449026">Call Cara to dispatch a crew for you <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+      </div>
+      <span class="det">Details: <a href="/dispatchme/">Dispatch Me</a></span>
+    </div>
+    <div>
+      <div class="ledger-p">
+        <div class="ln"><span class="lbl">Per filled contract</span><span class="dots"></span><span class="amt">15&ndash;30%<small> of the contracted job</small></span></div>
+        <div class="ln"><span class="lbl">To talk to us</span><span class="dots"></span><span class="amt">Free</span></div>
+      </div>
+      <h3>What&rsquo;s included</h3>
+      <ul class="inc">
+        <li>Crews vetted for reliability and quality of work, matched to your properties and their routes.</li>
+        <li>One number all season: Cara, our dispatcher, answers and dispatches &mdash; with backup crews if someone can&rsquo;t make it.</li>
+        <li>Commercial, industrial, and large residential. Snow in winter; lawn care and other trades in summer.</li>
+      </ul>
+      <p class="gq"><b>How you pay.</b> A percentage of each filled contract, agreed in writing before any introduction. No retainer, no upfront fees.</p>
+    </div>
+  </article>
+
+  <p class="legal-x rv"><b>All prices CAD, plus GST/RST where applicable; you&rsquo;ll see the exact amount on the Stripe page before paying.</b> Payments are processed by Stripe; Calas Automations does not see or store your card or bank details. Monthly plans can be cancelled with 30 days&rsquo; notice, always. Refunds under a guarantee are made to the payment method used.</p>
+</div></section>
+
+<section class="sec dark close" id="contact" aria-labelledby="close-h"><div class="wrap">
+  <div class="rv"><p class="kicker">Not sure which</p><h2 class="h2" id="close-h">Fifteen minutes, <em>and we&rsquo;ll tell you plainly.</em></h2></div>
+  <div class="side rv" style="--d:1">
+    <p>Including whether one of these is a bad fit for you. Replies within one business day.</p>
+    <a class="btn x gold" href="mailto:dan@calasautomations.com?subject=Calas%20Automations%20%E2%80%94%2015%20minutes">Book 15 minutes <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+    <span class="mail">dan@calasautomations.com &middot; 431-244-9026</span>
   </div>
-</div>
+</div></section>
+</main>
 
 <footer>
   <div class="wrap foot-row">
     <span>Calas Automations &middot; Winnipeg &middot; prices in CAD plus GST/RST where applicable</span>
-    <span>Small automations, built properly &middot; <a href="/accounting/">On File</a> &middot; <a href="/leadme/">Lead Me</a> &middot; <a href="/quote-me/">Quote Me</a> &middot; <a href="/haul-me/">Haul Me</a> &middot; <a href="/watchpost/">Watchpost</a> &middot; <a href="/dispatchme/">Dispatch Me</a> &middot; <a href="/receiptsort/">ReceiptSort</a> &middot; <a href="/pay/">Pricing</a> &middot; 30 days&#39; notice to cancel, always</span>
   </div>
 </footer>
-</main>
 <script>
 (function(){
-  var hdr=document.getElementById('hdr');
-  addEventListener('scroll',function(){hdr.classList.toggle('stuck',window.scrollY>10)},{passive:true});
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){for(var i=0;i<els.length;i++)els[i].classList.add('in');return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px',threshold:.02});
+  for(var j=0;j<els.length;j++)io.observe(els[j]);
 })();
 </script>
 <script src="/pay/pay.js" defer></script>
