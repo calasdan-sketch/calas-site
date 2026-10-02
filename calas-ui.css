@@ -176,3 +176,17 @@ body .cbar nav a:not(.nav-signin):not(.nav-cta):hover,
   /* long web addresses in body text break instead of running off the screen */
   main p a{overflow-wrap:anywhere}
 }
+
+
+/* === Unified Higgsfield hero (Calas) — added 2026-10-02 === */
+.hero,.hero-vis{position:relative;overflow:hidden;background-color:#0B2E45;color:#eaf2f7;isolation:isolate}
+.hero .hero-art,.hero-vis .hero-art{position:absolute;inset:0;z-index:0;background:url(/hero-home.jpg) center 40%/cover no-repeat}
+.hero .hero-overlay,.hero-vis .hero-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(11,46,69,.50),rgba(11,46,69,.20) 45%,rgba(11,46,69,.78) 100%),
+             linear-gradient(95deg,rgba(11,46,69,.82),rgba(11,46,69,.44) 45%,rgba(11,46,69,.12) 85%)}
+.hero>*:not(.hero-art):not(.hero-overlay),.hero-vis>*:not(.hero-art):not(.hero-overlay){position:relative;z-index:2}
+/* unify any existing inline hero-art to the shared image */
+.hero-art{background-image:url(/hero-home.jpg)!important}
+/* keep hero text legible on the cinematic art */
+.hero :is(h1,h2,h3,p,li),.hero-vis :is(h1,h2,h3,p,li){color:#eef4f8}
+.hero a:not(.btn):not(.nav-cta),.hero-vis a:not(.btn):not(.nav-cta){color:#cfe6f4}
