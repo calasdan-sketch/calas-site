@@ -13,7 +13,11 @@
 .entry .who{font-size:18.5px;color:#34434F}
 .ledger-p .amt{font-size:clamp(30px,3vw,44px)}
 .ledger-p .lbl{font-size:18px;color:#2C3A46}
-.entry ul.inc li,.inc li{font-size:18px}</style>
+.entry ul.inc li,.inc li{font-size:18px}
+/* price index card: names were washing out (light text on the white card) — force readable */
+.bezel.pidx a,.bezel.pidx .nm{color:var(--ink)}
+.bezel.pidx .n,.bezel.pidx .nm small,.bezel.pidx .pr small{color:var(--ink-3)}
+.bezel.pidx .pr{color:var(--accent)}</style>
 <style>
 /* price index in the hero */
 .pidx .core{padding:6px 0}
