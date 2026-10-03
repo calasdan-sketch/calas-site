@@ -1,0 +1,98 @@
+/* calas-theme.css — 2026-10-02 sitewide editorial uplift (Dan).
+   Carries the Watchpost look — big Libre Baskerville display headings, white text
+   with gold accent words, fancier hero spacing — to every page that ISN'T already
+   on calas-editorial.css. Loaded LAST so it wins at equal specificity; `body` / `#lean`
+   prefixes give it the edge over each page's own inline heading rules.
+   SCOPE: section-level marketing headings only (.hero/.lnhero/.calas-hero h1,
+   .sec-head/.lnsech h2) + gold flourishes + a gold top hairline. Never bare h1/h2,
+   so app and widget UI labels and in-card headings keep their sizes. */
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{--gold:#F0C171;--gold-2:#D9A443;--accent:#155F87;--night:#0B2E45}
+
+/* ============================================================
+   HERO TITLES — bigger, fancier, white with gold accent words
+   ============================================================ */
+body .hero h1,
+body .lnhero h1,
+body .calas-hero h1,
+#lean .lnhero h1{
+  font-family:"Libre Baskerville",Georgia,serif;
+  font-weight:700;
+  font-size:clamp(38px,5.2vw,66px);
+  line-height:1.05;
+  letter-spacing:-.022em;
+  text-wrap:balance;
+}
+/* gold italic emphasis inside hero titles (em / i / .r / .w / .gold) */
+body .hero h1 em,  body .lnhero h1 em,  body .calas-hero h1 em,
+body .hero h1 i,   body .lnhero h1 i,   body .calas-hero h1 i,
+body .hero h1 .r,  body .lnhero h1 .r,  body .calas-hero h1 .r,
+body .hero h1 .gold, body .calas-hero h1 .gold,
+#lean .lnhero h1 em, #lean .lnhero h1 .w{
+  font-style:italic;font-weight:400;color:var(--gold)!important;
+}
+
+/* hero lede a touch larger / airier */
+body .hero p.lede,  body .calas-hero p.lede,
+body .hero .lede,   body .calas-hero .lede,
+#lean .lnhero .lnlead{
+  font-size:clamp(17px,1.5vw,20px);line-height:1.6;
+}
+
+/* gold dot on the hero eyebrow */
+body .hero .eyebrow,
+body .calas-hero .eyebrow{display:inline-flex;align-items:center;gap:10px}
+body .hero .eyebrow::before,
+body .calas-hero .eyebrow::before{
+  content:"";width:7px;height:7px;border-radius:50%;background:var(--gold);
+  box-shadow:0 0 0 4px rgba(240,193,113,.18);flex:none;
+}
+
+/* more air in the hero band (premium feel) */
+body .hero > .wrap,
+#lean .lnhero .lnwrap{
+  padding-top:clamp(56px,6vw,96px);
+  padding-bottom:clamp(48px,5vw,84px);
+}
+
+/* ============================================================
+   SECTION HEADINGS — bigger serif, gold emphasis
+   ============================================================ */
+body .sec-head h2,
+#lean .lnsech h2{
+  font-family:"Libre Baskerville",Georgia,serif;
+  font-weight:700;
+  font-size:clamp(28px,3.6vw,46px);
+  line-height:1.12;
+  letter-spacing:-.018em;
+  text-wrap:balance;
+}
+body .sec-head h2 em, body .sec-head h2 i, body .sec-head h2 .r,
+#lean .lnsech h2 em,  #lean .lnsech h2 .r{
+  font-style:italic;font-weight:400;color:var(--accent);
+}
+/* emphasis goes gold on dark sections */
+body section.dark .sec-head h2 em,
+body .dark .sec-head h2 em{color:var(--gold)}
+
+/* gold hairline before a section eyebrow/kicker */
+body .sec-head .eyebrow{display:inline-flex;align-items:center;gap:12px}
+body .sec-head .eyebrow::before{content:"";width:30px;height:1px;background:var(--gold-2);flex:none}
+
+/* a little more breathing room above section content */
+body .sec-head{margin-bottom:clamp(26px,3.4vw,44px)}
+
+/* ============================================================
+   GOLD ACCENTS shared everywhere (incl. app / widget pages)
+   ============================================================ */
+/* warm gold CTA wherever .btn.gold is used */
+body .btn.gold{background:var(--gold)!important;color:var(--night)!important;border-color:var(--gold)!important}
+body .btn.gold:hover{background:#F5CF8C!important}
+
+/* gold top hairline on any page that loads this file (app/widget pages gain it;
+   marketing pages that already draw one simply overlap identically) */
+body::after{content:"";position:fixed;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  z-index:2147483646;pointer-events:none}

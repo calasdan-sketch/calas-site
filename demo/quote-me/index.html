@@ -1,4 +1,4 @@
-<!doctype html><html lang="en-CA"><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a">
+<!doctype html><html lang="en-CA"><head><link rel="icon" type="image/png" href="/favicon.png"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"><link rel="stylesheet" href="/calas-theme.css?v=20261002a">
 <title>Quote Me demo &middot; Calas Automations</title>
 <meta name="description" content="Try Quote Me: describe a job by voice or by typing, get an itemised quote priced from your own rate card, review it, send one link, and watch the customer accept. Made-up shop and customers; nothing is sent.">
 <meta name="robots" content="noindex">
@@ -412,7 +412,7 @@ var RATE=[
 ];
 var BY={}; RATE.forEach(function(r){BY[r.id]=r;});
 var GST=0.05, PST=0.07, DEPOSIT=0.25;
-var GATE_DEFAULT='Send stays locked until you tick Reviewed. Quote Me never sends a price you haven’t looked at.';
+var GATE_DEFAULT='Send stays locked until you tick Reviewed. Quote Me never sends a price you havenâ€™t looked at.';
 
 var EXAMPLES=[
   {id:'furnace', label:'Furnace service', job:'Furnace service', cust:'Maria Olsen', addr:'142 Aspen Bay', email:'maria.olsen@mail.example',
@@ -536,7 +536,7 @@ function renderQuoteHead(){
 function renderGate(){
   var rv=$('reviewed');
   rv.setAttribute('aria-checked',S.reviewed?'true':'false');
-  rv.querySelector('.box').textContent=S.reviewed?'✓':'';
+  rv.querySelector('.box').textContent=S.reviewed?'âœ“':'';
   rv.disabled=S.sent||!S.lines.length;
   $('send').disabled=!S.reviewed||S.sent||!S.lines.length;
   $('send').textContent=S.sent?'Sent':'Send';
@@ -560,7 +560,7 @@ function renderTrack(){
 
 /* ---------- render: customer's phone ---------- */
 function phoneEmpty(){
-  $('pSub').textContent='what they’ll see';
+  $('pSub').textContent='what theyâ€™ll see';
   $('pscr').innerHTML='<div class="pempty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><p>Build a quote, then press <b>Preview</b> to see it the way your customer will.</p></div>';
 }
 function customerQuoteHTML(){
@@ -657,7 +657,7 @@ function build(){
   var nm=$('nomatch');
   if(!text){nm.hidden=false;nm.textContent='Describe the job first: play the voice note, pick an example, or type it.';return;}
   var found=parse(text);
-  if(!found.length){nm.hidden=false;nm.textContent='Nothing in that matched Dave’s rate card. Try naming a part or the hours, like “two filters and an hour of labour”.';return;}
+  if(!found.length){nm.hidden=false;nm.textContent='Nothing in that matched Daveâ€™s rate card. Try naming a part or the hours, like â€œtwo filters and an hour of labourâ€.';return;}
   nm.hidden=true;
   S.ex=matchExample(text);
   building=true;
@@ -682,7 +682,7 @@ function playVoice(){
   var ex=S.ex||EXAMPLES[0];S.ex=ex;renderChips();
   recording=true;
   var mic=$('mic'),ta=$('job');
-  mic.classList.add('live');mic.disabled=true;$('micLab').textContent='Listening…';$('micSub').textContent='Demo voice note: '+ex.label.toLowerCase();
+  mic.classList.add('live');mic.disabled=true;$('micLab').textContent='Listeningâ€¦';$('micSub').textContent='Demo voice note: '+ex.label.toLowerCase();
   $('recbar').hidden=false;ta.value='';
   var words=ex.text.split(' '),n=words.length,step=3600/n,secs=84;
   words.forEach(function(w,i){
@@ -733,9 +733,9 @@ function accept(){
     '<div class="kv"><span>Accepted by</span><span id="nName"></span></div>'+
     '<div class="kv"><span>Deposit</span><span class="mono">CA'+money(t.dep)+'</span></div>'+
     '<div class="kv"><span>Paid by</span><span>'+(S.method==='pad'?'Bank account (pre-authorized debit)':'Card')+'</span></div>'+
-    '<div class="kv"><span>Stripe’s fee on it</span><span class="mono">CA'+money(fee)+'</span></div>'+
+    '<div class="kv"><span>Stripeâ€™s fee on it</span><span class="mono">CA'+money(fee)+'</span></div>'+
     '<div class="kv"><span>Balance on completion</span><span class="mono">CA'+money(r2(t.total-t.dep))+'</span></div>'+
-    '<p class="fn">'+(S.method==='pad'?'A bank debit is authorized on the spot; the money confirms over the following business days. ':'')+'Deposits go straight to the shop’s own Stripe account. Fees use Stripe Canada’s published rates (card 2.9% + CA$0.30; bank debit 1% + CA$0.40, capped at CA$5.00), checked 21 Sept 2026.</p>'+
+    '<p class="fn">'+(S.method==='pad'?'A bank debit is authorized on the spot; the money confirms over the following business days. ':'')+'Deposits go straight to the shopâ€™s own Stripe account. Fees use Stripe Canadaâ€™s published rates (card 2.9% + CA$0.30; bank debit 1% + CA$0.40, capped at CA$5.00), checked 21 Sept 2026.</p>'+
     '<div class="offer"><a class="run" href="/pay/#quoteme">Get Quote Me for your shop &rarr;</a><span>C$99/mo per shop, no setup fee. No real deposit in your first 60 days? Those two months are refunded.</span></div>';
   $('nName').textContent=S.acceptName;
 }
