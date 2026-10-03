@@ -20,8 +20,8 @@ body .calas-hero h1,
 #lean .lnhero h1{
   font-family:"Libre Baskerville",Georgia,serif;
   font-weight:700;
-  font-size:clamp(38px,5.2vw,66px);
-  line-height:1.05;
+  font-size:clamp(40px,5.6vw,74px);
+  line-height:1.03;
   letter-spacing:-.022em;
   text-wrap:balance;
 }
@@ -64,8 +64,8 @@ body .sec-head h2,
 #lean .lnsech h2{
   font-family:"Libre Baskerville",Georgia,serif;
   font-weight:700;
-  font-size:clamp(28px,3.6vw,46px);
-  line-height:1.12;
+  font-size:clamp(30px,4.1vw,52px);
+  line-height:1.08;
   letter-spacing:-.018em;
   text-wrap:balance;
 }
