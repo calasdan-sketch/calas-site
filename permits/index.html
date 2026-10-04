@@ -52,7 +52,7 @@ textarea{min-height:90px;resize:vertical}
 <header class="top"><div class="in"><div><b>Permit Checker</b><small>Free &middot; by Calas Automations</small></div><a href="/">Calas Automations</a></div></header>
 <main>
   <h1>What permits do I likely need?</h1>
-  <p class="lede">The fastest way to sort out <em>your own</em> permits. Describe the job and we'll show the permits you likely need, who signs each, what to gather, and exactly where to apply. <b>You apply and sign &mdash; we just make it easy.</b> Free, honest, not legal advice; your city has the final word.</p>
+  <p class="lede">A free, plain-English way to sort out <em>your own</em> permits. Describe the job and we'll show the permits you likely need, who signs each, what to gather, and exactly where to apply. <b>You apply and sign &mdash; we just make it easy.</b> General guidance (deepest in Winnipeg, and growing) &mdash; not legal advice; your local authority has the final word.</p>
 
   <label class="fld" for="job">Describe the job</label>
   <textarea id="job" placeholder="e.g. new warehouse build-out with electrical and plumbing; or: install a storefront sign; or: restaurant fit-out with commercial kitchen"></textarea>
@@ -71,7 +71,7 @@ textarea{min-height:90px;resize:vertical}
 <script>
 (function(){
 "use strict";
-var DISCLAIMER="Informational only — not legal advice and not a permit determination. Confirm the exact requirements, fees, timelines, and who typically signs with your municipality or the governing authority before you rely on this.";
+var DISCLAIMER="General information only — NOT legal advice, and not a permit determination. We're not your lawyer or agent; we don't file or sign anything. Your local authority decides what's required and approves or denies — always confirm with them before you act, pay, or start work. Rules change, and our guidance is deeper in some cities than others. Provided “as is,” at your own risk.";
 var INCOMPLETE="This is a STARTING checklist and is likely NOT complete — other permits or approvals may apply to your job. Your municipality / authority has the final list.";
 
 var PERMITS={
@@ -184,7 +184,7 @@ function render(){
  h+='<p class="confirm">Bigger or trickier job &mdash; large commercial, structural, or anything environmental? That’s when to bring in an architect, engineer, or permit expediter. We’ll tell you plainly when you’re past a self-serve checklist, rather than pretend otherwise.</p>';
  h+='<div class="tools"><button class="btn ghost" type="button" onclick="pcShare(event)">Share this free tool</button></div>';
  h+='<div class="cta">Run a trades business? We can put this right inside your workflow: <b>Quote Me</b> flags the permits (and their cost + lead time) in every quote, and <b>Dispatch Me</b> attaches the permit checklist to each job so crews never arrive without one. <a href="/pay/">See the tools &rarr;</a></div>';
- h+='<p class="disc">'+esc(DISCLAIMER)+' Calas does not file, sign, or certify permits, and does not provide engineering, architecture, or environmental services.</p>';
+ h+='<p class="disc">'+esc(DISCLAIMER)+' Calas does not file, sign, or certify permits, and provides no engineering, architecture, environmental, or legal services. Guidance last reviewed Oct 2026 &mdash; rules change; confirm current requirements with your authority. <a href="/permits/terms/">Terms of Use</a>.</p>';
  out.innerHTML=h;
 }
 document.getElementById("go").addEventListener("click",render);
