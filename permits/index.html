@@ -137,6 +137,14 @@ var GATHER=[
  "Contractor / licensed-trade details where the work needs them",
  "Budget for the permit fees and lead time (confirm the current amounts with the city)"
 ];
+// Some work needs NO permit — telling people that (and saving them a wasted trip) builds trust.
+// Thresholds are approximate; always confirm the exact rule with the city.
+var EXEMPT={winnipeg:[
+ "Re-shingling a roof like-for-like, with no structural change",
+ "A small detached accessory building under about 10 m² (~108 sq ft)",
+ "An open deck under about 0.6 m (~2 ft) high",
+ "Most minor like-for-like repairs"
+]};
 
 function needed(desc,city){
  var text=(desc||"").toLowerCase(),keys=[];
@@ -158,6 +166,8 @@ function render(){
  if(!desc){out.innerHTML='<p class="confirm">Type a short description of the job above, then press Check permits.</p>';return;}
  var r=needed(desc,city);
  var h='<div class="banner">⚠ '+esc(INCOMPLETE)+'</div>';
+ var ex=EXEMPT[(city||"").toLowerCase()];
+ if(ex){ h+='<div class="notes"><b>Good to know &mdash; some work needs NO permit in '+esc(city)+':</b><ul>'+ex.map(function(e){return '<li>'+e+'</li>';}).join("")+'</ul>Thresholds are approximate &mdash; confirm the exact rule with the city.</div>'; }
  if(!r.items.length){ h+='<p class="confirm">Nothing specific matched. That doesn’t mean no permit is needed — describe the work in more detail, and always confirm with '+esc(r.confirm)+'</p>'; out.innerHTML=h; return; }
  h+='<h2 style="font:700 20px \'Libre Baskerville\',Georgia,serif;margin:6px 0 8px">Permits you likely need</h2>';
  r.items.forEach(function(p){
@@ -171,6 +181,7 @@ function render(){
  if(ap){ h+='<div class="notes"><b>Where to apply ('+esc(city)+'):</b><ul>'+ap.map(function(a){return '<li>'+(a[1]?'<a href="'+a[1]+'" target="_blank" rel="noopener">'+a[0]+'</a>':a[0])+'</li>';}).join("")+'</ul></div>'; }
  h+='<div class="notes"><b>What to gather before you apply:</b><ul>'+GATHER.map(function(g){return '<li>'+g+'</li>';}).join("")+'</ul></div>';
  h+='<p class="confirm"><b>Confirm at:</b> '+esc(r.confirm)+'</p>';
+ h+='<p class="confirm">Bigger or trickier job &mdash; large commercial, structural, or anything environmental? That’s when to bring in an architect, engineer, or permit expediter. We’ll tell you plainly when you’re past a self-serve checklist, rather than pretend otherwise.</p>';
  h+='<div class="tools"><button class="btn ghost" type="button" onclick="pcShare(event)">Share this free tool</button></div>';
  h+='<div class="cta">Run a trades business? We can put this right inside your workflow: <b>Quote Me</b> flags the permits (and their cost + lead time) in every quote, and <b>Dispatch Me</b> attaches the permit checklist to each job so crews never arrive without one. <a href="/pay/">See the tools &rarr;</a></div>';
  h+='<p class="disc">'+esc(DISCLAIMER)+' Calas does not file, sign, or certify permits, and does not provide engineering, architecture, or environmental services.</p>';
