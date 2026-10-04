@@ -110,7 +110,7 @@
       '<nav>' + NAV + '<a href="/signin/">Sign in</a></nav>' +
       '<p class="fine">Winnipeg, Manitoba &middot; prices in CAD plus GST/RST where applicable &middot; 30 days’ notice to cancel, always.<br>' +
       '&copy; ' + (new Date().getFullYear()) + ' Calas Automations Inc. &middot; ' +
-      '<a href="mailto:dan@calasautomations.com">dan@calasautomations.com</a> &middot; (431) 244-9026</p>' +
+      '<a href="mailto:dan@calasautomations.com">dan@calasautomations.com</a> &middot; <a href="tel:+14312449026">(431) 244-9026</a></p>' +
     '</div>';
   }
 
