@@ -77,7 +77,7 @@ var INCOMPLETE="This is a STARTING checklist and is likely NOT complete — othe
 var PERMITS={
  building:{name:"Building permit",when:"New buildings, additions, structural changes, major renovations, and most commercial construction.",who:"Property owner or an authorized agent; larger/commercial work often needs drawings stamped by a licensed architect or professional engineer.",authority:"City/municipal building department"},
  development:{name:"Development / zoning permit",when:"Change of use, a new business occupying a space, some signage, variances — anything affecting how the land is used.",who:"Property owner or authorized agent.",authority:"City/municipal planning/zoning department"},
- electrical:{name:"Electrical permit",when:"Most electrical work beyond minor like-for-like repairs.",who:"A licensed electrical contractor or the electrical authority — not a software service.",authority:"Provincial/municipal electrical authority or licensed contractor"},
+ electrical:{name:"Electrical permit",when:"Most electrical work beyond minor like-for-like repairs.",who:"Usually a licensed electrical contractor; in Winnipeg trade permits run through the City and eligible homeowners may pull their own. Not something a software service signs.",authority:"City/municipal electrical permits (or your provincial electrical authority)"},
  plumbing:{name:"Plumbing permit",when:"New plumbing, relocations, water/sewer connections beyond minor repairs.",who:"A licensed plumbing contractor.",authority:"City/municipal plumbing inspection or licensed contractor"},
  mechanical:{name:"Mechanical / HVAC / gas permit",when:"Heating, cooling, ventilation, and gas-fired equipment work.",who:"A licensed HVAC/gas contractor.",authority:"City/municipal mechanical inspection or licensed contractor"},
  demolition:{name:"Demolition permit",when:"Demolishing or removing a structure in whole or part.",who:"Owner or authorized agent; utility disconnects may be needed first.",authority:"City/municipal building department"},
@@ -89,6 +89,10 @@ var PERMITS={
  excavation:{name:"Excavation / shoring / grading permit",when:"Excavation, shoring, significant grading, or site servicing.",who:"Owner/contractor; shoring design often needs a professional engineer.",authority:"City/municipal building/engineering department"},
  fence:{name:"Fence / retaining wall permit",when:"Fences above a height threshold and retaining walls above a height threshold.",who:"Owner; taller retaining walls often need a professional engineer.",authority:"City/municipal building/planning department"},
  pool:{name:"Pool / hot tub permit",when:"In-ground and many above-ground pools and hot tubs; enclosure/fencing rules apply.",who:"Owner.",authority:"City/municipal building department"},
+ secondary_suite:{name:"Secondary / basement suite approval",when:"Adding a secondary dwelling unit (basement, garage, or additional suite).",who:"Owner or authorized agent; building + trade permits apply, plus zoning rules.",authority:"City/municipal building & zoning department"},
+ basement_dev:{name:"Basement development permit",when:"Finishing or developing a basement (new rooms, bathrooms, or a suite).",who:"Owner or contractor; trade permits apply for new electrical/plumbing/HVAC.",authority:"City/municipal building department"},
+ garage:{name:"Garage / detached structure permit",when:"Building an attached or detached garage above the exempt size.",who:"Owner or contractor.",authority:"City/municipal building department"},
+ street_use:{name:"Street / boulevard use permit",when:"Placing a dumpster, scaffolding, hoarding, or a crane on the street or boulevard.",who:"Owner or contractor.",authority:"City/municipal public works / streets authority"},
  environmental:{name:"Environmental / contaminated-site / remediation permit or approval",when:"Contaminated land, spills, remediation, certain industrial processes, or works affecting water/wetlands.",who:"LEGALLY requires a qualified environmental professional or engineer (e.g. Phase I/II ESA) and the provincial regulator. Calas does NOT handle these — we point you to a licensed professional.",authority:"Provincial environment/regulatory body + qualified professional",pro:true}
 };
 
@@ -107,6 +111,10 @@ var RULES=[
  [["excavation","shoring","grading","site servicing"],["excavation"]],
  [["fence","retaining wall"],["fence"]],
  [["pool","hot tub","swimming pool"],["pool"]],
+ [["secondary suite","basement suite","garden suite","garage suite","additional dwelling","in-law suite","second suite"],["secondary_suite"]],
+ [["basement development","finish basement","finished basement","develop basement","basement renovation"],["basement_dev"]],
+ [["garage","carport"],["garage"]],
+ [["dumpster","scaffold","scaffolding","hoarding","crane","road closure","sidewalk closure","boulevard"],["street_use"]],
  [["environmental","contaminated","contamination","remediation","cleanup","clean-up","clean up","spill","wetland","hazardous","asbestos"],["environmental"]]
 ];
 var NEWBUILD=["new build","new building","new construction","commercial build","build out","build-out","fit out","fit-out","tenant improvement","new facility","warehouse","addition"];
@@ -126,7 +134,7 @@ var APPLY={winnipeg:[
  ["Apply online &mdash; Winnipeg Permits Online","https://www.winnipeg.ca/permitsonline"],
  ["How the two-step (development + building) process works","https://legacy.winnipeg.ca/ppd/permits/DevelopmentandBuildingPermits.stm"],
  ["Development Permit application form (PDF)","https://legacy.winnipeg.ca/ppd/Documents/Permits/Development-Permit-Application-Form-Residential-Commercial.pdf"],
- ["Owner authorization form &mdash; if someone applies for the owner (PDF)","https://legacy.winnipeg.ca/ppd/Documents/permits/Owner-Statement-Housing.pdf"],
+ ["Owner authorization — residential/housing form, if you apply for an owner (PDF). For COMMERCIAL, ask the City for the Letter of Authorization.","https://legacy.winnipeg.ca/ppd/Documents/permits/Owner-Statement-Housing.pdf"],
  ["Questions: call 311, or Zoning &amp; Permits at 204-986-5140",""]
 ]};
 var GATHER=[
@@ -154,7 +162,7 @@ function needed(desc,city){
  var items=keys.map(function(k){var o={};for(var x in PERMITS[k])o[x]=PERMITS[k][x];o.key=k;return o;});
  var notes=[];
  if(scope){
-  notes.push("Winnipeg (and most Manitoba cities) use a TWO-STEP process: a development (zoning) permit AND a building permit.");
+  notes.push("Winnipeg OFTEN needs BOTH a development (zoning) permit and a building permit — but not always; some projects instead file a declaration form with just the building permit. Confirm which applies to your job.");
   notes.push("The applicant usually must prove ownership (e.g. status of title); an agent files on the owner's behalf only with written authorization.");
   notes.push("Commercial or larger work usually needs drawings SEALED by a licensed architect or professional engineer — route that to a licensed pro.");
  }
@@ -168,7 +176,7 @@ function render(){
  var h='<div class="banner">⚠ '+esc(INCOMPLETE)+'</div>';
  var ex=EXEMPT[(city||"").toLowerCase()];
  if(ex){ h+='<div class="notes"><b>Good to know &mdash; some work needs NO permit in '+esc(city)+':</b><ul>'+ex.map(function(e){return '<li>'+e+'</li>';}).join("")+'</ul>Thresholds are approximate &mdash; confirm the exact rule with the city.</div>'; }
- if(!r.items.length){ h+='<p class="confirm">Nothing specific matched. That doesn’t mean no permit is needed — describe the work in more detail, and always confirm with '+esc(r.confirm)+'</p>'; out.innerHTML=h; return; }
+ if(!r.items.length){ h+='<p class="confirm">Nothing specific matched — that doesn’t mean no permit is needed. Try words like: <i>new build, renovation, electrical, plumbing, HVAC, sign, demolition, roof, fence, deck, basement suite, garage, restaurant</i>. And always confirm with '+esc(r.confirm)+'</p>'; out.innerHTML=h; return; }
  h+='<h2 style="font:700 20px \'Libre Baskerville\',Georgia,serif;margin:6px 0 8px">Permits you likely need</h2>';
  r.items.forEach(function(p){
   h+='<div class="card'+(p.pro?' pro':'')+'"><h3>'+esc(p.name)+'</h3>'+
@@ -184,7 +192,7 @@ function render(){
  h+='<p class="confirm">Bigger or trickier job &mdash; large commercial, structural, or anything environmental? That’s when to bring in an architect, engineer, or permit expediter. We’ll tell you plainly when you’re past a self-serve checklist, rather than pretend otherwise.</p>';
  h+='<div class="tools"><button class="btn ghost" type="button" onclick="pcShare(event)">Share this free tool</button></div>';
  h+='<div class="cta">Run a trades business? We can put this right inside your workflow: <b>Quote Me</b> flags the permits (and their cost + lead time) in every quote, and <b>Dispatch Me</b> attaches the permit checklist to each job so crews never arrive without one. <a href="/pay/">See the tools &rarr;</a></div>';
- h+='<p class="disc">'+esc(DISCLAIMER)+' Calas does not file, sign, or certify permits, and provides no engineering, architecture, environmental, or legal services. Guidance last reviewed Oct 2026 &mdash; rules change; confirm current requirements with your authority. <a href="/permits/terms/">Terms of Use</a>.</p>';
+ h+='<p class="disc">'+esc(DISCLAIMER)+' Calas does not file, sign, or certify permits, and provides no engineering, architecture, environmental, or legal services. This tool runs in your browser &mdash; we don’t collect or store what you type. Guidance last reviewed Oct 2026 &mdash; rules change; confirm current requirements with your authority. <a href="/permits/terms/">Terms of Use</a>.</p>';
  out.innerHTML=h;
 }
 document.getElementById("go").addEventListener("click",render);
