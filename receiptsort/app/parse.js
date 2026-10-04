@@ -19,6 +19,23 @@
   var GST_WORDS = /\b(gst|hst|gst\/hst|tps)\b/i;
   var SKIP_VENDOR = /^(receipt|invoice|tax invoice|thank you|welcome|store|customer copy|\W*)$/i;
   var PHONE = /\d{3}[-. ]\d{3}[-. ]\d{4}/;
+  // Vendor/line keyword -> expense category. Canada-aware. First match wins; else Uncategorized.
+  var CATEGORIES = [
+    ['Fuel', /\b(petro[- ]?can|petrocanada|shell|esso|husky|chevron|ultramar|pioneer|co-?op gas|gas bar|fuel|diesel|flying j|pilot|cardlock|mobil)\b/i],
+    ['Meals & Entertainment', /\b(restaurant|caf[eé]|coffee|tim hortons|mcdonald|subway|pizza|grill|diner|starbucks|a&w|wendy|burger|pub|bistro|donair|kfc|taco|bakery|deli)\b/i],
+    ['Vehicle & Repairs', /\b(napa|auto parts|tire|mechanic|oil change|lube|muffler|transmission|collision|kal tire|fountain tire|canadian tire auto|autobody)\b/i],
+    ['Travel & Lodging', /\b(hotel|motel|\binn\b|airbnb|air canada|westjet|flair|uber|lyft|taxi|parking|impark|via rail|greyhound|lodge|suites|expedia)\b/i],
+    ['Office & Supplies', /\b(staples|office depot|office outlet|amazon|walmart|costco|dollarama|dollar tree|best buy|the source|indigo)\b/i],
+    ['Hardware & Materials', /\b(home depot|\brona\b|lowe'?s|canadian tire|princess auto|home hardware|\bkent\b|windsor plywood|acklands)\b/i],
+    ['Utilities & Telecom', /\b(rogers|\bbell\b|telus|\bshaw\b|hydro|mts|internet|mobility|\bfido\b|koodo|virgin|eastlink)\b/i],
+    ['Shipping & Postage', /\b(canada post|\bups\b|fedex|purolator|\bdhl\b|postage|stamps)\b/i],
+    ['Software & Subscriptions', /\b(google|microsoft|adobe|godaddy|\bzoom\b|dropbox|intuit|quickbooks|\bxero\b|shopify|subscription|saas|notion|slack)\b/i]
+  ];
+  function categorize(vendor, text) {
+    var hay = ((vendor || '') + ' ' + (text || '')).toLowerCase();
+    for (var i = 0; i < CATEGORIES.length; i++) { if (CATEGORIES[i][1].test(hay)) return CATEGORIES[i][0]; }
+    return 'Uncategorized';
+  }
 
   function money(s) { var v = parseFloat(String(s).replace(/,/g, '')); return isNaN(v) ? null : v; }
   function allMoney(s) { var out = [], m; MONEY.lastIndex = 0; while ((m = MONEY.exec(s))) { var v = money(m[1]); if (v !== null) out.push(v); } return out; }
@@ -87,12 +104,13 @@
   function extract(text) {
     var a = parseAmounts(text);
     var row = { date: parseDate(text), vendor: parseVendor(text), subtotal: a.subtotal, gst: a.gst, total: a.total };
+    row.category = categorize(row.vendor, text);
     var missing = !row.date || !row.vendor || row.total === null;
     row.status = !String(text).trim() ? 'needs_review (no text found)' : (a.ambiguous || missing ? 'needs_review' : 'ok');
     return row;
   }
 
-  var COLUMNS = ['file', 'date', 'vendor', 'subtotal', 'gst', 'total', 'status'];
+  var COLUMNS = ['file', 'date', 'vendor', 'subtotal', 'gst', 'total', 'category', 'status'];
   function csvCell(v) {
     var s = v === null || v === undefined ? '' : (typeof v === 'number' ? v.toFixed(2) : String(v));
     if (/^[=+\-@]/.test(s)) s = "'" + s; // stop spreadsheet formulas
@@ -104,6 +122,29 @@
     })).join('\r\n') + '\r\n';
   }
 
-  var api = { parseDate: parseDate, parseAmounts: parseAmounts, parseVendor: parseVendor, extract: extract, toCSV: toCSV, COLUMNS: COLUMNS };
+  function round2(n) { return Math.round((n + Number.EPSILON) * 100) / 100; }
+  function summarize(rows) {
+    var s = { count: rows.length, needsReview: 0, total: 0, gst: 0, byCategory: {} };
+    rows.forEach(function (r) {
+      if (r.status !== 'ok') s.needsReview++;
+      if (typeof r.total === 'number') s.total += r.total;
+      if (typeof r.gst === 'number') s.gst += r.gst;
+      var cat = r.category || 'Uncategorized';
+      var b = s.byCategory[cat] || (s.byCategory[cat] = { count: 0, total: 0 });
+      b.count++; if (typeof r.total === 'number') b.total += r.total;
+    });
+    s.total = round2(s.total); s.gst = round2(s.gst);
+    Object.keys(s.byCategory).forEach(function (k) { s.byCategory[k].total = round2(s.byCategory[k].total); });
+    return s;
+  }
+  // Simplified file that QuickBooks and Xero import cleanly (map the columns on import).
+  function toAccountingCSV(rows) {
+    var cols = ['Date', 'Description', 'Category', 'Amount'];
+    return [cols.join(',')].concat(rows.map(function (r) {
+      return [csvCell(r.date), csvCell(r.vendor), csvCell(r.category), csvCell(typeof r.total === 'number' ? r.total : '')].join(',');
+    })).join('\r\n') + '\r\n';
+  }
+
+  var api = { parseDate: parseDate, parseAmounts: parseAmounts, parseVendor: parseVendor, categorize: categorize, extract: extract, summarize: summarize, toCSV: toCSV, toAccountingCSV: toAccountingCSV, COLUMNS: COLUMNS };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.RSParse = api;
 })(this);

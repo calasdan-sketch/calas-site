@@ -47,6 +47,17 @@ td.num input{text-align:right;font-variant-numeric:tabular-nums}
 .empty{padding:26px;text-align:center;color:var(--ink-2)}
 .note{font-size:16px;color:var(--ink-2);margin-top:14px}
 .cta{margin-top:26px;padding:16px 18px;background:var(--paper);border:1px solid var(--rule);border-left:4px solid var(--gold);border-radius:10px;font-size:17px}
+.summary{margin-top:20px;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:16px 18px}
+.summary h2{font:700 18px "Libre Baskerville",Georgia,serif;margin:0 0 12px}
+.sumgrid{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:14px}
+.sumgrid>div{flex:1 1 110px;background:var(--sunk);border-radius:10px;padding:10px 12px}
+.sumgrid b{display:block;font:700 22px "IBM Plex Sans",sans-serif;font-variant-numeric:tabular-nums}
+.sumgrid span{font-size:13px;color:var(--ink-2)}
+.cattbl{width:100%;border-collapse:collapse;font-size:15px}
+.cattbl th{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule)}
+.cattbl td{padding:6px 8px;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
+.cattbl td:last-child,.cattbl th:last-child{text-align:right}
+@media print{.top,.drop,.tools,.bar,#cta,#savednote,#cara{display:none!important}body{background:#fff}main{max-width:100%;padding:0}.wrap{overflow:visible;border:none}table{min-width:0}td input{border:none!important;background:none!important}}
 </style>
 <style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"><link rel="stylesheet" href="/calas-theme.css?v=20261002a"></head>
 <body>
@@ -64,17 +75,21 @@ td.num input{text-align:right;font-variant-numeric:tabular-nums}
   <div class="bar" id="bar" aria-hidden="true"><i id="barFill"></i></div>
 
   <div class="tools">
-    <button class="btn" id="dl" type="button" disabled>Download spreadsheet (CSV)</button>
+    <button class="btn" id="dl" type="button" disabled>Download CSV</button>
+    <button class="btn" id="dlacct" type="button" disabled>QuickBooks / Xero CSV</button>
+    <button class="btn ghost" id="print" type="button" disabled>Print report (PDF)</button>
     <button class="btn ghost" id="clear" type="button" disabled>Start over</button>
     <button class="btn ghost" type="button" onclick="rsShare(event)">Share this free tool</button>
     <span class="note" id="count"></span>
   </div>
+  <p class="note" id="savednote" style="margin-top:2px"></p>
   <div class="wrap"><table>
-    <thead><tr><th>File</th><th>Date</th><th>Vendor</th><th>Subtotal</th><th>GST</th><th>Total</th><th>Status</th></tr></thead>
-    <tbody id="rows"><tr><td colspan="7" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr></tbody>
+    <thead><tr><th>File</th><th>Date</th><th>Vendor</th><th>Subtotal</th><th>GST</th><th>Total</th><th>Category</th><th>Status</th></tr></thead>
+    <tbody id="rows"><tr><td colspan="8" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr></tbody>
   </table></div>
+  <div id="summary" class="summary" hidden></div>
   <p class="note">The CSV opens in Excel, Google Sheets, Numbers or your accounting software. Tip: add this page to your home screen to use it like an app, even offline after the first use.</p>
-  <div class="cta">Chasing clients for their receipts? <b>On File</b> by Calas Automations does the chasing for you. <a href="/accounting/">See On File &rarr;</a></div>
+  <div class="cta" id="cta">Chasing clients for their receipts? <b>On File</b> by Calas Automations does the chasing for you. <a href="/accounting/">See On File &rarr;</a></div>
 </main>
 <script>
 function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var msg='Free receipt-to-spreadsheet tool — drag in your receipt photos, get one CSV. Nothing leaves your device. '+url;if(navigator.share){navigator.share({title:'ReceiptSort — free',text:msg,url:url}).catch(function(){});}else{var b=e&&e.target;navigator.clipboard.writeText(msg).then(function(){if(b){b.textContent='Link copied';setTimeout(function(){b.textContent='Share this free tool';},1500);}}).catch(function(){});}}
@@ -149,24 +164,58 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function fmt(v) { return v === null || v === undefined || v === '' ? '' : Number(v).toFixed(2); }
+  function save() { try { localStorage.setItem('rs_rows', JSON.stringify(rows)); } catch (e) {} }
+  function restore() { try { var j = localStorage.getItem('rs_rows'); if (j) { var a = JSON.parse(j); if (Array.isArray(a)) rows = a; } } catch (e) {} }
+  function renderCTA(s) {
+    var cta = $('cta'); if (!cta) return;
+    var fuel = (s.byCategory['Fuel'] || { count: 0 }).count, veh = (s.byCategory['Vehicle & Repairs'] || { count: 0 }).count;
+    if (fuel + veh >= 3) { cta.innerHTML = 'Running vehicles or hauling? <b>Haul Me</b> tells you if a load or job actually pays before you take it. <a href="/haul-me/">See Haul Me &rarr;</a> &nbsp;&middot;&nbsp; <b>On File</b> chases the paperwork. <a href="/accounting/">See On File &rarr;</a>'; }
+    else if (s.count >= 15) { cta.innerHTML = 'Doing this for clients? <b>On File</b> chases every document your practice is still waiting on. <a href="/accounting/">See On File &rarr;</a>'; }
+    else { cta.innerHTML = 'Chasing clients for their receipts and paperwork? <b>On File</b> does the chasing for you. <a href="/accounting/">See On File &rarr;</a>'; }
+  }
+  function renderSummary() {
+    var box = $('summary'); if (!box) return;
+    if (!rows.length) { box.hidden = true; return; }
+    var s = RSParse.summarize(rows);
+    var cats = Object.keys(s.byCategory).sort(function (a, b) { return s.byCategory[b].total - s.byCategory[a].total; });
+    var meals = s.byCategory['Meals & Entertainment'];
+    box.innerHTML = '<h2>Your totals</h2>' +
+      '<div class="sumgrid">' +
+        '<div><b>' + s.count + '</b><span>receipts</span></div>' +
+        '<div><b>$' + s.total.toFixed(2) + '</b><span>total spent</span></div>' +
+        '<div><b>$' + s.gst.toFixed(2) + '</b><span>GST / HST</span></div>' +
+        (s.needsReview ? '<div><b>' + s.needsReview + '</b><span>to check</span></div>' : '') +
+      '</div>' +
+      '<table class="cattbl"><thead><tr><th>Category</th><th>Receipts</th><th>Total</th></tr></thead><tbody>' +
+        cats.map(function (c) { return '<tr><td>' + esc(c) + '</td><td>' + s.byCategory[c].count + '</td><td>$' + s.byCategory[c].total.toFixed(2) + '</td></tr>'; }).join('') +
+      '</tbody></table>' +
+      (meals ? '<p class="note">Heads-up: meals &amp; entertainment are often only <b>50% deductible</b> in Canada — a starting point, not tax advice.</p>' : '') +
+      '<p class="note">A starting point for your taxes, not tax advice. Check anything marked "Check this" against the original receipt.</p>';
+    box.hidden = false;
+    renderCTA(s);
+  }
   function render() {
-    if (!rows.length) { tbody.innerHTML = '<tr><td colspan="7" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr>'; }
+    if (!rows.length) { tbody.innerHTML = '<tr><td colspan="8" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr>'; }
     else tbody.innerHTML = rows.map(function (r, i) {
       var ok = r.status === 'ok';
       return '<tr><td>' + esc(r.file) + '</td>' +
         '<td><input data-i="' + i + '" data-k="date" value="' + esc(r.date) + '" placeholder="YYYY-MM-DD" aria-label="Date"></td>' +
         '<td><input data-i="' + i + '" data-k="vendor" value="' + esc(r.vendor) + '" aria-label="Vendor"></td>' +
         ['subtotal', 'gst', 'total'].map(function (k) { return '<td class="num"><input data-i="' + i + '" data-k="' + k + '" inputmode="decimal" value="' + esc(fmt(r[k])) + '" aria-label="' + k + '"></td>'; }).join('') +
+        '<td><input data-i="' + i + '" data-k="category" value="' + esc(r.category) + '" aria-label="Category"></td>' +
         '<td><span class="pill ' + (ok ? 'ok' : 'rev') + '">' + (ok ? 'OK' : 'Check this') + '</span></td></tr>';
     }).join('');
     var review = rows.filter(function (r) { return r.status !== 'ok'; }).length;
     $('count').textContent = rows.length ? rows.length + ' receipt' + (rows.length === 1 ? '' : 's') + (review ? ' · ' + review + ' to check' : '') : '';
-    $('dl').disabled = $('clear').disabled = !rows.length || busy;
+    $('dl').disabled = $('dlacct').disabled = $('print').disabled = $('clear').disabled = !rows.length || busy;
+    $('savednote').textContent = rows.length ? rows.length + ' receipt' + (rows.length === 1 ? '' : 's') + ' saved on this device — "Start over" clears them.' : '';
+    renderSummary();
+    save();
   }
   tbody.addEventListener('change', function (e) {
     var el = e.target; if (!el.dataset || el.dataset.i === undefined) return;
     var r = rows[+el.dataset.i], k = el.dataset.k, v = el.value.trim();
-    r[k] = (k === 'date' || k === 'vendor') ? (v || null) : (v === '' ? null : (isNaN(parseFloat(v.replace(/[$,]/g, ''))) ? null : parseFloat(v.replace(/[$,]/g, ''))));
+    r[k] = (k === 'date' || k === 'vendor' || k === 'category') ? (v || null) : (v === '' ? null : (isNaN(parseFloat(v.replace(/[$,]/g, ''))) ? null : parseFloat(v.replace(/[$,]/g, ''))));
     if (r.date && r.vendor && r.total !== null && r.total !== undefined) r.status = 'ok';
     render();
   });
@@ -201,7 +250,12 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
     a.download = 'receipts-' + new Date().toISOString().slice(0, 10) + '.csv';
     document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
   });
-  $('clear').addEventListener('click', function () { if (!busy) { rows = []; statusEl.textContent = ''; render(); } });
+  function rsDownload(name, text) { var blob = new Blob(['﻿' + text], { type: 'text/csv;charset=utf-8' }); var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+  function rsToday() { return new Date().toISOString().slice(0, 10); }
+  $('dlacct').addEventListener('click', function () { rsDownload('receipts-accounting-' + rsToday() + '.csv', RSParse.toAccountingCSV(rows)); });
+  $('print').addEventListener('click', function () { window.print(); });
+  $('clear').addEventListener('click', function () { if (!busy) { rows = []; statusEl.textContent = ''; try { localStorage.removeItem('rs_rows'); } catch (e) {} render(); } });
+  restore(); render();
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('/receiptsort/app/sw.js').catch(function () {});
 })();
 </script>
