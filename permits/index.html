@@ -52,7 +52,7 @@ textarea{min-height:90px;resize:vertical}
 <header class="top"><div class="in"><div><b>Permit Checker</b><small>Free &middot; by Calas Automations</small></div><a href="/">Calas Automations</a></div></header>
 <main>
   <h1>What permits do I likely need?</h1>
-  <p class="lede">Describe the job and we'll list the permits you most likely need, who has to sign each, and where to confirm. It's free, and we tell you plainly what we <em>don't</em> know &mdash; this is a starting point, not legal advice, and your city has the final word.</p>
+  <p class="lede">The fastest way to sort out <em>your own</em> permits. Describe the job and we'll show the permits you likely need, who signs each, what to gather, and exactly where to apply. <b>You apply and sign &mdash; we just make it easy.</b> Free, honest, not legal advice; your city has the final word.</p>
 
   <label class="fld" for="job">Describe the job</label>
   <textarea id="job" placeholder="e.g. new warehouse build-out with electrical and plumbing; or: install a storefront sign; or: restaurant fit-out with commercial kitchen"></textarea>
@@ -120,6 +120,24 @@ function officialLookup(city){
  return m[(city||"").toLowerCase()]||"Your municipality's permit office (building/planning dept) or 311.";
 }
 
+// Verified official "where to apply" links (confirmed 2026-10-04). We send people
+// straight to the real forms/portal -- we never file or sign on their behalf.
+var APPLY={winnipeg:[
+ ["Apply online &mdash; Winnipeg Permits Online","https://www.winnipeg.ca/permitsonline"],
+ ["How the two-step (development + building) process works","https://legacy.winnipeg.ca/ppd/permits/DevelopmentandBuildingPermits.stm"],
+ ["Development Permit application form (PDF)","https://legacy.winnipeg.ca/ppd/Documents/Permits/Development-Permit-Application-Form-Residential-Commercial.pdf"],
+ ["Owner authorization form &mdash; if someone applies for the owner (PDF)","https://legacy.winnipeg.ca/ppd/Documents/permits/Owner-Statement-Housing.pdf"],
+ ["Questions: call 311, or Zoning &amp; Permits at 204-986-5140",""]
+]};
+var GATHER=[
+ "The site address",
+ "A clear description of the work / scope",
+ "Drawings or plans for the work (sealed by an architect or engineer where that's required)",
+ "Proof of ownership &mdash; or a written owner authorization if you're applying on an owner's behalf",
+ "Contractor / licensed-trade details where the work needs them",
+ "Budget for the permit fees and lead time (confirm the current amounts with the city)"
+];
+
 function needed(desc,city){
  var text=(desc||"").toLowerCase(),keys=[];
  RULES.forEach(function(r){ if(r[0].some(function(w){return has(text,w);})) r[1].forEach(function(p){ if(keys.indexOf(p)<0)keys.push(p); }); });
@@ -149,6 +167,9 @@ function render(){
      '<p class="meta">Where: '+esc(p.authority)+'</p></div>';
  });
  if(r.notes.length){ h+='<div class="notes"><b>For a full build, also note:</b><ul>'+r.notes.map(function(n){return '<li>'+esc(n)+'</li>';}).join("")+'</ul></div>'; }
+ var ap=APPLY[(city||"").toLowerCase()];
+ if(ap){ h+='<div class="notes"><b>Where to apply ('+esc(city)+'):</b><ul>'+ap.map(function(a){return '<li>'+(a[1]?'<a href="'+a[1]+'" target="_blank" rel="noopener">'+a[0]+'</a>':a[0])+'</li>';}).join("")+'</ul></div>'; }
+ h+='<div class="notes"><b>What to gather before you apply:</b><ul>'+GATHER.map(function(g){return '<li>'+g+'</li>';}).join("")+'</ul></div>';
  h+='<p class="confirm"><b>Confirm at:</b> '+esc(r.confirm)+'</p>';
  h+='<div class="tools"><button class="btn ghost" type="button" onclick="pcShare(event)">Share this free tool</button></div>';
  h+='<div class="cta">Run a trades business? We can put this right inside your workflow: <b>Quote Me</b> flags the permits (and their cost + lead time) in every quote, and <b>Dispatch Me</b> attaches the permit checklist to each job so crews never arrive without one. <a href="/pay/">See the tools &rarr;</a></div>';
