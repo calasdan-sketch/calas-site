@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is this load profitable? &middot; Free owner-operator calculator &middot; Haul Me</title>
+<meta name="theme-color" content="#155F87">
+<meta name="description" content="Free load calculator for truckers. Enter the rate, the miles or kilometres, and the take-home you want — get a green, yellow, or red call in seconds, plus a counter-offer script. No signup. By Haul Me, Calas Automations.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<meta property="og:title" content="Is this load profitable? — free trucker calculator">
+<meta property="og:description" content="Paste a rate, get green / yellow / red before you say yes — and the counter to send the broker. Free, no signup.">
+<meta property="og:url" content="https://calasautomations.com/haul-me/calculator/">
+<meta property="og:image" content="https://calasautomations.com/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{color-scheme:light;--blue:#155F87;--gold:#F0C171;--ink:#141413;--muted:#5b6b78;--line:#e4ddd0;--bg:#faf9f5;
+  --green:#1f8a4c;--green-bg:#e7f5ec;--yellow:#b4890a;--yellow-bg:#fbf3dc;--red:#B0342B;--red-bg:#fbe8e6;}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.5 'IBM Plex Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink)}
+body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:9999;pointer-events:none}
+.wrap{max-width:560px;margin:0 auto;padding:20px 16px 48px}
+header{text-align:center;padding:12px 0 4px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+h1{font-family:'Libre Baskerville',Georgia,serif;color:var(--blue);font-size:27px;line-height:1.15;margin:0 0 6px}
+.tag{color:var(--muted);font-size:15px;margin:0}
+.card{background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:10px;padding:18px;margin-top:16px}
+label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:12px 0 4px}
+input{width:100%;padding:12px;border:1px solid var(--line);border-radius:7px;font-size:17px;font-family:inherit;background:#fff;color:var(--ink)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hint{font-size:12.5px;color:var(--muted);margin:5px 0 0}
+.toggle{display:flex;gap:8px;margin-top:6px}
+.toggle button{flex:1;padding:9px;border:1px solid var(--line);background:#fff;border-radius:7px;font-size:13px;cursor:pointer;color:var(--ink);font-family:inherit}
+.toggle button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.units{margin:0 0 4px}
+.go{width:100%;margin-top:18px;padding:14px;background:var(--blue);color:#fff;border:0;border-radius:8px;font-size:17px;font-weight:600;cursor:pointer;font-family:inherit}
+#result{margin-top:16px;display:none}
+.verdict{border-radius:10px;padding:18px;text-align:center}
+.verdict.green{background:var(--green-bg);border:1px solid var(--green)}
+.verdict.yellow{background:var(--yellow-bg);border:1px solid var(--yellow)}
+.verdict.red{background:var(--red-bg);border:1px solid var(--red)}
+.light{font-size:34px;font-weight:700;letter-spacing:.5px;margin:0;font-family:'Libre Baskerville',Georgia,serif}
+.verdict.green .light{color:var(--green)}.verdict.yellow .light{color:var(--yellow)}.verdict.red .light{color:var(--red)}
+.vmsg{margin:8px 0 0;font-size:15px}
+.stat{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.stat:last-child{border-bottom:0}
+.stat b{font-variant-numeric:tabular-nums;text-align:right}
+.counter{background:var(--bg);border:1px dashed var(--blue);border-radius:9px;padding:14px;margin-top:14px}
+.counter h3{margin:0 0 6px;color:var(--blue);font-size:15px}
+.script{background:#fff;border:1px solid var(--line);border-radius:7px;padding:10px;font-size:14px}
+.copy{margin-top:8px;padding:8px 12px;background:var(--blue);color:#fff;border:0;border-radius:6px;font-size:13px;cursor:pointer;font-family:inherit}
+.err{color:var(--red);font-size:14px;margin-top:10px}
+.priv{font-size:12.5px;color:var(--muted);text-align:center;margin:10px 0 0}
+.capture h3{margin:0 0 4px;color:var(--blue);font-size:16px}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:13px;font-weight:400;color:var(--ink);margin:10px 0}
+.chk input{width:auto;margin-top:3px}
+.promo{background:var(--blue);color:#fff;border-radius:10px;padding:16px;text-align:center;margin-top:18px;font-size:15px;line-height:1.5}
+.promo b{color:var(--gold)}
+.promo a{display:inline-block;margin-top:6px;color:#fff;font-weight:600}
+.cta{text-align:center;margin-top:24px;font-size:15px;color:var(--muted)}
+.cta a{color:var(--blue);font-weight:600}
+footer{text-align:center;color:var(--muted);font-size:12px;margin-top:26px}
+footer a{color:var(--muted)}
+.crest{width:26px;height:36px;flex:none;background:#155F87;
+  -webkit-mask:url(data:image/png;base64,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) center/contain no-repeat;
+  mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAACQCAYAAADk3S7VAAATdklEQVR42u2de9wcZXXHvzu7b27SAEkFsdyDBgUhQpEaLyC19UJRrFq0CUlaLGhvWG0xFqilxIq1SAVbCDcrCG3V0nxQAQGJFNSqFRFaCRqwUBMlaiJNAjHZd5/+cc757Mk4uzs7O7Mz8ybP57Of982+2dmZ53cuv3Oe85ynEUKgxiPS1yTgH2RP4AjghcALgOcC+wN7A039+XXgDcB6/UwlJ6JVY2AaCkxH35sPnAT8GnCcAtJrrAZ+F1in16mslNYNoKYCYqD8EnAqcBrw4oTn6ejkTwLT9L0VwPn6e6XBAWjUxMQ1dZJtvBQ4E3idmjMbbZ1007CO07g1wB8CX9C/+b/vBmhEjbGbfAPwx8CJ7v9MxsweTmtMoy4DzgU263vtupiMqgLkfQzAG4E/A453AHRioHjAmvr7A8CfAHf10MTdAA17PzqJJuEnAe8DXh7zKc2Ez3qt2Q58ALgI2KbvTVbd31QdIC/dzwEuAN7qtMJ8S9LouL/dA7wTuK+uWhM3JVXQGpPwCWA58A0Fp+NMVq97bevftutnT1BwWjEzWctRtgZ56X4ZcAlwbIIvoQ84LeBB4AwNPmvD0KquQaY1M4APAncrOO0+fibJ33wCWKjgtByBmBKjDA3yEn48cAWwQCc2pBCajrvGecD7p4KvqQpAfhLfpUxrmjNVpADHcm+/A1yfECtNqdEa83e1gbnASo1tbNKHAedp4M3A55RU7GAKj9aYwXkRcANwmP67mdIPGjhbgN9QfzXlwRkHSfCB5xLgiw6cVkIWoB84W4HX7krgFA1Q5OjyhcDHgZlDmDScX9kOvF6D0F0GnCJNXOSAuBpYqkBFQwiF0eWmBq1f2NXAKQogA+cZwKeBVw/B0vywOOcs4KZdEZwiADIaPQf4LLKItkMnd5hhgF4EXLmrgpN3HGSaMxf4vMsKZNGcJnCz+p3aZqKrBJCBszdwJ3BMRnCMsX0HqSvY4t7fJUeU0zUCsAdwywjgWKrnZ0iNwf8xhZKeZfkgy4lF6sh/JSM4nhT8EXA/NVuarqKJ80HoJ4BFGQmB9zurkLqD3eDkAJBN4gqkICMrOGbCfoIUGW7YbdpG90Etl745V3+fyHgtW2I4G3jCEY7dI6MGWaxzDPBlBSupumYY03YrkmfbbdpGBMhIwR7Iuv88di7YyMrajgIe2W3aRjdxtji2UsFpj2AmDdiLgbXu2rtHRg0y07YM+NgIdNrAaSDF688DnnIatXtk0CBz3AcDH6GbZc46ggL0V5otiCoITuT8a+U1yLTnNuBVpCuJGqQ931Hf066Q9thySLuH/w1V1CADZ6mC085Je1YgC3Fla0/kTHXHgfN8zWqsBv6awaVgpWiQAbg38G3gF0eMn0x7vgscSTdLPW6AGk4wPDE5GjhFX8c6QDYoKdoybk1qpXiQSfUV+4xIDHxQ+mHNPIw77vEmzMq/DkEqjN6EFLX4eK6tAO6DLDz+KzsX95eqQSZhz0eSl40RAlJPq3+I7Bnd4kAbBzC+TnuGBsZLkC2Ts2KgRC7ms6X6W5CKorFmOloDtKeDrGraolljhO8ygK5jfBup4sAcCJyuwDzX/b8dTrtaPa7xq8BBwGPjBCkaQAxeolKTB61u6kRc4wAr8rks8J1UtrgS2dC1QsHpKEkBySM2ewhgQwVpBrJONYoPzg0gMzsX5GSGjBzcrfS6KAlsxIA5DrgR2c5yJrKf1fxKByk7/jGyxHEH3aL8XvO0mG7p8XhGCCH+aurPhUHGZBh9tPXn4hBCI4TQSvjeUV9N9/uRIYTrY/e+I4TQcb+HEMI9IYR5+pk3xe41PuxaCxO+r7BXvwe9OfYwWYdNysYQwhy9diPHh4jc9fYJIfxdCGFbTDg67l4MgGtCCBP6uVYIYVoIYW0fobR5WFkmQJH+fF5M4kYZ9mCfLODBvCb+XghhXYLWekGxiT/PCUrkrnNOH6G0udgQQphdgKAlvqIetvYdjrnl4RcA/s1R17wCzTbS8uUOpH7u2SRvAPN7j85SouCzB/acH0eKVZoJftfY4DOVODXGkllwaJk07KVSEnLQIPv85hDCvjlJndfAs0MIWxJMWS/NWayfm+hz3av6aJF9x+0xizMWE2dqvnSAs8xCDlbn9EB2j/uFED7Tx5yFBJ+zqA84HqAFCmgvsDshhJ85chGNy8QZ7V2SY3Rv17krh/jBAtsTgK+qmem3nzW4rPsZyL6kfiXEljG4H9kmk7RD3N6bRrdFQDSOOMjiknnIbmtysq92/X8fIZ7y5V1nIZWrBzB4j5HV2b0HuJZ09d12v5em+D+LcvTTqQACaU40kdOXmlN+EtkmnyV74PNhH0Q2HFsg2i9NZeBdAfwN6YvvLZ11q2bck5bhTZgP10xLocsQUWziTo0xr1GzByBdpjZmSNP73eDXAue43F00YJJbalb/YMjss032dk0N9RIqe2/puNLvHTUbL8rRrhoYD2YwmQ0H6D8jO7p3MHjbpCVk16mPCBnWm8x6XKfan0S57Vler2tlkzkJdU+AAF6hCcG8v+y/MsY4HXXsp5GuatUDsVgX2bLk/EyLfqTC0Y8szFG3QFFmzmvKK3NenzGQvzvkdS2TvlK1IG1JsTG29ysLG8WB273+PYPrL5YVmp13scEjOSZH/ThqiHjB4py/1M9uHzLeuk+v0cwhILb7vb1PrNXRgHZ+UTGRadA8pKQqb//zlKbz02iQxTlvQXrEpV1eD465vc0RgpCTBbgsBSFZVFRMZBc8tqB1js2a20pzH21dWLvWmZW0fRSaSL3efTnGJuaLbwMe7kO5UVM8UQRZ8ADl6X+8Bm1LydhmqVOeOQTV96ztggKEzFaBr+jhZ4yEHKYZjty1yC52dI7xjx/bUsQgRgouRsqAh6m7sxq781Vb866xM424HtjUg3L7mCgUYeJmqg8qAqB2glbFwWkjBZFvZ7iyLsudPaAxSxEm2ij3T5Cl8yTKbcJ0ClI3mKuZi5BKl2cVBFBjwN8C0vDiH0jXKy7pGu9zk1JECZdd8/IelNtA2xOpbcg1JoqQwr3pzlzkOSbcNRs97Pdy4FCnEcNoz/1IP4UiCznsu/4bWRjs1wd1ad4xUeTMWxGB1oweQaaBcwjwbrKVdTU0EZp1A1kWX31ZHz8akF3uR+R5T5GLf4owbbMUpF7m7UK6HbDSaq+B+T1k6/84OvvakQO3Aw/1oNxm/hbnyeYiTZIWNX4BmB0DzbTnBRqUDtOezGv61cj2ySbjKR82QnN5H8qNPtP0vMhCVBBBaDgTN7eH9ixn+G2PQcF8WqlvcTmw3pT7BmT5pBUTDL/J7aS8tChKmMA8Hwik0saAMWd+KLKjYNjFLrvmncD/Mt59rXavG5HGHSSYVmtuuywvrY7UDBVBse0GD40BBLJ0ncUM2P+9gfxKuIYZHUe5kwJqS0+9Ftg3DzMXaRxS5DjATW4b2cK/JIMJMAnepM46MP4+2cbO1ug9xAmKf8Y35hETRXRPpioaIAPjZPV7k0MCZBOxuk/aZRzDNOLSHpbH/r0kDx/p98PkbS5s8g+PmbzFI07sLSWZtzhZuBNZLY6v2prgHId01B9p605U4IMaWztCA9LtyPr9K+h/1Ew/9rYD2cJS9vkMluC9PCZ88ezD6aMKf5E7xawiZzrwUeRYs/PV53WGvGmbgIeBRym/ZYxp0Y3IgmQzgXID/JYG4u2sIEV068VCQZKGsprVyHFlWZKiBsZXGX23X56U+6cuHpuMzeskclTorzNCoX3E4AW1vNhPJwfa+R9UZ5jQXKFC3kwAMdBdJwpZAdo6hoex8q7miJr4rQK1PQtATWRL522OYsdjolch571OZrAcRKqmVXnoXuakgRQRPjLm9E7acWlCXGeAzUJOayErQD+m2sME53GNf6okTGay70JWdpMCV5TNZcq6R8APaqBBAP9DSf1yUpjfDlLk2Ojxt2OAX85y/xGSdKyDBj1WUECdlxb9C1JuHKfcHadFQ99/pHFFFR88PtZVWICa6iOv60G5QXoBPWPYmMgDFFUcoCcqfG+mJSs1Y+K1yGKi/YDXDBsTRcjS8eYK+yGTto0Vvkej3GuRs/XihMDioGXDxkRGEtbXAKAtVH806BaWRAlxnDVkSh0TWU30wxVncowp4zEqWQBJ5n4zpkX2+9ANmaIKRui9NKgOh9j2o9yZGjLZh75eEyZHDbSoAXxSSU2cLFg10/FpYyKvQdspb5UyTRw0UQOAbNI3A/+YoPnxzceNNAA1NFhdU3E/NLMmWmQgXMnP1+2ZxvwmUi84MCaK3AXujX1B1TRodk3MsFHuR5GDFpPIwjOR2oyBMZFnEndUdAIMoLnUazRIznITi4k6gwAydO+ldyuuKoxn1ZAs3IO04/RaZGCdSIrTY2xHmi073Ev5BRm9xoE10yCb24/GrJJvyPSWQTFRvFfPzZR0RkGKOOjgivrIQVr0ac3W+DLl1A2Z4r16Pots/G1VCCQP0ATDVwSVTbm3IMf5EAOog+zJXdgvJvIA2W7pL1bMzBkY+7NzIX6dKPdVSKrK+3f727K0LM5+v75iE2A1cNPoVqnWCaAmshp8c4wspGrIFMVsJki6fEPF2JxJ23E1A8gLWTzLnaohUxSzmS1NU9yYkKaogpl7Sc2IgicLXwK+RnLxSM/Nx1GfNMWoBznlTVlNg2bXiCgMotxmpV4GzE+KiaIeNvMhkovxyvZDc5FMcN/YocJadJMSMU+5rSHTbyc9V7+HvLhiE2EPdHIN/ZDR6K38/OkvfRsyRT3QjpRuf4lxn/Yx2MydTH6Nb8sQsGuQTdBNl8XpAM8BXh7HJRrglC+smB23zlIv7sV6akC5HwdWxciCj4lCGhNnWvR5JOHXrIjEFtF8vQqUu2dDpigFtT2vQg/nF7zmUGC33YLJwleQrTQN9541ZDrVP+ug/tNNpGv8qopokbHKvem25m/WTIN8358k4dopJkpzjmpQB/YA3aOTy5RavxX+KPLrUTruoHsGUu52gHsmy4EejXTXakYpJsM2Kf1tRbTIWOXhaupCzbTI7vdppN8QsZjIN2RqpDnL27a8z0Cqf+aRbZ9p3rbcergtoLqLjIMY6f6qRTMdeBGyk2M+sD1KiXgDWSf6fcrfYY2LxI9EFr2G7ZhVFcr9fXZuqWbAHYS0Kxiqw2ELKSy5ivEf8dxLs63nXJat/VWi3N4iWUOm04EQZTAr70Z2RLRK1iSTtgOBP6ca2/OzUO6vAV92WuQbMu03bLePBrIcsdTZ/VAySJPAnyJnjrdrBlIS5Tag9gJOS0MS4sPM23lqXoZppVyUJDZVCl/qmGYdaLeBMl3DhoOcqQ7AY1mYmAGyAikyKdsfWavKhcB7a6ZFRrm3qW/3PigC1mfRIK+ae6oNPYzBx7gU/aDmD09AsvBVyR+m9aXP1nhzlr7/I+CYrLGMqeEmDRa3UGxjprSxWhP4J6T2eRztmvOk3OuBTzlf/3Zg3SgPYNT7QboVkpl70uRIGA6ge3JWmX3lsgjZR/Q5Poac3NwaVcLMH30O6UNatoM2f3QSsuN6mGNuyqbcAemkfzlyoGIDmMzqg+LDjsFcDnzAOeqyJsYE50LgL0h/TGcVtGgnQPICyNPvFcC5FaDf9v3nAB+qSPZjGOod8gbInxh8EXICcJmaFJyffBdwCd1C9dqsxkYFTchy1aRWidmGhvOJH9Z0kG05rE3JVp4alKRJ71Ft6hQgEMPGSHbO3TsdoZjcFQGK+6QzkErVqORg1nzSZ5Bc4qY6+KUiAfIgvQap996rZPJg370GWbX8Bt21pUr6pWhME3IrUpT3bQdaGRNi3304UgzzNkcaWrsiQB6kB5Fs8yo3GZ2SQOogOa+rkJNM9nGMM9rVAMI9/CbkIL730s3Ytkt6bmOdi9TUnab/tuXzSmQfivZBSQzPahpO0HTM/JJZnicuN2mQvcZpW6lx07gBivuCPZGDAs+Madq4pddT8aeQBhSXIDsNSwWqLIDiccgpGkweliDVZWnTDxWoK5GDbu2ex1riVSZAsPOxabORwzfOprvdvgyz5zMiIBuurkQOgf9+QpYiTGWAkrRpAXJw+uucVDcqANRPkXWma+n218NpXCGxVFUAimsTSNnR+cjhsVUCCmRLzo2alVgXY4eRAytMJYDi1N9M3FuRJYMFMUkddxF/ElBPIsWcq5DjAX6Q8CyR+3wYFrgqApRk9lrIARVn091EbKwvKkGr4s0oDKyvIJuv70Zqrp/uI4SRA6tTR4CSgAJ4NfAOJL83UQGt6iSABdLF8lGNqR7S16NKNLaleM7aAJTkn0AqSRdpBmBeTLpDCZrlK21bfTIq65Dyqm8C/6k/19ZZg5IkzUvuLKRh+JuR48j2TfAbjRK0K04UegnMVtWyTyFL8zv5qDoCFLfjPpc3B+lkeIqmkg7p4eh92qno0qwQ0zAf33lNu4zuYmJnKgAUN3/ETOAMZX4nKlgvjGlXL18COxey0wfA0OMnKUOC7yn7u5rupuJQdxOXBSw0UzEfOWxpAdJM7xAFbXqB9/SUBrlPIDvn1iJLL99SprfNaVRnKvigYcFqxEyLH3sg2xAP1dfBSI30fkj58F7I5rAJpF9dy4G/Q2n0VgVgo8ZBjysQ65F83gYkl/dkj/ts0edc8v8HSWH2d5qpbSsAAAAASUVORK5CYII=) center/contain no-repeat}
+@keyframes spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+.crestflip{display:inline-block;position:relative;width:26px;height:36px;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;animation:spin 6s linear infinite}.crestflip .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}.crestflip .back{transform:rotateY(180deg)}
+.crest.big{width:56px;height:78px;background:#fff}
+@media(prefers-reduced-motion:reduce){.crestflip{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="crestflip" aria-hidden="true" style="margin-bottom:8px"><span class="crest face"></span><span class="crest face back"></span></span>
+    <p class="eyebrow">Haul Me &middot; Calas Automations</p>
+    <h1>Is this load worth it?</h1>
+    <p class="tag">Enter the rate. Get green, yellow, or red &mdash; and what to counter. Free, no signup.</p>
+  </header>
+
+  <div class="card">
+    <label class="units">Distance in</label>
+    <div class="toggle">
+      <button type="button" id="btn-mi" class="on" onclick="setUnit('mi')">Miles</button>
+      <button type="button" id="btn-km" onclick="setUnit('km')">Kilometres</button>
+    </div>
+    <div class="row" style="margin-top:4px">
+      <div><label>Offered rate (total $)</label><input id="offered_revenue" type="number" inputmode="decimal" placeholder="2000"></div>
+      <div><label id="lbl_loaded">Loaded miles</label><input id="loaded_miles" type="number" inputmode="decimal" placeholder="900"></div>
+    </div>
+    <div class="row">
+      <div><label id="lbl_dead">Empty miles to pickup</label><input id="deadhead_miles" type="number" inputmode="decimal" placeholder="80" value="0"></div>
+      <div><label>Take-home you want / week ($)</label><input id="weekly_take_home" type="number" inputmode="decimal" placeholder="1500" value="1500"></div>
+    </div>
+    <p class="hint" style="margin:14px 0 0">Just enter your <b>rate</b> and <b>distance</b> to start &mdash; we've filled in typical numbers below; tap to adjust.</p>
+    <label id="lbl_cpm">Your cost per mile (fuel, truck payment, insurance)</label>
+    <input id="cost_per_mile" type="number" inputmode="decimal" step="0.01" value="1.05">
+    <div class="toggle">
+      <button type="button" id="btn-financed" class="on" onclick="setCpm('financed')">Truck payment</button>
+      <button type="button" id="btn-paidoff" onclick="setCpm('paidoff')">Paid-off truck</button>
+    </div>
+    <p class="hint" id="hint_bench"></p>
+    <button class="go" onclick="check()">Check this load</button>
+    <div id="err" class="err" style="display:none"></div>
+    <p class="priv">Private: your load numbers stay on your phone. We only get an email if you choose to share one below.</p>
+  </div>
+
+  <div id="result">
+    <div class="verdict" id="verdict"><p class="light" id="light">&mdash;</p><p class="vmsg" id="vmsg"></p></div>
+    <div class="card">
+      <div class="stat"><span>This load pays you</span><b id="r_take"></b></div>
+      <div class="stat"><span id="r_floor_lbl">Your floor (cost + pay) per loaded mile</span><b id="r_floor"></b></div>
+      <div class="stat"><span id="r_rate_lbl">Offered per loaded mile</span><b id="r_rate"></b></div>
+      <div class="stat"><span>Set aside from it</span><b id="r_aside"></b></div>
+      <div class="counter" id="counter" style="display:none">
+        <h3>Counter the broker</h3>
+        <div class="script" id="script"></div>
+        <button class="copy" onclick="copyScript()">Copy text</button>
+      </div>
+    </div>
+
+    <div class="card capture" id="capture">
+      <h3>Want Haul Me to remember every load?</h3>
+      <p class="hint" style="font-size:14px">Drop your email and we'll send you early access, a free cost-per-mile cheat sheet, and the occasional tip. No spam.</p>
+      <input id="lead_email" type="email" inputmode="email" placeholder="you@email.com" autocomplete="email">
+      <label class="chk"><input type="checkbox" id="lead_consent" checked> It's okay to email me about Haul Me and other Calas tools and news.</label>
+      <input type="text" id="lead_hp" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+      <button class="go" onclick="sendLead()">Send it</button>
+      <p class="priv" id="lead_msg"></p>
+    </div>
+  </div>
+
+  <div class="promo">
+    <b>Founding offer:</b> the first 50 owner-operators get the full Haul Me app at <b>$19/mo &mdash; locked in for life.</b><br>
+    <a href="/haul-me/">Claim your spot &rarr;</a>
+  </div>
+  <p class="cta">Want Haul Me to log every load and show which brokers and lanes actually make you money?<br>
+    <a href="/haul-me/">See the full app &rarr;</a></p>
+  <footer>
+    Free tool by <a href="/">Haul Me &middot; Calas Automations</a>. It's your numbers, done fast &mdash; not financial advice.
+  </footer>
+</div>
+
+<script>
+// The load math runs here in your browser. Only an email you type in is ever sent.
+var MI_PER_KM = 1.60934;
+var UNIT = 'mi';
+var CPM = {mi:{financed:1.05, paidoff:0.82}, km:{financed:0.65, paidoff:0.51}};
+var WEEKLY = {mi:2500, km:4000};
+var MAINT = {mi:0.15, km:0.09};
+var BENCH = {mi:'$2.26/mile', km:'$1.40/km'};
+var TAX_RATE = 0.25, COUNTER_CUSHION = 0.06;
+var LEAD_URL = 'https://calas-access.calasdan.workers.dev/api/haul-lead';
+var lastVerdict = '';
+function uword(){return UNIT==='km'?'km':'mile';}
+function uwords(){return UNIT==='km'?'km':'miles';}
+function applyUnit(){
+  document.getElementById('btn-mi').classList.toggle('on',UNIT==='mi');
+  document.getElementById('btn-km').classList.toggle('on',UNIT==='km');
+  document.getElementById('lbl_loaded').textContent='Loaded '+uwords();
+  document.getElementById('lbl_dead').textContent='Empty '+uwords()+' to pickup';
+  document.getElementById('lbl_cpm').textContent='Your cost per '+uword()+' (fuel, truck payment, insurance)';
+  document.getElementById('hint_bench').innerHTML="Not sure? These are typical owner-operator numbers &mdash; tune to your truck. The U.S. fleet average is about <b>"+BENCH[UNIT]+"</b>, but that includes a hired driver's wage. You're the driver, so your pay is the <b>take-home</b> above, not a cost &mdash; which is why your real cost per "+uword()+" is lower.";
+  document.getElementById('r_floor_lbl').textContent='Your floor (cost + pay) per loaded '+uword();
+  document.getElementById('r_rate_lbl').textContent='Offered per loaded '+uword();
+}
+function setUnit(u){
+  if(u===UNIT) return;
+  var f = (u==='km') ? MI_PER_KM : (1/MI_PER_KM);
+  ['loaded_miles','deadhead_miles'].forEach(function(id){var el=document.getElementById(id);var v=parseFloat(el.value);if(isFinite(v))el.value=Math.round(v*f);});
+  var cp=document.getElementById('cost_per_mile'); var cv=parseFloat(cp.value); if(isFinite(cv))cp.value=(cv/f).toFixed(2);
+  UNIT=u; applyUnit();
+}
+function setCpm(w){document.getElementById('cost_per_mile').value=CPM[UNIT][w];
+  document.getElementById('btn-financed').classList.toggle('on',w==='financed');
+  document.getElementById('btn-paidoff').classList.toggle('on',w==='paidoff');}
+function money(n){return '$'+Math.round(Number(n)).toLocaleString();}
+function rate(n){return '$'+Number(n).toFixed(2);}
+function num(id){var v=parseFloat(document.getElementById(id).value);return isFinite(v)?v:NaN;}
+function check(){
+  var err=document.getElementById('err');err.style.display='none';
+  var revenue=num('offered_revenue'), loaded=num('loaded_miles'),
+      dead=parseFloat(document.getElementById('deadhead_miles').value)||0,
+      cpm=num('cost_per_mile'), weekly=parseFloat(document.getElementById('weekly_take_home').value)||0;
+  if(!(revenue>=0)||!(loaded>0)||!(cpm>=0)){err.textContent='Enter the offered rate, loaded '+uwords()+', and your cost per '+uword()+'.';err.style.display='block';return;}
+  if(dead<0||weekly<0){err.textContent='Distance and take-home can’t be negative.';err.style.display='block';return;}
+  var total=loaded+dead;
+  var wk=WEEKLY[UNIT];
+  var opCost=cpm*total;
+  var share=wk>0?weekly*(total/wk):weekly;
+  var floor=opCost+share;
+  var take=revenue-opCost;
+  var opFloorLoaded=opCost/loaded, thFloorLoaded=floor/loaded, rateLoaded=revenue/loaded;
+  var light,msg;
+  if(revenue<opCost){light='red';
+    msg='Loses '+money(opCost-revenue)+' before you pay yourself a cent. You need '+rate(opFloorLoaded)+'/loaded '+uword()+' just to break even.';}
+  else if(revenue<floor){light='yellow';
+    msg='Covers costs and pays you '+money(take)+', but that’s '+money(floor-revenue)+' under your take-home pace. Clear your '+money(weekly)+'/week goal at '+rate(thFloorLoaded)+'/loaded '+uword()+'.';}
+  else {light='green';
+    msg='Clears costs AND your pay: '+money(take)+' in your pocket, ahead of your '+money(weekly)+'/week pace.';}
+  lastVerdict=light;
+  var v=document.getElementById('verdict');v.className='verdict '+light;
+  document.getElementById('light').textContent=light==='green'?'TAKE IT':(light==='yellow'?'THIN':'PASS');
+  document.getElementById('vmsg').textContent=msg;
+  document.getElementById('r_take').textContent=money(take);
+  document.getElementById('r_floor').textContent=rate(thFloorLoaded);
+  document.getElementById('r_rate').textContent=rate(rateLoaded);
+  var tax=Math.max(0,take)*TAX_RATE, maint=total*MAINT[UNIT];
+  document.getElementById('r_aside').textContent=money(tax)+' tax + '+money(maint)+' repairs';
+  var c=document.getElementById('counter');
+  if(rateLoaded<thFloorLoaded){
+    var counterRate=thFloorLoaded*(1+COUNTER_CUSHION), counterTotal=counterRate*loaded;
+    document.getElementById('script').textContent='Thanks for the offer. To run this one I need '+money(counterTotal)+' ('+rate(counterRate)+'/'+uword()+') — that covers my costs and keeps me moving. Can you get me there?';
+    c.style.display='block';
+  } else {c.style.display='none';}
+  document.getElementById('result').style.display='block';
+  document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function copyScript(){var t=document.getElementById('script').textContent;var b=event.target;
+  navigator.clipboard.writeText(t).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy text';},1500);}).catch(function(){});}
+function sendLead(){
+  var em=document.getElementById('lead_email').value.trim();
+  var msg=document.getElementById('lead_msg');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){msg.style.color='var(--red)';msg.textContent='Enter a valid email address.';return;}
+  var consent=document.getElementById('lead_consent').checked;
+  var hp=document.getElementById('lead_hp').value;
+  msg.style.color='var(--muted)';msg.textContent='Sending…';
+  fetch(LEAD_URL,{method:'POST',headers:{'content-type':'application/json'},
+    body:JSON.stringify({email:em,consent:consent,context:'unit='+UNIT+' verdict='+(lastVerdict||'-'),website:hp})})
+   .then(function(r){return r.json();})
+   .then(function(d){
+     if(d&&d.ok){document.getElementById('capture').innerHTML='<h3>You\'re on the list.</h3><p class="hint" style="font-size:14px">We\'ll be in touch with early access and your cost-per-mile cheat sheet. Thanks for trying it!</p>';}
+     else{msg.style.color='var(--red)';msg.textContent='Could not send just now — please try again in a moment.';}
+   })
+   .catch(function(){msg.style.color='var(--red)';msg.textContent='Could not send — check your connection and try again.';});
+}
+applyUnit();
+</script>
+</body>
+</html>
