@@ -66,6 +66,7 @@ td.num input{text-align:right;font-variant-numeric:tabular-nums}
   <div class="tools">
     <button class="btn" id="dl" type="button" disabled>Download spreadsheet (CSV)</button>
     <button class="btn ghost" id="clear" type="button" disabled>Start over</button>
+    <button class="btn ghost" type="button" onclick="rsShare(event)">Share this free tool</button>
     <span class="note" id="count"></span>
   </div>
   <div class="wrap"><table>
@@ -75,6 +76,9 @@ td.num input{text-align:right;font-variant-numeric:tabular-nums}
   <p class="note">The CSV opens in Excel, Google Sheets, Numbers or your accounting software. Tip: add this page to your home screen to use it like an app, even offline after the first use.</p>
   <div class="cta">Chasing clients for their receipts? <b>On File</b> by Calas Automations does the chasing for you. <a href="/accounting/">See On File &rarr;</a></div>
 </main>
+<script>
+function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var msg='Free receipt-to-spreadsheet tool — drag in your receipt photos, get one CSV. Nothing leaves your device. '+url;if(navigator.share){navigator.share({title:'ReceiptSort — free',text:msg,url:url}).catch(function(){});}else{var b=e&&e.target;navigator.clipboard.writeText(msg).then(function(){if(b){b.textContent='Link copied';setTimeout(function(){b.textContent='Share this free tool';},1500);}}).catch(function(){});}}
+</script>
 <script src="/receiptsort/app/parse.js"></script>
 <script>
 (function () {
