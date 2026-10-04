@@ -12,8 +12,9 @@ All prices in Canadian dollars, plus GST/RST where applicable. This file is the 
 | `leadme_team` | Lead Me Team — everything in Lead Me for up to 4 people on one shared list, plus CRM export (spreadsheet file) | C$800/mo | recurring monthly | 40 businesses in your territory that fit what you sell, each with a checked, working email address and a record of where we found it, within 14 days of going live, or walk away owing nothing; 30 days' notice to cancel | New 2026-09-30; Stripe link not made yet (a Talk to us button shows until it is) |
 | `quoteme_monthly` | Quote Me — per shop | C$99/mo | recurring monthly | 60-day deposit-or-refund: no real deposit collected in 60 days, first two months refunded | Early access; rises after first ten shops |
 | `textback_monthly` | Cara — missed-call text-back | C$29/mo | recurring monthly | none yet; first three months C$19 while validating | **Hypothesis** |
-| `greenmile_small` | Haul Me — owner-operator, up to 3 trucks | C$29/mo (C$290/yr) | recurring monthly (annual optional) | 30-day money-back, no questions | First price; flat, not per truck |
-| `greenmile_fleet` | Haul Me — small fleet, up to 20 trucks | C$79/mo (C$790/yr) | recurring monthly (annual optional) | 30-day money-back, no questions | First price |
+| `haulme_founding` | Haul Me — FOUNDING (first 50 owner-ops + couriers) | C$19/mo, locked 3 years | recurring monthly | 30-day money-back, no questions | First 50 only; price held 3 years then moves to regular |
+| `greenmile_small` | Haul Me — owner-operator, up to 3 trucks | C$39/mo | recurring monthly | 30-day money-back, no questions | Raised from C$29 (board: underpricing signals a toy); flat, not per truck |
+| `greenmile_fleet` | Haul Me — small fleet, up to 20 trucks | C$99/mo | recurring monthly | 30-day money-back, no questions | Raised from C$79 |
 | `watchpost_watch` | Watchpost — Watch plan, one location | C$79/mo (C$790/yr) | recurring monthly (annual optional) | First month free; any month the decoys can't be shown up is free; cancel with one email | Early access; business-hours support, no 24/7 |
 
 ## One-line rationale each
@@ -26,7 +27,7 @@ All prices in Canadian dollars, plus GST/RST where applicable. This file is the 
 - **Lead Me Team, C$800.** Up to four people on one shared lead list, so nobody emails the same company twice, plus CRM export. About C$200 a person.
 - **Quote Me, C$99/mo.** Sits between the invoice apps (Joist C$14–98) and the full job-management suites (Jobber from ~C$69, Housecall Pro from ~C$111) because it does one thing those don't: voice note → priced quote → deposit collected. No setup fee, no contract.
 - **Cara text-back, C$29/mo.** One recovered job pays for a year. C$19 intro for three months is a validation discount, said plainly on the page. Until we have real recovered-call numbers this is a guess, not a price.
-- **Haul Me, C$29/mo up to 3 trucks, C$79/mo up to 20.** Flat, not per truck; sits beside the bookkeeping/dispatch tools at roughly C$27–56/mo and under the load boards at C$59–83/mo. Annual C$290/C$790 (two months free). 30-day money-back so the risk of a first price sits with us.
+- **Haul Me, C$39/mo up to 3 trucks, C$99/mo up to 20.** Founding offer: first 50 owner-operators and couriers get C$19/mo locked for 3 years. Flat, not per truck; sits beside the bookkeeping/dispatch tools at roughly C$27–56/mo and under the load boards at C$59–83/mo. 30-day money-back so the risk of a first price sits with us. (Raised from C$29/C$79 on board advice — underpricing signals a toy and left 10–20x of the value on the table.)
 - **Watchpost, C$79/mo (C$790/yr).** One plan, one location. First month free, no setup fee, business-hours email support and no 24/7 monitoring, said plainly. Roughly a tenth of Thinkst Canary; not comparable to 24/7 MDR products, which it isn't.
 
 ## What is still a hypothesis
