@@ -92,7 +92,7 @@ footer a{color:var(--muted)}
       <button type="button" id="btn-km" onclick="setUnit('km')">Kilometres</button>
     </div>
     <div class="row" style="margin-top:4px">
-      <div><label>Offered rate (total $)</label><input id="offered_revenue" type="number" inputmode="decimal" placeholder="2000"></div>
+      <div><label>Offered rate (total $, incl. fuel surcharge)</label><input id="offered_revenue" type="number" inputmode="decimal" placeholder="2000"></div>
       <div><label id="lbl_loaded">Loaded miles</label><input id="loaded_miles" type="number" inputmode="decimal" placeholder="900"></div>
     </div>
     <div class="row">
@@ -113,7 +113,7 @@ footer a{color:var(--muted)}
   </div>
 
   <div id="result">
-    <div class="verdict" id="verdict"><p class="light" id="light">&mdash;</p><p class="vmsg" id="vmsg"></p></div>
+    <div class="verdict" id="verdict"><p class="light" id="light">&mdash;</p><p class="vmsg" id="vmsg"></p><button class="copy" onclick="shareResult()" style="margin-top:10px">Share this result</button></div>
     <div class="card">
       <div class="stat"><span>This load pays you</span><b id="r_take"></b></div>
       <div class="stat"><span id="r_floor_lbl">Your floor (cost + pay) per loaded mile</span><b id="r_floor"></b></div>
@@ -130,7 +130,7 @@ footer a{color:var(--muted)}
       <h3>Want Haul Me to remember every load?</h3>
       <p class="hint" style="font-size:14px">Drop your email and we'll send you early access, a free cost-per-mile cheat sheet, and the occasional tip. No spam.</p>
       <input id="lead_email" type="email" inputmode="email" placeholder="you@email.com" autocomplete="email">
-      <label class="chk"><input type="checkbox" id="lead_consent" checked> It's okay to email me about Haul Me and other Calas tools and news.</label>
+      <label class="chk"><input type="checkbox" id="lead_consent"> Email me about Haul Me and other Calas tools and news (you can unsubscribe anytime).</label>
       <input type="text" id="lead_hp" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
       <button class="go" onclick="sendLead()">Send it</button>
       <p class="priv" id="lead_msg"></p>
@@ -138,7 +138,7 @@ footer a{color:var(--muted)}
   </div>
 
   <div class="promo">
-    <b>Founding offer:</b> the first 50 owner-operators get the full Haul Me app at <b>$19/mo &mdash; locked in for life.</b><br>
+    <b>Founding offer:</b> the first 50 owner-operators get the full Haul Me app at <b>C$19/mo &mdash; locked in for life.</b><br>
     <a href="/haul-me/">Claim your spot &rarr;</a>
   </div>
   <p class="cta">Want Haul Me to log every load and show which brokers and lanes actually make you money?<br>
@@ -159,6 +159,7 @@ var BENCH = {mi:'$2.26/mile', km:'$1.40/km'};
 var TAX_RATE = 0.25, COUNTER_CUSHION = 0.06;
 var LEAD_URL = 'https://calas-access.calasdan.workers.dev/api/haul-lead';
 var lastVerdict = '';
+function shareResult(){var t=document.getElementById('light').textContent;var m=document.getElementById('vmsg').textContent;var url='https://calasautomations.com/haul-me/calculator/';var msg='Haul Me load check — '+t+': '+m+' Try it free: '+url;if(navigator.share){navigator.share({title:'Haul Me load check',text:msg,url:url}).catch(function(){});}else{var b=event&&event.target;navigator.clipboard.writeText(msg).then(function(){if(b){b.textContent='Link copied';setTimeout(function(){b.textContent='Share this result';},1500);}}).catch(function(){});}}
 function uword(){return UNIT==='km'?'km':'mile';}
 function uwords(){return UNIT==='km'?'km':'miles';}
 function applyUnit(){
