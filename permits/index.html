@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Winnipeg Permit Checker &mdash; free &middot; Calas Automations</title>
+<meta name="description" content="Describe your job and see the permits you likely need in Winnipeg, who must sign each, and where to confirm. Free, honest, no signup. Not legal advice.">
+<link rel="canonical" href="https://calasautomations.com/permits/">
+<meta property="og:title" content="Winnipeg Permit Checker — free">
+<meta property="og:description" content="The permits you likely need for your job, who must sign each, and where to confirm. We tell you what we don't know. Not legal advice.">
+<meta property="og:url" content="https://calasautomations.com/permits/">
+<meta name="theme-color" content="#0B2E45">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{--paper:#fff;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--rule:#D9E3EA;--accent:#155F87;--navy:#0B2E45;--gold:#F0C171;--ok:#17794A;--okbg:#E9F5EE;--warn:#8A5A12;--warnbg:#FBF1DF;--red:#8b1a1a;--redbg:#FBEDED}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0F2231;--sunk:#0A1722;--ink:#EEF4F8;--ink-2:#B2C3CF;--rule:#1E3A4D;--accent:#5CAAD6;--okbg:#16302A;--ok:#6FD9A2;--warnbg:#352A10;--warn:#F2C465;--redbg:#3A1C1C;--red:#F19B9B}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--sunk);color:var(--ink);font:16px/1.55 "IBM Plex Sans",system-ui,-apple-system,sans-serif}
+.top{background:linear-gradient(135deg,#0B2E45,#123C57);color:#fff;border-bottom:2px solid #B9812E}
+.top .in{max-width:900px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.top b{font:700 18px "Libre Baskerville",Georgia,serif}.top small{display:block;font:500 9px "IBM Plex Mono",monospace;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+.top a{margin-left:auto;color:#CFE3EF;font-size:16px}
+main{max-width:900px;margin:0 auto;padding:24px 16px 56px}
+h1{font:700 clamp(24px,4vw,34px)/1.2 "Libre Baskerville",Georgia,serif;margin:0 0 8px}
+.lede{color:var(--ink-2);margin:0 0 20px;max-width:64ch}
+label.fld{display:block;font-weight:600;margin:0 0 6px}
+textarea,select{width:100%;font:inherit;color:inherit;background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:12px}
+textarea{min-height:90px;resize:vertical}
+.row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;align-items:flex-end}
+.row>div{flex:1 1 160px}
+.btn{font:600 16px inherit;border:0;border-radius:9px;padding:12px 18px;background:var(--accent);color:#fff;cursor:pointer;margin-top:12px}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--rule)}
+.banner{margin:22px 0 14px;padding:13px 16px;border-radius:10px;background:var(--warnbg);color:var(--warn);border-left:4px solid #C8912F;font-weight:600}
+.card{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:14px 16px;margin:10px 0}
+.card h3{margin:0 0 4px;font-size:17px}
+.card .meta{font-size:14px;color:var(--ink-2);margin:3px 0}
+.card .who{font-weight:600}
+.card.pro{border-left:4px solid var(--red);background:var(--redbg)}
+.notes{margin:12px 0;padding:12px 16px;background:var(--paper);border:1px solid var(--rule);border-left:4px solid var(--gold);border-radius:10px;font-size:15px}
+.notes li{margin:4px 0}
+.confirm{font-size:15px;color:var(--ink-2);margin:10px 0}
+.disc{font-size:13px;color:var(--ink-2);margin-top:16px;border-top:1px solid var(--rule);padding-top:12px}
+.cta{margin-top:24px;padding:16px 18px;background:var(--paper);border:1px solid var(--rule);border-left:4px solid var(--gold);border-radius:10px;font-size:16px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+</style>
+<style>/*calas-gold-hairline*/body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style>
+<link rel="stylesheet" href="/calas-ui.css?v=20261001a"><link rel="stylesheet" href="/calas-theme.css?v=20261002a"></head>
+<body>
+<header class="top"><div class="in"><div><b>Permit Checker</b><small>Free &middot; by Calas Automations</small></div><a href="/">Calas Automations</a></div></header>
+<main>
+  <h1>What permits do I likely need?</h1>
+  <p class="lede">Describe the job and we'll list the permits you most likely need, who has to sign each, and where to confirm. It's free, and we tell you plainly what we <em>don't</em> know &mdash; this is a starting point, not legal advice, and your city has the final word.</p>
+
+  <label class="fld" for="job">Describe the job</label>
+  <textarea id="job" placeholder="e.g. new warehouse build-out with electrical and plumbing; or: install a storefront sign; or: restaurant fit-out with commercial kitchen"></textarea>
+  <div class="row">
+    <div>
+      <label class="fld" for="city">City</label>
+      <select id="city">
+        <option>Winnipeg</option><option>Calgary</option><option>Edmonton</option><option value="">Other / not listed</option>
+      </select>
+    </div>
+    <div style="flex:0 0 auto"><button class="btn" id="go" type="button">Check permits</button></div>
+  </div>
+
+  <div id="out" aria-live="polite"></div>
+</main>
+<script>
+(function(){
+"use strict";
+var DISCLAIMER="Informational only — not legal advice and not a permit determination. Confirm the exact requirements, fees, timelines, and who typically signs with your municipality or the governing authority before you rely on this.";
+var INCOMPLETE="This is a STARTING checklist and is likely NOT complete — other permits or approvals may apply to your job. Your municipality / authority has the final list.";
+
+var PERMITS={
+ building:{name:"Building permit",when:"New buildings, additions, structural changes, major renovations, and most commercial construction.",who:"Property owner or an authorized agent; larger/commercial work often needs drawings stamped by a licensed architect or professional engineer.",authority:"City/municipal building department"},
+ development:{name:"Development / zoning permit",when:"Change of use, a new business occupying a space, some signage, variances — anything affecting how the land is used.",who:"Property owner or authorized agent.",authority:"City/municipal planning/zoning department"},
+ electrical:{name:"Electrical permit",when:"Most electrical work beyond minor like-for-like repairs.",who:"A licensed electrical contractor or the electrical authority — not a software service.",authority:"Provincial/municipal electrical authority or licensed contractor"},
+ plumbing:{name:"Plumbing permit",when:"New plumbing, relocations, water/sewer connections beyond minor repairs.",who:"A licensed plumbing contractor.",authority:"City/municipal plumbing inspection or licensed contractor"},
+ mechanical:{name:"Mechanical / HVAC / gas permit",when:"Heating, cooling, ventilation, and gas-fired equipment work.",who:"A licensed HVAC/gas contractor.",authority:"City/municipal mechanical inspection or licensed contractor"},
+ demolition:{name:"Demolition permit",when:"Demolishing or removing a structure in whole or part.",who:"Owner or authorized agent; utility disconnects may be needed first.",authority:"City/municipal building department"},
+ occupancy:{name:"Occupancy permit",when:"Before occupying a new or substantially changed building/space.",who:"Owner/tenant after inspections pass.",authority:"City/municipal building department"},
+ sign:{name:"Sign permit",when:"Most permanent exterior signage; size/zoning rules apply.",who:"Property owner or authorized sign contractor.",authority:"City/municipal planning department"},
+ fire:{name:"Fire / sprinkler / suppression permit",when:"Sprinkler, standpipe, fire-alarm or suppression systems, and many commercial occupancies.",who:"Typically a licensed fire-protection contractor; engineered systems may need sealed drawings.",authority:"Fire prevention / building department"},
+ food_health:{name:"Food-service / health approval",when:"Restaurants, commercial kitchens, cafes, catering, and food-handling fit-outs.",who:"Owner/operator; reviewed and approved by the public health authority.",authority:"Regional public health authority (plus building/occupancy)"},
+ roofing:{name:"Roofing permit",when:"Structural roof work or re-roofing where the city requires it (rules vary; like-for-like may be exempt).",who:"Owner or roofing contractor.",authority:"City/municipal building department"},
+ excavation:{name:"Excavation / shoring / grading permit",when:"Excavation, shoring, significant grading, or site servicing.",who:"Owner/contractor; shoring design often needs a professional engineer.",authority:"City/municipal building/engineering department"},
+ fence:{name:"Fence / retaining wall permit",when:"Fences above a height threshold and retaining walls above a height threshold.",who:"Owner; taller retaining walls often need a professional engineer.",authority:"City/municipal building/planning department"},
+ pool:{name:"Pool / hot tub permit",when:"In-ground and many above-ground pools and hot tubs; enclosure/fencing rules apply.",who:"Owner.",authority:"City/municipal building department"},
+ environmental:{name:"Environmental / contaminated-site / remediation permit or approval",when:"Contaminated land, spills, remediation, certain industrial processes, or works affecting water/wetlands.",who:"LEGALLY requires a qualified environmental professional or engineer (e.g. Phase I/II ESA) and the provincial regulator. Calas does NOT handle these — we point you to a licensed professional.",authority:"Provincial environment/regulatory body + qualified professional",pro:true}
+};
+
+var RULES=[
+ [["new build","new building","new construction","addition","warehouse","industrial","commercial build","build out","build-out","fit out","fit-out","tenant improvement","structural","new facility"],["building","development","occupancy"]],
+ [["renovation","reno","remodel","alteration","interior alteration"],["building"]],
+ [["change of use","new location","new business","occupy","rezone","zoning","variance"],["development","occupancy"]],
+ [["electrical","wiring","rewire","electrical panel","lighting","ev charger"],["electrical"]],
+ [["plumbing","sewer","water line","water service","drain","re-pipe","backflow"],["plumbing"]],
+ [["hvac","furnace","heating","cooling","air conditioning","a/c","gas line","boiler","ventilation","rooftop unit","make-up air"],["mechanical"]],
+ [["demolish","demolition","tear down","teardown"],["demolition"]],
+ [["sign","signage","billboard","storefront sign","pylon sign"],["sign"]],
+ [["fire alarm","sprinkler","fire suppression","standpipe","fire protection"],["fire"]],
+ [["restaurant","commercial kitchen","food service","cafe","food handling","food premises","catering"],["food_health"]],
+ [["roof","roofing","re-roof","reroof"],["roofing"]],
+ [["excavation","shoring","grading","site servicing"],["excavation"]],
+ [["fence","retaining wall"],["fence"]],
+ [["pool","hot tub","swimming pool"],["pool"]],
+ [["environmental","contaminated","contamination","remediation","cleanup","clean-up","clean up","spill","wetland","hazardous","asbestos"],["environmental"]]
+];
+var NEWBUILD=["new build","new building","new construction","commercial build","build out","build-out","fit out","fit-out","tenant improvement","new facility","warehouse","addition"];
+
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function rx(p){return p.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");}
+function has(text,phrase){try{return new RegExp("(?<![a-z])"+rx(phrase)+"(?![a-z])").test(text);}catch(e){return text.indexOf(phrase)>=0;}}
+
+function officialLookup(city){
+ var m={winnipeg:"City of Winnipeg permits — winnipeg.ca (or call 311).",calgary:"City of Calgary planning & permits — calgary.ca.",edmonton:"City of Edmonton permits — edmonton.ca."};
+ return m[(city||"").toLowerCase()]||"Your municipality's permit office (building/planning dept) or 311.";
+}
+
+function needed(desc,city){
+ var text=(desc||"").toLowerCase(),keys=[];
+ RULES.forEach(function(r){ if(r[0].some(function(w){return has(text,w);})) r[1].forEach(function(p){ if(keys.indexOf(p)<0)keys.push(p); }); });
+ var scope=NEWBUILD.some(function(w){return has(text,w);});
+ if(scope)["electrical","plumbing","mechanical"].forEach(function(t){ if(keys.indexOf(t)<0)keys.push(t); });
+ var items=keys.map(function(k){var o={};for(var x in PERMITS[k])o[x]=PERMITS[k][x];o.key=k;return o;});
+ var notes=[];
+ if(scope){
+  notes.push("Winnipeg (and most Manitoba cities) use a TWO-STEP process: a development (zoning) permit AND a building permit.");
+  notes.push("The applicant usually must prove ownership (e.g. status of title); an agent files on the owner's behalf only with written authorization.");
+  notes.push("Commercial or larger work usually needs drawings SEALED by a licensed architect or professional engineer — route that to a licensed pro.");
+ }
+ return {items:items,pro:items.filter(function(i){return i.pro;}),notes:notes,confirm:officialLookup(city)};
+}
+
+function render(){
+ var desc=document.getElementById("job").value.trim(),city=document.getElementById("city").value,out=document.getElementById("out");
+ if(!desc){out.innerHTML='<p class="confirm">Type a short description of the job above, then press Check permits.</p>';return;}
+ var r=needed(desc,city);
+ var h='<div class="banner">⚠ '+esc(INCOMPLETE)+'</div>';
+ if(!r.items.length){ h+='<p class="confirm">Nothing specific matched. That doesn’t mean no permit is needed — describe the work in more detail, and always confirm with '+esc(r.confirm)+'</p>'; out.innerHTML=h; return; }
+ h+='<h2 style="font:700 20px \'Libre Baskerville\',Georgia,serif;margin:6px 0 8px">Permits you likely need</h2>';
+ r.items.forEach(function(p){
+  h+='<div class="card'+(p.pro?' pro':'')+'"><h3>'+esc(p.name)+'</h3>'+
+     '<p class="meta">'+esc(p.when)+'</p>'+
+     '<p class="meta who">Who signs: '+esc(p.who)+'</p>'+
+     '<p class="meta">Where: '+esc(p.authority)+'</p></div>';
+ });
+ if(r.notes.length){ h+='<div class="notes"><b>For a full build, also note:</b><ul>'+r.notes.map(function(n){return '<li>'+esc(n)+'</li>';}).join("")+'</ul></div>'; }
+ h+='<p class="confirm"><b>Confirm at:</b> '+esc(r.confirm)+'</p>';
+ h+='<div class="tools"><button class="btn ghost" type="button" onclick="pcShare(event)">Share this free tool</button></div>';
+ h+='<div class="cta">Run a trades business? We can put this right inside your workflow: <b>Quote Me</b> flags the permits (and their cost + lead time) in every quote, and <b>Dispatch Me</b> attaches the permit checklist to each job so crews never arrive without one. <a href="/pay/">See the tools &rarr;</a></div>';
+ h+='<p class="disc">'+esc(DISCLAIMER)+' Calas does not file, sign, or certify permits, and does not provide engineering, architecture, or environmental services.</p>';
+ out.innerHTML=h;
+}
+document.getElementById("go").addEventListener("click",render);
+document.getElementById("job").addEventListener("keydown",function(e){ if((e.ctrlKey||e.metaKey)&&e.key==="Enter")render(); });
+window.pcShare=function(e){var url="https://calasautomations.com/permits/",msg="Free Winnipeg Permit Checker — describe your job, see the permits you likely need and who must sign. "+url;if(navigator.share){navigator.share({title:"Winnipeg Permit Checker",text:msg,url:url}).catch(function(){});}else{var b=e&&e.target;navigator.clipboard.writeText(msg).then(function(){if(b){b.textContent="Link copied";setTimeout(function(){b.textContent="Share this free tool";},1500);}}).catch(function(){});}};
+})();
+</script>
+<script src="/calas-brandbar.js?v=20261001a" defer></script>
+</body>
+</html>
