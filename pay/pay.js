@@ -84,4 +84,9 @@
   } catch (e) {
     try { apply(null); } catch (e2) {}
   }
+
+  // Sign-up popup (email + password before checkout): pay/signup.js
+  try {
+    var su = document.createElement('script'); su.src = '/pay/signup.js'; su.defer = true; document.head.appendChild(su);
+  } catch (e) {}
 })();
