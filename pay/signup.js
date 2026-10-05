@@ -113,7 +113,11 @@
     var url = a.getAttribute('href') || '';
     if (!/^https:\/\/buy\.stripe\.com\//.test(url)) return;
     e.preventDefault();
-    open(a.getAttribute('data-pay'), url);
+    var key = a.getAttribute('data-pay') || '';
+    // Quote Me bills inside the app (Settings -> Subscribe), tied to the shop's account.
+    // A website Payment Link would take money without unlocking anything, so sign up first.
+    if (/^quoteme_/.test(key)) { location.href = '/quote-me/app/#/login'; return; }
+    open(key, url);
   });
 
   if (!window.calasPwEye && !document.querySelector('script[src*="pw-eye.js"]')) {
