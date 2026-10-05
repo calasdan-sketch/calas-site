@@ -70,7 +70,7 @@
     '<button class="cc-x" type="button" aria-label="Close chat">&times;</button></div>' +
     '<div class="cc-log" aria-live="polite"></div><div class="cc-chips"></div>' +
     '<form class="cc-in"><textarea rows="3" maxlength="800" placeholder="Type your question…" aria-label="Your question"></textarea><button type="submit">Send</button></form>' +
-    '<div class="cc-note">Cara can make mistakes. Anything important, email dan@calasautomations.com.</div>';
+    '<div class="cc-note">Cara can make mistakes. Anything important, call 431-244-9026.</div>';
   document.body.appendChild(btn); document.body.appendChild(win);
 
   var log = win.querySelector('.cc-log'), form = win.querySelector('form'), input = form.querySelector('textarea'),
@@ -92,10 +92,10 @@
     fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ app: APP, messages: history.slice(-10) }) })
       .then(function (r) { return r.json(); })
       .then(function (d) {
-        var reply = (d && d.reply) || "Sorry, I couldn't answer that. Email dan@calasautomations.com.";
+        var reply = (d && d.reply) || "Sorry, I couldn't answer that. Please call 431-244-9026.";
         typing.remove(); add(reply, 'a'); history.push({ role: 'assistant', content: reply });
       })
-      .catch(function () { typing.remove(); add("I can't connect right now. Email dan@calasautomations.com and Dan will reply.", 'a'); })
+      .catch(function () { typing.remove(); add("I can't connect right now. Please call 431-244-9026.", 'a'); })
       .then(function () { busy = false; input.focus(); });
   }
   CHIPS.forEach(function (c) {
