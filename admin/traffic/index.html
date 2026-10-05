@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" href="/favicon.png">
+<title>Website Traffic · Calas Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#F1F6F9;--panel:#fff;--ink:#12212C;--muted:#4E5B66;--line:#D9E3EA;--accent:#155F87;--accent-soft:#E6F0F6;--night:#0B2E45;--gold:#F0C171;--track:#E4ECF2;--good:#17794A;--bad:#A3352B;--warn:#8A6100;
+ --c1:#1A6FB0;--c2:#C98A1E;--c3:#6A4BB0;--c4:#C2573A;--c5:#00928A;
+ --f-display:"Libre Baskerville",Georgia,serif;--f-body:"IBM Plex Sans",system-ui,sans-serif;--f-data:"IBM Plex Mono",ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1A26;--panel:#102434;--ink:#EEF4F8;--muted:#B4C4CF;--line:#1F3A4D;--accent:#4FA3D1;--accent-soft:#123A54;--track:#173C55;--good:#6FD9A2;--bad:#FF9C8F;--warn:#F2C465;
+ --c1:#3B8CC4;--c2:#B5852A;--c3:#8A6ED0;--c4:#CC6448;--c5:#159C92;color-scheme:dark}}
+[hidden]{display:none!important}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--f-body)}
+header{background:var(--night);color:#fff;padding:14px 16px;border-bottom:2px solid var(--gold)}
+header .w{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+header b{font:700 18px var(--f-display)}header a{color:#B9CFDD;text-decoration:none;border:1px solid #1E4A66;padding:6px 12px;border-radius:8px;font-size:14px}
+main{max-width:1240px;margin:0 auto;padding:16px;display:grid;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-top:2px solid var(--gold);border-radius:12px;padding:18px;display:grid;gap:12px;min-width:0}
+h1{font:700 26px var(--f-display);margin:0}h1 em,h2 em,h3 em{font-style:italic;font-weight:400;color:var(--accent)}
+h2{font:700 18px var(--f-display);margin:0}
+.note{font-size:.82rem;color:var(--muted);margin:0}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kv div{border-top:1px solid var(--line);padding-top:8px}.kv b{display:block;font:500 .66rem var(--f-data);text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}.kv span{font:1.15rem var(--f-data)}
+.tgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:980px){.tgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (max-width:620px){.tgrid{grid-template-columns:minmax(0,1fr)}}
+.tcard{border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:8px;align-content:start;min-width:0;background:var(--panel)}
+.tcard h3{margin:0;font:700 .98rem var(--f-display)}.tcard .q{font-size:.76rem;color:var(--muted);margin:0}.tcard.wide{grid-column:1/-1}
+.tcard svg{display:block;width:100%;height:auto;overflow:visible}.tcard svg text{fill:var(--muted);font-family:var(--f-data);font-size:11px}.tcard svg text.v{fill:var(--ink)}.tcard svg .grid{stroke:var(--line);stroke-width:1}
+.leg{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:.78rem}.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.hbar{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,2fr) 38px;gap:8px;align-items:center;font-size:.8rem;padding:2px 0}
+.hbar .lb{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hbar .tr{height:10px;background:var(--track);border-radius:4px;overflow:hidden}.hbar .tr i{display:block;height:100%;border-radius:0 4px 4px 0}.hbar .n{font-family:var(--f-data);text-align:right}
+#tip{position:fixed;z-index:50;pointer-events:none;background:var(--night);color:#fff;font-size:.78rem;padding:6px 9px;border-radius:6px;max-width:240px}#tip b{font-family:var(--f-data)}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.82rem}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}th{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.pill{display:inline-block;padding:1px 8px;border-radius:99px;font-size:.74rem;font-weight:600}.bot{background:#FBECEA;color:#A3352B}.you{background:#FFF4DA;color:#8A6100}.person{background:#E9F5EE;color:#17794A}
+#login{max-width:380px;margin:40px auto}input{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}
+button{font:600 15px var(--f-body);padding:10px 16px;border:0;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer}
+.msg{padding:10px 12px;border-radius:8px;background:var(--track);font-size:.88rem}.err{color:var(--bad)}
+.funnel{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}@media(max-width:700px){.funnel{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.funnel div{border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--accent-soft)}.funnel b{display:block;font:500 .66rem var(--f-data);text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}.funnel span{font:700 1.8rem var(--f-display)}
+</style></head><body>
+<header><div class="w"><b>Calas · Website traffic</b><a href="/admin/">← Back to Admin</a></div></header>
+<main>
+<section id="login" class="card" hidden>
+  <h1>Admin <em>sign-in</em></h1><p class="note">Same admin password as the Admin page.</p>
+  <form id="lf"><input id="pw" type="password" autocomplete="current-password" aria-label="Admin password"><button style="margin-top:10px;width:100%">Sign in</button></form>
+  <div id="lmsg" class="msg err" hidden></div>
+</section>
+<div id="app" hidden style="display:grid;gap:16px">
+<section class="card">
+  <h1>Website <em>traffic</em></h1>
+  <p class="note" id="upd">Loading…</p>
+  <div class="kv"><div><b>Page views · 30 days</b><span id="w-views">—</span></div><div><b>Visits</b><span id="w-visits">—</span></div><div><b>Last 7 days</b><span id="w-7">—</span></div><div><b>Busiest day</b><span id="w-peak">—</span></div></div>
+</section>
+<section class="card">
+  <h2>From visit to <em>sale</em></h2>
+  <p class="note">Did people who looked at sign-in actually sign in? Sign-ins come from your app logins; sales come from Stripe once it's connected.</p>
+  <div class="funnel"><div><b>Site visits · 30d</b><span id="f-v">—</span></div><div><b>Sign-in page views</b><span id="f-s">—</span></div><div><b>Real sign-ins · 30d</b><span id="f-l">—</span></div><div><b>Sales</b><span id="f-p">—</span></div></div>
+  <p class="note" id="f-note"></p>
+</section>
+<section class="card">
+  <div class="tgrid">
+    <div class="tcard wide"><h3>Traffic <em>over time</em></h3><p class="q">Hover a day for its numbers.</p><div class="leg"><span><i style="background:var(--c1)"></i>Page views</span><span><i style="background:var(--c2)"></i>Visits</span></div><div id="ch-time"></div></div>
+    <div class="tcard"><h3>How they <em>found us</em></h3><p class="q">Where each page view came from</p><div id="ch-src"></div></div>
+    <div class="tcard"><h3>Where they <em>are</em></h3><p class="q">Page views by country</p><div id="ch-geo"></div></div>
+    <div class="tcard"><h3>Overlap <em>US × typed it in</em></h3><p class="q">US views vs views with no referring site</p><div id="ch-venn"></div></div>
+    <div class="tcard"><h3>Tracking <em>links</em></h3><p class="q">calasautomations.com/tiktok, /instagram, /ad …</p><div id="ch-track"></div></div>
+    <div class="tcard"><h3>Top <em>pages</em></h3><p class="q">Which pages got the views</p><div id="ch-pages"></div></div>
+    <div class="tcard"><h3>What they <em>used</em></h3><p class="q">Device, then operating system</p><div id="ch-dev"></div></div>
+    <div class="tcard"><h3>Which <em>browser</em></h3><p class="q">"ChromeHeadless" is a robot</p><div id="ch-br"></div></div>
+  </div>
+</section>
+<section class="card">
+  <h2>Who <em>visited</em> · last 7 days</h2>
+  <p class="note">Each row is one hour, one kind of visitor, one page. "Robot / AI" = automated browsers and data-centre computers. "Maybe you" = Canada visits on your usual devices. These are best guesses; Cloudflare doesn't record names.</p>
+  <div class="tw"><table><thead><tr><th>When (Winnipeg)</th><th>Guess</th><th>Country</th><th>Device</th><th>Browser</th><th>Came from</th><th>Page</th><th>Views</th></tr></thead><tbody id="who"></tbody></table></div>
+</section>
+<details class="card"><summary class="note" style="cursor:pointer">Show all numbers as a table</summary><div id="w-table" class="tw"></div></details>
+</div>
+</main>
+<script>
+var API="https://calas-traffic.calasdan.workers.dev",ACCESS="https://calas-access.calasdan.workers.dev",PW="";
+var todayISO=new Date().toLocaleDateString("en-CA",{timeZone:"America/Winnipeg"});
+function $(id){return document.getElementById(id)}
+function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+function chip(){} function setDiag(){}
+function ss(k,v){try{if(v===undefined)return sessionStorage.getItem(k);if(v===null)sessionStorage.removeItem(k);else sessionStorage.setItem(k,v)}catch(e){return null}}
+const CC=["var(--c1)","var(--c2)","var(--c3)","var(--c4)","var(--c5)"];
+const tip=(()=>{const t=document.createElement("div");t.id="tip";t.hidden=true;document.body.append(t);return t})();
+function showTip(e,html){tip.innerHTML=html;tip.hidden=false;const x=Math.min(e.clientX+14,innerWidth-250),y=e.clientY+14;tip.style.left=x+"px";tip.style.top=y+"px"}
+function hideTip(){tip.hidden=true}
+function bindTip(node,html){node.addEventListener("mousemove",e=>showTip(e,html));node.addEventListener("mouseleave",hideTip);node.addEventListener("focus",e=>{const r=node.getBoundingClientRect();showTip({clientX:r.left,clientY:r.top},html)});node.addEventListener("blur",hideTip);node.setAttribute("tabindex","0")}
+const NS="http://www.w3.org/2000/svg";
+function sv(tag,attrs,parent){const n=document.createElementNS(NS,tag);for(const k in attrs)n.setAttribute(k,attrs[k]);if(parent)parent.append(n);return n}
+const COUNTRY={US:"United States",CA:"Canada",GB:"United Kingdom",DE:"Germany",FR:"France",IN:"India",TW:"Taiwan",GR:"Greece",NL:"Netherlands",SG:"Singapore",IE:"Ireland",AU:"Australia"};
+const cname=c=>COUNTRY[c]||c;
+const srcName=h=>h==="(direct)"?"Typed it in / bookmark":h==="calasautomations.com"?"Clicked inside your site":/google/.test(h)?"Google search":/bing/.test(h)?"Bing search":h;
+function fold(rows,key,max){const s=rows.slice().sort((a,b)=>b.n-a.n);if(s.length<=max)return s;const keep=s.slice(0,max-1),rest=s.slice(max-1).reduce((t,r)=>t+r.n,0);return keep.concat([{[key]:"Other",n:rest}])}
+
+function lineChart(box,days){
+  box.innerHTML="";const end=new Date(todayISO+"T12:00"),pts=[];
+  const map=new Map(days.map(d=>[d.d,d]));
+  for(let i=29;i>=0;i--){const d=new Date(end);d.setDate(d.getDate()-i);const k=d.toISOString().slice(0,10);const r=map.get(k)||{views:0,visits:0};pts.push({d:k,views:r.views,visits:r.visits})}
+  const W=900,H=240,L=36,R=12,T=14,B=28,max=Math.max(10,...pts.map(p=>p.views));const top=Math.ceil(max/50)*50||10;
+  const X=i=>L+i*(W-L-R)/(pts.length-1),Y=v=>T+(1-v/top)*(H-T-B);
+  const svg=sv("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Daily page views and visits, last 30 days"},box);
+  for(let g=0;g<=4;g++){const v=top*g/4;sv("line",{x1:L,x2:W-R,y1:Y(v),y2:Y(v),class:"grid"},svg);const t=sv("text",{x:L-6,y:Y(v)+4,"text-anchor":"end"},svg);t.textContent=Math.round(v)}
+  pts.forEach((p,i)=>{if(i%5===0||i===pts.length-1){const t=sv("text",{x:X(i),y:H-8,"text-anchor":"middle"},svg);t.textContent=new Date(p.d+"T12:00").toLocaleDateString("en-CA",{month:"short",day:"numeric"})}});
+  const path=k=>pts.map((p,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(p[k]).toFixed(1)).join(" ");
+  sv("path",{d:path("views")+` L${X(pts.length-1)} ${Y(0)} L${X(0)} ${Y(0)} Z`,fill:"var(--c1)","fill-opacity":".12"},svg);
+  sv("path",{d:path("views"),fill:"none",stroke:"var(--c1)","stroke-width":2,"stroke-linejoin":"round"},svg);
+  sv("path",{d:path("visits"),fill:"none",stroke:"var(--c2)","stroke-width":2,"stroke-linejoin":"round","stroke-dasharray":"5 3"},svg);
+  const cross=sv("line",{y1:T,y2:H-B,stroke:"var(--muted)","stroke-width":1,opacity:0},svg);
+  const dv=sv("circle",{r:4.5,fill:"var(--c1)",stroke:"var(--panel)","stroke-width":2,opacity:0},svg),dt=sv("circle",{r:4.5,fill:"var(--c2)",stroke:"var(--panel)","stroke-width":2,opacity:0},svg);
+  const hit=sv("rect",{x:L,y:T,width:W-L-R,height:H-T-B,fill:"transparent"},svg);
+  hit.addEventListener("mousemove",e=>{const r=svg.getBoundingClientRect();const x=(e.clientX-r.left)*W/r.width;const i=Math.max(0,Math.min(pts.length-1,Math.round((x-L)/((W-L-R)/(pts.length-1)))));const p=pts[i];
+    cross.setAttribute("x1",X(i));cross.setAttribute("x2",X(i));cross.setAttribute("opacity",.6);dv.setAttribute("cx",X(i));dv.setAttribute("cy",Y(p.views));dt.setAttribute("cx",X(i));dt.setAttribute("cy",Y(p.visits));dv.setAttribute("opacity",1);dt.setAttribute("opacity",1);
+    showTip(e,`<div>${new Date(p.d+"T12:00").toLocaleDateString("en-CA",{weekday:"short",month:"short",day:"numeric"})}</div>Page views <b>${p.views}</b><br>Visits <b>${p.visits}</b>`)});
+  hit.addEventListener("mouseleave",()=>{hideTip();[cross,dv,dt].forEach(n=>n.setAttribute("opacity",0))});
+  const peak=pts.reduce((a,b)=>b.views>a.views?b:a,pts[0]);
+  if(peak.views){const i=pts.indexOf(peak);const t=sv("text",{x:X(i),y:Y(peak.views)-8,"text-anchor":"middle",class:"v"},svg);t.textContent=peak.views+" views"}
+  return {pts,peak};
+}
+function donut(box,rows,label){
+  box.innerHTML="";const tot=rows.reduce((t,r)=>t+r.n,0)||1;const S=200,c=S/2,ro=80,ri=50;
+  const svg=sv("svg",{viewBox:`0 0 ${S} ${S}`,role:"img","aria-label":label,style:"max-width:220px;margin:0 auto"},box);let a0=-Math.PI/2;
+  rows.forEach((r,i)=>{const a1=a0+2*Math.PI*r.n/tot;const gap=rows.length>1?0.02:0;const s0=a0+gap/2,s1=a1-gap/2;const lg=(s1-s0)>Math.PI?1:0;
+    const P=(a,rr)=>[c+rr*Math.cos(a),c+rr*Math.sin(a)];const[x0,y0]=P(s0,ro),[x1,y1]=P(s1,ro),[x2,y2]=P(s1,ri),[x3,y3]=P(s0,ri);
+    const d=rows.length===1?`M${c} ${c-ro}A${ro} ${ro} 0 1 1 ${c-.01} ${c-ro}L${c-.01} ${c-ri}A${ri} ${ri} 0 1 0 ${c} ${c-ri}Z`:`M${x0} ${y0}A${ro} ${ro} 0 ${lg} 1 ${x1} ${y1}L${x2} ${y2}A${ri} ${ri} 0 ${lg} 0 ${x3} ${y3}Z`;
+    const seg=sv("path",{d,fill:CC[i%5]},svg);bindTip(seg,`${r.label}<br><b>${r.n}</b> views · ${Math.round(r.n/tot*100)}%`);a0=a1});
+  const t1=sv("text",{x:c,y:c+2,"text-anchor":"middle",class:"v",style:"font-size:22px;font-family:var(--f-display);font-weight:700"},svg);t1.textContent=tot;
+  const t2=sv("text",{x:c,y:c+18,"text-anchor":"middle"},svg);t2.textContent="views";
+  const leg=el("div","leg");rows.forEach((r,i)=>{const s=el("span");const k=el("i");k.style.background=CC[i%5];s.append(k,document.createTextNode(`${r.label} · ${Math.round(r.n/tot*100)}%`));leg.append(s)});box.append(leg);
+}
+function hbars(box,rows,colorIdx){
+  box.innerHTML="";const max=Math.max(1,...rows.map(r=>r.n));
+  rows.forEach((r,i)=>{const row=el("div","hbar");const tr=el("div","tr");const b=el("i");b.style.width=(r.n/max*100)+"%";b.style.background=CC[(colorIdx??i)%5];tr.append(b);row.append(el("span","lb",r.label),tr,el("span","n",String(r.n)));bindTip(row,`${r.label}<br><b>${r.n}</b> views`);box.append(row)});
+  if(!rows.length)box.append(el("p","note","No data yet."));
+}
+function venn(box,A,B,AB,la,lb){
+  box.innerHTML="";const W=260,H=170;const svg=sv("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":`${la} and ${lb} overlap`},box);
+  const ra=Math.max(30,Math.sqrt(A)*4.2),rb=Math.max(30,Math.sqrt(B)*4.2);const ov=A&&B?AB/Math.min(A,B):0;const d=(ra+rb)*(1-ov*0.55);
+  const cx=W/2,ax=cx-d/2,bx=cx+d/2,cy=78;
+  const ca=sv("circle",{cx:ax,cy,r:ra,fill:"var(--c1)","fill-opacity":".35",stroke:"var(--c1)","stroke-width":2},svg);
+  const cb=sv("circle",{cx:bx,cy,r:rb,fill:"var(--c2)","fill-opacity":".35",stroke:"var(--c2)","stroke-width":2},svg);
+  bindTip(ca,`${la}<br><b>${A}</b> views`);bindTip(cb,`${lb}<br><b>${B}</b> views`);
+  const tA=sv("text",{x:ax-ra*.45,y:cy+4,"text-anchor":"middle",class:"v"},svg);tA.textContent=A-AB;
+  const tB=sv("text",{x:bx+rb*.45,y:cy+4,"text-anchor":"middle",class:"v"},svg);tB.textContent=B-AB;
+  const tC=sv("text",{x:(ax+bx)/2,y:cy+4,"text-anchor":"middle",class:"v",style:"font-weight:600"},svg);tC.textContent=AB;
+  const leg=el("div","leg");[[la,0],[lb,1]].forEach(([t,i])=>{const s=el("span");const k=el("i");k.style.background=CC[i];s.append(k,document.createTextNode(t));leg.append(s)});box.append(leg);
+  box.append(el("p","q",`${AB} views were both — from the US and with no referring site.`));
+}
+function renderWeb(w){
+  if(!w||!w.ok){chip("web-chip","err","update failed");setDiag("web","bad",(w&&w.error)?w.error.slice(0,40):"no data");return}
+  const days=w.days||[],sum=k=>days.reduce((n,x)=>n+(x[k]||0),0);
+  $("w-views").textContent=sum("views").toLocaleString();$("w-visits").textContent=sum("visits").toLocaleString();
+  const lc=lineChart($("ch-time"),days);
+  $("w-7").textContent=lc.pts.slice(-7).reduce((n,x)=>n+x.views,0)+" views";
+  $("w-peak").textContent=lc.peak.views?new Date(lc.peak.d+"T12:00").toLocaleDateString("en-CA",{month:"short",day:"numeric"})+" · "+lc.peak.views:"—";
+  donut($("ch-src"),fold(w.refs||[],"h",5).map(r=>({label:r.h==="Other"?"Other":srcName(r.h),n:r.n})),"How visitors found the site");
+  donut($("ch-geo"),fold(w.countries||[],"c",5).map(r=>({label:r.c==="Other"?"Other":cname(r.c),n:r.n})),"Page views by country");
+  const TL={tiktok:"TikTok",instagram:"Instagram",facebook:"Facebook",ad:"Ads",email:"Email outreach",qr:"QR code",linkedin:"LinkedIn"};
+  hbars($("ch-track"),Object.keys(TL).map(k=>({label:TL[k]+"  /"+k,n:(w.pages||[]).filter(r=>r.p.replace(/\//g,"")===k).reduce((t,r)=>t+r.n,0)})),1);
+  hbars($("ch-pages"),(w.pages||[]).slice(0,8).map(r=>({label:r.p==="/"?"Home page":r.p,n:r.n})),0);
+  const dev=(w.devices||[]).map(r=>({label:r.k[0].toUpperCase()+r.k.slice(1),n:r.n})),os=(w.os||[]).map(r=>({label:r.k.replace("MacOSX","Mac").replace("iOS","iPhone / iPad"),n:r.n}));
+  const devBox=$("ch-dev");devBox.innerHTML="";const d1=el("div"),d2=el("div");devBox.append(d1,el("p","q","Operating system"),d2);hbars(d1,dev,2);hbars(d2,os,4);
+  hbars($("ch-br"),(w.browsers||[]).map(r=>({label:r.k,n:r.n})),3);
+  const cr=w.cross||[];const A=cr.filter(r=>r.c==="US").reduce((t,r)=>t+r.n,0),B=cr.filter(r=>r.h==="(direct)").reduce((t,r)=>t+r.n,0),AB=cr.filter(r=>r.c==="US"&&r.h==="(direct)").reduce((t,r)=>t+r.n,0);
+  venn($("ch-venn"),A,B,AB,"From the US","Typed it in / bookmark");
+  const tb=$("w-table");const rows=[["Day","Views / visits"]].concat(lc.pts.filter(p=>p.views).map(p=>[p.d,p.views+" / "+p.visits]),[["How they found us",""]],(w.refs||[]).map(r=>[srcName(r.h),r.n]),[["Country",""]],(w.countries||[]).map(r=>[cname(r.c),r.n]),[["Page",""]],(w.pages||[]).map(r=>[r.p,r.n]),[["Device",""]],(w.devices||[]).map(r=>[r.k,r.n]),[["Browser",""]],(w.browsers||[]).map(r=>[r.k,r.n]));
+  const t=el("table","ttable");rows.forEach((r,i)=>{const tr=el("tr");r.forEach(c=>tr.append(el(r[1]===""||i===0?"th":"td",null,String(c))));t.append(tr)});tb.innerHTML="";tb.append(t);
+  const age=w.updated?Math.round((Date.now()-new Date(w.updated))/36e5):null;
+  chip("web-chip",age!=null&&age<26?"live":"stale","updated "+(w.updated||"").replace("T"," ")+(w._src==="snapshot"?" · saved copy":""));
+  setDiag("web",age!=null&&age<26?"ok":"warn",age!=null?(age<1?"just now":age+"h ago"):"unknown");
+}
+
+function guess(r){
+  if(/Headless|Unknown/i.test(r.br)||/Unknown|Linux/i.test(r.os))return["bot","Robot / AI"];
+  if(r.c==="CA")return["you","Maybe you"];
+  if(r.c==="US"&&r.os==="MacOSX"&&/signin|login/.test(r.p))return["bot","Robot / AI?"];
+  return["person","Possible person"];
+}
+function renderWho(rows){
+  var tb=$("who");tb.innerHTML="";
+  (rows||[]).slice(0,150).forEach(function(r){var g=guess(r);var tr=el("tr");
+    var when=new Date(r.t).toLocaleString("en-CA",{month:"short",day:"numeric",hour:"numeric",timeZone:"America/Winnipeg"});
+    var p=el("span","pill "+g[0],g[1]);var td=el("td");td.append(p);
+    tr.append(el("td",null,when),td,el("td",null,cname(r.c)),el("td",null,r.dev+" · "+r.os),el("td",null,r.br),el("td",null,srcName(r.h)),el("td",null,r.p),el("td",null,String(r.n)));tb.append(tr)});
+  if(!tb.children.length)tb.append(el("tr",null,"No visits in the last 7 days."));
+}
+function call(url){return fetch(url,{headers:{Authorization:"Bearer "+PW}}).then(function(r){return r.json().then(function(d){d._status=r.status;return d})})}
+function load(){
+  call(API+"/traffic?days=30").then(function(w){
+    if(!w.ok){ if(w._status===401){ss("cpw",null);showLogin("Please sign in again.");return}
+      $("upd").textContent="Couldn't load traffic: "+(w.error||"unknown");return}
+    $("upd").textContent="Live from Cloudflare · updated "+new Date(w.updated).toLocaleString("en-CA",{timeZone:"America/Winnipeg"})+" · numbers are rounded estimates";
+    renderWeb(w);renderWho(w.hourly);
+    var visits=(w.days||[]).reduce(function(t,x){return t+x.visits},0),sv=(w.pages||[]).filter(function(r){return /signin|login/.test(r.p)}).reduce(function(t,r){return t+r.n},0);
+    $("f-v").textContent=visits;$("f-s").textContent=sv;
+    call(ACCESS+"/api/admin/accounts").then(function(a){var n=0,since=Date.now()-30*864e5;(a.accounts||[]).forEach(function(x){if(x.last_login_at&&x.last_login_at>since)n++});
+      $("f-l").textContent=n;$("f-p").textContent="0";
+      $("f-note").textContent=sv&&!n?"People reached the sign-in page "+sv+" times, but nobody signed in. Most of those were likely robots or your own testing.":"";}).catch(function(){$("f-l").textContent="—"});
+    call(ACCESS+"/api/admin/codes").then(function(c){if(c&&c.stripe_ready===false)$("f-p").textContent="0 (Stripe not connected)"}).catch(function(){});
+  }).catch(function(){$("upd").innerHTML="";$("upd").append(el("span","err","The traffic server isn't set up yet. On your PC, open my-agent › calas-traffic-worker and double-click “Set Up Traffic Server”."))});
+}
+function showLogin(m){$("app").hidden=true;$("login").hidden=false;if(m){$("lmsg").hidden=false;$("lmsg").textContent=m}}
+function start(pw){PW=pw;fetch(ACCESS+"/api/admin/login",{method:"POST",headers:{Authorization:"Bearer "+pw,"Content-Type":"application/json"},body:"{}"}).then(function(r){return r.json()}).then(function(d){
+  if(!d.ok){ss("cpw",null);showLogin("That password didn’t work.");return}
+  ss("cpw",pw);$("login").hidden=true;$("app").hidden=false;load();setInterval(load,300000)}).catch(function(){showLogin("Couldn’t reach the server.")})}
+$("lf").addEventListener("submit",function(e){e.preventDefault();start($("pw").value)});
+var saved=ss("cpw");if(saved)start(saved);else showLogin();
+</script>
+<script src="/calas-brandbar.js?v=20261001a" defer></script>
+</body></html>
