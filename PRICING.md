@@ -15,8 +15,8 @@ All prices in Canadian dollars, plus GST/RST where applicable. This file is the 
 | `haulme_founding` | Haul Me — FOUNDING (first 50 owner-ops + couriers) | C$19/mo, locked 3 years | recurring monthly | 30-day money-back, no questions | First 50 only; price held 3 years then moves to regular |
 | `greenmile_small` | Haul Me — owner-operator, up to 3 trucks | C$39/mo | recurring monthly | 30-day money-back, no questions | Raised from C$29 (board: underpricing signals a toy); flat, not per truck |
 | `greenmile_fleet` | Haul Me — small fleet, up to 20 trucks | C$99/mo | recurring monthly | 30-day money-back, no questions | Raised from C$79 |
-| `watchpost_guarded` | Watchpost — Watch Pro, we triage alerts and call you | C$199/mo (C$1,990/yr) | recurring monthly (annual optional) | First month free | Early access |
-| `watchpost_family` | Watchpost — Family, per family | C$9.99/mo (C$99/yr); code FOUNDINGFAMILY = C$5/mo for 36 months, first 20 families | recurring | — | Early access |
+| `watchpost_guarded` | Watchpost — Watch Pro, we triage alerts and call you | C$199/mo (C$1,990/yr) | recurring monthly (annual optional) | First month free | RETIRED 2026-10-05 (board: sold hand work only the owner could do). Pay button removed; existing subscribers keep their price. |
+| `watchpost_family` | Guardian Family (was Watchpost Family), per family; sold on /guardian/#family | C$9.99/mo (C$99/yr); code FOUNDINGFAMILY = C$5/mo for 36 months, first 20 families | recurring | — | Early access |
 | `watchpost_watch` | Watchpost — Watch plan, one location | C$79/mo (C$790/yr) | recurring monthly (annual optional) | First month free; any month the decoys can't be shown up is free; cancel with one email | Early access; business-hours support, no 24/7 |
 
 ## One-line rationale each

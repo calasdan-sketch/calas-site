@@ -74,6 +74,18 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
 </div>
 <div class="result" id="result"></div>
 <p class="privacy">&#128274; Free. Your messages stay on your phone.</p>
+<section id="family" aria-labelledby="fam-h" style="margin:34px 0 10px;padding:26px 22px;border-radius:16px;background:#0f2f45;color:#fff;border:1px solid #F0C171">
+<p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#F0C171">Guardian Family</p>
+<h2 id="fam-h" style="margin:0 0 10px;font-size:26px;line-height:1.25">For an aging parent, <em style="color:#F0C171">a heads-up when it matters.</em></h2>
+<p style="margin:0 0 14px;font-size:17px;line-height:1.55">Guardian on their phone. When it spots a <b>High</b> scam warning, you get told too &mdash; only if they agree, and you see the warning, not their messages. Plus a family &ldquo;safe word&rdquo; so a fake &ldquo;it&rsquo;s me, I need money&rdquo; call has an easy test.</p>
+<p style="margin:0;font-size:34px;font-weight:700">C$9.99<small style="font-size:16px;font-weight:400;opacity:.8"> / month per family (up to 6 people), or C$99/year</small></p>
+<p style="margin:6px 0 16px;font-size:15px;opacity:.85">The first 20 founding families lock in <b>C$5/month for 3 years</b> with code <b style="letter-spacing:.1em">FOUNDINGFAMILY</b> at monthly checkout.</p>
+<p style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin:0">
+<a class="bigbtn" href="#" data-pay="watchpost_family" hidden style="display:none;max-width:320px;margin:0">Start Guardian Family</a>
+<a href="#" data-pay="watchpost_family_yr" hidden style="display:none;color:#F0C171">or C$99/year</a></p>
+<p style="margin:14px 0 0;font-size:14px;opacity:.8">Questions? Call Cara, our assistant: <a href="tel:+14312449026" data-cara style="color:#F0C171">431-244-9026</a>. Cancel any time from your account.</p>
+</section>
+
 <script src="/guardian/scamcheck.js"></script>
 
 <footer>Watchpost Guardian &middot; <a href="/" style="color:inherit">Calas Automations</a>, Winnipeg</footer>
@@ -188,5 +200,5 @@ if(/[?&]shared=1/.test(location.search)&&"caches" in window){caches.open("guardi
     return p.then(function(t){if(t){document.getElementById("msg").value=t;render();}
       var done=function(){c.delete("/guardian/_shared-text");c.delete("/guardian/_shared-image");history.replaceState(null,"","/guardian/");};
       if(r[1])return r[1].blob().then(readPicture).then(done);done();});});});}
-</script><script src="/cara/cara.js" data-app="guardian" defer></script>
+</script><script src="/pay/pay.js" defer></script><script src="/cara/cara.js" data-app="guardian" defer></script>
 <script src="/calas-brandbar.js?v=20261001a" defer></script></body></html>
