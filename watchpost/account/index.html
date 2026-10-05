@@ -41,10 +41,19 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
 
   <section class="card" id="signin" hidden>
     <h1>Sign in</h1>
-    <p class="muted">Enter your email and password. No password yet? Leave it blank and we'll email you a link that signs you in on this device.</p>
     <form id="sf"><label for="se">Your email</label><input id="se" type="email" autocomplete="username" required>
-    <label for="sp">Password</label><input id="sp" type="password" autocomplete="current-password">
+    <label for="sp">Password</label><input id="sp" type="password" autocomplete="current-password" required minlength="10">
     <button>Sign in</button></form>
+    <p class="muted" style="margin-top:14px"><a href="#" id="forgot">First time here, or forgot your password?</a> We&rsquo;ll email you a link to set one.</p>
+  </section>
+
+  <section class="card" id="setpw" hidden>
+    <h1>Choose your password</h1>
+    <p class="muted">You&rsquo;ll use this with your email every time you sign in. At least 10 characters &mdash; a short sentence works well.</p>
+    <form id="pf"><label for="pn">Your name</label><input id="pn" type="text" maxlength="80" autocomplete="name" required>
+    <label for="pw1">New password</label><input id="pw1" type="password" autocomplete="new-password" required minlength="10">
+    <label for="pw2">Type it again</label><input id="pw2" type="password" autocomplete="new-password" required minlength="10">
+    <button>Save and continue</button></form>
   </section>
 
   <section class="card" id="invite" hidden>
@@ -67,11 +76,11 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
       <button id="save" type="button">Save</button>
     </section>
 
-    <section class="card" id="human" hidden>
-      <h2>Talk to a real person</h2>
-      <p class="muted">Something feels off? We'll ring your phone and connect you with Cara, our assistant, who can bring in a person from Calas.</p>
-      <button class="big" id="call" type="button">📞 Get me on with a real person</button>
-      <p><small>Up to 3 a day. Calls last up to 15 minutes.</small></p>
+    <section class="card" id="human">
+      <h2>Need help?</h2>
+      <p class="muted">Something feels off, or a question about your account? Call Cara, our assistant. She can bring in the team.</p>
+      <a class="big" href="tel:+14312449026" style="display:inline-block;background:#155F87;color:#fff;padding:14px 22px;border-radius:10px;text-decoration:none;font-weight:600;border:1px solid #F0C171">Call Cara &middot; 431-244-9026</a>
+      <p><small>If it&rsquo;s an emergency, call 911.</small></p>
     </section>
 
     <section class="card" id="fam-create" hidden>
@@ -126,10 +135,12 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
   function api(path,body,method){var h={'Content-Type':'application/json'},s=ls('wp_session');if(s)h.Authorization='Bearer '+s;
     return fetch(API+path,{method:method||(body?'POST':'GET'),headers:h,body:body?JSON.stringify(body):undefined}).then(function(r){return r.json().then(function(d){d._status=r.status;return d})})
       .catch(function(){return{ok:false,error:'offline'}})}
-  var ERR={bad_email:'That email doesn’t look right.',too_many:'Too many tries — wait a few minutes.',link_expired:'That sign-in link has expired or was already used. Ask for a new one.',
+  var ERR={bad_email:'That email doesn’t look right.',too_many:'Too many tries — wait a few minutes.',link_expired:'That link has expired or was already used. Ask for a new one below.',
     bad_phone:'Please enter a Canada or US phone number.',phone_changed_recently:'You changed your number recently. You can change it again in a week.',
     needs_family_plan:'Family needs the Family plan.',already_member:'They’re already in your family.',family_full:'Your family is full (6 people).',thats_you:'That’s your own email.',
-    too_short:'Use at least 6 letters.',invite_expired:'This invitation has expired. Ask them to send a new one.',different_email:'This invitation was sent to another email address. Sign in with that one.',
+    too_short:'Use at least 10 characters.',too_long:'That’s too long.',same_as_email:'Don’t use your email as your password.',
+    bad_password:'That email and password don’t match.',locked:'Too many wrong tries. Wait 15 minutes, or use “forgot your password”.',need_current:'Sign in again with your email link to change your password.',
+    mismatch:'The two passwords don’t match.',need_name:'Please type your name.',invite_expired:'This invitation has expired. Ask them to send a new one.',different_email:'This invitation was sent to another email address. Sign in with that one.',
     already_member_elsewhere:'You’re already in a family.',need_phone:'Add your phone number first, then tap again.',needs_paid_plan:'Talking to a person is part of the paid plans.',
     limit_reached:'You’ve reached today’s limit. If it’s an emergency, call 911.',call_in_progress:'A call is already on its way to you.',busy_try_later:'We’re very busy — please try again shortly.',
     offline:'Couldn’t reach Watchpost. Check your connection.',call_failed:'The call didn’t go through. Please try again.'};
@@ -140,7 +151,7 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
   if(hp.get('invite')){ss('wp_invite',hp.get('invite'));history.replaceState(null,'',location.pathname)}
   var login=hp.get('login');
   if(login){history.replaceState(null,'',location.pathname);api('/api/auth/verify',{token:login}).then(function(d){
-    if(d.ok){ls('wp_session',d.session);say('You’re signed in.')}else say(err(d),'bad');start()})}
+    if(d.ok){ls('wp_session',d.session);ss('wp_setpw','1')}else say(err(d),'bad');start()})}
   else start();
 
   function start(){
@@ -151,21 +162,29 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
     load()}
 
   $('#sf').addEventListener('submit',function(e){e.preventDefault();var b=e.submitter||$('#sf button');b.disabled=true;
-    if($('#sp').value){api('/api/auth/password',{email:$('#se').value,password:$('#sp').value}).then(function(d){b.disabled=false;
-      if(d.ok){ls('wp_session',d.session);$('#sp').value='';load()}else say(d.error==='bad_password'?'That email and password don’t match. Leave the password blank to get an email link instead.':err(d),'bad')});return}
-    api('/api/auth/start',{email:$('#se').value}).then(function(d){b.disabled=false;
-      say(d.ok?'Check your email for the sign-in link. It works once, for 15 minutes.':err(d),d.ok?'good':'bad')})});
+    api('/api/auth/password',{email:$('#se').value,password:$('#sp').value}).then(function(d){b.disabled=false;
+      if(d.ok){ls('wp_session',d.session);$('#sp').value='';say('');load()}else say(err(d),'bad')})});
+  $('#forgot').addEventListener('click',function(e){e.preventDefault();var em=$('#se').value.trim();
+    if(!em){say('Type your email above first, then tap the link again.','warn');$('#se').focus();return}
+    api('/api/auth/start',{email:em}).then(function(d){say(d.ok?'Check your email for a link to set your password. It works once, for 15 minutes (look in Spam if it isn’t there).':err(d),d.ok?'good':'bad')})});
+  $('#pf').addEventListener('submit',function(e){e.preventDefault();
+    if(!$('#pn').value.trim()){say(ERR.need_name,'bad');return}
+    if($('#pw1').value!==$('#pw2').value){say(ERR.mismatch,'bad');return}
+    api('/api/me',{name:$('#pn').value.trim()}).then(function(){
+      return api('/api/me/password',{new_password:$('#pw1').value})}).then(function(d){
+      if(d.ok){ss('wp_setpw',null);$('#pw1').value=$('#pw2').value='';$('#setpw').hidden=true;say('Password saved. Next time, sign in with your email and this password.');load()}else say(err(d),'bad')})});
   $('#out').addEventListener('click',function(){api('/api/auth/logout',{}).then(function(){ls('wp_session',null);location.reload()})});
 
   function load(){api('/api/me').then(function(d){
     if(d._status===401){ls('wp_session',null);$('#signin').hidden=false;return}
     if(!d.ok){say(err(d),'bad');return}
-    ME=d;$('#out').hidden=false;$('#signin').hidden=true;$('#home').hidden=false;
+    ME=d;$('#out').hidden=false;$('#signin').hidden=true;
+    if(!d.has_password||ss('wp_setpw')){$('#setpw').hidden=false;$('#home').hidden=true;$('#pn').value=d.name||'';return}
+    $('#home').hidden=false;
     $('#hi').textContent=d.name?'Hi, '+d.name:'Your account';$('#tier').textContent=d.tier_name;$('#email').textContent=d.email;
     $('#nm').value=d.name||'';$('#ph').value=d.phone||'';
     var f=d.features;
-    $('#upsell').innerHTML=d.tier==='guardian'?'<p class="muted" style="font-size:16px">You’re on free Guardian. <a href="/watchpost/">See Family and Watch plans</a> for family alerts and a real person on call.</p>':'';
-    $('#human').hidden=f.indexOf('human_call')<0;
+    $('#upsell').innerHTML=d.tier==='guardian'?'<p class="muted" style="font-size:16px">You’re on free Guardian. <a href="/guardian/#family">See Guardian Family</a> for family alerts, or <a href="/watchpost/">Watchpost</a> for your business.</p>':'';
     var fam=d.family;$('#fam-create').hidden=!(f.indexOf('family_mode')>=0&&!fam);
     $('#fam-admin').hidden=!(fam&&fam.role==='admin');$('#fam-member').hidden=!(fam&&fam.role==='member');
     if(fam&&fam.role==='admin')drawAdmin(fam);
@@ -179,8 +198,6 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
     $('#fa-alerts').innerHTML=fam.alerts.map(function(a){return'<div class="note '+(a.level>=4?'bad':'warn')+'"><b>'+esc(a.display_name||a.email)+'</b> · '+['','','','High','Critical'][a.level]+' · '+new Date(a.created_at).toLocaleString('en-CA')+'<br>'+esc(a.signals.join('; '))+(a.excerpt?'<br><i>“'+esc(a.excerpt)+'”</i>':'')+'</div>'}).join('')||'<p class="muted">None yet.</p>'}
 
   $('#save').addEventListener('click',function(){api('/api/me',{name:$('#nm').value,phone:$('#ph').value}).then(function(d){say(d.ok?'Saved.':err(d),d.ok?'good':'bad');if(d.ok)load()})});
-  $('#call').addEventListener('click',function(){var b=$('#call');b.disabled=true;b.textContent='Connecting…';
-    api('/api/call/human',{}).then(function(d){b.disabled=false;b.textContent='📞 Get me on with a real person';say(d.ok?d.message:err(d),d.ok?'good':'bad')})});
   $('#fc').addEventListener('click',function(){api('/api/family',{name:$('#fn').value}).then(function(d){if(!d.ok)say(err(d),'bad');else{say('Family created. Now invite someone.');load()}})});
   $('#fa-copy').addEventListener('click',function(){try{navigator.clipboard.writeText($('#fa-topic').textContent);$('#fa-copy').textContent='Copied'}catch(e){}});
   $('#fa-swb').addEventListener('click',function(){api('/api/family/safe-word',{safe_word:$('#fa-sw').value}).then(function(d){say(d.ok?'Safe word saved. Tell your family in person, too.':err(d),d.ok?'good':'bad');if(d.ok){$('#fa-sw').value='';load()}})});
