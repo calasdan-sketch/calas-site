@@ -88,6 +88,11 @@
 </header>
 
 <main>
+<div id="paidNote" hidden style="max-width:900px;margin:24px auto 0;padding:18px 22px;border-radius:14px;background:#0f2f45;color:#fff;border:1px solid #F0C171;font-size:17px;line-height:1.5">
+  <b style="color:#F0C171">Thank you &mdash; your payment went through.</b><br>
+  We&rsquo;re setting up your account now. In the next few minutes you&rsquo;ll get an email from Calas Automations with your sign-in link (check Spam or Junk if you don&rsquo;t see it). Questions? <a href="mailto:dan@calasautomations.com" style="color:#F0C171">dan@calasautomations.com</a>
+</div>
+<script>if(/[?&]paid=1/.test(location.search)){document.getElementById('paidNote').hidden=false;}</script>
 <section class="x-hero" aria-labelledby="pr-h1">
       <div class="hero-art"></div>
       <div class="hero-overlay"></div><div class="wrap">
