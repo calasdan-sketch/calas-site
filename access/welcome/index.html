@@ -24,7 +24,7 @@ a.btn{background:#4FA3D1;color:#0B2E45}button{background:#fff;color:#0B2E45}smal
   var URLS={quoteme:'/quote-me/app/',leadme:'/leadme/',onfile:'/accounting/',dispatchme:'/dispatchme/',watchpost:'/watchpost/',haulme:'/haul-me/',cara:'/trades/',all:'/'};
   var sid=new URLSearchParams(location.search).get('session_id')||'',tries=0,c=document.getElementById('c');
   function esc(s){return String(s||'').replace(/[&<>"]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[x]})}
-  function fail(t){c.innerHTML='<h1>Payment received</h1><p>'+t+'</p><small>Email <a href="mailto:dan@calasautomations.com">dan@calasautomations.com</a> and we’ll sort it out right away.</small>'}
+  function fail(t){c.innerHTML='<h1>Payment received</h1><p>'+t+'</p><small>Email <a href="tel:+14312449026" data-cara>(431) 244-9026</a> and we’ll sort it out right away.</small>'}
   if(!sid){fail('We couldn’t find your order number on this page. Your code is also on its way by email.');return}
   function go(){fetch(API+'/api/claim?session_id='+encodeURIComponent(sid)).then(function(r){return r.json()}).then(function(d){
     if(d.ok){var u=URLS[d.app]||'/';

@@ -13,7 +13,7 @@
  *     }
  *   });
  *
- * Behaviour (2026-09-29, Dan: "you don't have to press play, it doesn't stutter"):
+ * Behaviour (2026-09-29, owner: "you don't have to press play, it doesn't stutter"):
  *  - Starts by itself shortly after the page loads. Browsers never allow sound
  *    before the visitor touches the page, so it starts with captions only and a
  *    "Turn on voice" button; the first click or key press anywhere turns the
@@ -43,7 +43,7 @@
     clips = cfg.lines.map(function (_, i) {
       var a = new Audio();
       a.preload = 'auto';
-      a.volume = 0.55;            // 2026-10-01 Dan: medium volume — audible but won't shock
+      a.volume = 0.55;            // 2026-10-01 Owner: medium volume — audible but won't shock
       a.src = cfg.audioBase + i + '.mp3';
       return a;
     });
@@ -176,7 +176,7 @@
 
   function run() {
     if (state && !state.stopped) return;
-    state = { stopped: false, voice: true, cancel: [], current: null, speaking: false, done: -1 }; // 2026-10-01 Dan: voice ON by default (browser still needs the first click before sound can play)
+    state = { stopped: false, voice: true, cancel: [], current: null, speaking: false, done: -1 }; // 2026-10-01 Owner: voice ON by default (browser still needs the first click before sound can play)
     buildOverlay();
     if (cfg.onStart) try { cfg.onStart(); } catch (e) {}
     var api = { point: point, tap: tap, sleep: sleep, type: type, q: q };

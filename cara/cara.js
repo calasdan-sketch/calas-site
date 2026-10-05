@@ -2,7 +2,7 @@
  * Add to any page:  <script src="https://calasautomations.com/cara/cara.js" data-app="leadme" defer></script>
  * data-app: site | onfile | leadme | quoteme | haulme | watchpost | dispatchme
  * Cara answers from what Calas actually sells (see calas-access src/cara-knowledge.js)
- * and hands anything else to Dan. The chat stays in this browser tab only.
+ * and hands anything else to the team. The chat stays in this browser tab only.
  */
 (function () {
   if (window.__calasCara) return;
@@ -110,4 +110,11 @@
     if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', { cancelable: true })); }
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && win.classList.contains('on')) open(false); });
+  // Contact links (data-cara, or href="#cara") open this chat instead of dialing; phones still dial.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('[data-cara], a[href="#cara"]');
+    if (!a || (/^tel:/.test(a.getAttribute('href') || '') && matchMedia('(pointer:coarse)').matches)) return;
+    e.preventDefault(); open(true);
+  });
+  if (location.hash === '#cara') open(true);
 })();

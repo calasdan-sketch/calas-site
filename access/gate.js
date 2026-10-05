@@ -40,7 +40,7 @@
       '<button type="submit">Unlock</button></form>' +
       '<a class="btn" id="cg-pay" href="/pay/#' + APP + '" hidden>Subscribe to keep using ' + NAME + '</a>' +
       '<div class="msg" id="cg-m" aria-live="polite"></div>' +
-      '<div class="small">No code? <a href="/pay/#' + APP + '">See plans</a> or email <a href="mailto:dan@calasautomations.com">dan@calasautomations.com</a>.</div></div>';
+      '<div class="small">No code? <a href="/pay/#' + APP + '">See plans</a> or email <a href="tel:+14312449026" data-cara>(431) 244-9026</a>.</div></div>';
     (document.body || document.documentElement).appendChild(gate);
     input = gate.querySelector('#cg-i'); msg = gate.querySelector('#cg-m');
     gate.querySelector('#cg-f').addEventListener('submit', function (e) { e.preventDefault(); check(input.value, true); });

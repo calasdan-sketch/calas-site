@@ -26,7 +26,7 @@
     '.cbar .nav-cta:hover{background:#0E4A6B}' +
     '@media(max-width:1400px){.cbar .cbar-in{padding:16px 22px;gap:14px}.cbar nav{gap:11px}.cbar .nav-cta{padding:9px 12px}}' +
     '@media(max-width:760px){.cbar .cbar-in{padding:10px 16px}.cbar nav{gap:14px;font-size:16px}}' +
-    /* phone (2026-09-29, Dan: the app needs the room): one slim row, menu behind a button */
+    /* phone (2026-09-29, owner: the app needs the room): one slim row, menu behind a button */
     '.cbar .cbar-menu{display:none;background:none;border:1px solid #C9D6DF;border-radius:6px;padding:6px 12px;font:600 14px "IBM Plex Sans",system-ui,sans-serif;color:#12212C;cursor:pointer}' +
     '@media(max-width:760px){' +
       '.cbar{position:static}' +
@@ -88,7 +88,7 @@
         '</a>' +
         '<button class="cbar-menu" type="button" aria-expanded="false">Menu</button>' +
         '<nav>' + NAV + '<a class="nav-signin" href="/signin/">Sign in</a>' +
-          '<a class="nav-cta" href="mailto:dan@calasautomations.com?subject=Calas%20Automations%20%E2%80%94%2015%20minutes">Book 15 minutes</a>' +
+          '<a class="nav-cta" href="tel:+14312449026" data-cara>Ask Cara</a>' +
         '</nav>' +
       '</div>';
     document.body.insertBefore(bar, document.body.firstChild);
@@ -110,7 +110,7 @@
       '<nav>' + NAV + '<a href="/signin/">Sign in</a></nav>' +
       '<p class="fine">Winnipeg, Manitoba &middot; prices in CAD plus GST/RST where applicable &middot; 30 days’ notice to cancel, always.<br>' +
       '&copy; ' + (new Date().getFullYear()) + ' Calas Automations Inc. &middot; ' +
-      '<a href="mailto:dan@calasautomations.com">dan@calasautomations.com</a> &middot; <a href="tel:+14312449026">(431) 244-9026</a></p>' +
+      '<a href="tel:+14312449026" data-cara>(431) 244-9026</a> &middot; <a href="tel:+14312449026">(431) 244-9026</a></p>' +
     '</div>';
   }
 
@@ -132,7 +132,7 @@
     if (!document.body) return;
     // Inside a working app (Quote Me, ReceiptSort...) the app has its own
     // header and menu; on a phone the Calas bar and footer only take room
-    // from it (2026-09-29, Dan). Desktop keeps them.
+    // from it (2026-09-29, owner). Desktop keeps them.
     if (/^\/[a-z-]+\/app\//.test(location.pathname)) document.documentElement.classList.add('calas-in-app');
     ensureStyle();
     injectMasthead();
