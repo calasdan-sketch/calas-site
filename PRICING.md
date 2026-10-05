@@ -15,6 +15,8 @@ All prices in Canadian dollars, plus GST/RST where applicable. This file is the 
 | `haulme_founding` | Haul Me — FOUNDING (first 50 owner-ops + couriers) | C$19/mo, locked 3 years | recurring monthly | 30-day money-back, no questions | First 50 only; price held 3 years then moves to regular |
 | `greenmile_small` | Haul Me — owner-operator, up to 3 trucks | C$39/mo | recurring monthly | 30-day money-back, no questions | Raised from C$29 (board: underpricing signals a toy); flat, not per truck |
 | `greenmile_fleet` | Haul Me — small fleet, up to 20 trucks | C$99/mo | recurring monthly | 30-day money-back, no questions | Raised from C$79 |
+| `watchpost_guarded` | Watchpost — Watch Pro, we triage alerts and call you | C$199/mo (C$1,990/yr) | recurring monthly (annual optional) | First month free | Early access |
+| `watchpost_family` | Watchpost — Family, per family | C$9.99/mo (C$99/yr); code FOUNDINGFAMILY = C$5/mo for 36 months, first 20 families | recurring | — | Early access |
 | `watchpost_watch` | Watchpost — Watch plan, one location | C$79/mo (C$790/yr) | recurring monthly (annual optional) | First month free; any month the decoys can't be shown up is free; cancel with one email | Early access; business-hours support, no 24/7 |
 
 ## One-line rationale each
@@ -33,7 +35,7 @@ All prices in Canadian dollars, plus GST/RST where applicable. This file is the 
 ## What is still a hypothesis
 
 1. **Cara text-back at C$29/mo** — needs recovered-call data from the first few trades customers.
-2. **Haul Me at C$29 / C$79** — a first price set from neighbouring tools, not a customer study; needs the first paying owner-operators.
+2. **Haul Me at C$39 / C$99 (founding C$19)** — set from neighbouring tools, not a customer study; needs the first paying owner-operators.
 3. **Watchpost Watch at C$79/mo** — set with the first businesses taken on in early access (matches the live Stripe strike price).
 4. **Quote Me at C$99/mo** — firm for the first ten shops; the "price rises after" is a stated intent, not a fixed number.
 
@@ -42,4 +44,4 @@ All prices in Canadian dollars, plus GST/RST where applicable. This file is the 
 - On File has **no build fee** (dropped 2026-09-27) — the old "waived for the first three trades contractors" offer is moot. Everyone now gets the free two-week trial and C$500/mo.
 - Trades page: Cara text-back **first three months at C$19**. In Stripe, a coupon (C$10 off, repeating for 3 months) on the C$29 price, not a second price.
 - Watchpost: **first month free on both plans** — a 30-day free trial on the `watchpost_watch` and `watchpost_guarded` (Watch Pro) Payment Links (Watch Pro trial added by Dan 2026-10-01, verified on the live checkout).
-- Haul Me / Watchpost annual prices (C$290, C$790): a second Stripe price on the same product, or offer by email; the site keys are the monthly ones.
+- Haul Me / Watchpost annual prices (Haul Me C$390 / C$990; Watchpost Watch C$790, Watch Pro C$1,990): a second Stripe price on the same product, or offer by email; the site keys are the monthly ones.
