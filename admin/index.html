@@ -54,8 +54,8 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
         <a class="appbtn" href="https://leadme.calasautomations.com/" target="_blank" rel="noopener">Lead Me<span>Calas's own leads</span></a>
         <a class="appbtn" href="https://haulme.calasautomations.com/" target="_blank" rel="noopener">Haul Me<span>Calas's own copy</span></a>
         <a class="appbtn" href="https://onfile.calasautomations.com/" target="_blank" rel="noopener">On File<span>Calas's own copy</span></a>
-        <a class="appbtn" href="/quote-me/app/" target="_blank" rel="noopener">Quote Me<span>the app</span></a>
-        <a class="appbtn" href="/watchpost/account/" target="_blank" rel="noopener">Watchpost<span>account page</span></a>
+        <a class="appbtn" href="/quote-me/app/" target="_blank" rel="noopener" data-sso="quoteme">Quote Me<span>the app</span></a>
+        <a class="appbtn" href="/watchpost/account/" target="_blank" rel="noopener" data-sso="watchpost">Watchpost<span>account page</span></a>
         <a class="appbtn" href="/admin/traffic/" style="border-left-color:#F0C171">Website traffic<span>visits, sources, sign-ins</span></a>
         <a class="appbtn" href="https://claude.ai/artifact/VV6oCR8dQgQUrzLMMbfxKn" target="_blank" rel="noopener" style="border-left-color:#F0C171">Dan&#39;s Desk<span>traffic, CRM &amp; master control</span></a>
       </div>
@@ -165,6 +165,14 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
     if(!d.ok){$('#lmsg').hidden=false;$('#lmsg').textContent=d._status===401?'That password didn’t work.':'Couldn’t reach the server.';ss('cpw',null);return}
     ss('cpw',pw);$('#login').hidden=true;$('#app').hidden=false;$('#out').hidden=false;load()}).catch(function(){$('#lmsg').hidden=false;$('#lmsg').textContent='Couldn’t reach the server.'})}
   $('#lf').addEventListener('submit',function(e){e.preventDefault();login($('#pw').value)});
+  // Quote Me and Watchpost live on this same website, so the admin password signs you in before the tab opens.
+  var SSO={quoteme:{url:'https://sitequote.calasdan.workers.dev/api/auth/login/password',key:'sitequote.token',pick:function(d){return d.token}},
+           watchpost:{url:'https://watchpost-api.calasdan.workers.dev/api/auth/password',key:'wp_session',pick:function(d){return d.ok&&d.session}}};
+  document.querySelectorAll('[data-sso]').forEach(function(a){a.addEventListener('click',function(e){
+    var s=SSO[a.dataset.sso];if(!s||!PW)return;e.preventDefault();var w=window.open('about:blank','_blank');
+    fetch(s.url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:'dan@calasautomations.com',password:PW,remember:true})})
+      .then(function(r){return r.json()}).then(function(d){var t=s.pick(d);if(t){try{localStorage.setItem(s.key,t)}catch(x){}}})
+      .catch(function(){}).then(function(){if(w)w.location=a.href;else location=a.href})})});
   $('#out').addEventListener('click',function(){ss('cpw',null);location.reload()});
 
   function loadLeads(){call('/api/admin/leads').then(function(d){if(!d.ok)return;var h='';

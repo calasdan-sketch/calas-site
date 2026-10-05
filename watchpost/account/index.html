@@ -36,9 +36,10 @@ table{width:100%;border-collapse:collapse;font-size:16px}td,th{text-align:left;p
 
   <section class="card" id="signin" hidden>
     <h1>Sign in</h1>
-    <p class="muted">No password. We email you a link that signs you in on this device.</p>
-    <form id="sf"><label for="se">Your email</label><input id="se" type="email" autocomplete="email" required>
-    <button>Email me a sign-in link</button></form>
+    <p class="muted">Enter your email and password. No password yet? Leave it blank and we'll email you a link that signs you in on this device.</p>
+    <form id="sf"><label for="se">Your email</label><input id="se" type="email" autocomplete="username" required>
+    <label for="sp">Password</label><input id="sp" type="password" autocomplete="current-password">
+    <button>Sign in</button></form>
   </section>
 
   <section class="card" id="invite" hidden>
@@ -145,6 +146,8 @@ table{width:100%;border-collapse:collapse;font-size:16px}td,th{text-align:left;p
     load()}
 
   $('#sf').addEventListener('submit',function(e){e.preventDefault();var b=e.submitter||$('#sf button');b.disabled=true;
+    if($('#sp').value){api('/api/auth/password',{email:$('#se').value,password:$('#sp').value}).then(function(d){b.disabled=false;
+      if(d.ok){ls('wp_session',d.session);$('#sp').value='';load()}else say(d.error==='bad_password'?'That email and password don’t match. Leave the password blank to get an email link instead.':err(d),'bad')});return}
     api('/api/auth/start',{email:$('#se').value}).then(function(d){b.disabled=false;
       say(d.ok?'Check your email for the sign-in link. It works once, for 15 minutes.':err(d),d.ok?'good':'bad')})});
   $('#out').addEventListener('click',function(){api('/api/auth/logout',{}).then(function(){ls('wp_session',null);location.reload()})});
