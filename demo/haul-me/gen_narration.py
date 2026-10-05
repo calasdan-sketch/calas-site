@@ -21,7 +21,7 @@ LINES = [
     "It also shows your floor rate: the lowest rate per loaded kilometre you can counter down to without losing money.",
     "Worried about fuel? Drag the fuel slider to see what a price jump does to the call, right away.",
     "Every load goes into a running log, totalled by broker and by lane, with a one-click CSV export, so you see who actually makes you money.",
-    "Haul Me is $29 a month for up to three trucks, or $79 for up to twenty. Flat, not per truck, with a thirty-day money-back guarantee.",
+    "Haul Me is $39 a month for up to three trucks, or $99 for up to twenty. Flat, not per truck, with a thirty-day money-back guarantee.",
     "Now it's your turn. Change the costs, try your own loads, and see what the numbers say.",
 ]
 
