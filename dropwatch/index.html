@@ -1,0 +1,950 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<title>Dropwatch — know the real odds before you buy</title>
+<meta name="description" content="Dropwatch tracks collectible releases — Pokémon, sneakers and cards — and shows your real, net-of-fees resale odds. Real sold data or we say unknown. No hype, no bots. Winnipeg / Canada. By Calas Automations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* off-black base (never #000), one primary accent, restrained secondary */
+    --bg:#0b0d12; --bg-2:#10131b; --panel:#141824; --line:#232838;
+    --ink:#eef1f8; --ink-2:#9aa3bd; --ink-3:#6b7390;
+    --accent:#38e0d4;              /* electric cyan — the single accent */
+    --accent-ink:#06211f;
+    --gold:#e8b765;               /* used only on the featured/holographic card */
+    --volt:#ffd84a;               /* electric yellow — Pokémon energy */
+    --pink:#ff5d8f; --violet:#9b7bff;
+    --pos:#4fd69c; --warn:#e8b765; --neg:#e8716b;
+    --display:'Outfit',system-ui,sans-serif; --mono:'IBM Plex Mono',monospace;
+    --ease:cubic-bezier(0.16,1,0.3,1);
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;background:#0b0d12}
+  body{margin:0;background:transparent;color:var(--ink);font-family:var(--display);
+    font-weight:400;line-height:1.55;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(760px 460px at 88% -8%,rgba(56,224,212,.10),transparent 60%),radial-gradient(620px 420px at 6% 18%,rgba(255,216,74,.08),transparent 60%),radial-gradient(700px 500px at 60% 110%,rgba(155,123,255,.09),transparent 60%);}
+  /* grain: fixed, pointer-none, never on a scroll container */
+  body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.5;
+    background-image:repeating-linear-gradient(0deg,transparent 0 2px,rgba(255,255,255,.012) 2px 3px)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  a{color:var(--accent);text-decoration:none}
+  .mono{font-family:var(--mono)}
+
+  /* reveal cascade */
+  .rise{opacity:0;transform:translateY(14px);animation:rise .7s var(--ease) forwards;
+    animation-delay:calc(var(--i,0)*90ms)}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.rise{animation:none;opacity:1;transform:none}}
+
+
+  /* ---- electric extras (2026-10-05) ---- */
+  .hero{position:relative}
+  .bolts{position:absolute;inset:-30px -10px auto auto;width:min(46vw,520px);height:360px;pointer-events:none;z-index:0;opacity:.9}
+  .hero > div,.hero > aside{position:relative;z-index:1}
+  .bolt{fill:none;stroke:var(--volt);stroke-width:3;stroke-linejoin:round;filter:drop-shadow(0 0 6px rgba(255,216,74,.9)) drop-shadow(0 0 18px rgba(255,216,74,.5));
+    stroke-dasharray:420;stroke-dashoffset:420;animation:zap 3.6s infinite}
+  .bolt.b2{animation-delay:1.2s;stroke:#fff3b0;stroke-width:2}
+  .bolt.b3{animation-delay:2.3s;stroke:var(--accent)}
+  @keyframes zap{0%{stroke-dashoffset:420;opacity:0}6%{opacity:1}14%{stroke-dashoffset:0;opacity:1}22%{opacity:.15}26%{opacity:1}40%,100%{stroke-dashoffset:0;opacity:0}}
+  .hero h1 em{color:var(--volt);text-shadow:0 0 22px rgba(255,216,74,.55);font-style:normal;background:none;-webkit-text-fill-color:var(--volt)}
+  .art{height:118px;margin:-4px -4px 12px;border-radius:12px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .art svg{width:72%;height:100%}
+  .art.pokemon{background:radial-gradient(circle at 30% 30%,rgba(255,216,74,.35),transparent 55%),linear-gradient(135deg,#2a1d05,#3a1030 60%,#14183a)}
+  .art.cards{background:radial-gradient(circle at 70% 40%,rgba(56,224,212,.3),transparent 55%),linear-gradient(135deg,#06211f,#151a33)}
+  .art.sneakers{background:radial-gradient(circle at 30% 60%,rgba(255,93,143,.35),transparent 55%),linear-gradient(135deg,#2a0a1c,#121a3a 70%)}
+  .card[data-g="pokemon"]{box-shadow:0 0 0 1px rgba(255,216,74,.18),0 10px 40px -18px rgba(255,216,74,.45)}
+  .card[data-g="pokemon"]:hover{box-shadow:0 0 0 1px rgba(255,216,74,.55),0 14px 50px -14px rgba(255,216,74,.7)}
+  .card[data-g="sneakers"]{box-shadow:0 0 0 1px rgba(255,93,143,.2),0 10px 40px -18px rgba(255,93,143,.45)}
+  .chipbtn.on{background:linear-gradient(90deg,var(--volt),var(--accent));color:#1a1400;border-color:transparent}
+  @media (prefers-reduced-motion:reduce){.bolt{animation:none;stroke-dashoffset:0;opacity:.7}}
+
+
+  /* ---- real card showcase + where to buy (2026-10-05) ---- */
+  .showcase{display:flex;gap:18px;justify-content:center;align-items:flex-end;margin:6px 0 34px;flex-wrap:wrap}
+  .pcard{width:170px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+  .pcard img{width:100%;border-radius:10px;display:block;transition:transform .4s var(--ease),box-shadow .4s var(--ease);
+    box-shadow:0 0 0 1px rgba(255,216,74,.35),0 12px 40px -10px rgba(255,216,74,.55)}
+  .pcard:nth-child(1) img{transform:rotate(-6deg)}
+  .pcard:nth-child(3) img{transform:rotate(6deg)}
+  .pcard:hover img{transform:translateY(-8px) rotate(0) scale(1.04);box-shadow:0 0 0 2px var(--volt),0 18px 60px -8px rgba(255,216,74,.85)}
+  .pcard b{display:block;color:var(--ink);font-family:var(--display);font-size:14px;margin-top:10px}
+  .pcard .px{color:var(--volt)}
+  .where{margin-top:12px;font-size:12.5px;color:var(--ink-2)}
+  .where b{color:var(--ink);font-weight:600}
+  .where .st{display:inline-block;margin:4px 6px 0 0;padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--ink)}
+  .where .note{display:block;margin-top:6px;font-size:11.5px;color:var(--ink-3)}
+
+
+  .pics{display:flex;gap:10px;margin:2px 0 12px;justify-content:center;align-items:flex-end}
+  .pics figure{margin:0;flex:1;max-width:120px;text-align:center;font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+  .pics img{width:100%;aspect-ratio:1/1;object-fit:contain;border-radius:8px;background:rgba(255,255,255,.04);padding:6px;transition:transform .3s var(--ease)}
+  .pics figure:hover img{transform:scale(1.08)}
+  .card[data-g="sneakers"] .pics figure{max-width:none}
+  .card[data-g="sneakers"] .pics img{aspect-ratio:16/10;padding:4px;background:radial-gradient(circle at 50% 60%,rgba(255,93,143,.22),rgba(255,255,255,.03) 70%)}
+  .rel{display:flex;align-items:center;gap:8px;margin:2px 0 8px;font-family:var(--mono);font-size:12.5px}
+  .rel b{color:var(--volt);font-size:15px}
+  .where a.st{text-decoration:none}
+  .where a.st:hover{border-color:var(--volt);color:var(--volt)}
+
+
+  /* ---- original anime-style backdrop: speed lines, halftone, energy glow ---- */
+  .anime-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+  .anime-bg svg{position:absolute;inset:0;width:100%;height:100%}
+  .anime-bg .burst{transform-origin:50% 50%;animation:spin 140s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.anime-bg .burst{animation:none}}
+
+  /* ---- header ---- */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+    background:rgba(11,13,18,.72);border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .crest{width:38px;height:38px;display:block}
+  .brand .n{font-weight:800;letter-spacing:.14em;font-size:15px}
+  .brand .n small{display:block;color:var(--ink-3);font-size:9.5px;letter-spacing:.26em;font-weight:500}
+  nav{display:flex;align-items:center;gap:26px}
+  nav a{color:var(--ink-2);font-size:14px;transition:color .2s var(--ease)}
+  nav a:hover{color:var(--ink)}
+  .stamp{font-family:var(--mono);font-size:11px;color:var(--ink-3);border:1px solid var(--line);
+    border-radius:999px;padding:5px 11px}
+  .stamp b{color:var(--pos);font-weight:500}
+  /* phones: menu becomes a swipeable strip under the logo instead of disappearing */
+  @media(max-width:760px){
+    .bar{flex-wrap:wrap;height:auto;padding-top:8px;padding-bottom:6px;row-gap:6px}
+    nav{order:3;width:100%;gap:18px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;padding-bottom:2px}
+    nav::-webkit-scrollbar{display:none}
+    nav .stamp{display:none}
+    nav a{font-size:14.5px;padding:6px 0}
+  }
+  html,body{overflow-x:hidden}
+
+  /* ---- hero: asymmetric, left-weighted ---- */
+  .hero{display:grid;grid-template-columns:1.35fr .9fr;gap:40px;align-items:center;
+    padding:84px 0 56px}
+  .kick{font-family:var(--mono);font-size:12px;letter-spacing:.24em;color:var(--accent);
+    text-transform:uppercase;margin-bottom:20px}
+  h1{font-weight:800;font-size:clamp(38px,5.4vw,66px);line-height:1.02;letter-spacing:-.02em;margin:0}
+  h1 em{font-style:normal;color:var(--accent)}
+  .sub{color:var(--ink-2);font-size:18px;max-width:46ch;margin:22px 0 30px}
+  .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{font-family:var(--display);font-weight:600;font-size:15px;padding:13px 22px;border-radius:11px;
+    border:1px solid transparent;cursor:pointer;transition:transform .14s var(--ease),background .2s}
+  .btn:active{transform:translateY(1px) scale(.99)}
+  .btn.p{background:var(--accent);color:var(--accent-ink)}
+  .btn.p:hover{background:#4af0e3}
+  .btn.g{background:transparent;color:var(--ink);border-color:var(--line)}
+  .btn.g:hover{border-color:var(--ink-3)}
+  .vow{margin-top:26px;font-family:var(--mono);font-size:12.5px;color:var(--ink-3);max-width:44ch}
+  .vow b{color:var(--ink-2);font-weight:500}
+
+  /* hero side: a "live odds" readout panel, sober not flashy */
+  .readout{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);
+    border-radius:18px;padding:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+  .readout .rh{display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--pos);box-shadow:0 0 0 3px rgba(79,214,156,.18);
+    display:inline-block;margin-right:7px;animation:pulse 2.6s var(--ease) infinite}
+  @keyframes pulse{50%{opacity:.4}}
+  .readout h3{margin:14px 0 2px;font-size:19px;font-weight:600}
+  .readout .meta{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+  .fig{font-family:var(--mono);font-weight:600;font-size:34px;margin:16px 0 2px;letter-spacing:-.01em}
+  .fig.neg{color:var(--neg)} .fig.pos{color:var(--pos)}
+  .figlab{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+  .src{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:11px;color:var(--ink-3);display:flex;justify-content:space-between;gap:10px}
+  @media(max-width:860px){.hero{grid-template-columns:1fr;gap:30px;padding:56px 0 40px}}
+
+  /* ---- section frame ---- */
+  section{padding:46px 0;border-top:1px solid var(--line)}
+  .sh{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:26px;gap:20px}
+  .sh h2{font-size:clamp(24px,3vw,32px);font-weight:800;letter-spacing:-.015em;margin:0}
+  .sh p{color:var(--ink-3);font-family:var(--mono);font-size:12px;margin:0;text-align:right}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+  .chipbtn{font-family:var(--mono);font-size:12px;color:var(--ink-2);background:transparent;
+    border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;transition:.18s var(--ease)}
+  .chipbtn:hover{border-color:var(--ink-3)}
+  .chipbtn.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+  /* ---- drops: bento, not equal thirds ---- */
+  .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+  .card{grid-column:span 2;background:rgba(20,24,36,.88);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:16px;
+    padding:18px;display:flex;flex-direction:column;transition:transform .2s var(--ease),border-color .2s}
+  .card:hover{transform:translateY(-3px);border-color:#313852}
+  .card.feature{grid-column:span 3}
+  /* holographic foil — the one 'cool' flourish, on the featured card only */
+  .card.foil{grid-column:span 3;position:relative;overflow:hidden;border-color:#3b3a52}
+  .card.foil::before{content:"";position:absolute;inset:0;opacity:.5;pointer-events:none;
+    background:linear-gradient(115deg,transparent 20%,rgba(56,224,212,.14) 40%,rgba(232,183,101,.14) 55%,rgba(123,140,255,.14) 68%,transparent 85%);
+    background-size:220% 220%;animation:foil 7s var(--ease) infinite}
+  @keyframes foil{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  @media (prefers-reduced-motion:reduce){.card.foil::before{animation:none}}
+  .ctop{display:flex;justify-content:space-between;align-items:baseline;gap:10px;position:relative}
+  .when{font-family:var(--mono);font-size:12px;color:var(--accent)}
+  .cat{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.12em;text-transform:uppercase}
+  .card h3{margin:9px 0 4px;font-size:18px;font-weight:600;position:relative}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px;position:relative}
+  .chip{font-family:var(--mono);font-size:11px;color:var(--ink-2);border:1px solid var(--line);
+    border-radius:7px;padding:3px 8px}
+  .chip.risk{color:var(--neg);border-color:rgba(232,113,107,.35)}
+  /* the honest number block — sober, boxed by a rule not neon */
+  .odds{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);position:relative}
+  .badge{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+    padding:2px 7px;border-radius:5px;border:1px solid var(--line);color:var(--ink-2)}
+  .badge.modeled{color:var(--warn);border-color:rgba(232,183,101,.3)}
+  .badge.unknown{color:var(--ink-3)}
+  .badge.sold{color:var(--pos);border-color:rgba(79,214,156,.3)}
+  .verdict{font-family:var(--mono);font-size:13px;margin:10px 0 2px;line-height:1.5;color:var(--ink)}
+  .verdict.neg{color:var(--neg)} .verdict.warn{color:var(--warn)}
+  .down{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:6px}
+  .prov{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:12px}
+  @media(max-width:860px){.bento{grid-template-columns:1fr}.card,.card.feature,.card.foil{grid-column:1/-1}}
+
+  /* ---- calculator ---- */
+  .calc{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+  .calc .pane{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-family:var(--mono);font-size:12px;color:var(--ink-2);margin-bottom:7px}
+  .field .help{color:var(--ink-3);font-size:11px}
+  .field input{width:100%;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;
+    color:var(--ink);font-family:var(--mono);font-size:16px;padding:11px 13px;transition:border-color .18s}
+  .field input:focus{outline:none;border-color:var(--accent)}
+  .adv{display:flex;gap:12px;flex-wrap:wrap}
+  .adv .field{flex:1;min-width:120px;margin-bottom:0}
+  .result h3{font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:-.02em;margin:0 0 6px}
+  .result .big{font-family:var(--mono);font-weight:600;font-size:42px;margin:4px 0;letter-spacing:-.01em}
+  .result .big.pos{color:var(--pos)} .result .big.neg{color:var(--neg)}
+  .result .rv{font-family:var(--mono);font-size:14px;color:var(--ink-2);line-height:1.6;max-width:42ch}
+  .result .breakdown{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:16px;
+    border-top:1px solid var(--line);padding-top:14px}
+  .result .breakdown span{display:flex;justify-content:space-between;margin:4px 0}
+  @media(max-width:860px){.calc{grid-template-columns:1fr;gap:20px}}
+
+  /* ---- how / honest / ledger: zig-zag + list, not equal thirds ---- */
+  .rows{display:flex;flex-direction:column;gap:2px}
+  .row{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid var(--line)}
+  .row .num{font-family:var(--mono);font-size:22px;color:var(--accent);font-weight:500}
+  .row h4{margin:0 0 5px;font-size:17px;font-weight:600}
+  .row p{margin:0;color:var(--ink-2);font-size:14.5px;max-width:62ch}
+  .honest{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .hcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .hcard h4{margin:0 0 7px;font-size:16px;font-weight:600;display:flex;align-items:center;gap:9px}
+  .hcard .tick{width:18px;height:18px;flex:none}
+  .hcard p{margin:0;color:var(--ink-2);font-size:14px}
+  .ledger{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-family:var(--mono);
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .ledger .score{font-size:28px;font-weight:600}
+  .ledger .lx{font-size:12.5px;color:var(--ink-3)}
+  .call{font-family:var(--mono);font-size:12.5px;padding:8px 0;border-top:1px dashed var(--line);
+    display:flex;gap:10px;align-items:baseline}
+  .call .v{flex:none;width:52px}
+  .call .hit{color:var(--pos)} .call .miss{color:var(--neg)}
+  @media(max-width:700px){.honest{grid-template-columns:1fr}}
+
+  footer{border-top:1px solid var(--line);padding:34px 0 60px;color:var(--ink-3);font-size:13px}
+  footer .fb{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+  footer b{color:var(--ink-2);font-weight:600;letter-spacing:.1em}
+  footer a{color:var(--ink-2)}
+  /* ---- bigger type, louder prices + dates (2026-10-05) ---- */
+  .card h3{font-size:21px}
+  .when{font-size:14px;font-weight:600}
+  .cat{font-size:11.5px}
+  .chip{font-size:12.5px}
+  .verdict{font-size:15px}
+  .down{font-size:13px}
+  .prov{font-size:12.5px}
+  .where{font-size:14px}
+  .where .note{font-size:12.5px}
+  .sub{font-size:20px}
+  .vow{font-size:14px}
+  .kick{font-size:13px}
+  nav a{font-size:15.5px}
+  .chipbtn{font-size:13.5px}
+  .rel{font-size:14px;flex-wrap:wrap}
+  .rel b{font-size:19px;text-shadow:0 0 14px rgba(255,216,74,.45)}
+  .pics figure{font-size:12px}
+  .card[data-g="sneakers"] .pics figure{font-size:18px;font-weight:700;color:var(--volt);font-family:var(--mono)}
+  .pcard{font-size:13.5px}
+  .pcard b{font-size:16px}
+  .pcard .px{display:block;font-size:26px;font-weight:700;margin-top:4px;text-shadow:0 0 16px rgba(255,216,74,.5)}
+  .odds .prov div span:last-child{font-size:15px;font-weight:700}
+  .fig{font-size:44px}
+  .money{color:var(--volt);font-weight:700;font-size:1.15em}
+
+
+  /* ---- local want / have board (prototype, 2026-10-05) ---- */
+  .tb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:22px}
+  @media (max-width:860px){.tb{grid-template-columns:1fr}}
+  .tform,.tlist{background:rgba(20,24,36,.88);border:1px solid var(--line);border-radius:16px;padding:20px}
+  .tform label{display:block;font-family:var(--mono);font-size:13px;color:var(--ink-2);margin:12px 0 6px}
+  .tform input,.tform select{width:100%;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;color:var(--ink);font-size:16px;padding:11px 12px;font-family:var(--display)}
+  .seg{display:flex;gap:8px}.seg button{flex:1}
+  .post{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+  .post:last-child{border-bottom:0}
+  .tag{font-family:var(--mono);font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px;flex:none}
+  .tag.want{background:rgba(56,224,212,.15);color:var(--accent)} .tag.have{background:rgba(255,216,74,.15);color:var(--volt)}
+  .post h4{margin:0 0 4px;font-size:18px}.post .meta{font-family:var(--mono);font-size:13px;color:var(--ink-3)}
+  .post .px{color:var(--volt);font-weight:700;font-size:20px;margin-left:auto;white-space:nowrap}
+  .match{margin-top:6px;font-family:var(--mono);font-size:13px;color:var(--pos)}
+  .safe{margin-top:16px;font-size:13.5px;color:var(--ink-2);border-left:3px solid var(--volt);padding-left:12px}
+
+  /* ---- Year calendar: Tron/cyberpunk, sits in the right margin on wide screens ---- */
+  .ycal{zoom:1.1;--cy:#2ef2ff;--mg:#ff2bd6;font-family:var(--mono);color:#bfefff;background:rgba(4,8,22,.86);
+    border:1px solid rgba(46,242,255,.55);border-radius:10px;padding:14px 14px 10px;
+    box-shadow:0 0 0 1px rgba(46,242,255,.12) inset,0 0 18px rgba(46,242,255,.25),0 0 40px rgba(255,43,214,.12);
+    background-image:linear-gradient(rgba(46,242,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(46,242,255,.06) 1px,transparent 1px);
+    background-size:14px 14px}
+  .ycal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .ycal-head b{font-size:19px;letter-spacing:.32em;color:var(--cy);text-shadow:0 0 6px var(--cy),0 0 16px rgba(46,242,255,.6)}
+  .ycal-head button{background:none;border:1px solid rgba(46,242,255,.5);color:var(--cy);border-radius:6px;width:26px;height:24px;cursor:pointer;font:inherit}
+  .ycal-head button:hover,.ycal-head button:focus-visible{box-shadow:0 0 10px var(--cy);outline:none}
+  .ycal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 10px}
+  .ym h5{margin:0 0 4px;font-size:12.5px;letter-spacing:.22em;color:#7fd8e6;font-weight:600}
+  .ym-days{display:grid;grid-template-columns:repeat(7,1fr);gap:1px}
+  .ym-days span{position:relative;font-size:12.5px;line-height:19px;text-align:center;color:rgba(191,239,255,.45);border-radius:2px}
+  .ym-days span.today{color:#fff;background:rgba(255,255,255,.14);outline:2px solid #fff;outline-offset:0;box-shadow:0 0 8px #fff,0 0 16px rgba(46,242,255,.8)}
+  .ym-days span.pre{color:#eafff3;font-weight:700;cursor:pointer;outline:2px dashed #39ff88;outline-offset:0;box-shadow:0 0 8px rgba(57,255,136,.7)}
+  .ycal-today{font-size:13px;color:#fff;margin:-2px 0 10px;text-align:center;letter-spacing:.12em;text-shadow:0 0 8px rgba(46,242,255,.9)}
+  .ycal-tip .pre-box{margin-top:8px;padding:8px 10px;border:1px dashed #39ff88;border-radius:8px;background:rgba(57,255,136,.06)}
+  .ycal-tip .pre-box a.go{display:inline-block;margin:4px 6px 0 0;padding:3px 9px;border-radius:999px;border:1px solid #39ff88;color:#39ff88;text-decoration:none}
+  .ym-days span.drop{color:#fff;font-weight:700;cursor:pointer;background:rgba(46,242,255,.25);
+    box-shadow:0 0 0 1px var(--cy) inset,0 0 4px var(--cy),0 0 10px var(--cy);text-shadow:0 0 4px #fff;animation:neonflick 7s infinite}
+  .ym-days span.drop.snk{background:rgba(255,43,214,.28);box-shadow:0 0 0 1px var(--mg) inset,0 0 4px var(--mg),0 0 10px var(--mg);animation-duration:9s}
+  .ym-days span.drop:focus-visible{outline:1px solid #fff}
+  @keyframes neonflick{0%,18%,22%,25%,53%,57%,100%{opacity:1;filter:brightness(1.25)}20%,24%,55%{opacity:.25;filter:brightness(.6)}}
+  .ym-days span.drop.rare{outline:2px solid #f0c171;outline-offset:1px;animation-duration:5s;
+    box-shadow:0 0 0 1px var(--cy) inset,0 0 4px var(--cy),0 0 6px #f0c171,0 0 16px #ffd84a}
+  .ym-days span.drop.rare.snk{box-shadow:0 0 0 1px var(--mg) inset,0 0 4px var(--mg),0 0 6px #f0c171,0 0 16px #ffd84a}
+  .ym-days span.drop.rare .zap{position:absolute;left:50%;top:-11px;width:14px;height:20px;transform:translateX(-50%);pointer-events:none;
+    animation:zap 3.2s infinite;animation-delay:inherit}
+  .zap path{fill:#f0c171;stroke:#fff6b0;stroke-width:.6}
+  @keyframes zap{0%,62%,100%{opacity:0;filter:none}
+    64%{opacity:1;filter:drop-shadow(0 0 3px #f0c171) drop-shadow(0 0 8px #f0c171)}
+    67%{opacity:.4}
+    70%{opacity:1;filter:drop-shadow(0 0 4px #fff200) drop-shadow(0 0 14px #ffea00) drop-shadow(0 0 22px #ffea00)}
+    76%{opacity:1;filter:drop-shadow(0 0 3px #ffea00) drop-shadow(0 0 10px #ffd84a)}
+    84%{opacity:0}}
+  @media (prefers-reduced-motion:reduce){.ym-days span.drop{animation:none}.ym-days span.drop.rare .zap{animation:none;opacity:1}}
+  .ycal-key{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:#7fd8e6}
+  .ycal-key i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+  .ycal-tip{min-height:36px;margin-top:9px;font-size:13.5px;line-height:1.4;color:#e8fbff;border-top:1px solid rgba(46,242,255,.25);padding-top:7px}
+  .ycal-tip a{color:var(--cy)}
+  .ycal-tip a.jump{color:#ff9cf0;font-weight:700;text-decoration:none;cursor:pointer}
+  .ycal-tip a.jump:hover,.ycal-tip a.jump:focus-visible{text-shadow:0 0 8px #ff2bd6;outline:none}
+  @keyframes cardflash{0%{box-shadow:0 0 0 2px #2ef2ff,0 0 28px rgba(46,242,255,.85)}100%{box-shadow:0 0 0 0 rgba(46,242,255,0)}}
+  .card.flash{animation:cardflash 1.8s ease-out;opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.card.flash{animation:none;outline:2px solid #2ef2ff}}
+  #ycal-wrap{margin:28px auto 0}
+  @media (min-width:2040px){#ycal-wrap{position:fixed;top:96px;right:18px;width:453px;margin:0;z-index:20;max-height:calc(100vh - 110px);overflow:auto}}
+  @media (max-width:2039px){#ycal-wrap{max-width:578px}}
+  /* phones: 2 months per row, normal size, so dates stay readable and nothing spills off-screen */
+  @media(max-width:600px){
+    .ycal{zoom:1}
+    #ycal-wrap{max-width:none;margin:18px 12px 0}
+    .ycal-grid{grid-template-columns:repeat(2,1fr);gap:12px 14px}
+    .ym-days span{font-size:13px;line-height:24px}
+  }
+
+  /* ---- click a photo: enlarge to centre, drag to spin it in 3D ---- */
+  .pics img,.showcase img{cursor:zoom-in}
+  .spin{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 50% 45%,rgba(30,20,70,.82),rgba(3,4,12,.95));backdrop-filter:blur(6px);perspective:1400px}
+  .spin.on{display:flex}
+  .spin-stage{width:min(72vmin,560px);aspect-ratio:3/4;position:relative;transform-style:preserve-3d;cursor:grab;touch-action:none;user-select:none}
+  .spin-stage.wide{aspect-ratio:16/10;width:min(86vmin,760px)}
+  .spin-stage:active{cursor:grabbing}
+  .spin-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.01));border:1px solid rgba(46,242,255,.35);
+    box-shadow:0 0 30px rgba(46,242,255,.25),0 0 80px rgba(255,43,214,.15)}
+  .spin-face img{max-width:92%;max-height:92%;object-fit:contain;filter:drop-shadow(0 20px 30px rgba(0,0,0,.6));pointer-events:none}
+  .spin-back{transform:rotateY(180deg);flex-direction:column;gap:10px;text-align:center;padding:24px;font-family:var(--mono);color:#bfefff}
+  .spin-back b{font-size:22px;color:#fff;font-family:var(--display)}
+  .spin-back .v{font-size:26px;color:var(--volt);text-shadow:0 0 14px rgba(255,216,74,.6)}
+  .spin-hint{position:fixed;bottom:22px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:13px;color:#9aa3bd}
+  .spin-x{position:fixed;top:18px;right:22px;background:none;border:1px solid rgba(46,242,255,.5);color:#2ef2ff;border-radius:8px;
+    width:40px;height:40px;font-size:20px;cursor:pointer}
+  .spin-x:focus-visible{outline:2px solid #fff}
+</style>
+</head>
+<body>
+<div class="anime-bg" aria-hidden="true"><svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="sky" cx="72%" cy="18%" r="90%"><stop offset="0" stop-color="#3b1d6e"/><stop offset=".35" stop-color="#1a1240"/><stop offset=".7" stop-color="#0d0f22"/><stop offset="1" stop-color="#07080f"/></radialGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffe680" stop-opacity=".55"/><stop offset=".4" stop-color="#ff7ab0" stop-opacity=".22"/><stop offset="1" stop-color="#ff7ab0" stop-opacity="0"/></radialGradient>
+    <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="7" cy="7" r="1.6" fill="#ffffff" fill-opacity=".07"/></pattern>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07080f" stop-opacity="0"/><stop offset="1" stop-color="#07080f" stop-opacity=".85"/></linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <g class="burst" fill="#ffd84a" fill-opacity=".045"><polygon points="800,450 2800,450 2799,520"/><polygon points="800,450 2783,711 2773,780"/><polygon points="800,450 2732,968 2713,1035"/><polygon points="800,450 2648,1215 2620,1280"/><polygon points="800,450 2532,1450 2496,1510"/><polygon points="800,450 2387,1668 2343,1722"/><polygon points="800,450 2214,1864 2164,1913"/><polygon points="800,450 2018,2037 1961,2078"/><polygon points="800,450 1800,2182 1739,2216"/><polygon points="800,450 1565,2298 1500,2323"/><polygon points="800,450 1318,2382 1250,2399"/><polygon points="800,450 1061,2433 991,2441"/><polygon points="800,450 800,2450 730,2449"/><polygon points="800,450 539,2433 470,2423"/><polygon points="800,450 282,2382 215,2363"/><polygon points="800,450 35,2298 -30,2270"/><polygon points="800,450 -200,2182 -260,2146"/><polygon points="800,450 -418,2037 -472,1993"/><polygon points="800,450 -614,1864 -663,1814"/><polygon points="800,450 -787,1668 -828,1611"/><polygon points="800,450 -932,1450 -966,1389"/><polygon points="800,450 -1048,1215 -1073,1150"/><polygon points="800,450 -1132,968 -1149,900"/><polygon points="800,450 -1183,711 -1191,641"/><polygon points="800,450 -1200,450 -1199,380"/><polygon points="800,450 -1183,189 -1173,120"/><polygon points="800,450 -1132,-68 -1113,-135"/><polygon points="800,450 -1048,-315 -1020,-380"/><polygon points="800,450 -932,-550 -896,-610"/><polygon points="800,450 -787,-768 -743,-822"/><polygon points="800,450 -614,-964 -564,-1013"/><polygon points="800,450 -418,-1137 -361,-1178"/><polygon points="800,450 -200,-1282 -139,-1316"/><polygon points="800,450 35,-1398 100,-1423"/><polygon points="800,450 282,-1482 350,-1499"/><polygon points="800,450 539,-1533 609,-1541"/><polygon points="800,450 800,-1550 870,-1549"/><polygon points="800,450 1061,-1533 1130,-1523"/><polygon points="800,450 1318,-1482 1385,-1463"/><polygon points="800,450 1565,-1398 1630,-1370"/><polygon points="800,450 1800,-1282 1860,-1246"/><polygon points="800,450 2018,-1137 2072,-1093"/><polygon points="800,450 2214,-964 2263,-914"/><polygon points="800,450 2387,-768 2428,-711"/><polygon points="800,450 2532,-550 2566,-489"/><polygon points="800,450 2648,-315 2673,-250"/><polygon points="800,450 2732,-68 2749,0"/><polygon points="800,450 2783,189 2791,259"/></g>
+  <circle cx="1150" cy="170" r="420" fill="url(#sun)"/>
+  <rect width="1600" height="900" fill="url(#dots)"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M-50 700 C300 640 520 760 900 690 S1400 620 1700 680" stroke="#9b7bff" stroke-opacity=".25" stroke-width="3"/>
+    <path d="M-50 760 C320 700 600 820 960 750 S1450 690 1700 740" stroke="#38e0d4" stroke-opacity=".18" stroke-width="2"/>
+  </g>
+  <g fill="#fff">
+    <circle cx="220" cy="120" r="1.6" opacity=".7"/><circle cx="460" cy="70" r="1.2" opacity=".6"/><circle cx="700" cy="180" r="1.8" opacity=".5"/>
+    <circle cx="1400" cy="420" r="1.4" opacity=".6"/><circle cx="90" cy="380" r="1.2" opacity=".5"/><circle cx="1520" cy="90" r="1.7" opacity=".7"/>
+  </g>
+  <rect width="1600" height="900" fill="url(#fade)"/>
+</svg></div>
+<header>
+  <div class="wrap bar">
+    <div class="brand">
+      <img class="crest" src="logo.svg" alt="" width="38" height="38">
+      <div class="n">DROPWATCH<small>BY CALAS AUTOMATIONS</small></div>
+    </div>
+    <nav>
+      <a class="lnk" href="#drops">Drops</a>
+      <a class="lnk" href="#trade">Want / Have</a>
+      <a class="lnk" href="#calc">Flip calculator</a>
+      <a class="lnk" href="#news">News</a>
+      <a class="lnk" href="#community">Community</a>
+      <a class="lnk" href="#honest">Honesty</a>
+      <a class="lnk" id="grademe-link" href="https://grademe.calasautomations.com/" target="_blank" rel="noopener" title="Photo a card or shoe: condition + price">Grade Me &#128247;</a>
+      <span class="stamp">Updated <b id="stamp">—</b></span>
+    </nav>
+  </div>
+</header>
+
+<aside id="ycal-wrap" aria-label="Release calendar for the year"><div class="ycal">
+  <div class="ycal-head"><button type="button" id="ycal-prev" aria-label="Previous year">&lsaquo;</button><b id="ycal-year"></b><button type="button" id="ycal-next" aria-label="Next year">&rsaquo;</button></div>
+  <div class="ycal-today" id="ycal-today"></div>
+  <div class="ycal-grid" id="ycal-grid"></div>
+  <div class="ycal-key"><span><i style="background:#2ef2ff;box-shadow:0 0 6px #2ef2ff"></i>Pokémon &amp; cards</span><span><i style="background:#ff2bd6;box-shadow:0 0 6px #ff2bd6"></i>Sneakers</span><span><i style="background:transparent;outline:2px solid #f0c171;box-shadow:0 0 6px #ffea00"></i>&#9889; High-value (gold box)</span><span><i style="background:transparent;outline:2px dashed #39ff88"></i>Pre-orders open</span><span><i style="background:rgba(255,255,255,.2);outline:2px solid #fff"></i>Today</span></div>
+  <div class="ycal-tip" id="ycal-tip" aria-live="polite">Tap a glowing day to see what drops.</div>
+</div></aside>
+<div class="spin" id="spin" role="dialog" aria-modal="true" aria-label="Photo, drag to spin">
+  <button class="spin-x" id="spin-x" type="button" aria-label="Close">&times;</button>
+  <div class="spin-stage" id="spin-stage"><div class="spin-face"><img id="spin-img" alt=""></div>
+    <div class="spin-face spin-back" id="spin-back"></div></div>
+  <div class="spin-hint">Drag to spin &middot; tap outside or press Esc to close</div>
+</div>
+<main class="wrap">
+  <!-- HERO (asymmetric) -->
+  <section class="hero" style="border-top:0">
+    <svg class="bolts" viewBox="0 0 520 360" aria-hidden="true">
+      <path class="bolt" d="M380 0 L330 120 L380 120 L300 250 L345 250 L250 360"/>
+      <path class="bolt b2" d="M470 30 L440 110 L475 110 L420 200"/>
+      <path class="bolt b3" d="M250 20 L225 90 L255 90 L210 170"/>
+    </svg>
+    <div>
+      <div class="kick rise">Pokémon · Sneakers · Cards · Winnipeg &amp; Canada</div>
+      <h1 class="rise" style="--i:1">Know the <em>real odds</em><br>before you buy.</h1>
+      <p class="sub rise" style="--i:2">Dropwatch tracks Pokémon and sneaker releases and shows what you'd actually clear after fees, shipping, tax and exchange — with the downside in plain sight. Real sold data, or we say so.</p>
+      <div class="cta rise" style="--i:3">
+        <a class="btn p" href="#drops">See this week's drops</a>
+        <a class="btn g" href="#calc">Run a flip</a>
+      </div>
+      <p class="vow rise" style="--i:4"><b>Our one rule:</b> we show a price only when a real source published it. No sold data, no number — we print "unknown" and move on. No hype, no buying bots.</p>
+    </div>
+    <aside class="readout rise" style="--i:3">
+      <div class="rh"><span><span class="dot"></span>Live read</span><span>net of fees</span></div>
+      <h3>Delta Reign — Booster Box</h3>
+      <div class="meta">Market est. · TCGplayer via TCGCSV</div>
+      <div class="fig" id="heroFig">…</div>
+      <div class="figlab">est. result in <b>US$</b> if you bought at US MSRP and resold today (TCGplayer prices are US dollars)</div>
+      <div class="src"><span>Source: market estimate</span><span class="badge modeled">modeled</span></div>
+    </aside>
+  </section>
+
+  <!-- REAL CARDS (images: TCGplayer product photos, prices: TCGCSV market, as of 2026-10-05) -->
+  <section class="showcase" aria-label="Chase cards right now">
+    <figure class="pcard"><img src="https://tcgplayer-cdn.tcgplayer.com/product/676088_400w.jpg" alt="Pikachu ex 276/217 card" loading="lazy"><b>Pikachu ex · 276/217</b>Ascended Heroes <span class="px">~$926</span></figure>
+    <figure class="pcard"><img src="https://tcgplayer-cdn.tcgplayer.com/product/517045_400w.jpg" alt="Charizard ex 199/165 card" loading="lazy"><b>Charizard ex · 199/165</b>Scarlet &amp; Violet 151 <span class="px">~$343</span></figure>
+    <figure class="pcard"><img src="https://tcgplayer-cdn.tcgplayer.com/product/717605_400w.jpg" alt="Mew ex 152/128 card" loading="lazy"><b>Mew ex · 152/128</b>30th Celebration <span class="px">~$93</span></figure>
+  </section>
+  <p class="where" style="text-align:center;margin:-22px 0 30px"><span class="note">Market estimates (USD, TCGplayer via TCGCSV, Oct 5 2026) — modeled, not verified sales.</span></p>
+
+  <!-- DROPS -->
+  <section id="drops">
+    <div class="sh">
+      <h2>This week's drops</h2>
+      <p>honest odds · net of fees &amp; tax<br>sorted soonest first</p>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="bento" id="bento"></div>
+  </section>
+
+  <!-- FLIP CALCULATOR -->
+  <!-- WANT / HAVE (local trades, prototype: saved in this browser only) -->
+  <section id="trade">
+    <div class="sh">
+      <h2>Want / Have — Winnipeg</h2>
+      <p>post what you want or what you've got<br>we match you locally · meet in person</p>
+    </div>
+    <div class="tb">
+      <form class="tform" id="tform">
+        <div class="seg"><button type="button" class="chipbtn on" data-k="want">I want</button><button type="button" class="chipbtn" data-k="have">I have</button></div>
+        <label for="t-item">Item</label><input id="t-item" required maxlength="80" placeholder="Charizard ex 199/165">
+        <label for="t-cat">Category</label><select id="t-cat"><option>Pokémon</option><option>Sneakers</option><option>Cards</option></select>
+        <label for="t-cond">Condition / size</label><input id="t-cond" maxlength="40" placeholder="Near mint · or US 10">
+        <label for="t-price">Price (CAD)</label><input id="t-price" type="number" min="1" step="1" required>
+        <label for="t-area">Area of Winnipeg</label><select id="t-area"><option>Downtown</option><option>St. Vital</option><option>St. James</option><option>Transcona</option><option>North End</option><option>Fort Garry</option><option>River Heights</option><option>East Kildonan</option><option>Other</option></select>
+        <button class="btn p" style="margin-top:16px;width:100%">Post it</button>
+        <p class="safe"><b>Safe trades:</b> meet at a busy public place in daylight (a partner card shop, once we sign them up), check the item before paying, and never send money first.</p>
+      </form>
+      <div class="tlist"><div id="tposts"></div></div>
+    </div>
+  </section>
+
+  <section id="calc">
+    <div class="sh">
+      <h2>Flip calculator</h2>
+      <p>we do the math · you bring the price</p>
+    </div>
+    <div class="calc">
+      <div class="pane">
+        <div class="field">
+          <label for="buy">What you'd pay (CAD)</label>
+          <input id="buy" type="number" inputmode="decimal" value="160" min="0" step="1">
+        </div>
+        <div class="field">
+          <label for="sale">Resale price you found (CAD) <span class="help">— paste a real sold price you saw</span></label>
+          <input id="sale" type="number" inputmode="decimal" value="0" min="0" step="1">
+        </div>
+        <div class="adv">
+          <div class="field"><label for="fee">Marketplace fee %</label><input id="fee" type="number" value="13" min="0" step="0.1"></div>
+          <div class="field"><label for="pay">Payment fee %</label><input id="pay" type="number" value="2.9" min="0" step="0.1"></div>
+          <div class="field"><label for="ship">Shipping (CAD)</label><input id="ship" type="number" value="0" min="0" step="1"></div>
+          <div class="field"><label for="tax">Buy tax % (MB 12)</label><input id="tax" type="number" value="12" min="0" step="0.1"></div>
+        </div>
+      </div>
+      <div class="pane result">
+        <h3>Your take-home</h3>
+        <div class="big" id="cProfit">enter a price</div>
+        <div class="rv" id="cVerdict">Paste a resale price you've actually seen and we'll strip every fee, shipping and tax to show what really lands in your pocket — including if it's a loss.</div>
+        <div class="breakdown" id="cBreak" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section id="how">
+    <div class="sh"><h2>How it works</h2><p>free · local · legal</p></div>
+    <div class="rows">
+      <div class="row"><div class="num">01</div><div><h4>Track</h4><p>One calendar for Pokémon, sneakers and sports cards — pulled from release feeds and official schedules, with a Winnipeg/Canada lens on exchange, duty and local stock.</p></div></div>
+      <div class="row"><div class="num">02</div><div><h4>Weigh the odds</h4><p>Real sold comps from sources that publish them, minus marketplace fees, shipping, exchange and tax — with the downside shown. When there's no real data, you get "unknown," never a guess.</p></div></div>
+      <div class="row"><div class="num">03</div><div><h4>Decide</h4><p>Buy manually, within store limits. We grade our own past calls in the open — hits and misses both — so "honest" is something you can actually check.</p></div></div>
+    </div>
+  </section>
+
+  <!-- NEWS: official confirmations first, then our own posts -->
+  <section id="news">
+    <div class="sh"><h2>Confirmed news</h2><p>straight from the source</p></div>
+    <div class="honest" id="newsList"></div>
+    <p class="down" style="margin-top:12px">Release dates marked <b style="color:#39ff88">&#10004; confirmed</b> come straight from The Pok&eacute;mon Company&rsquo;s press site and refresh every day. Rumours never go up here.</p>
+  </section>
+
+  <!-- COMMUNITY + SPONSORS -->
+  <section id="community">
+    <div class="sh"><h2>Community</h2><p>talk drops with Winnipeg collectors</p></div>
+    <div class="honest">
+      <div class="hcard"><h4>Dropwatch Discord</h4><p>Live restock alerts, pre-order heads-ups, and a channel for each set and shoe. No bots, no paid &ldquo;cook groups&rdquo;.</p>
+        <p><a class="btn g" id="discordBtn" href="#" hidden>Join the Discord</a><span id="discordSoon" class="down">Opening soon.</span></p></div>
+      <div class="hcard"><h4>Trade safely in Winnipeg</h4><p>Meeting a buyer or seller? Use a Winnipeg Police Service exchange zone: the Winnipeg Police headquarters lobby at 245 Smith St (open 8am–5pm). Daylight, bring a friend, never go to a stranger&rsquo;s home.</p></div>
+      <div class="hcard"><h4>Advertise on Dropwatch</h4><p>Local card shop, sneaker store or event? Sponsored spots are clearly labelled and reach Winnipeg collectors right when they&rsquo;re deciding where to buy.</p><p>Call Cara: <a href="tel:+14312449026">431-244-9026</a></p></div>
+    </div>
+  </section>
+
+  <!-- HONEST -->
+  <section id="honest">
+    <div class="sh"><h2>The honest part</h2><p>why you can trust the number</p></div>
+    <div class="honest">
+      <div class="hcard"><h4><svg class="tick" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#4fd69c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Nothing is guaranteed</h4><p>Reselling is speculative — reprints, fees and dips are real, and some buys lose money. We show odds and the loss case, never promises.</p></div>
+      <div class="hcard"><h4><svg class="tick" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#4fd69c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>No bots, ever</h4><p>Manual buying within posted limits only. Purchase bots break retailer rules and we won't build or use them.</p></div>
+      <div class="hcard"><h4><svg class="tick" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#4fd69c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Real data or "unknown"</h4><p>Prices come from feeds and APIs that allow it. We never scrape sites that forbid it, and every number carries its source, date and comp count.</p></div>
+      <div class="hcard"><h4><svg class="tick" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#4fd69c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Your data stays yours</h4><p>Built free and local. Your watchlist and portfolio live in your own browser — no accounts, no cloud harvesting.</p></div>
+    </div>
+    <div class="ledger" style="margin-top:18px">
+      <div><div class="score">0<span style="color:var(--ink-3)"> calls yet</span></div><div class="lx">public track record<br>starts with our first graded call</div></div>
+      <div style="flex:1;min-width:240px"><p style="margin:0;color:var(--ink-2)">Every buy / wait / skip call we make will be dated here, then graded against real sold prices 90 days later &mdash; hits and misses both. Nothing is shown until it has actually happened.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap fb">
+    <div><b>DROPWATCH</b> &middot; by Calas Automations, Winnipeg<br>Know the real odds before you buy.</div>
+    <div style="text-align:right">Questions? Call Cara: 431-244-9026 &middot; <a href="https://calasautomations.com">calasautomations.com</a><br>Not financial advice. Collectibles can lose value.<br><small>Unofficial fan site, not affiliated with or endorsed by The Pok&eacute;mon Company, Nintendo, Nike or any retailer. Product names and images belong to their owners. Some store links may earn us a commission, at no extra cost to you.</small></div>
+  </div>
+</footer>
+
+<script src="drops.js" onerror="window.DROPS=null"></script>
+<script src="sneakers.js" onerror="window.SNEAKERS=null"></script>
+<script src="stores.js" onerror="window.STORES=null"></script>
+<script src="official.js" onerror="window.OFFICIAL=null"></script>
+<script src="links.js" onerror="window.DROPWATCH_LINKS=null"></script>
+<script src="preorders.js" onerror="window.PREORDERS=null"></script>
+<script>
+/* ---- flip-odds: a faithful JS port of engine/flip_odds.py ---- */
+const round2 = n => Math.round(n*100)/100;
+function evaluate({buy, sale, compCount=1, mkt=0.13, pay=0.029, ship=0, tax=0.12}){
+  const cost = round2(buy*(1+tax));
+  if(sale==null || sale<=0){ return {known:false, cost}; }
+  const net = round2(sale*(1-mkt-pay) - ship);
+  const profit = round2(net - cost);
+  const roi = cost ? round2(profit/cost) : null;
+  let tone='pos', verdict;
+  if(profit<=0){ tone='neg'; verdict=`Likely loses money: you clear $${net.toFixed(2)} on a $${cost.toFixed(2)} all-in cost.`; }
+  else if(roi!=null && roi<0.15){ tone='warn'; verdict=`Thin margin (${(roi*100).toFixed(0)}%) before your time — easy to lose to a reprint or a dip.`; }
+  else { verdict=`Real edge: about +$${profit.toFixed(2)} (${(roi*100).toFixed(0)}%) net after every fee and tax.`; }
+  return {known:true, cost, net, profit, roi, tone, verdict};
+}
+
+/* ---- data ---- live prices come from drops.js (window.DROPS), regenerated by
+   engine/build_feed.py from TCGCSV. The array below is the offline fallback. ---- */
+const FALLBACK_DROPS = [
+  {id:'ptcg-delta-reign', cat:'Pokémon TCG', group:'pokemon', when:'NOV 6, 2026', title:'Mega Evolution — Delta Reign',
+   chips:['ETB ~$70','Booster box ~$160',{t:'Reprint risk: HIGH',risk:true}], feature:true,
+   badge:'modeled', comp:262.64, compLabel:'box market est.', buy:160,
+   basis:'Pokémon prints sealed to demand; modern boxes often reprint and drift toward MSRP. The chase is graded singles, not boxes.'},
+  {id:'ptcg-mcd', cat:'Pokémon · Promo', group:'pokemon', when:'NOV 2026', title:"McDonald's 30th-Anniversary packs",
+   chips:['Free w/ Happy Meal','Oversupplied'], badge:'unknown', comp:null,
+   basis:'Fun to grab, poor to flip — too many printed. Only specific insert cards move; we flag those, not the packs.'},
+  {id:'sports-cal', cat:'Sports / Hockey', group:'cards', when:'CALENDAR', title:'Release calendar only',
+   chips:['No free sold data','Dates + MSRP'], badge:'unknown', comp:null,
+   basis:'No honest free source for sold prices yet, so we track the drops and say "unknown" on odds — never a faked number.'},
+];
+/* prefer live prices from drops.js when present, else the baked fallback */
+const DROPS = ((window.DROPS && window.DROPS.length) ? window.DROPS : FALLBACK_DROPS).concat(window.SNEAKERS || [{
+  id:'sneaker-watch', cat:'Sneakers', group:'sneakers', when:'WATCHLIST', title:'Sneaker drops — coming next',
+  chips:['Release calendar', {t:'Sold data not connected yet', risk:true}], badge:'unknown', comp:null,
+  basis:'Sneakers are next on Dropwatch. Until a real sold-price source is wired in, we list drops without a number rather than guess.'}]);
+
+const ART = {
+  pokemon:`<svg viewBox="0 0 200 110"><g transform="rotate(-8 100 55)"><rect x="62" y="12" width="62" height="86" rx="7" fill="#ffd84a"/><rect x="68" y="18" width="50" height="40" rx="4" fill="#2b1a05"/><path d="M98 22 L84 42 L95 42 L88 56 L106 34 L95 34 Z" fill="#ffd84a"/><rect x="68" y="64" width="50" height="5" rx="2" fill="#2b1a05" opacity=".5"/><rect x="68" y="74" width="34" height="5" rx="2" fill="#2b1a05" opacity=".5"/></g><g transform="rotate(10 130 55)"><rect x="104" y="16" width="58" height="82" rx="7" fill="#9b7bff"/><circle cx="133" cy="50" r="18" fill="#fff" opacity=".9"/><rect x="115" y="48" width="36" height="4" fill="#9b7bff"/><circle cx="133" cy="50" r="6" fill="#fff" stroke="#9b7bff" stroke-width="3"/></g></svg>`,
+  cards:`<svg viewBox="0 0 200 110"><rect x="70" y="14" width="60" height="84" rx="6" fill="#38e0d4"/><rect x="77" y="22" width="46" height="38" rx="3" fill="#06211f"/><circle cx="100" cy="41" r="11" fill="#38e0d4"/><rect x="77" y="68" width="46" height="5" rx="2" fill="#06211f" opacity=".5"/></svg>`,
+  sneakers:`<svg viewBox="0 0 200 110"><path d="M30 78 C30 60 46 52 60 50 L84 34 C92 30 100 34 104 42 L116 58 C140 60 168 64 172 78 Z" fill="#ff5d8f"/><path d="M30 78 L172 78 L172 88 C172 92 168 94 164 94 L36 94 C32 94 30 92 30 88 Z" fill="#fff"/><path d="M62 52 L80 62 M72 46 L90 56 M84 40 L100 50" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M120 62 L134 70 L126 70 L138 80" stroke="#ffd84a" stroke-width="4" fill="none" stroke-linejoin="round"/></svg>`
+};
+const WHERE = {
+  pokemon:['Walmart','Best Buy','EB Games','Costco','Toys"R"Us','Pokémon Center','Local game stores'],
+  cards:['Local card shops','Walmart','Shoppers Drug Mart'],
+  sneakers:['Nike SNKRS app','adidas Confirmed app','Foot Locker','Sporting Life','Sneaker boutiques'],
+  promo:['McDonald’s']
+};
+// Store finders that list each Winnipeg location's opening hours (checked 2026-10-05);
+// anything else opens Google Maps, which shows hours too.
+const FINDER = {
+  'Walmart':'https://www.walmart.ca/en/stores-near-me','Best Buy':'https://www.bestbuy.ca/en-ca/stores',
+  'Costco':'https://www.costco.ca/warehouse-locations','Toys"R"Us':'https://www.toysrus.ca/en/storelocator',
+  'Pokémon Center':'https://www.pokemoncenter.com/en-ca',
+  'Foot Locker':'https://www.footlocker.ca/en/stores','Shoppers Drug Mart':'https://www1.shoppersdrugmart.ca/en/store-locator'
+};
+const APPS = {'Nike SNKRS app':1,'adidas Confirmed app':1};
+function storeLink(x){
+  if(APPS[x]) return `<span class="st">${x}</span>`;
+  const url = FINDER[x] || 'https://www.google.com/maps/search/'+encodeURIComponent(x.replace(/s$/,'')+' Winnipeg');
+  return `<a class="st" href="${url}" target="_blank" rel="noopener" title="Locations &amp; opening hours">${x} &#8599;</a>`;
+}
+function whereBlock(d){
+  const list = d.where || (/mcdonald/i.test(d.title) ? WHERE.promo : WHERE[d.group]);
+  if(!list) return '';
+  return `<div class="where"><b>Where to look:</b><br>${list.map(storeLink).join('')}
+    <span class="note">${d.where?'Confirmed for this release.':'Stores that usually carry these in Canada. Tap a store for Winnipeg locations and opening hours. Stock varies, so call ahead.'}</span></div>`;
+}
+const CATS = [['all','All'],['pokemon','Pokémon'],['sneakers','Sneakers'],['cards','Cards']];
+let active='all';
+
+function oddsBlock(d){
+  const bEval = (d.comp!=null) ? evaluate({buy:d.buy||0, sale:d.comp, compCount:1}) : null;
+  const badgeTxt = d.badge==='sold'?'sold data':d.badge==='modeled'?'modeled':'unknown';
+  let verdict, cls='', down='';
+  if(d.badge==='unknown' || !bEval){
+    verdict = 'No real sold data yet — we won’t guess.';
+    cls='';
+  } else {
+    verdict = bEval.verdict; cls = bEval.tone==='neg'?'neg':bEval.tone==='warn'?'warn':'';
+    down = d.badge==='modeled' ? 'Based on a modeled market price, not a verified sale — treat as a hint, not a fact.' : '';
+  }
+  return `<div class="odds">
+    <span class="badge ${d.badge}">${badgeTxt}</span>
+    <div class="verdict ${cls}">${verdict}</div>
+    ${down?`<div class="down">${down}</div>`:''}
+    <div class="prov">${d.comp!=null?`Source: ${d.compLabel||'market est.'} · $${d.comp}`:'Source: calendar only'}</div>
+  </div>`;
+}
+function chaseBlock(d){
+  if(!d.chase || !d.chase.length) return '';
+  const rows = d.chase.map(c =>
+    `<div style="display:flex;justify-content:space-between;gap:10px">
+       <span style="color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.name}</span>
+       <span style="color:var(--gold);flex:none">$${(+c.market).toFixed(2)}</span></div>`).join('');
+  const etb = d.etb!=null ? `<div style="display:flex;justify-content:space-between"><span style="color:var(--ink-2)">Elite Trainer Box</span><span style="color:var(--ink)">$${(+d.etb).toFixed(2)}</span></div>`:'';
+  return `<div class="odds" style="position:relative">
+    <span class="badge modeled">chase singles · modeled</span>
+    <div class="prov" style="margin-top:8px;display:flex;flex-direction:column;gap:3px">${etb}${rows}</div>
+  </div>`;
+}
+function fmtDate(iso){const d=new Date(iso+'T12:00:00');return d.toLocaleDateString('en-CA',{weekday:'short',month:'long',day:'numeric',year:'numeric'})}
+function relBlock(d){
+  if(!d.release) return '';
+  const future = new Date(d.release+'T23:59:59') > new Date();
+  return `<div class="rel">${future?'Release date':'Released'}: <b>${fmtDate(d.release)}</b></div>`;
+}
+function picsBlock(d){
+  if(!d.pics||!d.pics.length) return '';
+  return `<div class="pics">${d.pics.map(p=>`<figure><img src="${p.img}" alt="${p.name}" loading="lazy">${p.label}</figure>`).join('')}</div>`;
+}
+function preorderBlock(d){
+  const p = (window.PREORDERS||{})[d.id];
+  if(!p) return '';
+  const tag = ok => ok===true?'<b style="color:var(--volt)">open</b>':ok===false?'<span style="color:var(--ink-3)">sold out</span>':'';
+  const shops = p.shops.map(s=>`<div style="margin-top:8px"><a class="st" href="${s.url}" target="_blank" rel="noopener">${s.name} &#8599;</a> <span class="note" style="display:inline">${s.ships}</span>
+    ${s.items.map(([n,pr,ok])=>`<div style="display:flex;justify-content:space-between;gap:10px;font-size:12.5px"><span>${n}</span><span>${pr?`<b class="money">${pr}</b> `:''}${tag(ok)}</span></div>`).join('')}</div>`).join('');
+  return `<div class="where"><b>Pre-orders</b> <span class="note" style="display:inline">checked ${fmtDate(p.checked)}</span>${shops}<span class="note">${p.note}</span></div>`;
+}
+function cardHTML(d,i){
+  const foil = d.feature ? 'feature foil':'';
+  const chips = d.chips.map(c => typeof c==='string'
+    ? `<span class="chip">${c}</span>`
+    : `<span class="chip ${c.risk?'risk':''}">${c.t}</span>`).join('').replace(/(C?\$[\d,]+(?:\.\d+)?)/g,'<b class="money">$1</b>');
+  return `<article class="card ${foil} rise" id="card-${d.id}" style="--i:${i}" data-g="${d.group}">
+    ${d.pics&&d.pics.length?picsBlock(d):(ART[d.group]?`<div class="art ${d.group}" aria-hidden="true">${ART[d.group]}</div>`:'')}
+    <div class="ctop"><span class="when">${d.when}</span><span class="cat">${d.cat}</span></div>
+    ${d.asof?`<div class="prov" style="margin-top:4px">prices as of ${d.asof}</div>`:''}
+    <h3>${d.title}</h3>
+    ${relBlock(d)}
+    <div class="chips">${chips}</div>
+    <p class="down" style="position:relative;margin-top:2px">${d.basis}</p>
+    ${preorderBlock(d)}
+    ${whereBlock(d)}
+    ${chaseBlock(d)}
+    ${oddsBlock(d)}
+  </article>`;
+}
+function renderBento(){
+  const box=document.getElementById('bento');
+  box.innerHTML = DROPS.filter(d=>active==='all'||d.group===active).map(cardHTML).join('');
+}
+function renderFilters(){
+  document.getElementById('filters').innerHTML = CATS.map(([k,l])=>
+    `<button class="chipbtn ${k===active?'on':''}" data-k="${k}">${l}</button>`).join('');
+}
+document.getElementById('filters').addEventListener('click',e=>{
+  const b=e.target.closest('.chipbtn'); if(!b)return;
+  active=b.dataset.k; renderFilters(); renderBento();
+});
+/* ---- jump from the calendar to a drop's card so you SEE what's dropping ---- */
+function jumpTo(id, grp, anchor){
+  if(!DROPS.some(d=>d.id===id)) return false;          // calendar-only date, no card to show
+  if(active!=='all' && active!==grp){ active=grp; renderFilters(); renderBento(); }
+  const el=document.getElementById('card-'+id);
+  if(!el) return false;
+  const cal=document.getElementById('ycal-wrap');
+  if(anchor && getComputedStyle(cal).position==='fixed'){   // calendar pinned on the side: line the card up beside the clicked day
+    const r=el.getBoundingClientRect(), a=anchor.getBoundingClientRect();
+    const y=Math.max(90, Math.min(a.top+a.height/2-r.height/2, innerHeight-r.height-10));
+    scrollTo({top:scrollY+r.top-y, behavior:'smooth'});
+  } else el.scrollIntoView({behavior:'smooth', block:'center'});
+  el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  return true;
+}
+
+/* ---- calculator wiring ---- */
+const $ = id => document.getElementById(id);
+function runCalc(){
+  const buy=+$('buy').value||0, sale=+$('sale').value||0;
+  const mkt=(+$('fee').value||0)/100, pay=(+$('pay').value||0)/100;
+  const ship=+$('ship').value||0, tax=(+$('tax').value||0)/100;
+  const r=evaluate({buy, sale, mkt, pay, ship, tax});
+  const pEl=$('cProfit'), vEl=$('cVerdict'), bEl=$('cBreak');
+  if(!r.known){ pEl.textContent='enter a price'; pEl.className='big';
+    vEl.textContent='Paste a resale price you’ve actually seen and we’ll strip every fee, shipping and tax to show what really lands in your pocket — including if it’s a loss.';
+    bEl.hidden=true; return; }
+  pEl.textContent=(r.profit>=0?'+':'−')+'$'+Math.abs(r.profit).toFixed(2);
+  pEl.className='big '+(r.profit>=0?'pos':'neg');
+  vEl.textContent=r.verdict;
+  bEl.hidden=false;
+  bEl.innerHTML=`<span><b>All-in cost</b><b>$${r.cost.toFixed(2)}</b></span>
+    <span>Net proceeds after fees<span>$${r.net.toFixed(2)}</span></span>
+    <span>Break-even resale<span>$${round2(r.cost/(1-mkt-pay)+ship).toFixed(2)}</span></span>`;
+}
+['buy','sale','fee','pay','ship','tax'].forEach(id=>$(id).addEventListener('input',runCalc));
+
+/* hero readout: show the honest modeled result for the featured box at MSRP */
+(function heroReadout(){
+  const d=DROPS.find(x=>x.feature&&x.comp!=null);   // same live numbers as the feature card, both in US$
+  if(!d) return;
+  const r=evaluate({buy:d.buy||0, sale:d.comp});
+  const f=$('heroFig');
+  f.textContent=(r.profit>=0?'+':'−')+'$'+Math.abs(r.profit).toFixed(2);
+  f.className='fig '+(r.profit>=0?'pos':'neg');
+})();
+
+
+/* ---- news list (official first) + Discord link ---- */
+(function(){
+  const box=document.getElementById('newsList'); if(!box) return;
+  const today=new Date().toISOString().slice(0,10);
+  const off=(window.OFFICIAL&&OFFICIAL.schedule)||[];
+  const up=off.filter(o=>o.release>=today).slice(-4).reverse();
+  const recent=off.filter(o=>o.release<today).slice(0,2);
+  const card=(o,label)=>`<div class="hcard"><h4><span style="color:#39ff88">&#10004;</span> ${o.product}</h4><p>${label} <b>${new Date(o.release+'T12:00:00').toLocaleDateString('en-CA',{weekday:'short',month:'long',day:'numeric',year:'numeric'})}</b></p><p><a href="${o.url}" target="_blank" rel="noopener">Official page &#8599;</a></p></div>`;
+  const posts=(window.POSTS||[]).map(p=>`<div class="hcard"><h4>${p.title}</h4><p class="down">${p.date}</p><p>${p.body}</p></div>`);
+  box.innerHTML=up.map(o=>card(o,'Releases')).concat(recent.map(o=>card(o,'Released'))).concat(posts).join('')||'<p class="down">No confirmed news right now.</p>';
+  const inv=(window.DROPWATCH_LINKS||{}).discord;
+  if(inv){const b=document.getElementById('discordBtn');b.href=inv;b.hidden=false;b.target='_blank';b.rel='noopener';document.getElementById('discordSoon').hidden=true}
+})();
+
+$('stamp').textContent = new Date().toISOString().slice(0,10);
+renderFilters(); renderBento(); runCalc();
+
+/* ---- photo spinner: one photo per product, so "360" is a 3D turn of the photo with info on the back ---- */
+(function(){
+  const ov=document.getElementById('spin'), st=document.getElementById('spin-stage'), im=document.getElementById('spin-img'), back=document.getElementById('spin-back');
+  let ry=0, rx=0, vy=0, drag=null, raf=0, lastFocus=null;
+  const apply=()=>{st.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`};
+  function coast(){ if(drag) return; vy*=0.95; ry+=vy; rx*=0.92; apply(); if(Math.abs(vy)>0.05||Math.abs(rx)>0.1) raf=requestAnimationFrame(coast); }
+  function open(img){
+    const card=img.closest('.card'), fig=img.closest('figure');
+    const title=card?card.querySelector('h3').textContent:(img.alt||'');
+    const price=(fig&&fig.textContent.trim())||(card&&card.querySelector('.chip')?card.querySelector('.chip').textContent:'');
+    const provs=card?[...card.querySelectorAll('.prov')].map(x=>x.textContent).filter(t=>/Source:/.test(t)&&!/calendar only/.test(t)):[];
+    const val=provs.length?provs[provs.length-1]:'';
+    im.src=img.currentSrc||img.src; im.alt=img.alt||title;
+    st.classList.toggle('wide', !!(card&&card.dataset.g==='sneakers'));
+    back.innerHTML=`<b>${title}</b><span>${price}</span>${val?`<span class="v">${val.replace(/^Source:\s*/,'')}</span>`:''}<span style="font-size:12px;opacity:.7">Dropwatch &middot; by Calas Automations</span>`;
+    ry=-18; rx=6; vy=0; apply(); lastFocus=document.activeElement; ov.classList.add('on'); document.getElementById('spin-x').focus();
+    if(!matchMedia('(prefers-reduced-motion:reduce)').matches){ vy=4; raf=requestAnimationFrame(coast); }
+  }
+  function close(){ ov.classList.remove('on'); cancelAnimationFrame(raf); if(lastFocus) lastFocus.focus(); }
+  document.addEventListener('click',e=>{ const img=e.target.closest('.pics img,.showcase img'); if(img){ e.preventDefault(); open(img); } });
+  ov.addEventListener('click',e=>{ if(e.target===ov) close(); });
+  document.getElementById('spin-x').onclick=close;
+  document.addEventListener('keydown',e=>{ if(!ov.classList.contains('on')) return;
+    if(e.key==='Escape') close(); if(e.key==='ArrowLeft'){ry-=15;apply()} if(e.key==='ArrowRight'){ry+=15;apply()} });
+  st.addEventListener('pointerdown',e=>{ drag={x:e.clientX,y:e.clientY}; vy=0; cancelAnimationFrame(raf); st.setPointerCapture(e.pointerId); });
+  st.addEventListener('pointermove',e=>{ if(!drag) return; const dx=e.clientX-drag.x, dy=e.clientY-drag.y;
+    ry+=dx*0.5; rx=Math.max(-35,Math.min(35,rx-dy*0.3)); vy=dx*0.5; drag={x:e.clientX,y:e.clientY}; apply(); });
+  st.addEventListener('pointerup',()=>{ drag=null; raf=requestAnimationFrame(coast); });
+})();
+
+/* ---- year calendar: every drop with a release date glows ---- */
+(function(){
+  const M=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const byDay={};
+  const norm=t=>String(t||'').toLowerCase().replace(/pok[eé]mon tcg:?|mega evolution|[^a-z0-9]+/g,'');
+  const OFF=(window.OFFICIAL&&OFFICIAL.schedule)||[];
+  const officialFor=d=>OFF.find(o=>o.release===d.release&&(norm(o.product).includes(norm(d.title))||norm(d.title).includes(norm(o.product))));
+  const calItems=DROPS.slice();
+  OFF.forEach(o=>{ if(!DROPS.some(d=>d.release===o.release&&d.group==='pokemon')) calItems.push({id:'off-'+o.release,title:o.product,release:o.release,group:'pokemon',official:o,chips:[],comp:null}); });
+  calItems.forEach(d=>{ if(d.group==='pokemon'&&!d.official) d.official=officialFor(d); });
+  calItems.forEach(d=>{ if(!d.release) return; (byDay[d.release]=byDay[d.release]||[]).push(d); });
+  const preDay={};
+  Object.entries(window.PREORDERS||{}).forEach(([id,p])=>{ const d=DROPS.find(x=>x.id===id); if(p.opens&&d) (preDay[p.opens]=preDay[p.opens]||[]).push(d); });
+  const now=new Date(), todayIso=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  let year=now.getFullYear();
+  const pad=n=>String(n).padStart(2,'0');
+  const ZAP='<svg class="zap" viewBox="0 0 14 20" aria-hidden="true"><path d="M8.5 0L1 11.2h5L4.6 20 13 7.8H8z"/></svg>';
+  // High-value: a box/ETB market estimate or a chase card well above typical, or a premium-retail sneaker.
+  const RARE_BOX=200, RARE_CHASE=500, RARE_SNEAKER_RETAIL=250;
+  function retailOf(x){const c=(x.chips||[]).map(c=>typeof c==='string'?c:c.t).find(c=>/retail/i.test(c));return c?parseFloat(c.replace(/[^0-9.]/g,'')):0}
+  function isRare(x){return (x.comp||0)>=RARE_BOX||(x.chase||[]).some(c=>c.market>=RARE_CHASE)||(x.group==='sneakers'&&retailOf(x)>=RARE_SNEAKER_RETAIL)}
+  function draw(){
+    document.getElementById('ycal-year').textContent=year;
+    document.getElementById('ycal-today').textContent='TODAY · '+now.toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric',year:'numeric'}).toUpperCase();
+    let h='';
+    for(let m=0;m<12;m++){
+      const first=new Date(year,m,1).getDay(), days=new Date(year,m+1,0).getDate();
+      let cells='<span></span>'.repeat(first);
+      for(let d=1;d<=days;d++){
+        const iso=`${year}-${pad(m+1)}-${pad(d)}`, hit=byDay[iso], pre=!hit&&preDay[iso];
+        if(pre){ cells+=`<span class="pre${iso===todayIso?' today':''}" tabindex="0" role="button" data-d="${iso}" title="Pre-orders open: ${pre.map(x=>x.title).join(' · ').replace(/"/g,'&quot;')}">${d}</span>`; continue; }
+        const rare=hit&&hit.some(isRare);
+        const cls=(hit?'drop'+(hit.every(x=>x.group==='sneakers')?' snk':'')+(rare?' rare':''):'')+(iso===todayIso?' today':'');
+        const delay=hit?` style="animation-delay:${(d*1.7+m*0.9)%6}s"`:'';
+        cells+=hit?`<span class="${cls}" tabindex="0" role="button" data-d="${iso}" title="${hit.map(x=>x.title).join(' · ').replace(/"/g,'&quot;')}"${delay}>${d}${rare?ZAP:''}</span>`
+                  :`<span class="${cls}">${d}</span>`;
+      }
+      h+=`<div class="ym"><h5>${M[m]}</h5><div class="ym-days">${cells}</div></div>`;
+    }
+    document.getElementById('ycal-grid').innerHTML=h;
+  }
+  const DAY=['Su','Mo','Tu','We','Th','Fr','Sa'];
+  const fmt=t=>{const [h,m]=t.split(':').map(Number);const hh=((h+11)%12)+1;return hh+(m?':'+String(m).padStart(2,'0'):'')+(h<12||h===24?'am':'pm')};
+  function storesFor(x,dt){
+    const list=(x.where||(/mcdonald/i.test(x.title)?WHERE.promo:WHERE[x.group])||[]).filter(c=>window.STORES&&STORES[c]);
+    if(!list.length) return '';
+    const day=DAY[dt.getDay()];
+    return '<div style="margin-top:6px">'+list.slice(0,4).map(c=>{
+      const locs=STORES[c].slice(0,3).map(l=>{
+        const h=l.hours[day], when=!l.hours||!Object.keys(l.hours).length?'hours not listed':h==='closed'?'closed that day':h?h.split(',').map(r=>r.split('-').map(fmt).join('–')).join(', '):'hours not listed';
+        const map=l.lat?`https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lon}`:`https://www.google.com/maps/search/${encodeURIComponent((l.addr||l.name||c)+' Winnipeg')}`;
+        const src=l.verified?` <span style="color:#39ff88" title="from ${c}'s own site">&#10004; verified ${l.verified}</span>`:(Object.keys(l.hours||{}).length?' <span style="opacity:.5" title="community data, may be out of date">(OSM)</span>':'');
+        return `<a href="${map}" target="_blank" rel="noopener">${l.addr||l.name}</a> <span style="opacity:.8">${when}</span>${src}`;
+      }).join('<br>&nbsp;&nbsp;');
+      return `<div style="margin-top:4px"><b style="color:#2ef2ff">${c}</b><br>&nbsp;&nbsp;${locs}</div>`;
+    }).join('')+'</div>';
+  }
+  function preFor(x){
+    const p=(window.PREORDERS||{})[x.id];
+    if(!p) return x.group==='sneakers'&&(x.where||[]).some(w=>/SNKRS/.test(w))
+      ? `<div class="pre-box"><b style="color:#39ff88">Sign up / enter</b><br>Enter the draw in the Nike SNKRS app before ${x.time||'launch time'}.<br><a class="go" href="https://www.nike.com/ca/launch" target="_blank" rel="noopener">Open SNKRS &#8599;</a></div>` : '';
+    const open=p.shops.filter(sh=>sh.items.some(i=>i[2]===true));
+    return `<div class="pre-box"><b style="color:#39ff88">Pre-orders</b>${p.opens?' open '+new Date(p.opens+'T12:00:00').toLocaleDateString('en-CA',{month:'short',day:'numeric'}):''}<br>${p.status||''}<br>`+
+      p.shops.map(sh=>`<a class="go" href="${sh.url}" target="_blank" rel="noopener">${sh.name}${sh.items.some(i=>i[2]===true)?' · open':''} &#8599;</a>`).join('')+
+      `<div style="font-size:11px;opacity:.7;margin-top:4px">Checked ${p.checked}. ${open.length?'':'All sold out when checked. '}Our stock watcher re-checks every 10 minutes.</div></div>`;
+  }
+  function show(iso, anchor){
+    const list=byDay[iso]||preDay[iso]||[]; const dt=new Date(iso+'T12:00:00');
+    document.getElementById('ycal-tip').innerHTML=`<b>${dt.toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric'})}</b><br>`+
+      list.map(x=>{
+        const retail=(x.chips||[]).map(c=>typeof c==='string'?c:c.t).find(c=>/retail|ETB|box/i.test(c));
+        const value=x.comp!=null?`worth ~$${Math.round(x.comp)} (${x.compLabel||'market est.'})`:(x.etb!=null?`ETB worth ~$${Math.round(x.etb)}`:'resale value: unknown yet');
+        const off=x.official?`<br><span style="color:#39ff88">&#10004; Date confirmed by The Pokémon Company</span> <a href="${x.official.url}" target="_blank" rel="noopener">official page &#8599;</a>`:'';
+        const hasCard=DROPS.some(d=>d.id===x.id);
+        const title=hasCard
+          ? `<a class="jump" href="#card-${x.id}" data-jump="${x.id}" data-grp="${x.group}">${x.title} &#8597;</a>`
+          : `<b style="color:#ff9cf0">${x.title}</b>`;
+        return `${title}${x.time?' · '+x.time+' Winnipeg':''}${off}<br>${retail?'Price: '+retail+' · ':''}${value}`+preFor(x)+storesFor(x,dt);
+      }).join('<br><br>')+`<div style="margin-top:8px;font-size:11px;opacity:.7">Store hours are verified from each store's own site where shown; launch and holiday hours can still differ, so call ahead.</div>`;
+    const first=list.find(x=>DROPS.some(d=>d.id===x.id));   // scroll the page to the first product so you SEE it
+    if(first) jumpTo(first.id, first.group, anchor);
+  }
+  const grid=document.getElementById('ycal-grid');
+  grid.addEventListener('click',e=>{const t=e.target.closest('[data-d]'); if(t) show(t.dataset.d, t);});
+  document.getElementById('ycal-tip').addEventListener('click',e=>{const j=e.target.closest('[data-jump]'); if(j){e.preventDefault(); jumpTo(j.dataset.jump, j.dataset.grp, j);}});
+  grid.addEventListener('keydown',e=>{const t=e.target.closest('[data-d]'); if(t&&(e.key==='Enter'||e.key===' ')){e.preventDefault();show(t.dataset.d, t);}});
+  document.getElementById('ycal-prev').onclick=()=>{year--;draw();};
+  document.getElementById('ycal-next').onclick=()=>{year++;draw();};
+  draw();
+})();
+
+</script>
+
+<script>
+(function(){
+  const KEY='dw_trades', side={k:'want'};
+  const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []}};
+  const save=v=>{try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}};
+  const norm=t=>t.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  function matches(p,all){ // a want meets a have for the same item at or under the want price
+    return all.filter(q=>q.id!==p.id&&q.side!==p.side&&norm(q.item)===norm(p.item)&&
+      (p.side==='want'?q.price<=p.price:q.price>=p.price)).length}
+  function render(){
+    const all=load().sort((a,b)=>b.t-a.t);
+    document.getElementById('tposts').innerHTML=all.length?all.map(p=>{const m=matches(p,all);return `<div class="post">
+      <span class="tag ${p.side}">${p.side==='want'?'WANT':'HAVE'}</span>
+      <div><h4>${esc(p.item)}</h4><div class="meta">${esc(p.cat)}${p.cond?' · '+esc(p.cond):''} · ${esc(p.area)}</div>
+      ${m?`<div class="match">&#10003; ${m} local match${m>1?'es':''} at your price</div>`:''}</div>
+      <span class="px">C$${(+p.price).toFixed(0)}</span></div>`}).join(''):
+      '<p class="meta" style="font-family:var(--mono);color:var(--ink-3)">No posts yet. Post a want or a have and matches show up here.</p>';
+  }
+  document.querySelector('#tform .seg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+    side.k=b.dataset.k;document.querySelectorAll('#tform .seg button').forEach(x=>x.classList.toggle('on',x===b))});
+  document.getElementById('tform').addEventListener('submit',e=>{e.preventDefault();const v=id=>document.getElementById(id).value.trim();
+    const price=+v('t-price');if(!v('t-item')||!(price>0))return;
+    save(load().concat({id:Date.now()+''+Math.random(),side:side.k,item:v('t-item'),cat:v('t-cat'),cond:v('t-cond'),price,area:v('t-area'),t:Date.now()}));
+    e.target.reset();render()});
+  render();
+})();
+</script>
+</body>
+</html>
