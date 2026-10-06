@@ -47,6 +47,18 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
 
   <div id="app" hidden>
     <div id="setup"></div>
+    <section class="card" id="pk-card" aria-labelledby="pk-h">
+      <h1 id="pk-h">My passcodes</h1>
+      <p style="color:var(--ink2);margin-top:0">One passcode per device. Use it instead of your master password on this page and on Website traffic. Cancel it and it stops working straight away &mdash; handy if a phone is lost. Only your master password can make or cancel passcodes.</p>
+      <form id="pk-form" style="display:flex;gap:8px;flex-wrap:wrap;align-items:end">
+        <div style="flex:1;min-width:200px"><label for="pk-label">Name it</label><input id="pk-label" placeholder="e.g. My phone" maxlength="60"></div>
+        <button>Make passcode</button>
+      </form>
+      <div id="pk-new" style="margin-top:12px"></div>
+      <div id="pk-msg" class="notice" hidden></div>
+      <div class="tablewrap" style="margin-top:12px"><table><thead><tr><th>Name</th><th>Made</th><th>Last used</th><th>Status</th><th></th></tr></thead><tbody id="pk-rows"></tbody></table></div>
+      <p style="margin-top:10px"><button type="button" class="ghost" id="pk-all">Cancel every passcode</button></p>
+    </section>
     <section class="card" aria-labelledby="open-h">
       <h1 id="open-h">Open the apps</h1>
       <p style="color:var(--ink2);margin-top:0">Each app opens in a new tab. Sign in there with <b>dan@calasautomations.com</b> and this same admin password &mdash; it's the master login for every app and every customer copy.</p>
@@ -162,7 +174,7 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
   function plus(n){var d=new Date();d.setDate(d.getDate()+n);return iso(d)}
 
   function login(pw){PW=pw;return call('/api/admin/login',{}).then(function(d){
-    if(!d.ok){$('#lmsg').hidden=false;$('#lmsg').textContent=d._status===401?'That password didn’t work.':'Couldn’t reach the server.';ss('cpw',null);return}
+    if(!d.ok){$('#lmsg').hidden=false;$('#lmsg').textContent=d._status===429?'Too many wrong tries from this connection. Wait 15 minutes and try again.':d._status===401?'That password didn’t work.':'Couldn’t reach the server.';ss('cpw',null);return}
     ss('cpw',pw);$('#login').hidden=true;$('#app').hidden=false;$('#out').hidden=false;load()}).catch(function(){$('#lmsg').hidden=false;$('#lmsg').textContent='Couldn’t reach the server.'})}
   $('#lf').addEventListener('submit',function(e){e.preventDefault();login($('#pw').value)});
   // Quote Me and Watchpost live on this same website, so the admin password signs you in before the tab opens.
@@ -307,4 +319,29 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
 })();
 </script>
 <script src="/calas-brandbar.js?v=20261001a" defer></script><script src="/pw-eye.js" defer></script>
+<script id="pk-js">
+(function(){
+  var API='https://calas-access.calasdan.workers.dev';
+  function pw(){try{return sessionStorage.getItem('cpw')||''}catch(e){return ''}}
+  function call(path,body){return fetch(API+path,{method:body?'POST':'GET',headers:{'Authorization':'Bearer '+pw(),'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined}).then(function(r){return r.json().then(function(d){d._status=r.status;return d})})}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function when(ms){return ms?new Date(ms).toLocaleString('en-CA',{timeZone:'America/Winnipeg',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'never'}
+  var el=function(id){return document.getElementById(id)};
+  function msg(t,bad){var m=el('pk-msg');m.hidden=!t;m.className='notice'+(bad?' err':'');m.textContent=t||''}
+  function load(){call('/api/admin/keys').then(function(d){
+    if(d._status===403){el('pk-form').hidden=true;el('pk-all').hidden=true;msg('You signed in with a passcode. Sign in with your master password to make or cancel passcodes.');el('pk-rows').innerHTML='';return}
+    if(d._status===503||d._status===404){msg('Passcodes are not switched on yet. Double-click DEPLOY-PASSCODES.cmd in the calas-access folder once.',true);return}
+    if(!d.ok){msg('Could not load passcodes.',true);return}
+    msg('');el('pk-rows').innerHTML=d.keys.length?d.keys.map(function(k){var on=!k.revoked_at;
+      return '<tr><td>'+esc(k.label)+'</td><td>'+when(k.created_at)+'</td><td>'+when(k.last_used_at)+'</td><td>'+(on?'Working':'Cancelled '+when(k.revoked_at))+'</td><td><button class="ghost" data-pk="'+k.id+'" data-act="'+(on?'cancel':'restore')+'">'+(on?'Cancel':'Turn back on')+'</button></td></tr>'}).join(''):'<tr><td colspan="5">No passcodes yet.</td></tr>'})}
+  el('pk-form').addEventListener('submit',function(e){e.preventDefault();var label=el('pk-label').value.trim()||'Passcode';
+    call('/api/admin/keys',{label:label}).then(function(d){if(!d.ok){msg(d._status===503?'Passcodes are not switched on yet. Double-click DEPLOY-PASSCODES.cmd once.':'Could not make a passcode.',true);return}
+      el('pk-label').value='';el('pk-new').innerHTML='<div class="notice">New passcode for <b>'+esc(d.label)+'</b>: <code style="font-size:20px;letter-spacing:.06em;user-select:all">'+esc(d.passcode)+'</code><br>Write it down or save it in your password manager now. It will not be shown again.</div>';load()})});
+  el('pk-rows').addEventListener('click',function(e){var b=e.target.closest('[data-pk]');if(!b)return;
+    if(b.dataset.act==='cancel'&&!confirm('Cancel this passcode? It stops working straight away.'))return;
+    call('/api/admin/keys/'+b.dataset.pk+'/'+b.dataset.act,{}).then(load)});
+  el('pk-all').addEventListener('click',function(){if(!confirm('Cancel every passcode? Only your master password will work after this.'))return;call('/api/admin/keys/cancel-all',{}).then(load)});
+  var t=setInterval(function(){var a=el('app');if(a&&!a.hidden&&pw()){clearInterval(t);load()}},500);
+})();
+</script>
 </body></html>
