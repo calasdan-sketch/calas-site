@@ -528,7 +528,7 @@
   <section id="how">
     <div class="sh"><h2>How it works</h2><p>free · local · legal</p></div>
     <div class="rows">
-      <div class="row"><div class="num">01</div><div><h4>Track</h4><p>One calendar for Pokémon, sneakers and sports cards — pulled from release feeds and official schedules, with a Winnipeg/Canada lens on exchange, duty and local stock.</p></div></div>
+      <div class="row"><div class="num">01</div><div><h4>Track</h4><p>One calendar for Pokémon and sneakers — pulled from release feeds and official schedules, with a Winnipeg/Canada lens on exchange, duty and local stock.</p></div></div>
       <div class="row"><div class="num">02</div><div><h4>Weigh the odds</h4><p>Real sold comps from sources that publish them, minus marketplace fees, shipping, exchange and tax — with the downside shown. When there's no real data, you get "unknown," never a guess.</p></div></div>
       <div class="row"><div class="num">03</div><div><h4>Decide</h4><p>Buy manually, within store limits. We grade our own past calls in the open — hits and misses both — so "honest" is something you can actually check.</p></div></div>
     </div>
@@ -607,9 +607,6 @@ const FALLBACK_DROPS = [
   {id:'ptcg-mcd', cat:'Pokémon · Promo', group:'pokemon', when:'NOV 2026', title:"McDonald's 30th-Anniversary packs",
    chips:['Free w/ Happy Meal','Oversupplied'], badge:'unknown', comp:null,
    basis:'Fun to grab, poor to flip — too many printed. Only specific insert cards move; we flag those, not the packs.'},
-  {id:'sports-cal', cat:'Sports / Hockey', group:'cards', when:'CALENDAR', title:'Release calendar only',
-   chips:['No free sold data','Dates + MSRP'], badge:'unknown', comp:null,
-   basis:'No honest free source for sold prices yet, so we track the drops and say "unknown" on odds — never a faked number.'},
 ];
 /* prefer live prices from drops.js when present, else the baked fallback */
 const DROPS = ((window.DROPS && window.DROPS.length) ? window.DROPS : FALLBACK_DROPS).concat(window.SNEAKERS || [{
