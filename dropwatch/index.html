@@ -294,7 +294,7 @@
   .safe{margin-top:16px;font-size:13.5px;color:var(--ink-2);border-left:3px solid var(--volt);padding-left:12px}
 
   /* ---- Year calendar: Tron/cyberpunk, sits in the right margin on wide screens ---- */
-  .ycal{zoom:1.1;--cy:#2ef2ff;--mg:#ff2bd6;font-family:var(--mono);color:#bfefff;background:rgba(4,8,22,.86);
+  .ycal{--cy:#2ef2ff;--mg:#ff2bd6;font-family:var(--mono);color:#bfefff;background:rgba(4,8,22,.86);
     border:1px solid rgba(46,242,255,.55);border-radius:10px;padding:14px 14px 10px;
     box-shadow:0 0 0 1px rgba(46,242,255,.12) inset,0 0 18px rgba(46,242,255,.25),0 0 40px rgba(255,43,214,.12);
     background-image:linear-gradient(rgba(46,242,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(46,242,255,.06) 1px,transparent 1px);
@@ -340,8 +340,8 @@
   .card.flash{animation:cardflash 1.8s ease-out;opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){.card.flash{animation:none;outline:2px solid #2ef2ff}}
   #ycal-wrap{margin:28px auto 0}
-  @media (min-width:2040px){#ycal-wrap{position:fixed;top:96px;right:18px;width:453px;margin:0;z-index:20;max-height:calc(100vh - 110px);overflow:auto}}
-  @media (max-width:2039px){#ycal-wrap{max-width:578px}}
+  @media (min-width:2040px){#ycal-wrap{position:fixed;top:96px;right:18px;width:412px;margin:0;z-index:20;max-height:calc(100vh - 110px);overflow:auto}}
+  @media (max-width:2039px){#ycal-wrap{max-width:525px}}
   /* phones: 2 months per row, normal size, so dates stay readable and nothing spills off-screen */
   @media(max-width:600px){
     .ycal{zoom:1}
