@@ -436,12 +436,14 @@
   @keyframes dweye{0%,45%{opacity:.5}60%{opacity:1}100%{opacity:.6}}
   @keyframes dwtrace{0%{stroke-dashoffset:40;opacity:.2}50%{opacity:.9}100%{stroke-dashoffset:0;opacity:.2}}
   @keyframes dwring{0%,100%{opacity:.45}55%{opacity:1}}
-  .crest .dwfig{transform-box:fill-box;transform-origin:center;animation:dwclue 3.4s ease-in-out infinite}
-  .crest .dwscan{transform-box:fill-box;transform-origin:center;animation:dwscan 3.4s ease-in-out infinite}
-  .crest .dweye{animation:dweye 3.4s ease-in-out infinite}
-  .crest .dwtrace{stroke-dasharray:40;animation:dwtrace 3.4s ease-in-out infinite}
-  .crest .dwring{animation:dwring 3.4s ease-in-out infinite}
-  @media(prefers-reduced-motion:reduce){.crest .dwfig,.crest .dwscan,.crest .dweye,.crest .dwtrace,.crest .dwring{animation:none}.crest .dwfig{transform:scale(1.08)}}
+  .dwfig{transform-box:fill-box;transform-origin:center;animation:dwclue 3.4s ease-in-out infinite}
+  .dwscan{transform-box:fill-box;transform-origin:center;animation:dwscan 3.4s ease-in-out infinite}
+  .dweye{animation:dweye 3.4s ease-in-out infinite}
+  .dwtrace{stroke-dasharray:40;animation:dwtrace 3.4s ease-in-out infinite}
+  .dwring{animation:dwring 3.4s ease-in-out infinite}
+  @media(prefers-reduced-motion:reduce){.dwfig,.dwscan,.dweye,.dwtrace,.dwring{animation:none}.dwfig{transform:scale(1.08)}}
+  .brand .n .wm{display:inline-flex;align-items:center;line-height:1}
+  .brand .omk{width:1.3em;height:1.3em;flex:0 0 auto;margin:0 .01em;position:relative;top:.03em}
 </style>
 </head>
 <body>
@@ -469,34 +471,33 @@
 <header>
   <div class="wrap bar">
     <div class="brand">
-      <svg class="crest" viewBox="0 0 76 76" width="38" height="38" role="img" aria-label="Dropwatch">
-        <defs>
-          <linearGradient id="dwaR" x1="8" y1="8" x2="64" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#38e0d4"/><stop offset=".55" stop-color="#9b7bff"/><stop offset="1" stop-color="#ff5d8f"/></linearGradient>
-          <radialGradient id="dwaGl" cx="44%" cy="40%" r="62%"><stop offset="0" stop-color="#6ff0e6" stop-opacity=".45"/><stop offset=".5" stop-color="#241a3e" stop-opacity=".42"/><stop offset="1" stop-color="#070b16"/></radialGradient>
-          <clipPath id="dwaC"><circle cx="37" cy="37" r="26"/></clipPath>
-        </defs>
-        <circle class="dwring" cx="37" cy="37" r="30.5" fill="none" stroke="url(#dwaR)" stroke-width="3"/>
-        <g stroke="#38e0d4" stroke-width="1.4" fill="none" stroke-linecap="round">
-          <path class="dwtrace" d="M66 30 h7 M73 30 v8"/>
-          <path class="dwtrace" d="M10 46 h-6 M4 46 v-8" style="animation-delay:.5s"/>
-          <path class="dwtrace" d="M37 8 v-5" style="animation-delay:1s"/>
-        </g>
-        <line x1="57" y1="57" x2="70" y2="70" stroke="#05121d" stroke-width="11" stroke-linecap="round"/>
-        <line x1="57" y1="57" x2="70" y2="70" stroke="url(#dwaR)" stroke-width="6.5" stroke-linecap="round"/>
-        <circle cx="37" cy="37" r="29" fill="url(#dwaGl)" stroke="#05121d" stroke-width="9"/>
-        <circle cx="37" cy="37" r="29" fill="none" stroke="url(#dwaR)" stroke-width="4.5"/>
-        <g clip-path="url(#dwaC)">
-          <g class="dwfig">
-            <path d="M37 18 C27 18 22 28 21 39 C21 51 27 61 37 63 C47 61 53 51 53 39 C52 28 47 18 37 18 Z" fill="#0b1327"/>
-            <ellipse cx="37" cy="43" rx="10" ry="12" fill="#060a14"/>
-            <ellipse class="dweye" cx="32" cy="42" rx="2.6" ry="3.4" fill="#38e0d4"/>
-            <ellipse class="dweye" cx="42" cy="42" rx="2.6" ry="3.4" fill="#ffd84a" style="animation-delay:.12s"/>
+      <div class="n">
+        <span class="wm">DR<svg class="omk" viewBox="0 0 76 76" role="img" aria-label="o">
+          <defs>
+            <linearGradient id="dwaR" x1="8" y1="8" x2="64" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#38e0d4"/><stop offset=".55" stop-color="#9b7bff"/><stop offset="1" stop-color="#ff5d8f"/></linearGradient>
+            <radialGradient id="dwaGl" cx="44%" cy="40%" r="62%"><stop offset="0" stop-color="#6ff0e6" stop-opacity=".45"/><stop offset=".5" stop-color="#241a3e" stop-opacity=".42"/><stop offset="1" stop-color="#070b16"/></radialGradient>
+            <clipPath id="dwaC"><circle cx="37" cy="37" r="26"/></clipPath>
+          </defs>
+          <circle class="dwring" cx="37" cy="37" r="30.5" fill="none" stroke="url(#dwaR)" stroke-width="3"/>
+          <g stroke="#38e0d4" stroke-width="1.4" fill="none" stroke-linecap="round">
+            <path class="dwtrace" d="M66 30 h7 M73 30 v8"/>
+            <path class="dwtrace" d="M10 46 h-6 M4 46 v-8" style="animation-delay:.5s"/>
           </g>
-          <rect class="dwscan" x="11" y="36" width="52" height="3" fill="#38e0d4" opacity=".85"/>
-        </g>
-        <path d="M22 26 q5 -7 13 -8" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2.2" stroke-linecap="round"/>
-      </svg>
-      <div class="n">DROPWATCH<small>BY CALAS AUTOMATIONS</small></div>
+          <line x1="57" y1="57" x2="70" y2="70" stroke="#05121d" stroke-width="11" stroke-linecap="round"/>
+          <line x1="57" y1="57" x2="70" y2="70" stroke="url(#dwaR)" stroke-width="6.5" stroke-linecap="round"/>
+          <circle cx="37" cy="37" r="29" fill="url(#dwaGl)" stroke="#05121d" stroke-width="9"/>
+          <circle cx="37" cy="37" r="29" fill="none" stroke="url(#dwaR)" stroke-width="4.5"/>
+          <g clip-path="url(#dwaC)">
+            <g class="dwfig">
+              <path d="M37 18 C27 18 22 28 21 39 C21 51 27 61 37 63 C47 61 53 51 53 39 C52 28 47 18 37 18 Z" fill="#0b1327"/>
+              <ellipse cx="37" cy="43" rx="10" ry="12" fill="#060a14"/>
+              <ellipse class="dweye" cx="32" cy="42" rx="3" ry="3.8" fill="#38e0d4"/>
+              <ellipse class="dweye" cx="42" cy="42" rx="3" ry="3.8" fill="#ffd84a" style="animation-delay:.12s"/>
+            </g>
+            <rect class="dwscan" x="11" y="36" width="52" height="3" fill="#38e0d4" opacity=".85"/>
+          </g>
+          <path d="M22 26 q5 -7 13 -8" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>PWATCH</span><small>BY CALAS AUTOMATIONS</small></div>
     </div>
     <nav>
       <a class="lnk" href="#drops">Drops</a>
