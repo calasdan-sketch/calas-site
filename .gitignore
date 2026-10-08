@@ -2,3 +2,9 @@
 
 # graft's local graph cache — regenerable, not committed (run `graft build`).
 /graft/
+
+# Internal ops docs — must NEVER be published (repo + Pages are both public).
+# Live copies: C:\Users\danie\calas-private\site-docs\
+PRICING.md
+SETUP-PAYMENTS.md
+CLAUDE.md
