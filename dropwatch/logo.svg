@@ -1,12 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Dropwatch">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 76" role="img" aria-label="Dropwatch">
   <defs>
-    <linearGradient id="dwg" x1="14" y1="4" x2="50" y2="60" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#38e0d4"/><stop offset="1" stop-color="#9b7bff"/>
-    </linearGradient>
+    <linearGradient id="dwR" x1="8" y1="8" x2="64" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#38e0d4"/><stop offset=".55" stop-color="#9b7bff"/><stop offset="1" stop-color="#ff5d8f"/></linearGradient>
+    <radialGradient id="dwGl" cx="44%" cy="40%" r="62%"><stop offset="0" stop-color="#6ff0e6" stop-opacity=".45"/><stop offset=".5" stop-color="#241a3e" stop-opacity=".42"/><stop offset="1" stop-color="#070b16"/></radialGradient>
+    <clipPath id="dwC"><circle cx="37" cy="37" r="26"/></clipPath>
   </defs>
-  <path d="M32 3 C32 3 10 27 10 40 a22 22 0 0 0 44 0 C54 27 32 3 32 3 Z" fill="url(#dwg)"/>
-  <path d="M15 41 Q32 25 49 41 Q32 57 15 41 Z" fill="#0b0d12"/>
-  <circle cx="32" cy="41" r="9.5" fill="none" stroke="#38e0d4" stroke-width="2"/>
-  <path d="M34.6 32.5 L27.6 42.4 h4.6 l-2.2 7.9 7.9-11.1 h-4.7 Z" fill="#ffd84a"/>
-  <path d="M22 19 Q26 13 30 9" stroke="#fff" stroke-opacity=".45" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <line x1="57" y1="57" x2="70" y2="70" stroke="#05121d" stroke-width="11" stroke-linecap="round"/>
+  <line x1="57" y1="57" x2="70" y2="70" stroke="url(#dwR)" stroke-width="6.5" stroke-linecap="round"/>
+  <circle cx="37" cy="37" r="29" fill="url(#dwGl)" stroke="#05121d" stroke-width="9"/>
+  <circle cx="37" cy="37" r="29" fill="none" stroke="url(#dwR)" stroke-width="4.5"/>
+  <g clip-path="url(#dwC)">
+    <path d="M37 18 C27 18 22 28 21 39 C21 51 27 61 37 63 C47 61 53 51 53 39 C52 28 47 18 37 18 Z" fill="#0b1327"/>
+    <ellipse cx="37" cy="43" rx="10" ry="12" fill="#060a14"/>
+    <ellipse cx="32" cy="42" rx="2.6" ry="3.4" fill="#38e0d4"/>
+    <ellipse cx="42" cy="42" rx="2.6" ry="3.4" fill="#ffd84a"/>
+  </g>
+  <path d="M22 26 q5 -7 13 -8" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2.2" stroke-linecap="round"/>
 </svg>

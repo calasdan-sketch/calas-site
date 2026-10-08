@@ -22,7 +22,7 @@
     --pos:#4fd69c; --warn:#e8b765; --neg:#e8716b;
     --display:'Outfit',system-ui,sans-serif; --mono:'IBM Plex Mono',monospace;
     --ease:cubic-bezier(0.16,1,0.3,1);
-    --maxw:1180px;
+    --maxw:1080px;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;background:#0b0d12}
@@ -173,6 +173,7 @@
 
   /* ---- drops: bento, not equal thirds ---- */
   .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+  .bento-break{grid-column:1/-1;height:0;margin:0;padding:0}
   .card{grid-column:span 2;background:rgba(20,24,36,.88);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:16px;
     padding:18px;display:flex;flex-direction:column;transition:transform .2s var(--ease),border-color .2s}
   .card:hover{transform:translateY(-3px);border-color:#313852}
@@ -294,7 +295,7 @@
   .safe{margin-top:16px;font-size:13.5px;color:var(--ink-2);border-left:3px solid var(--volt);padding-left:12px}
 
   /* ---- Year calendar: Tron/cyberpunk, sits in the right margin on wide screens ---- */
-  .ycal{zoom:1.1;--cy:#2ef2ff;--mg:#ff2bd6;font-family:var(--mono);color:#bfefff;background:rgba(4,8,22,.86);
+  .ycal{zoom:.84;--cy:#2ef2ff;--mg:#ff2bd6;font-family:var(--mono);color:#bfefff;background:rgba(4,8,22,.86);
     border:1px solid rgba(46,242,255,.55);border-radius:10px;padding:14px 14px 10px;
     box-shadow:0 0 0 1px rgba(46,242,255,.12) inset,0 0 18px rgba(46,242,255,.25),0 0 40px rgba(255,43,214,.12);
     background-image:linear-gradient(rgba(46,242,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(46,242,255,.06) 1px,transparent 1px);
@@ -303,7 +304,7 @@
   .ycal-head b{font-size:19px;letter-spacing:.32em;color:var(--cy);text-shadow:0 0 6px var(--cy),0 0 16px rgba(46,242,255,.6)}
   .ycal-head button{background:none;border:1px solid rgba(46,242,255,.5);color:var(--cy);border-radius:6px;width:26px;height:24px;cursor:pointer;font:inherit}
   .ycal-head button:hover,.ycal-head button:focus-visible{box-shadow:0 0 10px var(--cy);outline:none}
-  .ycal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 10px}
+  .ycal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px 6px}
   .ym h5{margin:0 0 4px;font-size:12.5px;letter-spacing:.22em;color:#7fd8e6;font-weight:600}
   .ym-days{display:grid;grid-template-columns:repeat(7,1fr);gap:1px}
   .ym-days span{position:relative;font-size:12.5px;line-height:19px;text-align:center;color:rgba(191,239,255,.45);border-radius:2px}
@@ -340,10 +341,10 @@
   .card.flash{animation:cardflash 1.8s ease-out;opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){.card.flash{animation:none;outline:2px solid #2ef2ff}}
   #ycal-wrap{margin:28px auto 0}
-  @media (min-width:1700px){#ycal-wrap{position:fixed;top:96px;right:18px;width:453px;margin:0;z-index:20;max-height:calc(100vh - 110px);overflow:auto}}
+  @media (min-width:1830px){#ycal-wrap{position:fixed;top:96px;right:16px;width:354px;margin:0;z-index:20;max-height:calc(100vh - 110px);overflow-y:auto;overflow-x:hidden}}
   /* calendar pinned in the right margin: when the margin is too narrow, slide the page left to make room */
   @media (min-width:1700px) and (max-width:2159px){.wrap{margin-left:max(0px,calc(100vw - var(--maxw) - 500px));margin-right:0} header .wrap{margin:0 auto}}
-  @media (max-width:1699px){#ycal-wrap{max-width:578px}}
+  @media (max-width:1829px){#ycal-wrap{max-width:560px;margin:18px auto 0}}
   /* phones: 2 months per row, normal size, so dates stay readable and nothing spills off-screen */
   @media(max-width:600px){
     .ycal{zoom:1}
@@ -371,6 +372,76 @@
   .spin-x{position:fixed;top:18px;right:22px;background:none;border:1px solid rgba(46,242,255,.5);color:#2ef2ff;border-radius:8px;
     width:40px;height:40px;font-size:20px;cursor:pointer}
   .spin-x:focus-visible{outline:2px solid #fff}
+    /* ===== Market left rail (interactive, 2026-10-07) ===== */
+  #mkt-rail{--cyn:#2ef2ff;--mgn:#ff2bd6;--voltx:#ffd84a;background:rgba(4,8,22,.86);border:1px solid rgba(56,224,212,.28);border-radius:16px;padding:16px 16px 14px;box-shadow:0 0 0 1px rgba(56,224,212,.05),0 24px 60px rgba(0,0,0,.5)}
+  @media(min-width:1830px){#mkt-rail{position:fixed;top:96px;left:16px;width:346px;margin:0;z-index:20;max-height:calc(100vh - 110px);overflow:auto}}
+  @media(max-width:1829px){#mkt-rail{max-width:560px;margin:28px auto 0}}
+  #mkt-rail .grad{background:linear-gradient(90deg,#19c9bd 0%,#7b5cff 50%,#ff2f74 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  #mkt-rail .mkt-head{display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+  #mkt-rail .mkt-head b{font-family:var(--mono);font-size:18px;letter-spacing:.3em}
+  #mkt-rail input.mkt-t{position:absolute;opacity:0;pointer-events:none}
+  #mkt-rail .mkt-tabs{display:flex;gap:8px;margin-bottom:10px}
+  #mkt-rail .mkt-tab{flex:1;text-align:center;font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);padding:9px 0;border:1px solid var(--line);border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
+  #mkt-rail .mkt-dot{width:9px;height:9px;border-radius:2px}
+  #mkt-rail .mkt-dot.p{background:var(--cyn);box-shadow:0 0 6px var(--cyn)}#mkt-rail .mkt-dot.k{background:var(--mgn);box-shadow:0 0 6px var(--mgn)}
+  #mkt-rail #mkt-p:checked~.mkt-tabs label[for=mkt-p]{color:#041014;background:var(--cyn);border-color:transparent;box-shadow:0 0 14px rgba(46,242,255,.5)}
+  #mkt-rail #mkt-k:checked~.mkt-tabs label[for=mkt-k]{color:#1a0012;background:var(--mgn);border-color:transparent;box-shadow:0 0 14px rgba(255,43,214,.45)}
+  #mkt-rail .mkt-pane{display:none;flex-direction:column;gap:8px}
+  #mkt-rail #mkt-p:checked~.mkt-poke{display:flex}#mkt-rail #mkt-k:checked~.mkt-kicks{display:flex}
+  #mkt-rail details.mkt-sec{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  #mkt-rail details.mkt-sec>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px}
+  #mkt-rail summary::-webkit-details-marker{display:none}
+  #mkt-rail .mkt-sttl{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+  #mkt-rail .mkt-chev{width:16px;height:16px;transition:transform .2s var(--ease);color:var(--ink-3);flex:0 0 16px}
+  #mkt-rail details[open] .mkt-chev{transform:rotate(180deg)}
+  #mkt-rail .mkt-body{padding:0 8px 6px}
+  #mkt-rail .mkt-row{display:flex;align-items:center;gap:10px;padding:6px 6px;border-top:1px solid var(--line)}
+  #mkt-rail .mkt-row .nm{flex:1;min-width:0}
+  #mkt-rail .mkt-row .nm b{display:block;font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #mkt-rail .mkt-row .nm span{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+  #mkt-rail .mkt-row .pr{text-align:right}#mkt-rail .mkt-row .pr b{font-family:var(--mono);font-weight:600;font-size:13px;color:var(--voltx)}
+  #mkt-rail .mkt-row .pr .c{font-family:var(--mono);font-size:10.5px}
+  #mkt-rail .up{color:var(--pos)}#mkt-rail .down{color:var(--neg)}
+  #mkt-rail .mkt-tc{border-top:1px solid var(--line);padding:7px 6px}
+  #mkt-rail .mkt-tc .th{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  #mkt-rail .mkt-tc .th b{font-weight:700;font-size:12.5px}#mkt-rail .mkt-tc .th .c{font-family:var(--mono);font-size:10.5px}
+  #mkt-rail .chartwrap{position:relative;margin-top:10px;touch-action:none}
+  #mkt-rail .chartwrap svg{display:block;width:100%;height:40px;overflow:visible;cursor:ew-resize}
+  #mkt-rail .ln{fill:none;stroke:var(--cyn);stroke-width:2.5;stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(46,242,255,.55))}
+  #mkt-rail .ln.dn{stroke:var(--neg);filter:drop-shadow(0 0 5px rgba(232,113,107,.5))}
+  #mkt-rail .fillA{fill:rgba(46,242,255,.12)}
+  #mkt-rail .ball{cursor:grab;filter:drop-shadow(0 0 6px #ff3d9a)}#mkt-rail .ball:active{cursor:grabbing}
+  #mkt-rail .tip{position:absolute;transform:translate(-50%,-120%);pointer-events:none;white-space:nowrap;font-family:var(--mono);font-size:10.5px;padding:3px 7px;border-radius:7px;background:rgba(10,14,24,.95);border:1px solid rgba(123,92,255,.5);box-shadow:0 0 12px rgba(123,92,255,.35);line-height:1.35;text-align:center}
+  #mkt-rail .tip .d{color:#c9b8ff;letter-spacing:.06em}#mkt-rail .tip .p{color:var(--voltx);font-weight:600}
+  #mkt-rail .readout{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+  #mkt-rail .readout .px{font-size:17px;font-weight:600;color:var(--voltx)}
+  #mkt-rail .hint{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);letter-spacing:.1em;margin-top:3px;opacity:.8}
+
+  #ycal-grid .ym{background:rgba(46,242,255,.06);border:1px solid rgba(46,242,255,.22);border-radius:11px;padding:5px 5px 6px;box-shadow:0 0 0 1px rgba(46,242,255,.04) inset}
+  #ycal-grid .ym h5{margin:0 0 4px}
+  @media(min-width:1830px){.wrap{transform:translateX(1.5cm)}}
+  #drops .sh h2{background:linear-gradient(90deg,#19c9bd 0%,#7b5cff 40%,#ff2f74 62%,#ffd84a 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  @media(min-width:1830px){
+    #drops .sh{display:block;text-align:center}
+    #drops .sh p{text-align:center}
+    #drops #filters{justify-content:center}
+    #drops .card[data-g="pokemon"]{position:relative;left:2.5cm}
+    #drops .card[data-g="pokemon"][data-out="1"]{left:5cm}
+    header .wrap{transform:none}
+  }
+
+  /* ---- animated crest (4C focus-in) ---- */
+  @keyframes dwclue{0%{transform:scale(.78);filter:blur(1.6px)}18%{transform:scale(.82);filter:blur(1.3px)}55%{transform:scale(1.16);filter:blur(0)}80%{transform:scale(1.16);filter:blur(0)}100%{transform:scale(.78);filter:blur(1.6px)}}
+  @keyframes dwscan{0%{transform:translateY(-30px);opacity:0}12%{opacity:.9}55%{opacity:.9}70%{opacity:0}100%{opacity:0}}
+  @keyframes dweye{0%,45%{opacity:.5}60%{opacity:1}100%{opacity:.6}}
+  @keyframes dwtrace{0%{stroke-dashoffset:40;opacity:.2}50%{opacity:.9}100%{stroke-dashoffset:0;opacity:.2}}
+  @keyframes dwring{0%,100%{opacity:.45}55%{opacity:1}}
+  .crest .dwfig{transform-box:fill-box;transform-origin:center;animation:dwclue 3.4s ease-in-out infinite}
+  .crest .dwscan{transform-box:fill-box;transform-origin:center;animation:dwscan 3.4s ease-in-out infinite}
+  .crest .dweye{animation:dweye 3.4s ease-in-out infinite}
+  .crest .dwtrace{stroke-dasharray:40;animation:dwtrace 3.4s ease-in-out infinite}
+  .crest .dwring{animation:dwring 3.4s ease-in-out infinite}
+  @media(prefers-reduced-motion:reduce){.crest .dwfig,.crest .dwscan,.crest .dweye,.crest .dwtrace,.crest .dwring{animation:none}.crest .dwfig{transform:scale(1.08)}}
 </style>
 </head>
 <body>
@@ -398,7 +469,33 @@
 <header>
   <div class="wrap bar">
     <div class="brand">
-      <img class="crest" src="logo.svg" alt="" width="38" height="38">
+      <svg class="crest" viewBox="0 0 76 76" width="38" height="38" role="img" aria-label="Dropwatch">
+        <defs>
+          <linearGradient id="dwaR" x1="8" y1="8" x2="64" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#38e0d4"/><stop offset=".55" stop-color="#9b7bff"/><stop offset="1" stop-color="#ff5d8f"/></linearGradient>
+          <radialGradient id="dwaGl" cx="44%" cy="40%" r="62%"><stop offset="0" stop-color="#6ff0e6" stop-opacity=".45"/><stop offset=".5" stop-color="#241a3e" stop-opacity=".42"/><stop offset="1" stop-color="#070b16"/></radialGradient>
+          <clipPath id="dwaC"><circle cx="37" cy="37" r="26"/></clipPath>
+        </defs>
+        <circle class="dwring" cx="37" cy="37" r="30.5" fill="none" stroke="url(#dwaR)" stroke-width="3"/>
+        <g stroke="#38e0d4" stroke-width="1.4" fill="none" stroke-linecap="round">
+          <path class="dwtrace" d="M66 30 h7 M73 30 v8"/>
+          <path class="dwtrace" d="M10 46 h-6 M4 46 v-8" style="animation-delay:.5s"/>
+          <path class="dwtrace" d="M37 8 v-5" style="animation-delay:1s"/>
+        </g>
+        <line x1="57" y1="57" x2="70" y2="70" stroke="#05121d" stroke-width="11" stroke-linecap="round"/>
+        <line x1="57" y1="57" x2="70" y2="70" stroke="url(#dwaR)" stroke-width="6.5" stroke-linecap="round"/>
+        <circle cx="37" cy="37" r="29" fill="url(#dwaGl)" stroke="#05121d" stroke-width="9"/>
+        <circle cx="37" cy="37" r="29" fill="none" stroke="url(#dwaR)" stroke-width="4.5"/>
+        <g clip-path="url(#dwaC)">
+          <g class="dwfig">
+            <path d="M37 18 C27 18 22 28 21 39 C21 51 27 61 37 63 C47 61 53 51 53 39 C52 28 47 18 37 18 Z" fill="#0b1327"/>
+            <ellipse cx="37" cy="43" rx="10" ry="12" fill="#060a14"/>
+            <ellipse class="dweye" cx="32" cy="42" rx="2.6" ry="3.4" fill="#38e0d4"/>
+            <ellipse class="dweye" cx="42" cy="42" rx="2.6" ry="3.4" fill="#ffd84a" style="animation-delay:.12s"/>
+          </g>
+          <rect class="dwscan" x="11" y="36" width="52" height="3" fill="#38e0d4" opacity=".85"/>
+        </g>
+        <path d="M22 26 q5 -7 13 -8" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
       <div class="n">DROPWATCH<small>BY CALAS AUTOMATIONS</small></div>
     </div>
     <nav>
@@ -421,6 +518,52 @@
   <div class="ycal-key"><span><i style="background:#2ef2ff;box-shadow:0 0 6px #2ef2ff"></i>Pokémon &amp; cards</span><span><i style="background:#ff2bd6;box-shadow:0 0 6px #ff2bd6"></i>Sneakers</span><span><i style="background:transparent;outline:2px solid #f0c171;box-shadow:0 0 6px #ffea00"></i>&#9889; High-value (gold box)</span><span><i style="background:transparent;outline:2px dashed #39ff88"></i>Pre-orders open</span><span><i style="background:rgba(255,255,255,.2);outline:2px solid #fff"></i>Today</span></div>
   <div class="ycal-tip" id="ycal-tip" aria-live="polite">Tap a glowing day to see what drops.</div>
 </div></aside>
+<aside id="mkt-rail" aria-label="Market history and trending prices">
+  <input type="radio" name="mktt" id="mkt-p" class="mkt-t" checked>
+  <input type="radio" name="mktt" id="mkt-k" class="mkt-t">
+  <div class="mkt-head"><b class="grad">MARKET</b></div>
+  <div class="mkt-tabs">
+    <label class="mkt-tab" for="mkt-p"><span class="mkt-dot p"></span>Pok&eacute;mon</label>
+    <label class="mkt-tab" for="mkt-k"><span class="mkt-dot k"></span>Kicks</label>
+  </div>
+  <div class="mkt-pane mkt-poke">
+    <details class="mkt-sec" open><summary><span class="mkt-sttl grad">Market history</span><svg class="mkt-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary>
+      <div class="mkt-body">
+        <div class="mkt-row"><div class="nm"><b>Charizard ex &middot; Surging Sparks</b><span>released $120</span></div><div class="pr"><b>$412</b><div class="c up">&#9650; 243%</div></div></div>
+        <div class="mkt-row"><div class="nm"><b>Moonbreon &middot; Evolving Skies</b><span>released $700</span></div><div class="pr"><b>$2,050</b><div class="c up">&#9650; 193%</div></div></div>
+        <div class="mkt-row"><div class="nm"><b>Umbreon VMAX &middot; Evolving Skies</b><span>released $500</span></div><div class="pr"><b>$1,180</b><div class="c up">&#9650; 136%</div></div></div>
+      </div></details>
+    <details class="mkt-sec" open><summary><span class="mkt-sttl grad">Trending now</span><svg class="mkt-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary>
+      <div class="mkt-body">
+        <div class="mkt-tc"><div class="th"><b>Charizard ex</b><span class="c up">&#9650; 23% &middot; 90d</span></div>
+          <div class="chartwrap" data-pts='[["Apr",118],["May",150],["Jun",165],["Jul",250],["Aug",300],["Sep",360],["Oct",412]]'></div>
+          <div class="readout"><span class="px">$412</span><span class="dt">latest</span></div><div class="hint">&#9666; drag to scrub &#9656;</div></div>
+        <div class="mkt-tc"><div class="th"><b>Moonbreon</b><span class="c up">&#9650; 41% &middot; 90d</span></div>
+          <div class="chartwrap" data-pts='[["Apr",700],["May",980],["Jun",1200],["Jul",1500],["Aug",1700],["Sep",1900],["Oct",2050]]'></div>
+          <div class="readout"><span class="px">$2,050</span><span class="dt">latest</span></div><div class="hint">&#9666; drag to scrub &#9656;</div></div>
+      </div></details>
+  </div>
+  <div class="mkt-pane mkt-kicks">
+    <details class="mkt-sec" open><summary><span class="mkt-sttl grad">Market history</span><svg class="mkt-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary>
+      <div class="mkt-body">
+        <div class="mkt-row"><div class="nm"><b>AJ1 High &middot; Chicago Lost&amp;Found</b><span>retail $180</span></div><div class="pr"><b>$402</b><div class="c up">&#9650; 123%</div></div></div>
+        <div class="mkt-row"><div class="nm"><b>Jordan 4 &middot; Bred Reimagined</b><span>retail $300</span></div><div class="pr"><b>$345</b><div class="c up">&#9650; 15%</div></div></div>
+        <div class="mkt-row"><div class="nm"><b>Yeezy 350 &middot; Bone</b><span>retail $300</span></div><div class="pr"><b>$214</b><div class="c down">&#9660; 29%</div></div></div>
+      </div></details>
+    <details class="mkt-sec" open><summary><span class="mkt-sttl grad">Trending now</span><svg class="mkt-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></summary>
+      <div class="mkt-body">
+        <div class="mkt-tc"><div class="th"><b>AJ1 Lost &amp; Found</b><span class="c up">&#9650; 28% &middot; 90d</span></div>
+          <div class="chartwrap" data-pts='[["Apr",180],["May",240],["Jun",300],["Jul",330],["Aug",360],["Sep",385],["Oct",402]]'></div>
+          <div class="readout"><span class="px">$402</span><span class="dt">latest</span></div><div class="hint">&#9666; drag to scrub &#9656;</div></div>
+        <div class="mkt-tc"><div class="th"><b>Yeezy 350 Bone</b><span class="c down">&#9660; 29% &middot; 90d</span></div>
+          <div class="chartwrap" data-dn="1" data-pts='[["Apr",300],["May",288],["Jun",270],["Jul",250],["Aug",235],["Sep",222],["Oct",214]]'></div>
+          <div class="readout"><span class="px">$214</span><span class="dt">latest</span></div><div class="hint">&#9666; drag to scrub &#9656;</div></div>
+      </div></details>
+  </div>
+</aside>
+
+
+
 <div class="spin" id="spin" role="dialog" aria-modal="true" aria-label="Photo, drag to spin">
   <button class="spin-x" id="spin-x" type="button" aria-label="Close">&times;</button>
   <div class="spin-stage" id="spin-stage"><div class="spin-face"><img id="spin-img" alt=""></div>
@@ -700,7 +843,7 @@ function cardHTML(d,i){
   const chips = d.chips.map(c => typeof c==='string'
     ? `<span class="chip">${c}</span>`
     : `<span class="chip ${c.risk?'risk':''}">${c.t}</span>`).join('').replace(/(C?\$[\d,]+(?:\.\d+)?)/g,'<b class="money">$1</b>');
-  return `<article class="card ${foil} rise" id="card-${d.id}" style="--i:${i}" data-g="${d.group}">
+  return `<article class="card ${foil} rise" id="card-${d.id}" style="--i:${i}" data-g="${d.group}" data-out="${/out\s*now/i.test(d.when||'')?'1':'0'}">
     ${d.pics&&d.pics.length?picsBlock(d):(ART[d.group]?`<div class="art ${d.group}" aria-hidden="true">${ART[d.group]}</div>`:'')}
     <div class="ctop"><span class="when">${d.when}</span><span class="cat">${d.cat}</span></div>
     ${d.asof?`<div class="prov" style="margin-top:4px">prices as of ${d.asof}</div>`:''}
@@ -716,7 +859,12 @@ function cardHTML(d,i){
 }
 function renderBento(){
   const box=document.getElementById('bento');
-  box.innerHTML = DROPS.filter(d=>active==='all'||d.group===active).map(cardHTML).join('');
+  const list=DROPS.filter(d=>active==='all'||d.group===active);
+  const order={pokemon:0,sneakers:1};
+  const sorted=list.slice().sort((a,b)=>(order[a.group]??9)-(order[b.group]??9));
+  let html='', prev=null;
+  sorted.forEach(d=>{ if(prev!==null && d.group!==prev) html+='<div class="bento-break"></div>'; html+=cardHTML(d); prev=d.group; });
+  box.innerHTML = html;
 }
 function renderFilters(){
   document.getElementById('filters').innerHTML = CATS.map(([k,l])=>
@@ -942,5 +1090,21 @@ renderFilters(); renderBento(); runCalc();
   render();
 })();
 </script>
+<script>
+(function(){var W=280,H=40,PAD=6,YEAR="2026";
+document.querySelectorAll('#mkt-rail .chartwrap').forEach(function(wrap){
+  var pts=JSON.parse(wrap.getAttribute('data-pts')),dn=wrap.getAttribute('data-dn')==="1";
+  var vals=pts.map(function(p){return p[1]}),mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals),span=(mx-mn)||1,n=pts.length;
+  var xy=pts.map(function(p,i){return [PAD+(W-2*PAD)*i/(n-1),PAD+(H-2*PAD)*(1-(p[1]-mn)/span)];});
+  var line=xy.map(function(c,i){return (i?'L':'M')+c[0].toFixed(1)+' '+c[1].toFixed(1)}).join(' ');
+  var area=line+' L'+xy[n-1][0].toFixed(1)+' '+H+' L'+xy[0][0].toFixed(1)+' '+H+' Z';
+  wrap.innerHTML='<svg viewBox="0 0 '+W+' '+(H+8)+'" preserveAspectRatio="none">'+(dn?'':'<path class="fillA" d="'+area+'"/>')+'<path class="ln'+(dn?' dn':'')+'" d="'+line+'"/><circle class="ball" r="5" fill="#ff3d9a"></circle><circle class="ballc" r="1.6" fill="#fff" pointer-events="none"></circle></svg><div class="tip"></div>';
+  var S=wrap.querySelector('svg'),ball=wrap.querySelector('.ball'),ballc=wrap.querySelector('.ballc'),tip=wrap.querySelector('.tip'),pxEl=wrap.parentNode.querySelector('.readout .px');
+  function place(i){var c=xy[i];ball.setAttribute('cx',c[0]);ball.setAttribute('cy',c[1]);ballc.setAttribute('cx',c[0]);ballc.setAttribute('cy',c[1]);var m='$'+pts[i][1].toLocaleString();pxEl.textContent=m;tip.innerHTML='<span class="d">'+pts[i][0]+' '+YEAR+'</span><br><span class="p">'+m+'</span>';tip.style.left=(c[0]/W*100)+'%';tip.style.top=(c[1]/(H+8)*100)+'%';}
+  function fe(e){var r=S.getBoundingClientRect();var px=((e.touches?e.touches[0].clientX:e.clientX)-r.left)/r.width*W;var i=Math.max(0,Math.min(n-1,Math.round((px-PAD)/((W-2*PAD)/(n-1)))));place(i);}
+  var drag=false;S.addEventListener('pointerdown',function(e){drag=true;try{S.setPointerCapture(e.pointerId)}catch(_){}fe(e);});S.addEventListener('pointermove',function(e){if(drag)fe(e);});window.addEventListener('pointerup',function(){drag=false;});place(n-1);
+});})();
+</script>
+
 </body>
 </html>
