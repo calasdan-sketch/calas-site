@@ -33,9 +33,12 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
 .appbtn{display:block;padding:14px 16px;border:1px solid var(--rule);border-radius:10px;color:var(--ink);text-decoration:none;font:700 17px "Libre Baskerville",Georgia,serif;border-left:4px solid var(--blue);transition:transform .12s,box-shadow .12s}
 .appbtn span{display:block;font:400 13px "IBM Plex Sans",sans-serif;color:var(--ink2);margin-top:2px}
 .appbtn:hover,.appbtn:focus-visible{transform:translateY(-1px);box-shadow:0 4px 14px rgba(11,46,69,.14);outline:none}
+.grp{font:700 19px "Libre Baskerville",Georgia,serif;margin:22px 0 10px}.grp small{font:400 14px "IBM Plex Sans",sans-serif;color:var(--ink2);margin-left:8px}
+.jump{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}.jump a{padding:6px 12px;border:1px solid var(--rule);border-radius:99px;text-decoration:none;color:var(--ink);font-size:14px}.jump a:hover{border-color:var(--blue)}
+.appbtn em.pill{font-style:normal;margin-top:6px;display:inline-block}
 </style>
 <style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"><link rel="stylesheet" href="/calas-theme.css?v=20261002a"></head><body>
-<header><div class="w"><b>Calas · People &amp; access</b><button id="out" hidden>Sign out</button></div></header>
+<header><div class="w"><b>Calas · Back office</b><button id="out" hidden>Sign out</button></div></header>
 <main>
   <section id="login" class="card">
     <h1>Administrator sign-in</h1>
@@ -47,6 +50,59 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
 
   <div id="app" hidden>
     <div id="setup"></div>
+
+    <section class="card" aria-labelledby="open-h">
+      <h1 id="open-h">Back office</h1>
+      <p style="color:var(--ink2);margin-top:0"><b>Start here.</b> Every button opens in a new tab. Business apps ask you to sign in with your own Calas login (owner: the master admin password). Buttons marked <span class="pill soon">This PC only</span> run on the office computer and won't open anywhere else.</p>
+      <nav class="jump" aria-label="Jump to">
+        <a href="#bo-today">Today's numbers</a><a href="#bo-sales">Sales &amp; customers</a><a href="#bo-apps">Our apps</a><a href="#bo-drop">Dropwatch</a><a href="#bo-ionius">Ionius</a><a href="#people-h">People &amp; logins</a><a href="#dsp">Dispatch Me</a><a href="#pk-card">My passcodes</a>
+      </nav>
+
+      <h2 class="grp" id="bo-today">Today's numbers <small>how the business is doing</small></h2>
+      <div class="apps">
+        <a class="appbtn" href="/admin/traffic/" style="border-left-color:#F0C171">Website traffic<span>visits, where they came from, sign-ins</span></a>
+        <a class="appbtn" href="https://claude.ai/artifact/VV6oCR8dQgQUrzLMMbfxKn" target="_blank" rel="noopener" style="border-left-color:#F0C171">Dan's Desk<span>owner dashboard: emails, follow-ups, leads</span></a>
+        <a class="appbtn" href="https://dashboard.stripe.com/" target="_blank" rel="noopener" style="border-left-color:#F0C171">Payments<span>Stripe: who paid, subscriptions</span></a>
+        <a class="appbtn" href="https://bird.com/dashboard" target="_blank" rel="noopener" style="border-left-color:#F0C171">Email delivery<span>Bird: emails sent, delivered, bounced</span></a>
+        <a class="appbtn" href="https://elevenlabs.io/app/agents/agents" target="_blank" rel="noopener" style="border-left-color:#F0C171">Kara phone calls<span>who called 431-244-9026 and what they asked</span></a>
+      </div>
+
+      <h2 class="grp" id="bo-sales">Sales &amp; customers <small>finding and talking to customers</small></h2>
+      <div class="apps">
+        <a class="appbtn" href="http://127.0.0.1:8789/calas-crm.html" target="_blank" rel="noopener">Calas CRM<span>every lead and customer, send emails <em class="pill soon">This PC only</em></span></a>
+        <a class="appbtn" href="http://127.0.0.1:8895/" target="_blank" rel="noopener">Calas Messages<span>sent emails, automations, unsubscribes <em class="pill soon">This PC only</em></span></a>
+        <a class="appbtn" href="https://leadme-calas.calasautomations.com/" target="_blank" rel="noopener">Lead Me<span>find new businesses to contact</span></a>
+        <a class="appbtn" href="https://mail.google.com/" target="_blank" rel="noopener">Office inbox<span>Gmail: replies to office@, billing@, hr@</span></a>
+      </div>
+
+      <h2 class="grp" id="bo-apps">Our apps <small>Calas's own copies of what we sell</small></h2>
+      <div class="apps">
+        <a class="appbtn" href="https://onfile.calasautomations.com/" target="_blank" rel="noopener">On File<span>chases missing documents</span></a>
+        <a class="appbtn" href="https://haulme.calasautomations.com/" target="_blank" rel="noopener">Haul Me<span>trucking cost per mile</span></a>
+        <a class="appbtn" href="/quote-me/app/" target="_blank" rel="noopener" data-sso="quoteme">Quote Me<span>trades quotes and deposits</span></a>
+        <a class="appbtn" href="/watchpost/account/" target="_blank" rel="noopener" data-sso="watchpost">Watchpost<span>network alarm account</span></a>
+        <a class="appbtn" href="/dispatchme/" target="_blank" rel="noopener">Dispatch Me<span>snow-clearing page (jobs are further down)</span></a>
+        <a class="appbtn" href="/" target="_blank" rel="noopener">calasautomations.com<span>the public website</span></a>
+        <a class="appbtn" href="/pay/" target="_blank" rel="noopener">Pricing &amp; pay<span>what customers see at checkout</span></a>
+      </div>
+      <form id="cf" class="grid" style="margin-top:14px">
+        <div><label for="c-app">A customer's private copy</label><select id="c-app"><option value="leadme">Lead Me</option><option value="haulme">Haul Me</option><option value="onfile">On File</option></select></div>
+        <div><label for="c-copy">Copy name</label><input id="c-copy" placeholder="e.g. acme" pattern="[a-z0-9]{1,20}" title="Lowercase letters and numbers only" required></div>
+        <div><button>Open that copy</button></div>
+      </form>
+
+      <h2 class="grp" id="bo-drop">Dropwatch <small>Pokémon cards &amp; sneakers</small></h2>
+      <div class="apps">
+        <a class="appbtn" href="/dropwatch/" target="_blank" rel="noopener">Dropwatch<span>release calendar and flip calculator</span></a>
+        <a class="appbtn" href="https://grademe.calasautomations.com/" target="_blank" rel="noopener">Grade Me<span>photo appraisal for cards and sneakers</span></a>
+      </div>
+
+      <h2 class="grp" id="bo-ionius">Ionius Trades <small>next release, owner only</small></h2>
+      <div class="apps">
+        <a class="appbtn" href="http://127.0.0.1:18790/dec-trades-v2.html" target="_blank" rel="noopener">Ionius<span>trading terminal &mdash; start it first with Ionius.cmd <em class="pill soon">This PC only</em></span></a>
+      </div>
+      <p style="color:var(--ink2);font-size:14px">Ionius still holds personal portfolio data, so it isn't public and staff can't open it. A clean public version comes before launch.</p>
+    </section>
     <section class="card" id="pk-card" aria-labelledby="pk-h">
       <h1 id="pk-h">My passcodes</h1>
       <p style="color:var(--ink2);margin-top:0">One passcode per device. Use it instead of your master password on this page and on Website traffic. Cancel it and it stops working straight away &mdash; handy if a phone is lost. Only your master password can make or cancel passcodes.</p>
@@ -59,26 +115,8 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
       <div class="tablewrap" style="margin-top:12px"><table><thead><tr><th>Name</th><th>Made</th><th>Last used</th><th>Status</th><th></th></tr></thead><tbody id="pk-rows"></tbody></table></div>
       <p style="margin-top:10px"><button type="button" class="ghost" id="pk-all">Cancel every passcode</button></p>
     </section>
-    <section class="card" aria-labelledby="open-h">
-      <h1 id="open-h">Open the apps</h1>
-      <p style="color:var(--ink2);margin-top:0">Each app opens in a new tab. Sign in there with <b>dan@calasautomations.com</b> and this same admin password &mdash; it's the master login for every app and every customer copy.</p>
-      <div class="apps">
-        <a class="appbtn" href="https://leadme-calas.calasautomations.com/" target="_blank" rel="noopener">Lead Me<span>Calas's own leads (automation buyers)</span></a>
-        <a class="appbtn" href="https://haulme.calasautomations.com/" target="_blank" rel="noopener">Haul Me<span>Calas's own copy</span></a>
-        <a class="appbtn" href="https://onfile.calasautomations.com/" target="_blank" rel="noopener">On File<span>Calas's own copy</span></a>
-        <a class="appbtn" href="/quote-me/app/" target="_blank" rel="noopener" data-sso="quoteme">Quote Me<span>the app</span></a>
-        <a class="appbtn" href="/watchpost/account/" target="_blank" rel="noopener" data-sso="watchpost">Watchpost<span>account page</span></a>
-        <a class="appbtn" href="/admin/traffic/" style="border-left-color:#F0C171">Website traffic<span>visits, sources, sign-ins</span></a>
-        <a class="appbtn" href="https://claude.ai/artifact/VV6oCR8dQgQUrzLMMbfxKn" target="_blank" rel="noopener" style="border-left-color:#F0C171">Dan&#39;s Desk<span>traffic, CRM &amp; master control</span></a>
-      </div>
-      <form id="cf" class="grid" style="margin-top:14px">
-        <div><label for="c-app">A customer's private copy</label><select id="c-app"><option value="leadme">Lead Me</option><option value="haulme">Haul Me</option><option value="onfile">On File</option></select></div>
-        <div><label for="c-copy">Copy name</label><input id="c-copy" placeholder="e.g. acme" pattern="[a-z0-9]{1,20}" title="Lowercase letters and numbers only" required></div>
-        <div><button>Open that copy</button></div>
-      </form>
-    </section>
     <section class="card">
-      <h1>People · app logins</h1>
+      <h1 id="people-h">People · app logins</h1>
       <p style="color:var(--ink2);margin-top:0">Each person gets their own password for one app. It’s made for them and emailed; they can change it on the sign-in page. Your admin password opens every app.</p>
       <form id="af">
         <div class="grid">
