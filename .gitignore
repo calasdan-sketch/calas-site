@@ -3,11 +3,8 @@
 # graft's local graph cache — regenerable, not committed (run `graft build`).
 /graft/
 
-# Internal ops docs — must NEVER be published (repo + Pages are both public).
-# Live copies: C:\Users\danie\calas-private\site-docs\
-PRICING.md
-SETUP-PAYMENTS.md
-CLAUDE.md
+# Root-level markdown is never published (the site is HTML).
+/*.md
 
 # Local agent tooling + scratch. The repo root IS the live site, so anything
 # committed here gets published to calasautomations.com — these must never be.
