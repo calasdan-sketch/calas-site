@@ -8,3 +8,19 @@
 PRICING.md
 SETUP-PAYMENTS.md
 CLAUDE.md
+
+# Local agent tooling + scratch. The repo root IS the live site, so anything
+# committed here gets published to calasautomations.com — these must never be.
+.claude/
+.mcp.json
+.ignore
+__pycache__/
+*.bak
+*.bak-*
+*.herobak
+/_*.py
+/_*.txt
+/_*.mjs
+/_*.html
+/_*.sh
+/_*.log
