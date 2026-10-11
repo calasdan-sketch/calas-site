@@ -137,6 +137,27 @@
     }
   }
 
+  // On a product's own page, "Sign in" should drop the customer straight into
+  // that app's login — not back to the /signin/ app-picker (owner, 2026-10-11).
+  // Each product's real login (from /signin/ cards):
+  var APP_LOGIN = [
+    ['/accounting', 'https://onfile.calasautomations.com/'],
+    ['/leadme',     'https://leadme.calasautomations.com/'],
+    ['/quote-me',   '/quote-me/app/'],
+    ['/haul-me',    'https://haulme.calasautomations.com/'],
+    ['/watchpost',  '/watchpost/account/']
+  ];
+  function routeSignin() {
+    var path = location.pathname, login = null;
+    for (var i = 0; i < APP_LOGIN.length; i++) {
+      var p = APP_LOGIN[i][0];
+      if (path === p || path.indexOf(p + '/') === 0) { login = APP_LOGIN[i][1]; break; }
+    }
+    if (!login) return; // non-app pages (home, pricing, about...) keep the picker
+    var links = document.querySelectorAll('a.nav-signin');
+    for (var j = 0; j < links.length; j++) links[j].setAttribute('href', login);
+  }
+
   function run() {
     if (!document.body) return;
     // Inside a working app (Quote Me, ReceiptSort...) the app has its own
@@ -147,6 +168,7 @@
     injectMasthead();
     injectFooter();
     showCurrentLink();
+    routeSignin();
   }
 
   // Phones swipe the header links sideways; start with this page's link in view.
