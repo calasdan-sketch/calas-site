@@ -190,3 +190,9 @@ body .cbar nav a:not(.nav-signin):not(.nav-cta):hover,
 /* keep hero text legible on the cinematic art */
 .hero :is(h1,h2,h3,p,li),.hero-vis :is(h1,h2,h3,p,li){color:#eef4f8}
 .hero a:not(.btn):not(.nav-cta),.hero-vis a:not(.btn):not(.nav-cta){color:#cfe6f4}
+
+/* a11y: skip-to-content link (injected by calas-brandbar.js) */
+.calas-skip{position:absolute;left:-9999px;top:0;background:#155F87;color:#fff;padding:10px 16px;border-radius:0 0 6px 0;z-index:2147483647;text-decoration:none;font:600 14px/1 "IBM Plex Sans",system-ui,sans-serif}
+.calas-skip:focus{left:0;top:0}
+html{scroll-padding-top:90px}
+@media(prefers-reduced-motion:reduce){.card,.tier,.seg,.segment,.product-card{transition:none}}

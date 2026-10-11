@@ -66,6 +66,7 @@
 
   var NAV =
     '<a href="/">Home</a>' +
+    '<a href="/about/">About</a>' +
     '<a href="/accounting/">On File</a>' +
     '<a href="/leadme/">Lead Me</a>' +
     '<a href="/quote-me/">Quote Me</a>' +
@@ -87,11 +88,19 @@
           '<span><span class="name">Calas</span><span class="sub">AUTOMATIONS</span></span>' +
         '</a>' +
         '<button class="cbar-menu" type="button" aria-expanded="false">Menu</button>' +
-        '<nav>' + NAV + '<a class="nav-signin" href="/signin/">Sign in</a>' +
+        '<nav aria-label="Primary">' + NAV + '<a class="nav-signin" href="/signin/">Sign in</a>' +
           '<a class="nav-cta" href="tel:+14312449026" data-cara>Ask Cara</a>' +
         '</nav>' +
       '</div>';
     document.body.insertBefore(bar, document.body.firstChild);
+    // a11y: skip-to-content link as the very first focusable element
+    var main = document.querySelector('main') || bar.nextElementSibling;
+    if (main && !main.id) main.id = 'main';
+    var skip = document.createElement('a');
+    skip.className = 'calas-skip';
+    skip.href = '#' + ((main && main.id) || 'main');
+    skip.textContent = 'Skip to content';
+    document.body.insertBefore(skip, document.body.firstChild);
     var btn = bar.querySelector('.cbar-menu');
     btn.addEventListener('click', function () {
       var open = bar.classList.toggle('open');

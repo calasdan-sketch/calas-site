@@ -3,6 +3,7 @@
 <title>Calas Automations — Business Automation Software in Winnipeg, Manitoba</title>
 <meta name="description" content="Calas Automations removes repetitive business work for Winnipeg companies — chase documents, send quotes, find leads and catch scams automatically. Free trials.">
 <link rel="canonical" href="https://calasautomations.com/">
+<link rel="preload" as="image" href="/hero-home.jpg" fetchpriority="high">
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "ProfessionalService", "name": "Calas Automations", "url": "https://calasautomations.com", "telephone": "+1-431-244-9026", "description": "Business automation for Winnipeg trades, truckers, accountants and small businesses.", "areaServed": [{"@type": "City", "name": "Winnipeg", "containedInPlace": {"@type": "State", "name": "Manitoba"}}, {"@type": "State", "name": "Manitoba"}], "address": {"@type": "PostalAddress", "addressLocality": "Winnipeg", "addressRegion": "MB", "addressCountry": "CA"}, "alternateName": ["Callus Automations", "Callous Automations", "Calas Automation"], "email": "office@calasautomations.com", "logo": "https://calasautomations.com/favicon.png", "priceRange": "$$"}
 </script>
@@ -50,6 +51,9 @@
   --rule:#1F3A4D; --rule-2:#183041;
   --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#16302A; --ok-line:#2E5C48; --gold:#F0C171;
 }
+/* a11y: keep buttons readable in dark mode (white on light-blue failed contrast) */
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn,:root:not([data-theme="light"]) .nav-cta,:root:not([data-theme="light"]) #lean .lnbtn{background:#155F87;border-color:#4FA3D1;color:#fff}}
+:root[data-theme="dark"] .btn,:root[data-theme="dark"] .nav-cta,:root[data-theme="dark"] #lean .lnbtn{background:#155F87;border-color:#4FA3D1;color:#fff}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);
   font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -262,6 +266,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 #lean hr.lngline{height:2px;border:0;margin:0;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 #lean .lnrv{transition:opacity .7s ease,transform .7s ease}
 .js #lean .lnrv{opacity:0;transform:translateY(22px)}
+@media(prefers-reduced-motion:reduce){.js #lean .lnrv{opacity:1;transform:none;transition:none}#lean .lnrot .w{animation:none}}
 .js #lean .lnrv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){#lean .lnspincrest,#lean .lnaurora,#lean .lnhwm,#lean .lnflourish .lnfc{animation:none}}
 </style>
@@ -345,8 +350,8 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 
 <footer>
   <div class="wrap foot-row">
-    <span>Calas Automations &middot; Winnipeg &middot; prices in CAD plus GST/RST where applicable</span>
-    <span>Small automations, built properly &middot; <a href="/accounting/">On File</a> &middot; <a href="/leadme/">Lead Me</a> &middot; <a href="/quote-me/">Quote Me</a> &middot; <a href="/haul-me/">Haul Me</a> &middot; <a href="/watchpost/">Watchpost</a> &middot; <a href="/dispatchme/">Dispatch Me</a> &middot; <a href="/receiptsort/">ReceiptSort</a> &middot; <a href="/guardian/">Guardian</a> &middot; <a href="/dropwatch/">Dropwatch</a> &middot; <a href="/pay/">Pricing</a> &middot; 30 days&#39; notice to cancel, always</span>
+    <span>Calas Automations (&ldquo;CAL-us&rdquo;) &middot; Winnipeg, Manitoba &middot; <a href="tel:+14312449026">431-244-9026</a> &middot; <a href="mailto:office@calasautomations.com">office@calasautomations.com</a> &middot; prices in CAD plus GST/RST where applicable</span>
+    <span>Small automations, built properly &middot; <a href="/about/">About</a> &middot; <a href="/accounting/">On File</a> &middot; <a href="/leadme/">Lead Me</a> &middot; <a href="/quote-me/">Quote Me</a> &middot; <a href="/haul-me/">Haul Me</a> &middot; <a href="/watchpost/">Watchpost</a> &middot; <a href="/dispatchme/">Dispatch Me</a> &middot; <a href="/receiptsort/">ReceiptSort</a> &middot; <a href="/guardian/">Guardian</a> &middot; <a href="/dropwatch/">Dropwatch</a> &middot; <a href="/pay/">Pricing</a> &middot; 30 days&#39; notice to cancel, always</span>
   </div>
 </footer>
 
@@ -354,7 +359,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 (function(){
  document.documentElement.classList.add('js');
  var words=["repetitive","boring","manual","tedious","time-sucking","busy"];var i=0;var el=document.querySelector('#lean .lnrot');
- if(el){setInterval(function(){i=(i+1)%words.length;el.innerHTML='<span class="w">'+words[i]+'</span>';},2100);}
+ if(el&&!matchMedia('(prefers-reduced-motion:reduce)').matches){setInterval(function(){i=(i+1)%words.length;el.innerHTML='<span class="w">'+words[i]+'</span>';},2100);}
  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});
  document.querySelectorAll('#lean .lnrv').forEach(function(n,k){n.style.transitionDelay=(Math.min(k,6)*60)+'ms';io.observe(n);});
 })();
