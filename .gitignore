@@ -22,3 +22,8 @@ __pycache__/
 /_*.sh
 /_*.log
 /_*.json
+
+# internal tooling / heavy assets — never publish
+/rs/
+/promo/videos/
+/dropwatch-band.jpg
