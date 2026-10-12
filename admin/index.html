@@ -152,7 +152,10 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
           <div><label for="note">Who is it for?</label><input id="note" placeholder="e.g. Pat Smith"></div>
           <div><label for="email">Their email (optional)</label><input id="email" type="email" placeholder="friend@example.com"></div>
           <div><label for="count">How many codes</label><input id="count" type="number" min="1" max="500" value="1"></div>
+          <div><label for="tdays">Free trial: days of use (blank = plain access code)</label><input id="tdays" type="number" min="1" max="90" placeholder="e.g. 14"></div>
+          <div><label for="tuses">Free trial: how many people can use each code</label><input id="tuses" type="number" min="1" max="1000" value="1"></div>
         </div>
+        <p style="color:var(--ink2);margin:8px 0 0;font-size:14px">A free-trial code works for Lead Me, Haul Me and On File. The person types it in at <b>calasautomations.com/trial</b>, picks their own email and password, and gets their own login for that many days, with no card. "Works until" is the last day they can start. If they pay later with the same email, they keep everything.</p>
         <label class="check"><input type="checkbox" id="send"> Email the code to them now</label>
         <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
           <button>Make code</button>
@@ -321,10 +324,10 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
       if(q&&(c.code+' '+c.note+' '+c.email).toLowerCase().indexOf(q)<0)return;
       var soon=c.live&&c.expires_at-now<7*864e5;
       var st=c.status==='revoked'?'<span class="pill off">Turned off</span>':!c.live?'<span class="pill off">Ended</span>':soon?'<span class="pill soon">Ends soon</span>':'<span class="pill on">Working</span>';
-      h+='<tr><td class="code">'+esc(c.code)+'</td><td>'+esc(DATA.apps[c.app]||c.app)+'</td><td>'+esc(c.note)+(c.email?'<br><small>'+esc(c.email)+'</small>':'')+'</td><td>'+st+'</td><td>'+day(c.expires_at)+'</td><td>'+(c.source==='stripe'?'Paid':'Free')+'</td><td>'+(c.last_used_at?day(c.last_used_at):'Never')+'</td><td>'+
+      h+='<tr><td class="code">'+esc(c.code)+'</td><td>'+esc(DATA.apps[c.app]||c.app)+'</td><td>'+esc(c.note)+(c.email?'<br><small>'+esc(c.email)+'</small>':'')+'</td><td>'+st+'</td><td>'+day(c.expires_at)+'</td><td>'+(c.source==='stripe'?'Paid':c.source==='trial'?'Trial · '+c.trial_days+' days<br><small>'+c.uses+' of '+(c.max_uses||1)+' used</small>':'Free')+'</td><td>'+(c.last_used_at?day(c.last_used_at):'Never')+'</td><td>'+
         '<button class="ghost" data-a="copy" data-c="'+esc(c.code)+'">Copy</button> '+
         (c.status==='revoked'?'<button class="ghost" data-a="restore" data-c="'+esc(c.code)+'">Turn on</button> ':'<button class="ghost" data-a="revoke" data-c="'+esc(c.code)+'">Turn off</button> ')+
-        (c.source==='admin'?'<button class="ghost" data-a="extend" data-c="'+esc(c.code)+'">Change date</button> ':'')+
+        (c.source==='admin'||c.source==='trial'?'<button class="ghost" data-a="extend" data-c="'+esc(c.code)+'">Change date</button> ':'')+
         '<button class="ghost" data-a="email" data-c="'+esc(c.code)+'" data-e="'+esc(c.email)+'">Email</button></td></tr>'});
     $('#rows').innerHTML=h||'<tr><td colspan="8" style="color:var(--ink2)">No codes yet.</td></tr>'}
   ['#f-app','#f-status','#f-q'].forEach(function(s){$(s).addEventListener('input',render)});
@@ -341,9 +344,10 @@ td.code{font-family:"IBM Plex Mono",monospace}.pill{display:inline-block;padding
   $('#exp').value=plus(14);
 
   $('#cf').addEventListener('submit',function(e){e.preventDefault();
-    call('/api/admin/codes',{app:$('#app-sel').value,expires:$('#exp').value,note:$('#note').value,email:$('#email').value,count:$('#count').value,send_email:$('#send').checked}).then(function(d){
-      if(!d.ok){$('#madebox').innerHTML='<div class="notice err">'+({pick_an_end_date:'Pick an end date.',end_date_in_past:'That date has already passed.',pick_an_app:'Pick an app.'}[d.error]||'Something went wrong.')+'</div>';return}
-      $('#madebox').innerHTML='<div class="notice good">Made. Works until '+day(d.expires_at)+'.</div>'+d.made.map(function(m){return'<div class="made">'+esc(m.code)+(m.emailed?' <small style="font-family:IBM Plex Sans">(emailed)</small>':'')+'</div>'}).join('');
+    call('/api/admin/codes',{app:$('#app-sel').value,expires:$('#exp').value,note:$('#note').value,email:$('#email').value,count:$('#count').value,send_email:$('#send').checked,trial_days:$('#tdays').value,max_uses:$('#tuses').value}).then(function(d){
+      if(!d.ok){$('#madebox').innerHTML='<div class="notice err">'+({pick_an_end_date:'Pick an end date.',end_date_in_past:'That date has already passed.',pick_an_app:'Pick an app.',trial_apps_only:'Free-trial codes work for Lead Me, Haul Me and On File only.'}[d.error]||'Something went wrong.')+'</div>';return}
+      var trial=+$('#tdays').value>0;
+      $('#madebox').innerHTML='<div class="notice good">Made. '+(trial?'Start by ':'Works until ')+day(d.expires_at)+'.'+(trial?' Send them the link below, or the code and calasautomations.com/trial.':'')+'</div>'+d.made.map(function(m){return'<div class="made">'+esc(m.code)+(m.emailed?' <small style="font-family:IBM Plex Sans">(emailed)</small>':'')+(trial?'<br><small style="font-family:IBM Plex Sans">calasautomations.com/trial/?code='+esc(m.code)+'</small>':'')+'</div>'}).join('');
       load()})});
 
   // A customer's private copy lives at <app>-<copy>.calasautomations.com
