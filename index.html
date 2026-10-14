@@ -214,7 +214,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 .lnhero .hero-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(11,46,69,.50),rgba(11,46,69,.20) 45%,rgba(11,46,69,.78)),linear-gradient(95deg,rgba(11,46,69,.82),rgba(11,46,69,.44) 45%,rgba(11,46,69,.12) 85%)}
 .lnhero>*:not(.hero-art):not(.hero-overlay){position:relative;z-index:2}
 #lean .lngold{position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:5}
-#lean .lnaurora{position:absolute;inset:-20%;z-index:0;filter:blur(10px);background:radial-gradient(42% 46% at 72% 24%,rgba(95,179,221,.42),transparent 62%),radial-gradient(40% 44% at 20% 88%,rgba(21,95,135,.5),transparent 60%),radial-gradient(36% 40% at 50% 50%,rgba(14,58,85,.5),transparent 70%);animation:lnDrift 18s ease-in-out infinite alternate}
+
 @keyframes lnDrift{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-4%,3%,0) scale(1.12)}}
 #lean .lnhwm{position:absolute;right:-8%;bottom:-18%;width:560px;height:772px;background:var(--sky);opacity:.08;transform:rotate(-8deg);z-index:0;animation:lnFloat 9s ease-in-out infinite alternate}
 @keyframes lnFloat{0%{transform:rotate(-8deg) translateY(0)}100%{transform:rotate(-8deg) translateY(-26px)}}
@@ -246,7 +246,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 @media(max-width:620px){#lean .lng4,#lean .lng2{grid-template-columns:1fr}}
 #lean .lncard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;transition:.22s;position:relative;display:block}
 #lean .lncard:hover{transform:translateY(-6px);border-color:var(--sky);box-shadow:0 22px 44px -26px rgba(11,46,69,.5)}
-#lean .lnwho .lncard{border-top:3px solid var(--gold)}
+
 #lean .lncard .lnic{width:34px;height:46px;background:var(--blue);margin-bottom:14px;display:block}
 #lean .lncard h3{font-size:20px;color:var(--ink1)}
 #lean .lncard p{color:var(--ink2);font-size:15px;margin-top:8px}
@@ -268,7 +268,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 .js #lean .lnrv{opacity:0;transform:translateY(22px)}
 @media(prefers-reduced-motion:reduce){.js #lean .lnrv{opacity:1;transform:none;transition:none}#lean .lnrot .w{animation:none}}
 .js #lean .lnrv.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){#lean .lnspincrest,#lean .lnaurora,#lean .lnhwm,#lean .lnflourish .lnfc{animation:none}}
+@media(prefers-reduced-motion:reduce){#lean .lnspincrest,#lean .lnhwm,#lean .lnflourish .lnfc{animation:none}}
 </style>
 
 <header id="hdr">
@@ -298,11 +298,11 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 <main id="lean">
 <div class="lnhero">
       <div class="hero-art"></div>
-      <div class="hero-overlay"></div><div class="lngold"></div><div class="lnaurora"></div><div class="lnhwm lnmask"></div>
+      <div class="hero-overlay"></div><div class="lngold"></div><div class="lnhwm lnmask"></div>
   <div class="lnspinwrap"><div class="lnspincrest lnmask"></div></div>
   <div class="lnwrap">
     <div class="lneyebrow lnrv">Winnipeg · Business Automation</div>
-    <h1 class="lnrv">We remove the <span class="lnrot"><span class="w">repetitive</span></span><br>work in your business.</h1>
+    <h1 class="lnrv">We remove the <span class="lnrot"><span class="w">repetitive</span></span> <br>work in your business.</h1>
     <p class="lnlead lnrv">Automation for Winnipeg companies — chase paperwork, send quotes, find leads, and catch scams, automatically. Less admin, more time on what makes money.</p>
     <p class="lntag lnrv">The paperwork you're still waiting on, chased for you — kindly, and on time.</p>
     <div class="lnhbtns lnrv"><a class="lnbtn" href="/pay/">Try a tool free</a><a class="lnbtn lng" href="#who">See what we do</a></div>
@@ -335,7 +335,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 </div></section>
 
 <section id="start"><div class="lnwrap"><hr class="lngline" style="margin-bottom:46px"><div class="lnband lnrv">
-  <div class="lnaurora" style="opacity:.5"></div>
+  
   <div style="position:relative;z-index:2">
   <h2>Pick a tool. Get your time back today.</h2>
   <p>No call. No setup project. Try any tool free — and the free ones stay free. You're running in about five minutes.</p>
