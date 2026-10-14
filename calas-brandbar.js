@@ -40,6 +40,9 @@
       'body .cbar.open nav .nav-signin,body .cbar.open nav .nav-cta{margin-top:8px;text-align:center;border-top:0}' +
     '}' +
     '@media(max-width:760px){.calas-in-app .cbar,.calas-in-app .cfoot{display:none}}' +
+    /* inside an app the site bar scrolls away and the footer is dropped, so neither covers the app's own screens/bottom bar */
+    '.calas-in-app .cbar{position:static}.calas-in-app .cfoot{display:none}' +
+    '.calas-skip{position:absolute;left:-9999px;top:0;background:#155F87;color:#fff;padding:10px 16px;z-index:2147483647;text-decoration:none}.calas-skip:focus{left:0}' +
     /* footer */
     '.cfoot{margin-top:48px;background:#fff;border-top:2px solid #F0C171;font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#4E5B66}' +
     '.cfoot .cfoot-in{max-width:1240px;margin:0 auto;padding:30px 30px 34px;box-sizing:border-box}' +
