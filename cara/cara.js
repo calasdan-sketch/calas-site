@@ -21,7 +21,7 @@
     guardian: "Hi, I'm Cara. Not sure about a message? Tell me what it says and I'll help you think it through."
   };
   var CHIPS = APP === 'guardian'
-    ? ['Is Guardian free?', 'What if I already sent money?', 'Is my message private?']
+    ? ['Is ScamCatch free?', 'What if I already sent money?', 'Is my message private?']
     : ['What does it cost?', 'How do I get started?', 'Is my data private?'];
 
   var css = '' +

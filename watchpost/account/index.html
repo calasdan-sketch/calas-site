@@ -58,9 +58,9 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
 
   <section class="card" id="invite" hidden>
     <h1>You're invited to <span id="iv-family"></span></h1>
-    <p><b id="iv-from"></b> would like you on Guardian Family. You'd use Guardian on your phone to check suspicious messages.</p>
+    <p><b id="iv-from"></b> would like you on Calas ScamCatch Family. You'd use ScamCatch on your phone to check suspicious messages.</p>
     <p class="muted">You decide what they see. Nothing is shared unless you tick the boxes below, and you can change your mind any time on this page.</p>
-    <label class="check"><input type="checkbox" id="iv-alerts"> When Guardian rates a message <b>High</b> or <b>Critical</b>, let them know so they can check on me. (They see the warning and the scam signs, not the message.)</label>
+    <label class="check"><input type="checkbox" id="iv-alerts"> When ScamCatch rates a message <b>High</b> or <b>Critical</b>, let them know so they can check on me. (They see the warning and the scam signs, not the message.)</label>
     <label class="check"><input type="checkbox" id="iv-text" disabled> Also include a short piece of the message (the first 140 characters).</label>
     <button id="iv-accept" type="button">Join the family</button>
   </section>
@@ -85,7 +85,7 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
 
     <section class="card" id="fam-create" hidden>
       <h2>Set up your family</h2>
-      <p class="muted">Invite the people you look out for. Each of them runs Guardian on their own phone and chooses whether its High warnings reach you.</p>
+      <p class="muted">Invite the people you look out for. Each of them runs ScamCatch on their own phone and chooses whether its High warnings reach you.</p>
       <label for="fn">Family name</label><input id="fn" type="text" maxlength="60" placeholder="e.g. The Smith family">
       <button id="fc" type="button">Create my family</button>
     </section>
@@ -115,11 +115,11 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
     <section class="card" id="fam-member" hidden>
       <h2 id="fm-name"></h2>
       <p>Your family safe word: <span class="word" id="fm-word"></span></p>
-      <label class="check"><input type="checkbox" id="fm-alerts"> Let my family admin know when Guardian rates a message High or Critical.</label>
+      <label class="check"><input type="checkbox" id="fm-alerts"> Let my family admin know when ScamCatch rates a message High or Critical.</label>
       <label class="check"><input type="checkbox" id="fm-text"> Also include the first 140 characters of the message.</label>
       <button class="ghost" id="fm-save" type="button">Save my choices</button>
       <button class="ghost" id="fm-leave" type="button" style="margin-left:8px">Leave this family</button>
-      <p style="margin-top:14px"><a href="/guardian/">Open Guardian</a> to check a message.</p>
+      <p style="margin-top:14px"><a href="/guardian/">Open ScamCatch</a> to check a message.</p>
     </section>
   </div>
 </main>
@@ -184,7 +184,7 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
     $('#hi').textContent=d.name?'Hi, '+d.name:'Your account';$('#tier').textContent=d.tier_name;$('#email').textContent=d.email;
     $('#nm').value=d.name||'';$('#ph').value=d.phone||'';
     var f=d.features;
-    $('#upsell').innerHTML=d.tier==='guardian'?'<p class="muted" style="font-size:16px">You’re on free Guardian. <a href="/guardian/#family">See Guardian Family</a> for family alerts, or <a href="/watchpost/">Watchpost</a> for your business.</p>':'';
+    $('#upsell').innerHTML=d.tier==='guardian'?'<p class="muted" style="font-size:16px">You’re on free ScamCatch. <a href="/guardian/#family">See ScamCatch Family</a> for family alerts, or <a href="/watchpost/">Watchpost</a> for your business.</p>':'';
     var fam=d.family;$('#fam-create').hidden=!(f.indexOf('family_mode')>=0&&!fam);
     $('#fam-admin').hidden=!(fam&&fam.role==='admin');$('#fam-member').hidden=!(fam&&fam.role==='member');
     if(fam&&fam.role==='admin')drawAdmin(fam);
@@ -208,10 +208,10 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
   $('#iv-alerts').addEventListener('change',function(){$('#iv-text').disabled=!this.checked;if(!this.checked)$('#iv-text').checked=false});
   $('#fm-alerts').addEventListener('change',function(){$('#fm-text').disabled=!this.checked;if(!this.checked)$('#fm-text').checked=false});
   $('#iv-accept').addEventListener('click',function(){api('/api/family/invite/accept',{token:ss('wp_invite'),alerts_ok:$('#iv-alerts').checked,share_text:$('#iv-text').checked}).then(function(d){
-    if(!d.ok){say(err(d),'bad');return}ss('wp_invite',null);$('#invite').hidden=true;say('Welcome to the family. Guardian is ready at calasautomations.com/guardian.');load()})});
+    if(!d.ok){say(err(d),'bad');return}ss('wp_invite',null);$('#invite').hidden=true;say('Welcome to the family. ScamCatch is ready at calasautomations.com/guardian.');load()})});
   $('#fm-save').addEventListener('click',function(){api('/api/family/me',{alerts_ok:$('#fm-alerts').checked,share_text:$('#fm-text').checked}).then(function(d){say(d.ok?'Saved.':err(d),d.ok?'good':'bad')})});
   $('#fm-leave').addEventListener('click',function(){if(!confirm('Leave this family? Alerts stop right away.'))return;api('/api/family/me',{leave:true}).then(function(){say('You left the family.');load()})});
 })();
 </script>
-<script src="/calas-brandbar.js?v=20261015a" defer></script><script src="/pw-eye.js" defer></script>
+<script src="/calas-brandbar.js?v=20261015b" defer></script><script src="/pw-eye.js" defer></script>
 </body></html>

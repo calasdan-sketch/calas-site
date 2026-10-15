@@ -1,7 +1,7 @@
 {
-  "name": "Watchpost Guardian",
-  "short_name": "Guardian",
-  "description": "Check a suspicious text, link or screenshot for scam tactics. Share it straight to Guardian; it's read on your phone.",
+  "name": "Calas ScamCatch",
+  "short_name": "ScamCatch",
+  "description": "Check a suspicious text, link or screenshot for scam tactics. Share it straight to ScamCatch; it's read on your phone.",
   "start_url": "/guardian/",
   "display": "standalone",
   "background_color": "#F1F6F9",

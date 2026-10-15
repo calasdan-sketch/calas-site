@@ -77,7 +77,7 @@
     '<a href="/watchpost/">Watchpost</a>' +
     '<a href="/dispatchme/">Dispatch Me</a>' +
     '<a href="/receiptsort/">ReceiptSort</a>' +
-    '<a href="/guardian/">Guardian</a>' +
+    '<a href="/guardian/">ScamCatch</a>' +
     '<a href="/pay/">Pricing</a>';
 
   function injectMasthead() {
