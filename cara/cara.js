@@ -66,7 +66,7 @@
   btn.innerHTML = '<span class="cc-dot" aria-hidden="true"></span><span><b>Ask Cara</b></span>';
   var win = document.createElement('div');
   win.className = 'cc-win'; win.setAttribute('role', 'dialog'); win.setAttribute('aria-label', 'Chat with Cara');
-  win.innerHTML = '<div class="cc-hd"><span class="cc-lg" aria-hidden="true">C</span><div><b>Cara</b><span>Calas Automations assistant</span></div>' +
+  win.innerHTML = '<div class="cc-hd"><span class="cc-lg" aria-hidden="true">C</span><div><b>Cara</b><span>Calas Automations AI assistant</span></div>' +
     '<button class="cc-x" type="button" aria-label="Close chat">&times;</button></div>' +
     '<div class="cc-log" aria-live="polite"></div><div class="cc-chips"></div>' +
     '<form class="cc-in"><textarea rows="3" maxlength="800" placeholder="Type your question…" aria-label="Your question"></textarea><button type="submit">Send</button></form>' +

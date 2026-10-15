@@ -60,7 +60,8 @@
              '<button type="button" class="sug">Suggest a strong password for me</button>' : '') +
       '<div class="err" aria-live="polite"></div>' +
       '<button class="go" type="submit">Continue to checkout</button>' +
-      '<p class="fine">Payments are handled by Stripe. We never see your card.' +
+      '<p class="fine">By continuing you agree to our <a href="/terms/" target="_blank" rel="noopener">Terms</a> and ' +
+      '<a href="/privacy/" target="_blank" rel="noopener">Privacy Policy</a>. Payments are handled by Stripe. We never see your card.' +
       (own ? ' Your password is stored scrambled, so not even we can read it.' : '') + '</p></form>';
     document.body.appendChild(m);
     if (window.calasPwEye) window.calasPwEye.scan(m);

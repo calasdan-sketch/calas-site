@@ -233,7 +233,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 <a class="btn ghost" href="/demo/dispatchme/">&#9654; Watch the demo</a>
     <a class="btn ghost light" href="#how" style="color:#4FA3D1">How it works</a></p>
     <a class="hero-signin" href="/signin/">Already a customer? Sign in &rarr;</a>
-    <p class="fine">Seasonal contracts &middot; Commercial, industrial &amp; large residential &middot; Call and Cara, our dispatcher, takes it from there</p>
+    <p class="fine">Seasonal contracts &middot; Commercial, industrial &amp; large residential &middot; Call and Cara, our AI assistant, takes the details; the team dispatches the crew</p>
   </div>
 </div>
 
@@ -279,8 +279,8 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
         <p>Every storm, one call handles dispatch. No chasing three contractors while the snow piles up.</p>
       </div>
       <div class="door">
-        <h3>4. Backup, built in</h3>
-        <p>If a crew can&rsquo;t make it, we re-dispatch. Your lots don&rsquo;t wait, and neither do you.</p>
+        <h3>4. Backup plan</h3>
+        <p>If a crew can&rsquo;t make it, we work to send another as fast as we can.</p>
       </div>
     </div>
   </section>
@@ -301,7 +301,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
       </div>
       <div class="door">
         <h3>A backup plan, not a shrug</h3>
-        <p>If a crew misses a visit, call or text the one number. We find another crew and send them &mdash; you don&rsquo;t chase anyone.</p>
+        <p>If a crew misses a visit, call or text the one number. We look for another crew and send them as soon as one is free &mdash; you don&rsquo;t chase anyone.</p>
       </div>
     </div>
   </section>
@@ -361,7 +361,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
     <div class="dm-faq">
       <details><summary>What does it cost?</summary><p>Every property is quoted for the season, based on lot size, walks, and whether you need salting or sanding. Asking for a quote is free and there&rsquo;s no obligation.</p></details>
       <details><summary>Who actually clears the snow?</summary><p>Independent Winnipeg snow-clearing companies. We check their insurance and references before they join, then handle the booking, the storm-night calls, and the follow-up for you.</p></details>
-      <details><summary>What if a crew doesn&rsquo;t show up?</summary><p>Call or text (431) 244-9026. We find another crew and send them, so you&rsquo;re not the one making the calls.</p></details>
+      <details><summary>What if a crew doesn&rsquo;t show up?</summary><p>Call or text (431) 244-9026. We look for another crew and send them as soon as one is free, so you&rsquo;re not the one making the calls.</p></details>
       <details><summary>I run a plow crew. How do I get work?</summary><p>Pick &ldquo;I run a plow crew&rdquo; in the form below. Tell us your area and equipment. We&rsquo;ll ask for proof of commercial liability insurance and a couple of references, then send you lots that fit your route.</p></details>
       <details><summary>Where do you work?</summary><p>Winnipeg and nearby, starting this winter.</p></details>
     </div>
@@ -396,6 +396,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
       </fieldset>
       <fieldset class="dm-svc dm-consent" style="display:none"><legend>Job offers</legend>
         <label><input type="checkbox" name="offers_ok"> Yes, email me jobs that fit my area and equipment</label><label><input type="checkbox" name="sms_ok"> Text me too</label>
+        <small style="display:block;margin-top:8px">Calas Automations Inc. (Dispatch Me), Winnipeg MB (mailing address available on request), 431-244-9026, office@calasautomations.com. You can unsubscribe from emails or reply STOP to texts at any time.</small>
       </fieldset>
       <label>Anything else we should know<textarea name="notes" rows="3"></textarea></label>
       <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
@@ -441,14 +442,14 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 <footer>
   <div class="wrap foot-row">
     <span>Calas Automations &middot; Winnipeg &middot; prices in CAD plus GST/RST where applicable</span>
-    <span>Small automations, built properly &middot; <a href="/accounting/">On File</a> &middot; <a href="/leadme/">Lead Me</a> &middot; <a href="/quote-me/">Quote Me</a> &middot; <a href="/haul-me/">Haul Me</a> &middot; <a href="/watchpost/">Watchpost</a> &middot; <a href="/dispatchme/">Dispatch Me</a> &middot; <a href="/receiptsort/">ReceiptSort</a> &middot; <a href="/pay/">Pricing</a> &middot; 30 days&#39; notice to cancel, always</span>
+    <span>Small automations, built properly &middot; <a href="/accounting/">On File</a> &middot; <a href="/leadme/">Lead Me</a> &middot; <a href="/quote-me/">Quote Me</a> &middot; <a href="/haul-me/">Haul Me</a> &middot; <a href="/watchpost/">Watchpost</a> &middot; <a href="/dispatchme/">Dispatch Me</a> &middot; <a href="/receiptsort/">ReceiptSort</a> &middot; <a href="/pay/">Pricing</a> &middot; cancel any time, never billed again</span>
   </div>
 </footer>
 <script>
 (function(){var hdr=document.getElementById('hdr');addEventListener('scroll',function(){hdr.classList.toggle('stuck',window.scrollY>10)},{passive:true});})();
 </script>
 <script src="/cara/cara.js" data-app="dispatchme" defer></script>
-<script src="/calas-brandbar.js?v=20261014a" defer></script><script>
+<script src="/calas-brandbar.js?v=20261015a" defer></script><script>
 /* On a computer a phone link makes Windows ask "which program", so the call buttons jump to the form instead. Phones keep tap-to-call. */
 (function(){if(window.matchMedia&&matchMedia('(pointer:coarse)').matches)return;
 document.querySelectorAll('a.btn[href^="tel:"]').forEach(function(a){var f=document.getElementById('start')||document.querySelector('form');if(!f)return;

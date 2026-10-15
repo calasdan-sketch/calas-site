@@ -120,8 +120,8 @@
       '</a>' +
       '<p class="tag">Small automations, built properly.</p>' +
       '<nav>' + NAV + '<a href="/signin/">Sign in</a></nav>' +
-      '<p class="fine">Winnipeg, Manitoba &middot; prices in CAD plus GST/RST where applicable &middot; 30 days’ notice to cancel, always.<br>' +
-      '&copy; ' + (new Date().getFullYear()) + ' Calas Automations Inc. &middot; ' +
+      '<p class="fine">Winnipeg, Manitoba &middot; prices in CAD plus GST/RST where applicable &middot; cancel any time, never billed again.<br>' +
+      '&copy; ' + (new Date().getFullYear()) + ' Calas Automations Inc. &middot; ' + '<a href="/terms/">Terms</a> &middot; <a href="/privacy/">Privacy</a> &middot; ' +
       '<a href="tel:+14312449026" data-cara>Ask Cara</a> &middot; <a href="tel:+14312449026">Call (431) 244-9026</a> &middot; <a href="mailto:office@calasautomations.com">office@calasautomations.com</a></p>' +
     '</div>';
   }

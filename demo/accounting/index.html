@@ -601,12 +601,12 @@ select{font-family:inherit;font-size:16px;padding:9px 12px;border:1px solid var(
             <button class="pick addon" data-k="lt" hidden>Letter</button>
           </div>
           <div class="msg" id="vEmail">
-            <div class="to">To <b id="mTo">your client</b> &middot; from sarah@prairieledger.ca</div>
+            <div class="to">To <b id="mTo">your client</b> &middot; from sarah@prairieledger.example</div>
             <div class="sub" id="mSub"></div>
             <div class="bd" id="mBody"></div>
             <a class="uplink" href="#m2" id="uplink">Send your documents, please &rarr;</a>
             <div class="upnote">Your usual Prairie Ledger client portal link &mdash; the same one you've always used. It stays open for anything you find later.</div>
-            <div class="sig">Thank you so much,<br><b style="color:var(--ink-2);font-weight:500">Sarah Bergen</b><br>Reception &middot; Prairie Ledger CPA<br>sarah@prairieledger.ca &middot; (204) 555&#8209;0148</div>
+            <div class="sig">Thank you so much,<br><b style="color:var(--ink-2);font-weight:500">Sarah Bergen</b><br>Reception &middot; Prairie Ledger CPA<br>sarah@prairieledger.example &middot; (204) 555&#8209;0148</div>
           </div>
           <div class="callcard" id="vCall" style="display:none">
             <div class="lead">On Sarah's call list: <b id="cName"></b> &middot; <span id="cWhen"></span> &middot; script below, she dials</div>
@@ -619,7 +619,7 @@ select{font-family:inherit;font-size:16px;padding:9px 12px;border:1px solid var(
               <p id="lBody"></p>
               <div class="box"><b>Still to come:</b><ul id="lList"></ul></div>
               <p id="lDead"></p>
-              <div class="sign">Thank you kindly,<br><b>Sarah Bergen</b> &middot; Prairie Ledger CPA<br>(204) 555&#8209;0148 &middot; sarah@prairieledger.ca<br>Or drop them at the office &mdash; we're open 9 to 5, Monday to Friday.</div>
+              <div class="sign">Thank you kindly,<br><b>Sarah Bergen</b> &middot; Prairie Ledger CPA<br>(204) 555&#8209;0148 &middot; sarah@prairieledger.example<br>Or drop them at the office &mdash; we're open 9 to 5, Monday to Friday.</div>
             </div>
           </div>
           <div class="msg-note" id="mNote"></div>
@@ -662,7 +662,7 @@ select{font-family:inherit;font-size:16px;padding:9px 12px;border:1px solid var(
               <rect x="24" y="52" width="170" height="78" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
               <text x="109" y="82" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">Requests mailbox</text>
               <text x="109" y="101" text-anchor="middle" font-size="11.5" fill="var(--ink-2)">sends in your name</text>
-              <text x="109" y="117" text-anchor="middle" font-size="11" fill="var(--ink-3)">sarah@prairieledger.ca</text>
+              <text x="109" y="117" text-anchor="middle" font-size="11" fill="var(--ink-3)">sarah@prairieledger.example</text>
               <rect x="446" y="52" width="170" height="78" rx="6" fill="var(--surface)" stroke="var(--rule)"/>
               <text x="531" y="82" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">Portal → folders</text>
               <text x="531" y="101" text-anchor="middle" font-size="11.5" fill="var(--ink-2)">…/Clients/Kildonan Dental/</text>
@@ -978,8 +978,8 @@ function renderReceipt(){
   var c=C[CIDX],R=received(CIDX),O=outstanding(CIDX),el=document.getElementById('rcpt');
   if(!R.length){el.className='rcpt none';el.textContent='No receipt yet — '+c.c+' hasn\'t sent anything. The moment a file lands, a thank-you goes back listing exactly what came in.';return;}
   var d='Day '+CAD[cad].days[Math.min(day,4)];
-  if(!O.length){el.className='rcpt final';el.innerHTML='<div class="to"><span>From <b>sarah@prairieledger.ca</b></span><span>'+d+'</span></div><div class="sub">All in — thank you</div><div class="bd"><span class="ok">Received:</span> '+R.join(', ')+'. That\'s everything we needed for your '+(c.t==='corp'?'year-end':'return')+' — thank you.<br>We\'ll be in touch as soon as it\'s ready. Any questions, please call Sarah on (204) 555-0148.</div>';}
-  else{el.className='rcpt';el.innerHTML='<div class="to"><span>From <b>sarah@prairieledger.ca</b></span><span>'+d+'</span></div><div class="sub">Got them — thank you</div><div class="bd"><span class="ok">Received:</span> '+R.join(', ')+'.<br><b>Still to come:</b> '+O.join(', ')+'.<br>Same portal link whenever you\'re ready — no rush at all.</div>';}
+  if(!O.length){el.className='rcpt final';el.innerHTML='<div class="to"><span>From <b>sarah@prairieledger.example</b></span><span>'+d+'</span></div><div class="sub">All in — thank you</div><div class="bd"><span class="ok">Received:</span> '+R.join(', ')+'. That\'s everything we needed for your '+(c.t==='corp'?'year-end':'return')+' — thank you.<br>We\'ll be in touch as soon as it\'s ready. Any questions, please call Sarah on (204) 555-0148.</div>';}
+  else{el.className='rcpt';el.innerHTML='<div class="to"><span>From <b>sarah@prairieledger.example</b></span><span>'+d+'</span></div><div class="sub">Got them — thank you</div><div class="bd"><span class="ok">Received:</span> '+R.join(', ')+'.<br><b>Still to come:</b> '+O.join(', ')+'.<br>Same portal link whenever you\'re ready — no rush at all.</div>';}
 }
 function render(){
   var c=C[CIDX], O=outstanding(CIDX); if(!O.length) O=c.d;
@@ -1332,7 +1332,7 @@ document.getElementById('run2').addEventListener('click',function(){play();docum
         return [sign("Don't take the number from me either — that's the point. Go to "+p.firm+"'s website yourself, or the sign on the truck, and use the number you find there. If it doesn't match "+p.phone+", something's wrong and I'd want to know."),
           ["What's still outstanding?"]];
       M.said.scam=true;
-      return [sign("Good instinct, and thank you for checking. It is us — the note came from "+(p.v==='trades'?'documents@northgateconstruction.ca':'sarah@prairieledger.ca')+" and the upload link is the same one "+p.firm+" always uses. You'll never be asked to pay anything, or to send banking details or a SIN, by email or phone. Best thing you can do is not take my word for it: ring "+p.phone+" from "+p.firm+"'s own website and ask."),
+      return [sign("Good instinct, and thank you for checking. It is us — the note came from "+(p.v==='trades'?'documents@northgate.example':'sarah@prairieledger.example')+" and the upload link is the same one "+p.firm+" always uses. You'll never be asked to pay anything, or to send banking details or a SIN, by email or phone. Best thing you can do is not take my word for it: ring "+p.phone+" from "+p.firm+"'s own website and ask."),
         ["What's still outstanding?","Can I just send a photo?"]];
     }
 
@@ -1776,4 +1776,4 @@ build();renderPlan();setDay(0);render();
 </script>
 
 
-<script src="/calas-brandbar.js?v=20261014a" defer></script></body></html>
+<script src="/calas-brandbar.js?v=20261015a" defer></script></body></html>

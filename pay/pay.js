@@ -26,6 +26,17 @@
     try { el.hidden = false; el.removeAttribute('hidden'); el.style.display = ''; } catch (e) {}
   }
 
+  // One "By buying you agree..." line beside each group of pay buttons (legal audit 2026-10-15).
+  function termsNote(el) {
+    var box = el.parentNode;
+    if (!box || box.querySelector('.pay-terms')) return;
+    var s = document.createElement('span');
+    s.className = 'pay-terms';
+    s.style.cssText = 'display:block;flex-basis:100%;width:100%;font-size:13px;line-height:1.4;margin:8px 0 0;opacity:.85';
+    s.innerHTML = 'By buying you agree to our <a href="/terms/" style="color:inherit;text-decoration:underline">Terms</a> and <a href="/privacy/" style="color:inherit;text-decoration:underline">Privacy Policy</a>.';
+    box.appendChild(s);
+  }
+
   function apply(links) {
     var els;
     try { els = document.querySelectorAll('[data-pay]'); } catch (e) { return; }
@@ -38,6 +49,7 @@
           el.setAttribute('href', url.trim());
           if (!el.getAttribute('rel')) el.setAttribute('rel', 'noopener');
           show(el);
+          termsNote(el);
         } else {
           hide(el);
         }
