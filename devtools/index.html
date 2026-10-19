@@ -1,0 +1,313 @@
+<!doctype html><html><head><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://calasautomations.com/devtools/">
+<style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.nav-signin{font-weight:600;color:var(--ink) !important;border:1px solid currentColor;padding:8px 14px;border-radius:2px}
+</style><style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"><link rel="stylesheet" href="/calas-theme.css?v=20261002a">
+<meta property="og:title" content="Dev Tools — Calas Automations">
+<meta property="og:description" content="Free, open-source developer tools for the agent era: agent safety, code quality, and developer experience. Built by Calas Automations.">
+<meta property="og:image" content="https://calasautomations.com/hero-home.jpg">
+<meta property="og:url" content="https://calasautomations.com/devtools/">
+<meta name="twitter:card" content="summary_large_image">
+<title>Dev Tools — free open-source tools for AI developers · Calas Automations</title>
+<meta name="description" content="Free, open-source developer tools for the agent era: agent safety, code quality, and developer experience. pip install or npm install. Built by Calas Automations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
+<style>
+:root{
+  --paper:#FFFFFF; --surface:#FFFFFF; --sunk:#F1F6F9;
+  --ink:#12212C; --ink-2:#4E5B66; --ink-3:#66717B;
+  --rule:#D9E3EA; --rule-2:#EAF0F4;
+  --red:#155F87; --red-2:#0E4A6B; --red-soft:#E6F0F6; --ok:#17794A; --ok-soft:#E9F5EE; --ok-line:#B7E0C7; --gold:#F0C171;
+  --night:#0B2E45; --night-2:#0E3A55; --night-ink:#FFFFFF; --night-ink-2:#B9CFDD;
+  --night-rule:#1E4A66;
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0B1A26; --surface:#102434; --sunk:#0D1F2C;
+    --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
+    --rule:#1F3A4D; --rule-2:#183041;
+    --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#E9F5EE; --ok-line:#2E5C48; --gold:#F0C171;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0B1A26; --surface:#102434; --sunk:#0D1F2C;
+  --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
+  --rule:#1F3A4D; --rule-2:#183041;
+  --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#E9F5EE; --ok-line:#2E5C48; --gold:#F0C171;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55}
+h1,h2,h3{font-family:"Libre Baskerville",Baskerville,Georgia,serif;font-weight:700;text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0 0 12px}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:14.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+/* header — copied from site standard */
+header{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid transparent}
+header.stuck{border-bottom-color:var(--rule)}
+.mast{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 40px;max-width:1240px;margin:0 auto}
+.lockup{display:flex;align-items:center;gap:14px;text-decoration:none;perspective:400px}
+.crest{width:26px;height:36px;flex:none;background:var(--red);
+  -webkit-mask:url(/assets/crest-64857d0a0d.png) center/contain no-repeat;
+  mask:url(/assets/crest-64857d0a0d.png) center/contain no-repeat}
+@keyframes spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+.crestflip{display:inline-block;position:relative;width:26px;height:36px;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;animation:spin 6s linear infinite}.crestflip .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}.crestflip .back{transform:rotateY(180deg)}
+@media(prefers-reduced-motion:reduce){.crestflip{animation:none}}
+.lk-name{font-family:"Libre Baskerville",Georgia,serif;font-size:17px;font-weight:700;line-height:1.05;display:block;color:var(--ink)}
+.lk-name .r{color:var(--red)}
+.lk-rule{display:block;height:2px;background:var(--red);width:100%;margin:4px 0 3px}
+.lk-sub{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.24em;color:var(--ink-3);display:block}
+nav{display:flex;align-items:center;gap:14px;font-size:16px;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--ink-2)}
+nav a.on{color:var(--red);font-weight:600}
+nav a:hover{color:var(--red)}
+.nav-cta{background:var(--red);color:#fff !important;padding:9px 16px;border-radius:2px}
+@media(max-width:760px){.mast{flex-wrap:wrap}nav{gap:14px;font-size:15.5px}}
+
+/* hero */
+.hero{background-color:var(--night);color:var(--night-ink);overflow:hidden;border-bottom:1px solid var(--night-rule)}
+.hero .wrap{position:relative;display:flex;flex-direction:column;gap:14px;padding-top:64px;padding-bottom:56px}
+.hero .eyebrow{color:var(--night-ink-2)}
+.hero h1{color:#fff;font-size:clamp(30px,4vw,42px);line-height:1.12;margin-top:4px}
+.hero p.lede{color:var(--night-ink-2);font-size:17px;max-width:640px}
+.hero .freeline{display:inline-flex;align-items:center;gap:10px;margin-top:6px;color:var(--night-ink-2);font-size:15px}
+.hero .freeline .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
+
+/* tool sections */
+main{padding:8px 0 0}
+section{padding:48px 0;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0}
+.sec-head{max-width:680px;margin-bottom:26px}
+.sec-head h2{font-size:25px;margin-top:8px}
+.sec-head p{margin-top:8px;color:var(--ink-2)}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.card{border:1px solid var(--rule);background:var(--surface);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.card h3{font-size:19px}
+.card h3 .pkg{font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:500;color:var(--red)}
+.card p.desc{color:var(--ink-2);font-size:15.5px;margin:0;flex:1}
+.install{display:flex;align-items:center;gap:10px;background:var(--sunk);border:1px solid var(--rule-2);border-radius:4px;padding:10px 14px;font-family:"IBM Plex Mono",monospace;font-size:14.5px;overflow-x:auto;white-space:nowrap;cursor:pointer}
+.install:hover{border-color:var(--red)}
+.install .prompt{color:var(--ink-3);user-select:none}
+.card .links{display:flex;gap:14px;flex-wrap:wrap;font-size:14.5px}
+.card .links a{color:var(--red);text-decoration:none;font-weight:500}
+.card .links a:hover{text-decoration:underline}
+.badge{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--rule);border-radius:3px;padding:3px 8px;margin-left:10px;vertical-align:middle}
+.badge.soon{color:var(--red);border-color:var(--red)}
+
+footer{border-top:1px solid var(--rule);margin-top:0}
+.foot-row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:26px 40px;max-width:1240px;margin:0 auto;color:var(--ink-3);font-size:14.5px}
+.foot-row a{text-decoration:none;color:var(--ink-2)}
+.foot-row a:hover{color:var(--red)}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="mast">
+    <a class="lockup" href="/" aria-label="Calas Automations, home">
+      <span class="crestflip" aria-hidden="true"><span class="crest hdr face"></span><span class="crest hdr face back"></span></span>
+      <span><span class="lk-name"><span class="r">Calas</span></span><span class="lk-rule"></span><span class="lk-sub">AUTOMATIONS</span></span>
+    </a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/accounting/">On File</a>
+      <a href="/leadme/">Lead Me</a>
+      <a href="/quote-me/">Quote Me</a>
+      <a href="/haul-me/">Haul Me</a>
+      <a href="/watchpost/">Watchpost</a>
+      <a href="/dispatchme/">Dispatch Me</a>
+      <a href="/receiptsort/">ReceiptSort</a>
+      <a href="/guardian/">Guardian</a>
+      <a href="/dropwatch/">Dropwatch</a>
+      <a href="/devtools/" class="on">Dev Tools</a>
+      <a href="/pay/">Pricing</a>
+      <a href="/signin/" class="nav-signin">Sign in</a>
+      <a class="nav-cta" href="/pay/">Try a tool free</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Developer tools</span>
+    <h1>Dev Tools</h1>
+    <p class="lede">Built for the agent era. Open-source packages that make AI coding agents safer, code more trustworthy, and developers faster — installable in one command.</p>
+    <span class="freeline"><span class="dot"></span>Free and open source. Built by Dan Calas, Calas Automations.</span>
+  </div>
+</div>
+
+<main>
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Agent safety</span>
+      <h2>Keep agents under control</h2>
+      <p>Guardrails, audits, and kill switches for AI agents running in production.</p>
+    </div>
+    <div class="grid">
+
+      <div class="card">
+        <h3><span class="pkg">shortleash</span></h3>
+        <p class="desc">Circuit breaker for AI agent runs. Budget, spawn, token, and timeout guards with per-run receipts. Now includes planok's human approval gate.</p>
+        <div class="install" data-cmd="pip install shortleash"><span class="prompt">$</span>&nbsp;pip install shortleash</div>
+        <div class="links"><a href="https://pypi.org/project/shortleash/">PyPI</a><a href="https://github.com/calasdan-sketch/shortleash">GitHub</a></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="pkg">mcp-audit</span></h3>
+        <p class="desc"><code class="mono">npm audit</code> for MCP servers. Scans for prompt injection, credential exfiltration, and misconfigurations. A–F security scoring.</p>
+        <div class="install" data-cmd="pip install mcp-audit"><span class="prompt">$</span>&nbsp;pip install mcp-audit</div>
+        <div class="links"><a href="https://pypi.org/project/mcp-audit/">PyPI</a><a href="https://github.com/calasdan-sketch/mcp-audit">GitHub</a></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="pkg">mcp-jail</span></h3>
+        <p class="desc">Runtime permission firewall for MCP servers. Policy enforcement and audit logging through a stdio proxy.</p>
+        <div class="install" data-cmd="pip install mcp-jail"><span class="prompt">$</span>&nbsp;pip install mcp-jail</div>
+        <div class="links"><a href="https://pypi.org/project/mcp-jail/">PyPI</a><a href="https://github.com/calasdan-sketch/mcp-jail">GitHub</a></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="pkg">@decnutz/warden</span></h3>
+        <p class="desc">Enterprise agent flight recorder. Runtime supervision for AI agent fleets: audit everything, live fleet view, one-tap kill switch.</p>
+        <div class="install" data-cmd="npm i @decnutz/warden"><span class="prompt">$</span>&nbsp;npm i @decnutz/warden</div>
+        <div class="links"><a href="https://www.npmjs.com/package/@decnutz/warden">npm</a><a href="https://github.com/calasdan-sketch/warden">GitHub</a></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="pkg">ceasefire</span></h3>
+        <p class="desc">Merge-conflict prevention for parallel AI coding agents. Intent ledger, merge forecasting, and PR collision warnings — zero merge fights.</p>
+        <div class="install" data-cmd="npm i ceasefire"><span class="prompt">$</span>&nbsp;npm i ceasefire</div>
+        <div class="links"><a href="https://www.npmjs.com/package/ceasefire">npm</a><a href="https://github.com/calasdan-sketch/ceasefire">GitHub</a></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Code quality</span>
+      <h2>Trust what ships</h2>
+      <p>Deterministic checks that catch what reviews miss — before it reaches production.</p>
+    </div>
+    <div class="grid">
+
+      <div class="card">
+        <h3><span class="pkg">pr-verify</span></h3>
+        <p class="desc">Deterministic trust for agent-authored PRs. Blame provenance, blast radius analysis, and a 0–100 risk score on every pull request.</p>
+        <div class="install" data-cmd="pip install pr-verify"><span class="prompt">$</span>&nbsp;pip install pr-verify</div>
+        <div class="links"><a href="https://pypi.org/project/pr-verify/">PyPI</a><a href="https://github.com/calasdan-sketch/pr-verify">GitHub</a></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="pkg">promptregress</span></h3>
+        <p class="desc">pytest for prompts. Regression testing for LLM prompts, local-first — catch prompt drift before your users do.</p>
+        <div class="install" data-cmd="pip install promptregress"><span class="prompt">$</span>&nbsp;pip install promptregress</div>
+        <div class="links"><a href="https://pypi.org/project/promptregress/">PyPI</a><a href="https://github.com/calasdan-sketch/promptregress">GitHub</a></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="pkg">adr-drift</span></h3>
+        <p class="desc">Deterministic architecture tests from arch.yaml and ADR constraints. Catches architectural drift before it ships.</p>
+        <div class="install" data-cmd="pip install adr-drift"><span class="prompt">$</span>&nbsp;pip install adr-drift</div>
+        <div class="links"><a href="https://pypi.org/project/adr-drift/">PyPI</a><a href="https://github.com/calasdan-sketch/adr-drift">GitHub</a></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="pkg">flakebox</span></h3>
+        <p class="desc">Self-hosted flaky-test triage. Find and quarantine the tests wasting your CI minutes.</p>
+        <div class="install" data-cmd="pip install flakebox"><span class="prompt">$</span>&nbsp;pip install flakebox</div>
+        <div class="links"><a href="https://pypi.org/project/flakebox/">PyPI</a><a href="https://github.com/calasdan-sketch/flakebox">GitHub</a></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Developer experience</span>
+      <h2>Move faster</h2>
+      <p>Tools that remove the friction from everyday development work.</p>
+    </div>
+    <div class="grid">
+
+      <div class="card">
+        <h3><span class="pkg">standupguy</span></h3>
+        <p class="desc">Local-first standup notes from git ground truth. No more "what did I do yesterday."</p>
+        <div class="install" data-cmd="pip install standupguy"><span class="prompt">$</span>&nbsp;pip install standupguy</div>
+        <div class="links"><a href="https://pypi.org/project/standupguy/">PyPI</a><a href="https://github.com/calasdan-sketch/standupguy">GitHub</a></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="pkg">sessionsteward</span></h3>
+        <p class="desc">Versioned snapshots for agent working state. Undo what compaction dropped.</p>
+        <div class="install" data-cmd="pip install sessionsteward"><span class="prompt">$</span>&nbsp;pip install sessionsteward</div>
+        <div class="links"><a href="https://pypi.org/project/sessionsteward/">PyPI</a><a href="https://github.com/calasdan-sketch/sessionsteward">GitHub</a></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="pkg">safeeasyapi</span></h3>
+        <p class="desc">Guided API-key setup with validation, plus a free public-API directory. Never fumble an API key again.</p>
+        <div class="install" data-cmd="pip install safeeasyapi"><span class="prompt">$</span>&nbsp;pip install safeeasyapi</div>
+        <div class="links"><a href="https://pypi.org/project/safeeasyapi/">PyPI</a><a href="https://github.com/calasdan-sketch/safeeasyapi">GitHub</a></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="pkg">onememory-mcp</span></h3>
+        <p class="desc">One shared memory layer for all your AI agents. Namespaces, scoped tokens, MCP-native.</p>
+        <div class="install" data-cmd="npm i -g onememory-mcp"><span class="prompt">$</span>&nbsp;npm i -g onememory-mcp</div>
+        <div class="links"><a href="https://www.npmjs.com/package/onememory-mcp">npm</a><a href="https://github.com/calasdan-sketch/onememory">GitHub</a></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="pkg">@decnutz/contextrouter</span></h3>
+        <p class="desc">Cross-repo context routing for AI agents. Answers "which repos" — not "where in this repo."</p>
+        <div class="install" data-cmd="npm i @decnutz/contextrouter"><span class="prompt">$</span>&nbsp;npm i @decnutz/contextrouter</div>
+        <div class="links"><a href="https://www.npmjs.com/package/@decnutz/contextrouter">npm</a></div>
+      </div>
+
+      <div class="card">
+        <h3><span class="pkg">calas-gateway</span><span class="badge soon">Coming soon</span></h3>
+        <p class="desc">Multi-provider LLM gateway (Anthropic, OpenAI). Zero runtime dependencies, smart batching, cost tracking.</p>
+        <div class="links"><a href="https://github.com/calasdan-sketch/calas-gateway">GitHub</a></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>Calas Automations &middot; Winnipeg &middot; prices in CAD plus GST/RST where applicable</span>
+    <span>Small automations, built properly &middot; <a href="/accounting/">On File</a> &middot; <a href="/leadme/">Lead Me</a> &middot; <a href="/quote-me/">Quote Me</a> &middot; <a href="/haul-me/">Haul Me</a> &middot; <a href="/watchpost/">Watchpost</a> &middot; <a href="/dispatchme/">Dispatch Me</a> &middot; <a href="/receiptsort/">ReceiptSort</a> &middot; <a href="/guardian/">Guardian</a> &middot; <a href="/dropwatch/">Dropwatch</a> &middot; <a href="/devtools/">Dev Tools</a> &middot; <a href="/pay/">Pricing</a> &middot; 30 days&#39; notice to cancel, always</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var hdr=document.getElementById('hdr');
+  function onScroll(){hdr.classList.toggle('stuck',window.scrollY>4)}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  document.querySelectorAll('.install[data-cmd]').forEach(function(el){
+    el.title='Click to copy';
+    el.addEventListener('click',function(){
+      var cmd=el.getAttribute('data-cmd');
+      function done(){var p=el.querySelector('.prompt');var t=document.createElement('span');t.textContent='copied';t.style.color='var(--ok)';t.style.marginLeft='auto';el.appendChild(t);setTimeout(function(){t.remove()},1200)}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(cmd).then(done).catch(function(){done()})}else{done()}
+    });
+  });
+})();
+</script>
+</body></html>
