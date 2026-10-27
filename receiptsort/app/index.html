@@ -57,6 +57,31 @@ td.num input{text-align:right;font-variant-numeric:tabular-nums}
 .cattbl th{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule)}
 .cattbl td{padding:6px 8px;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
 .cattbl td:last-child,.cattbl th:last-child{text-align:right}
+main{padding-bottom:110px} /* room under the fixed "Ask Cara" chat button so it never covers the last rows or buttons */
+.catwrap{overflow-x:auto;max-width:100%}
+.cattbl{min-width:0;table-layout:auto}
+.cattbl td:first-child{overflow-wrap:anywhere}
+.swipe{display:none;font-size:14px;color:var(--ink-2);margin:6px 2px 0}
+.why{display:block;font-size:13px;font-weight:400;color:var(--ink-2);margin-top:4px;white-space:normal;max-width:30ch}
+.cur{display:block;font-size:13px;color:var(--ink-2);margin-top:2px}
+@media (max-width:980px) and (min-width:601px){.swipe{display:block}}
+@media (max-width:600px){
+  main{padding-bottom:130px}
+  .wrap{overflow:visible;background:transparent;border:0}
+  table.rs{min-width:0;display:block}
+  table.rs thead{display:none}
+  table.rs tbody{display:block}
+  table.rs tr{display:block;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:6px 12px;margin-bottom:12px}
+  table.rs td{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--rule);padding:6px 0}
+  table.rs td:last-child{border-bottom:0}
+  table.rs td::before{content:attr(data-label);flex:0 0 36%;font:500 11px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+  table.rs td input{flex:1 1 auto;min-width:0;width:auto;border-color:var(--rule);text-align:right}
+  table.rs td.fn{font-weight:600;overflow-wrap:anywhere}
+  table.rs td.empty{display:block;text-align:center}
+  table.rs td.empty::before{content:none}
+  .tools .btn{flex:1 1 100%}
+  .cattbl th,.cattbl td{padding:6px 4px;font-size:14px}
+}
 @media print{.top,.drop,.tools,.bar,#cta,#savednote,#cara{display:none!important}body{background:#fff}main{max-width:100%;padding:0}.wrap{overflow:visible;border:none}table{min-width:0}td input{border:none!important;background:none!important}}
 </style>
 <style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"><link rel="stylesheet" href="/calas-theme.css?v=20261002a"><style id="calas-readable">/* 2026-10-05 Owner: same readable text size + brand fonts as the main site */
@@ -105,9 +130,10 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
     <span class="note" id="count"></span>
   </div>
   <p class="note" id="savednote" style="margin-top:2px"></p>
-  <div class="wrap"><table>
-    <thead><tr><th>File</th><th>Date</th><th>Vendor</th><th>Subtotal</th><th>GST</th><th>Total</th><th>Category</th><th>Status</th></tr></thead>
-    <tbody id="rows"><tr><td colspan="8" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr></tbody>
+  <p class="swipe" aria-hidden="true">&larr; Swipe the table sideways to see every column &rarr;</p>
+  <div class="wrap"><table class="rs">
+    <thead><tr><th>File</th><th>Date</th><th>Vendor</th><th>Subtotal</th><th>GST</th><th>PST / RST / QST</th><th>Sales tax</th><th>Total</th><th>Currency</th><th>Category</th><th>Status</th></tr></thead>
+    <tbody id="rows"><tr><td colspan="11" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr></tbody>
   </table></div>
   <div id="summary" class="summary" hidden></div>
   <p class="note">The CSV opens in Excel, Google Sheets, Numbers or your accounting software. Tip: add this page to your home screen to use it like an app, even offline after the first use.</p>
@@ -204,28 +230,35 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
     box.innerHTML = '<h2>Your totals</h2>' +
       '<div class="sumgrid">' +
         '<div><b>' + s.count + '</b><span>receipts</span></div>' +
-        '<div><b>$' + s.total.toFixed(2) + '</b><span>total spent</span></div>' +
+        '<div><b>$' + s.total.toFixed(2) + '</b><span>total spent (CAD only)</span></div>' +
         '<div><b>$' + s.gst.toFixed(2) + '</b><span>GST / HST</span></div>' +
+        (s.pst ? '<div><b>$' + s.pst.toFixed(2) + '</b><span>PST / RST / QST</span></div>' : '') +
+        (s.salesTax ? '<div><b>$' + s.salesTax.toFixed(2) + '</b><span>other sales tax</span></div>' : '') +
+        Object.keys(s.byCurrency).filter(function (k) { return k !== 'CAD'; }).map(function (k) { return '<div><b>' + esc(k) + ' ' + s.byCurrency[k].total.toFixed(2) + '</b><span>' + s.byCurrency[k].count + ' receipt' + (s.byCurrency[k].count === 1 ? '' : 's') + ', not added to CAD</span></div>'; }).join('') +
         (s.needsReview ? '<div><b>' + s.needsReview + '</b><span>to check</span></div>' : '') +
       '</div>' +
-      '<table class="cattbl"><thead><tr><th>Category</th><th>Receipts</th><th>Total</th></tr></thead><tbody>' +
+      '<div class="catwrap"><table class="cattbl"><thead><tr><th>Category</th><th>Receipts</th><th>Total</th></tr></thead><tbody>' +
         cats.map(function (c) { return '<tr><td>' + esc(c) + '</td><td>' + s.byCategory[c].count + '</td><td>$' + s.byCategory[c].total.toFixed(2) + '</td></tr>'; }).join('') +
-      '</tbody></table>' +
+      '</tbody></table></div>' +
+      (s.foreignCount ? '<p class="note">' + s.foreignCount + ' receipt' + (s.foreignCount === 1 ? ' is' : 's are') + ' in another currency. They are listed above on their own and are not in the CAD totals or the category table. Convert them before filing.</p>' : '') +
       (meals ? '<p class="note">Heads-up: meals &amp; entertainment are often only <b>50% deductible</b> in Canada — a starting point, not tax advice.</p>' : '') +
       '<p class="note">A starting point for your taxes, not tax advice. Check anything marked "Check this" against the original receipt.</p>';
     box.hidden = false;
     renderCTA(s);
   }
   function render() {
-    if (!rows.length) { tbody.innerHTML = '<tr><td colspan="8" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr>'; }
+    if (!rows.length) { tbody.innerHTML = '<tr><td colspan="11" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr>'; }
     else tbody.innerHTML = rows.map(function (r, i) {
-      var ok = r.status === 'ok';
-      return '<tr><td>' + esc(r.file) + '</td>' +
-        '<td><input data-i="' + i + '" data-k="date" value="' + esc(r.date) + '" placeholder="YYYY-MM-DD" aria-label="Date"></td>' +
-        '<td><input data-i="' + i + '" data-k="vendor" value="' + esc(r.vendor) + '" aria-label="Vendor"></td>' +
-        ['subtotal', 'gst', 'total'].map(function (k) { return '<td class="num"><input data-i="' + i + '" data-k="' + k + '" inputmode="decimal" value="' + esc(fmt(r[k])) + '" aria-label="' + k + '"></td>'; }).join('') +
-        '<td><input data-i="' + i + '" data-k="category" value="' + esc(r.category) + '" aria-label="Category"></td>' +
-        '<td><span class="pill ' + (ok ? 'ok' : 'rev') + '">' + (ok ? 'OK' : 'Check this') + '</span></td></tr>';
+      var ok = r.status === 'ok', cur = r.currency || 'CAD';
+      function num(k, label) { return '<td class="num" data-label="' + label + '"><input data-i="' + i + '" data-k="' + k + '" inputmode="decimal" value="' + esc(fmt(r[k])) + '" aria-label="' + label + '"></td>'; }
+      var why = !ok && r.reason ? '<span class="why">' + esc(r.reason) + '</span>' : '';
+      return '<tr><td class="fn" data-label="File">' + esc(r.file) + '</td>' +
+        '<td data-label="Date"><input data-i="' + i + '" data-k="date" value="' + esc(r.date) + '" placeholder="YYYY-MM-DD" aria-label="Date"></td>' +
+        '<td data-label="Vendor"><input data-i="' + i + '" data-k="vendor" value="' + esc(r.vendor) + '" aria-label="Vendor"></td>' +
+        num('subtotal', 'Subtotal') + num('gst', 'GST') + num('pst', 'PST / RST / QST') + num('sales_tax', 'Sales tax') + num('total', 'Total') +
+        '<td data-label="Currency"><input data-i="' + i + '" data-k="currency" value="' + esc(cur) + '" aria-label="Currency"></td>' +
+        '<td data-label="Category"><input data-i="' + i + '" data-k="category" value="' + esc(r.category) + '" aria-label="Category"></td>' +
+        '<td data-label="Status"><span class="pill ' + (ok ? 'ok' : 'rev') + '">' + (ok ? (cur === 'CAD' ? 'OK' : 'OK (' + esc(cur) + ')') : 'Check this') + '</span>' + why + '</td></tr>';
     }).join('');
     var review = rows.filter(function (r) { return r.status !== 'ok'; }).length;
     $('count').textContent = rows.length ? rows.length + ' receipt' + (rows.length === 1 ? '' : 's') + (review ? ' · ' + review + ' to check' : '') : '';
@@ -237,8 +270,8 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
   tbody.addEventListener('change', function (e) {
     var el = e.target; if (!el.dataset || el.dataset.i === undefined) return;
     var r = rows[+el.dataset.i], k = el.dataset.k, v = el.value.trim();
-    r[k] = (k === 'date' || k === 'vendor' || k === 'category') ? (v || null) : (v === '' ? null : (isNaN(parseFloat(v.replace(/[$,]/g, ''))) ? null : parseFloat(v.replace(/[$,]/g, ''))));
-    if (r.date && r.vendor && r.total !== null && r.total !== undefined) r.status = 'ok';
+    r[k] = (k === 'currency') ? ((v || 'CAD').toUpperCase().slice(0, 3)) : (k === 'date' || k === 'vendor' || k === 'category') ? (v || null) : (v === '' ? null : (isNaN(parseFloat(v.replace(/[$,]/g, ''))) ? null : parseFloat(v.replace(/[$,]/g, ''))));
+    if (r.date && r.vendor && r.total !== null && r.total !== undefined) { r.status = 'ok'; r.reason = 'checked by you'; }
     render();
   });
 

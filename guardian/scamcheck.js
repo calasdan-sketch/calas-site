@@ -5,7 +5,10 @@
  *   - The message text never leaves the phone.
  *   - To check a number/link/wallet/handle, the phone makes a scrambled fingerprint (SHA-256) and
  *     sends only its first 6 characters. The server answers with every reported fingerprint that
- *     starts that way; the phone does the final comparison. The server can't tell what was checked.
+ *     starts that way; the phone does the final comparison. So the server never receives the
+ *     number, link or message text. It is NOT blind, though: it sees which 6-character prefixes
+ *     were asked about, and from which network address (kept only as a salted hash, for rate
+ *     limits). A prefix fits many possible values, so it does not name one, but it narrows it down.
  *   - Reporting sends the number/link itself, and only when the person taps "Warn others".
  *   - A family alert goes out only if this person joined a family and switched alerts on.
  *
