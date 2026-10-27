@@ -1,0 +1,22 @@
+/* calas-glance.css (2026-10-26): the plain "at a glance" block on every product page.
+   What it does / what it does not do / price / how to start. Self-contained so it looks the
+   same on every page. Calas blue #155F87 on white, night #0B2E45, text #12212C. */
+.tm{background:#F4F8FA;border-top:1px solid #DCE6ED;border-bottom:1px solid #DCE6ED;padding:28px 16px;color:#12212C;font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.tm *{box-sizing:border-box}
+.tm-in{max-width:1100px;margin:0 auto}
+.tm h2{font-family:"Libre Baskerville",Georgia,serif;font-weight:700;font-size:clamp(22px,5.4vw,30px);line-height:1.2;color:#0B2E45;margin:0 0 6px;letter-spacing:-.01em}
+.tm .tm-sub{margin:0 0 16px;color:#4E5B66;font-size:16px;line-height:1.5}
+.tm-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:760px){.tm{padding:40px 24px}.tm-grid{grid-template-columns:1fr 1fr;gap:16px}}
+.tm-card{background:#fff;border:1px solid #D9E3EA;border-radius:12px;padding:16px 18px;color:#12212C}
+.tm-card h3{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#155F87;margin:0 0 10px}
+.tm-no{border-left:3px solid #B9812E}
+.tm-no h3{color:#7A5518}
+.tm-yes{border-left:3px solid #155F87}
+.tm-card ul{margin:0;padding-left:18px}
+.tm-card li{margin:5px 0;font-size:16px;line-height:1.5;color:#12212C}
+.tm-card p{margin:0 0 8px;font-size:16px;line-height:1.5;color:#12212C}
+.tm-card b{color:#0B2E45}
+.tm-cta{display:inline-block;margin-top:8px;background:#155F87;color:#fff!important;padding:12px 18px;border-radius:8px;font-weight:600;font-size:16px;text-decoration:none;text-align:center}
+.tm-cta:hover,.tm-cta:focus-visible{background:#0E4A6B;outline:none}
+@media(max-width:560px){.tm-cta{display:block}}

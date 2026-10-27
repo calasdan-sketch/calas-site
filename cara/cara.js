@@ -55,7 +55,10 @@
     '.cc-win .cc-in textarea:focus{outline:2px solid #155F87;outline-offset:1px}' +
     '.cc-win .cc-in button{align-self:flex-end;width:auto;min-width:0;margin:0;background:#155F87;color:#fff;border:0;border-radius:8px;' +
     'padding:7px 18px;font:600 14px "IBM Plex Sans",system-ui,sans-serif;cursor:pointer;box-shadow:none}' +
-    '@media(max-width:560px){.cc-win{right:8px;left:8px;width:auto;bottom:70px;height:calc(100vh - 90px);height:calc(100dvh - 90px)}}' +
+    '@media(max-width:560px){.cc-win{right:8px;left:8px;width:auto;bottom:62px;height:calc(100vh - 80px);height:calc(100dvh - 80px)}' +
+    '.cc-btn{right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));padding:7px 12px;gap:7px;font-size:13px;box-shadow:0 6px 18px -6px rgba(11,46,69,.4);transition:opacity .2s,transform .2s}' +
+    '.cc-btn.cc-away{opacity:0;transform:translateY(10px);pointer-events:none}' +
+    'body{padding-bottom:calc(56px + env(safe-area-inset-bottom,0px))}}' +
     '.cc-note{font-size:11.5px;color:#7A868F;padding:0 12px 9px;background:#fff}' +
     '@media print{.cc-btn,.cc-win{display:none!important}}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
@@ -70,8 +73,12 @@
     '<button class="cc-x" type="button" aria-label="Close chat">&times;</button></div>' +
     '<div class="cc-log" aria-live="polite"></div><div class="cc-chips"></div>' +
     '<form class="cc-in"><textarea rows="3" maxlength="800" placeholder="Type your question…" aria-label="Your question"></textarea><button type="submit">Send</button></form>' +
-    '<div class="cc-note">Cara can make mistakes. Anything important, call 431-244-9026.</div>';
-  document.body.appendChild(btn); document.body.appendChild(win);
+    '<div class="cc-note">Cara can make mistakes. Anything important, call 431-244-9026.</div>';  document.body.appendChild(btn); document.body.appendChild(win);
+  // On phones the chat button would sit on top of the page's own buttons, so it stays out of the way
+  // until the visitor has scrolled past the first screen, and is hidden again at the very top.
+  var small = window.matchMedia && matchMedia('(max-width:560px)');
+  function placeBtn() { var away = small && small.matches && window.scrollY < 360 && !win.classList.contains('on'); btn.classList.toggle('cc-away', !!away); }
+  window.addEventListener('scroll', placeBtn, { passive: true }); window.addEventListener('resize', placeBtn); placeBtn();
 
   var log = win.querySelector('.cc-log'), form = win.querySelector('form'), input = form.querySelector('textarea'),
       chips = win.querySelector('.cc-chips'), history = [], busy = false;
@@ -81,7 +88,7 @@
     log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
   }
   function open(on) {
-    win.classList.toggle('on', on); btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+    win.classList.toggle('on', on); btn.setAttribute('aria-expanded', on ? 'true' : 'false'); if (typeof placeBtn === 'function') placeBtn();
     if (on) { if (!log.childElementCount) add(HELLO[APP] || HELLO.site, 'a'); setTimeout(function () { input.focus(); }, 50); }
     else btn.focus();
   }
