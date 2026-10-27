@@ -224,7 +224,7 @@ mark sup{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;co
 <meta name="twitter:image" content="https://calasautomations.com/og/demo-guardian.jpg">
 <meta name="twitter:image:alt" content="Is that text a scam? Paste it and see: Check a message before you trust it.">
 <!-- og:end -->
-</head><body>
+</head><body><div id="honesty-banner" style="background:#EAF2F7;color:#0B2E45;border-bottom:1px solid #155F87;padding:8px 16px;font:13px/1.4 system-ui,sans-serif;text-align:center">Demo with made-up messages.</div>
 
 <div class="banner"><div class="wrap">
   <span><b>This is a demo.</b> Made-up person, made-up messages, fake links. None of this is anyone's real information.</span>
@@ -505,7 +505,7 @@ var lines=[
 "This is Calas ScamCatch, a free scam checker from Calas Automations. Here is a phone with four made-up texts, the kind that reach you, your staff, and your parents every week.",
 "First, a parcel notice asking for a small customs fee. Open it, and tap Check with ScamCatch.",
 "ScamCatch reads it right on the phone. It marks each warning sign in the message itself: the customs fee story, the gift card, the push over to WhatsApp.",
-"Below that, each red flag is explained in plain words, with a clear next step. Nothing you paste is sent anywhere.",
+"Below that, each red flag is explained in plain words, with a clear next step. Your message stays on your phone.",
 "Next, a bank alert telling you to wire your savings to a safe account, and to keep it from your branch. ScamCatch rates that one high.",
 "This one claims to be a tax refund from the CRA. Pay a fee with a gift card, send bitcoin, tell no one. ScamCatch rates it critical.",
 "It also lists what the scammer gave away, like the fake link, and helps you report it.",
@@ -514,7 +514,7 @@ var lines=[
 "Know someone who might click the wrong link? Send ScamCatch to them. It's free, and they can add it to their home screen.",
 "That's the tour. Pick a message, or paste one of your own, and see what ScamCatch finds."
 ];
-var durs=[9.61, 5.29, 9.2, 6.69, 7.52, 8.41, 4.64, 6.27, 4.97, 6.22, 4.32];
+var durs=[9.61, 5.29, 9.2, 7.06, 7.52, 8.41, 4.64, 6.27, 4.97, 6.22, 4.32];
 function open(t,id){
  t.tap("#threadBack");
  return t.sleep(450).then(function(){t.tap("#m-"+id);return t.sleep(800);})

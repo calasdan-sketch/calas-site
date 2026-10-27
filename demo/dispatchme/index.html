@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"><link rel="stylesheet" href="/calas-theme.css?v=20261002a">
 <title>Dispatch Me demo · snow clearing dispatch · Calas Automations</title>
-<meta name="description" content="A working demo of Dispatch Me: a made-up Winnipeg property company's lots, matched to vetted snow crews, and one call that sends them all out when the snow comes.">
+<meta name="description" content="A working demo of Dispatch Me: a made-up Winnipeg property company's lots, matched to snow crews, and one call that sends them all out when the snow comes. Made-up data; we are signing up our first crews.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
@@ -213,7 +213,7 @@ button{cursor:pointer}
 <meta name="twitter:image" content="https://calasautomations.com/og/demo-dispatchme.jpg">
 <meta name="twitter:image:alt" content="Dispatch Me — snow clearing, Winnipeg &amp; Manitoba: Your lots, cleared. Every storm.">
 <!-- og:end -->
-</head><body>
+</head><body><div id="honesty-banner" style="background:#EAF2F7;color:#0B2E45;border-bottom:1px solid #155F87;padding:8px 16px;font:13px/1.4 system-ui,sans-serif;text-align:center">Demo with made-up data. We are signing up our first crews; no crew is placed until the written agreements are in place.</div>
 
 <div class="banner"><div class="wrap">
   <span><b>This is a demo.</b> Made-up property company, made-up crews and lots. None of this is anyone's real information.</span>
@@ -276,7 +276,7 @@ button{cursor:pointer}
 
     <div class="stack">
       <div class="card" id="addCard">
-        <div class="hd"><h3>Add a property</h3><span class="eyebrow">Matched to a vetted crew</span></div>
+        <div class="hd"><h3>Add a property</h3><span class="eyebrow">Matched to a crew we have checked</span></div>
         <form class="form" id="addForm" novalidate>
           <label class="full">Property name<input type="text" id="fName" maxlength="60" placeholder="e.g. Grant Avenue Medical Arts" autocomplete="off"></label>
           <label>Part of town<select id="fArea"></select></label>
@@ -297,14 +297,14 @@ button{cursor:pointer}
       </div>
 
       <div class="card" id="crewsCard">
-        <div class="hd"><h3>Your crews</h3><span class="eyebrow">Insurance &amp; references checked</span></div>
+        <div class="hd"><h3>Your crews</h3><span class="eyebrow">Insurance &amp; references checked by hand</span></div>
         <div id="crews"></div>
       </div>
 
       <div class="card" id="feedCard">
         <div class="hd"><h3>What's happening</h3><span class="eyebrow" id="feedCount">quiet night</span></div>
         <div class="feed" id="feed"></div>
-        <div class="feednote">One number all winter. We deal with the crews, the scheduling and the storm-night calls; this is the record of what happened.</div>
+        <div class="feednote">This is the record of what happened. In real life, if a crew misses, call us and we will try to send another.</div>
       </div>
     </div>
   </div>
@@ -317,7 +317,7 @@ button{cursor:pointer}
       <span class="crest" aria-hidden="true"></span>
       <div><div class="t1"><span class="r">Dispatch</span> Me</div><div class="t2">BY CALAS AUTOMATIONS</div></div>
     </a>
-    <p class="fl">Dispatch Me matches Winnipeg commercial and industrial properties with insured, reference-checked snow crews. One call covers you all winter. Built in Winnipeg by Calas Automations.</p>
+    <p class="fl">Dispatch Me matches Winnipeg commercial and industrial properties with snow crews. We are signing up our first crews and check insurance and references by hand before a crew is offered any lot. Built in Winnipeg by Calas Automations.</p>
   </div>
   <div class="legal">
     <p>Questions?  or read more about <a href="/dispatchme/">Dispatch Me</a>.</p>
@@ -533,7 +533,7 @@ button{cursor:pointer}
     var name = '<b>' + esc(l.name) + '</b>', t = clockAt(at);
     l.backup = { from: from }; l.crew = b.id; l.status = 'backup';
     note(l, t, 'Backup sent: ' + esc(b.name));
-    log('you', '&#8634;', 'Backup sent to ' + name + ': <b>' + esc(b.name) + '</b>. No chasing needed.', t);
+    log('you', '&#8634;', 'Backup sent to ' + name + ': <b>' + esc(b.name) + '</b>. Backup arranged.', t);
     render();
     step(l, 'conf', at + 1400, 'Backup crew confirmed', esc(b.name) + ' confirmed ' + name, '', '&#10003;');
     step(l, 'site', at + 4200, 'On site, clearing', esc(b.name) + ' on site at ' + name, '', '&#9679;');
@@ -576,7 +576,7 @@ button{cursor:pointer}
     var t = fmt(last + 5);
     log('ok you', '&#9993;', '<b>Morning update to Priya:</b> ' + n + ' lot' + (n === 1 ? '' : 's') + ' cleared by ' + fmt(last) + ', each before its deadline.', t);
     $('doneB').textContent = 'Every lot that needed it is clear, by ' + fmt(last);
-    $('doneS').textContent = 'You made one call. No 5 a.m. chasing.';
+    $('doneS').textContent = 'You made one call.';
     render();
   }
 
@@ -612,7 +612,7 @@ button{cursor:pointer}
     var covered = svc.filter(function (k) { return NEEDS[k].some(function (x) { return best.eq.indexOf(x) >= 0; }); }).map(function (k) { return SVC[k].toLowerCase(); });
     out.className = 'match on';
     out.innerHTML = '<b>' + esc(name) + '</b> is on file and matched to <b>' + esc(best.name) + '</b>. They already run ' + esc(area) +
-      (covered.length ? ', and they have the equipment for ' + esc(covered.join(', ')) : '') + '. Insurance and references checked.';
+      (covered.length ? ', and they have the equipment for ' + esc(covered.join(', ')) : '') + '. Insurance and references checked by hand before any lot is offered.';
     log('sys', '+', '<b>' + esc(name) + '</b> added and matched to ' + esc(best.name) + '.', S.phase === 'idle' ? fmt(20 * 60 + 15) : clockAt(now()));
     S.open = null;
     nameEl.value = '';
@@ -670,17 +670,17 @@ CalasTour.start({
   lines: [
     "Welcome to Dispatch Me. This is a made-up property company in Winnipeg, with six lots to keep clear all winter.",
     "Each property is on file once: the lot size, the trigger depth, what it needs, and the time it has to be clear by.",
-    "Every lot is matched to a vetted crew. Each crew shows proof of insurance and references before they get a single lot.",
+    "Every lot is matched to a crew. We check insurance and references by hand before a crew is offered any lot.",
     "Adding a property takes a moment. Tell us about it, and it's matched to a crew that already runs that part of town.",
     "Now the snow is coming. Six centimetres tonight. Instead of calling three contractors, you make one call.",
     "That's it. Every lot past its trigger depth gets a crew sent out. The warehouse yard is set for eight, so it waits.",
     "Watch the board. Crews confirm, head out, and report each lot cleared, one by one, before its deadline.",
     "Here, a crew hasn't answered. You don't chase anyone. A backup crew is sent instead, and the lot still gets done.",
     "Everything that happened is written down here, so you can see who cleared what, and when.",
-    "By morning, every lot that needed it is clear, and you made one call. No five a.m. chasing.",
+    "In this made-up example every lot gets cleared. In real life, if a crew misses, call us and we will try to send another.",
     "Good crews fill their routes in the fall, so talk to us early. Now it's your turn: add a lot, call in a storm, and click around."
   ],
-  durs: [6.73, 6.64, 6.59, 6.13, 6.64, 6.97, 6.18, 6.97, 4.41, 4.78, 7.06],
+  durs: [6.73, 6.64, 6.62, 6.13, 6.64, 6.97, 6.18, 6.97, 4.41, 7.63, 7.06],
   audioBase: "narration/step-",
   onReplay: function () { window.DispatchDemo.reset(); window.scrollTo(0, 0); },
   script: function (t) {

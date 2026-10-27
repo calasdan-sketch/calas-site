@@ -246,7 +246,7 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
 <meta name="twitter:image:alt" content="Local leads that fit what you sell: A short list, with a reason to call.">
 <!-- og:end -->
 </head>
-<body>
+<body><div id="honesty-banner" style="background:#EAF2F7;color:#0B2E45;border-bottom:1px solid #155F87;padding:8px 16px;font:13px/1.4 system-ui,sans-serif;text-align:center">Demo with made-up data. In the real app, sends happen when you press Send for the day.</div>
 
 <div class="demostrip"><div class="wrap">
   <span><b>This is a demo.</b> Made-up salesperson, made-up companies. None of this is anyone's real information, and nothing is ever emailed.</span>
@@ -867,7 +867,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
       "Or approve every good-fit lead with a verified contact at once, and send them as one batch, within your daily limit.",
       "When someone writes back, it lands in Replied and the follow-ups stop. This vet hospital wants to talk next week.",
       "Getting started takes three boxes: your name, your company and your email. Press Find my leads, and Lead Me works out who buys from you and starts finding them. No passwords, nothing else to set up.",
-      "Lead Me starts at a hundred and ninety-nine dollars a month, with no setup fee. Forty checked, ready-to-email businesses in fourteen days, or you owe nothing.",
+      "Lead Me starts at a hundred and ninety-nine dollars a month, with no setup fee. Forty fitting businesses in fourteen days, or your money back, handled by hand.",
       "That's the tour. Now click around: find leads, open a card, send a few. It's all made up, so nothing leaves this page."
     ],
     reset: reset,
@@ -884,7 +884,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
   function first(sel) { return document.querySelector('#cards .row-card:not([hidden]) ' + (sel || '')); }
   CalasTour.start({
     lines: T.lines,
-    durs: [7.58, 7.13, 6.96, 7.78, 5.11, 5.35, 10.22, 7.37, 7.1, 12.17, 9.84, 7.37],
+    durs: [7.58, 7.13, 6.96, 7.78, 5.11, 5.35, 10.22, 7.37, 7.1, 12.17, 10.01, 7.37],
     audioBase: 'narration/step-',
     onReplay: function () { T.reset(); window.scrollTo(0, 0); },
     script: function (t) {
