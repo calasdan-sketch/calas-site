@@ -78,7 +78,19 @@
 <meta name="twitter:image" content="https://calasautomations.com/og/pay.jpg">
 <meta name="twitter:image:alt" content="Pricing — On File, Lead Me, Quote Me: Every price on one page.">
 <!-- og:end -->
-<link rel="stylesheet" href="/calas-nav.css?v=20261027a"></head>
+<link rel="stylesheet" href="/calas-nav.css?v=20261027a"><style id="pay-2026-10-27">
+.pay-summary{background:#0B2E45;color:#fff;text-align:center;padding:12px 16px;font:500 17px/1.4 "IBM Plex Sans",system-ui,sans-serif;border-bottom:2px solid #F0C171}
+.pay-summary b{color:#F6D89B;font-weight:600}
+.entry .gq{border:2px solid #D9A443;background:#FFF8E8;color:#12212C;padding:14px 18px;border-radius:12px;margin:16px 0}
+.entry .gq b{color:#6B4710;display:block;font:600 14px/1.3 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .entry .gq{background:#2A2210;color:#F3EBD8;border-color:#B9812E}:root:not([data-theme="light"]) .entry .gq b{color:#F6D89B}}
+.lm-table{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:16px}
+.lm-table th{font:600 14px/1.3 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#4A5A66;text-align:left;padding:8px 10px;border-bottom:2px solid #D9E3EA}
+.lm-table td{padding:10px;border-bottom:1px solid #E3EBF0;vertical-align:top}
+.lm-table td:last-child,.lm-table th:last-child{text-align:right;white-space:nowrap}
+.lm-table td b{font-family:"Libre Baskerville",Georgia,serif}
+.sub-link{display:inline-block;min-height:44px;line-height:44px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+</style></head>
 <body><a class="skip-link" href="#main">Skip to content</a>
 
 <header id="hdr">
@@ -116,6 +128,7 @@
 </header>
 
 <main id="main">
+<p class="pay-summary">Two main plans: <b>Quote Me C$99/mo</b>, <b>On File C$500/mo</b>. Everything else is below.</p>
 <div id="paidNote" hidden style="max-width:900px;margin:24px auto 0;padding:18px 22px;border-radius:14px;background:#0f2f45;color:#fff;border:1px solid #F0C171;font-size:17px;line-height:1.5">
   <b style="color:#F0C171">Thank you &mdash; your payment went through.</b><br>
   We&rsquo;re setting up your account now. In the next few minutes you&rsquo;ll get an email from Calas Automations with your sign-in link (check Spam or Junk if you don&rsquo;t see it). Questions? <a href="tel:+14312449026" data-cara style="color:#F0C171">(431) 244-9026</a>
@@ -127,11 +140,9 @@
   <div>
     <a class="of-lockup" href="/" aria-label="Calas Automations pricing"><span class="crest" aria-hidden="true"></span><span class="of-lk-text"><span class="of-lk-name"><span class="r">Pricing</span></span><span class="of-lk-sub">BY CALAS AUTOMATIONS</span></span></a>
     <div><span class="eyebrow"><i></i>Every price · every guarantee · CAD</span></div>
-    <h1 id="pr-h1">Every price on one page. <em>Pay here, start today.</em></h1>
-    <p class="lede">Fixed prices in Canadian dollars, each with its guarantee written next to it. If a Pay button is showing, it goes to a secure Stripe checkout. We accept Visa, Mastercard, American Express, Apple Pay, Link, and Klarna. If it isn&rsquo;t showing yet, email us and we&rsquo;ll switch it on.</p>
-    <div class="ctas">
-      
-    </div>
+    <h1 id="pr-h1">Start free, <em>pay only if you keep it.</em></h1>
+    <p class="lede">Every price is in Canadian dollars with its guarantee written next to it. Quote Me has a free 14-day trial with no card; On File starts with a free two-week pilot. When a Pay button is showing, it goes to a secure Stripe checkout (Visa, Mastercard, American Express, Apple Pay, Link and Klarna). If it is not showing yet, call us and we will switch it on.</p>
+    <div class="ctas"><a class="btn x gold" href="/quote-me/app/">Start free &ndash; Quote Me <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a></div>
     <div class="fine"><span>Sign up in minutes, no call needed</span><span>Nobody is charged until checkout</span></div>
   </div>
   <div class="hero-vis rv" style="--d:2" role="navigation" aria-label="Jump to a product">
@@ -172,7 +183,7 @@
         <li>Request and reminder emails that go out when you or we press the button, and a record of who was asked what and when.</li>
         <li>Maintenance, fixes and small changes through the year. Cancel any time, never billed again.</li>
       </ul>
-      <p class="gq"><b>Guarantee.</b> If the two-week run doesn&rsquo;t return at least 6 staff hours a week, you have paid nothing.</p>
+      <p class="gq"><b>Guarantee.</b> If the two-week run doesn&rsquo;t return at least 6 staff hours a week, you have paid nothing (<a href="/terms/#on-file-test">how the hours are counted</a>).</p>
       <p class="gq"><b>Billing.</b> Nothing is charged during the two-week run. If you keep it, C$500 a month plus tax starts on day 15.</p>
     </div>
   </article>
@@ -194,18 +205,20 @@
       <span class="det">Details and plan comparison: <a href="/leadme/#pricing">Lead Me</a></span>
     </div>
     <div>
-      <div class="ledger-p">
-        <div class="ln"><span class="lbl">Setup fee, any plan</span><span class="dots"></span><span class="amt">C$0</span></div>
-        <div class="ln"><span class="lbl">Lead Me Starter &middot; you send, with one click</span><span class="dots"></span><span class="amt">C$199<small>/mo</small></span></div>
-        <div class="ln"><span class="lbl">Lead Me &middot; sends for you <b>(most popular)</b></span><span class="dots"></span><span class="amt">C$599<small>/mo</small></span></div>
-        <div class="ln"><span class="lbl">Lead Me Team &middot; up to 4 people</span><span class="dots"></span><span class="amt">C$1,200<small>/mo</small></span></div>
-      </div>
+      <table class="lm-table">
+        <thead><tr><th scope="col">Plan</th><th scope="col">Who sends</th><th scope="col">People</th><th scope="col">Price</th></tr></thead>
+        <tbody>
+          <tr><td><b>Starter</b></td><td>You, one click</td><td>1</td><td>C$199/mo</td></tr>
+          <tr><td><b>Lead Me</b> (most popular)</td><td>It sends when you press Send for the day</td><td>1</td><td>C$599/mo</td></tr>
+          <tr><td><b>Team</b></td><td>Same as Lead Me, shared list</td><td>Up to 4</td><td>C$1,200/mo</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:15px;color:#4A5A66;margin:0 0 12px">No setup fee on any plan.</p>
       <h3>What&rsquo;s included</h3>
       <ul class="inc">
-        <li><b>Starter:</b> your industry and territory profile, built with you; the finder, the website reader and a fit score out of 100 with plain reasons; every email address's domain checked, with a record of where it was found; honest first emails written for you. You send them from your own email with one click (&ldquo;Open in my email&rdquo;), up to 30 a day after a one-week warm-up (10 a day, then 20). One person.</li>
-        <li><b>Lead Me:</b> everything in Starter, plus it sends for you from your own email address when you press Send for the day: a first email, a follow-up on day 3 and a last one on day 7, then it stops. It stops when someone replies (needs your inbox connected) or unsubscribes, and pauses if emails start bouncing. One person.</li>
-        <li><b>Team:</b> everything in Lead Me for up to 4 people sharing one lead list, so two people never email the same company, plus export to your CRM (a spreadsheet file that HubSpot, Pipedrive, Salesforce and Excel all open).</li>
-        <li>Ongoing runs, fixes and profile tuning on every plan. Cancel any time, never billed again.</li>
+        <li>Finds local businesses that fit what you sell, reads their websites, gives a fit score out of 100 with plain reasons, and writes honest first emails.</li>
+        <li>Every email address was published on the business&rsquo;s own site and its domain is checked to accept email. Sending is by button press, after a one-week warm-up: 10 a day, then 20, then 30 at most.</li>
+        <li>The follow-ups on day 3 and day 7 stop when someone replies (needs your inbox connected) or unsubscribes. <a href="/leadme/#pricing">Full plan comparison</a>.</li>
       </ul>
       <p class="gq"><b>Guarantee, on every plan.</b> 40 businesses in your territory that fit what you sell, each with an email address published on their own site, their domain checked to accept email, and a record of where we found it, within 14 days of going live &mdash; or you walk away owing nothing. Refunds are handled by hand: email us and we sort it out.</p>
     </div>
@@ -217,7 +230,8 @@
       <h2>Quote Me</h2>
       <p class="who">A 90-second voice note on site becomes a priced quote from your rate card. The customer accepts by typing their name and pays the deposit by bank debit or card.</p>
       <div class="acts">
-        <a class="btn x" data-pay="quoteme_monthly" href="#" hidden style="display:none">Subscribe &mdash; C$99/mo <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+        <a class="btn x" href="/quote-me/app/">Start your 14-day free trial <span class="chip" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></a>
+        <a class="sub-link" data-pay="quoteme_monthly" href="#" hidden style="display:none">Already tried it? Subscribe, C$99/mo</a>
         
       </div>
       <span class="det">Details: <a href="/quote-me/">Quote Me</a> &middot; shops already in the app can subscribe from inside it</span>

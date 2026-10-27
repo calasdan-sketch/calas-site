@@ -32,7 +32,7 @@
     if (!box || box.querySelector('.pay-terms')) return;
     var s = document.createElement('span');
     s.className = 'pay-terms';
-    s.style.cssText = 'display:block;flex-basis:100%;width:100%;font-size:13px;line-height:1.4;margin:8px 0 0;opacity:.85';
+    s.style.cssText = 'display:block;flex-basis:100%;width:100%;font-size:14px;line-height:1.4;margin:8px 0 0;opacity:.85';
     s.innerHTML = 'By buying you agree to our <a href="/terms/" style="color:inherit;text-decoration:underline">Terms</a> and <a href="/privacy/" style="color:inherit;text-decoration:underline">Privacy Policy</a>.';
     box.appendChild(s);
   }

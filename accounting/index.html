@@ -32,7 +32,26 @@
 <meta name="twitter:image" content="https://calasautomations.com/og/accounting.jpg">
 <meta name="twitter:image:alt" content="Chase missing client documents with On File (early access) early-access document chasing.">
 <!-- og:end -->
-<link rel="stylesheet" href="/calas-glance.css?v=20261026a"><link rel="stylesheet" href="/calas-nav.css?v=20261027a"></head><body><a class="skip-link" href="#main">Skip to content</a>
+<link rel="stylesheet" href="/calas-glance.css?v=20261026a"><link rel="stylesheet" href="/calas-nav.css?v=20261027a"><style id="onfile-2026-10-27">
+.sub-line{margin:14px 0 0;font-size:16px}
+.sub-line a{color:#BFE0F2;font-weight:600;text-decoration:underline;text-underline-offset:3px;display:inline-block;min-height:44px;line-height:44px}
+.sub-line .sep{color:#8FAFC4;padding:0 6px}
+.cta-links{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.cta-links a.textlink{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:3px;min-height:44px;line-height:44px}
+.faq-of{border-top:1px solid var(--rule)}
+.faq-of details{border-bottom:1px solid var(--rule)}
+.faq-of summary{cursor:pointer;padding:18px 0;font-family:"Libre Baskerville",Georgia,serif;font-weight:700;font-size:18px;line-height:1.35;list-style:none;display:flex;justify-content:space-between;gap:16px;min-height:44px}
+.faq-of summary::-webkit-details-marker{display:none}
+.faq-of summary::after{content:"+";font-family:"IBM Plex Mono",monospace;font-size:22px;color:var(--red)}
+.faq-of details[open] summary::after{content:"\2212"}
+.faq-of details p{margin:0 0 20px;color:var(--ink-2);max-width:70ch}
+.databox{border:1px solid var(--rule);border-left:4px solid var(--red);background:var(--sunk);padding:22px 24px;border-radius:2px}
+.databox h2{font-size:22px;margin:0 0 10px}
+.databox ul{margin:0 0 10px;padding-left:20px;color:var(--ink-2)}
+.databox li{margin:6px 0}
+.databox p{margin:0;color:var(--ink-3);font-size:15px}
+</style><script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"On File","description":"Early access. Keeps a list of the documents each client still owes an accounting or bookkeeping firm and sends request and reminder emails when you press the button. Free two-week pilot, set up with you.","brand":{"@type":"Brand","name":"Calas Automations"},"url":"https://calasautomations.com/accounting/","offers":{"@type":"Offer","price":"500","priceCurrency":"CAD","url":"https://calasautomations.com/accounting/","availability":"https://schema.org/InStock","priceSpecification":{"@type":"UnitPriceSpecification","price":"500","priceCurrency":"CAD","billingDuration":1,"unitCode":"MON"}}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need an app?","acceptedAnswer":{"@type":"Answer","text":"On File runs in your web browser; you sign in at onfile.calasautomations.com. Your clients need nothing installed: the requests and reminders reach them as emails."}},{"@type":"Question","name":"What if a client never sends the documents?","acceptedAnswer":{"@type":"Answer","text":"On File keeps showing it as missing, with who was asked and when. Reminders go out when you or we press the button; nothing chases on its own yet. The conversation with the client is still yours."}},{"@type":"Question","name":"Who sees my data?","acceptedAnswer":{"@type":"Answer","text":"We act as your service provider for the receipts, statements and signed forms and contact details you put in: we keep them confidential, use them only to run On File for you, let only our staff and the providers who need it see them, and delete them when you close your account. On File is stored on our server in Toronto, Canada. Reminder emails are sent through Resend (United States) and Bird (Netherlands). Details are in our Privacy Policy."}},{"@type":"Question","name":"What if it gets something wrong?","acceptedAnswer":{"@type":"Answer","text":"On File does not check whether a document is valid or enough. It tracks and chases. A person at your firm still reviews and accepts what comes in. Reminders go out only when someone presses the button."}},{"@type":"Question","name":"How do I cancel?","acceptedAnswer":{"@type":"Answer","text":"Cancel any time and you are never billed again; your plan runs to the end of the period you paid for. Nothing is charged during the two-week pilot. Call (431) 244-9026 or email office@calasautomations.com. The workflow stays yours if you leave."}}]}</script></head><body><a class="skip-link" href="#main">Skip to content</a>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -251,10 +270,8 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
     <p class="lede">Early access: we set it up with you and run the first two weeks side by side with how you chase documents today. You see it on your own files before you pay anything.</p>
     <div class="hero-actions">
       <a class="btn" href="tel:+14312449026" data-cara>Ask about the free two-week pilot</a>
-      <a class="btn ghost" href="/demo/accounting/" target="_blank" rel="noopener">Watch the demo (made-up data)</a>
-      
-      <a class="btn ghost" data-pay="onfile_monthly" href="/pay/" hidden style="display:none">Monthly plan &mdash; C$500/mo</a>
     </div>
+    <p class="sub-line"><a href="/demo/accounting/" target="_blank" rel="noopener">Watch the demo (made-up data)</a><span class="sep" aria-hidden="true">&middot;</span><a data-pay="onfile_monthly" href="/pay/#onfile" hidden style="display:none">Finished the pilot? Subscribe, C$500/mo</a></p>
     <a class="hero-signin" href="https://onfile.calasautomations.com/login">Already a customer? Sign in &rarr;</a>
     <p class="fine">C$500/mo, flat all year &middot; no setup fee &middot; free for two weeks &middot; cancel any time, never billed again &middot; prices in CAD. Nothing is charged during the two-week run. If you keep it, C$500 a month plus tax starts on day 15.</p>
     <div class="demo-wrap">
@@ -282,7 +299,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
     </style>
   </div>
 </div>
-<section class="tm" id="at-a-glance" aria-label="On File for accounting at a glance"><div class="tm-in"><h2>On File for accounting, plainly</h2><p class="tm-sub">What it does, what it does not do, what it costs, and how to start.</p><div class="tm-grid"><div class="tm-card tm-yes"><h3>What it does</h3><ul><li>Keeps a list of what each client still owes and which documents are missing.</li><li>Sends request and reminder emails in your firm's name when you or we press the button.</li><li>Keeps a record of who was asked for what, and when.</li></ul></div><div class="tm-card tm-no"><h3>What it does not do</h3><ul><li>No mailbox reader, shared-folder sync or automatic Cara replies yet.</li><li>Not tax or legal advice.</li><li>Hours saved are counted in the two-week side-by-side run. They are not promised in advance.</li></ul></div><div class="tm-card"><h3>Price</h3><p><b>C$500 a month</b>, flat, no setup fee. The first two weeks run side by side with how you chase today, free. If that run does not return at least 6 staff hours a week, you have paid nothing. Cancel any time, never billed again.</p></div><div class="tm-card"><h3>How to start</h3><p>Early access: we set it up with you in about two weeks. Call (431) 244-9026 or ask Cara.</p><a class="tm-cta" href="tel:+14312449026" data-cara>Ask about the free two-week pilot</a></div></div></div></section>
+<section class="tm" id="at-a-glance" aria-label="On File for accounting at a glance"><div class="tm-in"><h2>On File for accounting, plainly</h2><p class="tm-sub">What it does, what it does not do, what it costs, and how to start.</p><div class="tm-grid"><div class="tm-card tm-yes"><h3>What it does</h3><ul><li>Keeps a list of what each client still owes and which documents are missing.</li><li>Sends request and reminder emails in your firm's name when you or we press the button.</li><li>Keeps a record of who was asked for what, and when.</li></ul></div><div class="tm-card tm-no"><h3>What it does not do</h3><ul><li>No mailbox reader, shared-folder sync or automatic Cara replies yet.</li><li>Not tax or legal advice.</li><li>Hours saved are counted in the two-week side-by-side run. They are not promised in advance.</li></ul></div><div class="tm-card"><h3>Price</h3><p><b>C$500 a month</b>, flat, no setup fee. The first two weeks run side by side with how you chase today, free. If that run does not return at least 6 staff hours a week, you have paid nothing (<a href="/terms/#on-file-test">how the hours are counted</a>). Cancel any time, never billed again.</p></div><div class="tm-card"><h3>How to start</h3><p>Early access: we set it up with you in about two weeks. Call (431) 244-9026 or ask Cara.</p><a class="tm-cta" href="tel:+14312449026" data-cara>Ask about the free two-week pilot</a></div></div></div></section>
 <div class="wrap">
   <section>
     <p class="eyebrow" style="margin-bottom:10px">Estimate &mdash; illustrative figures, no external source</p>
@@ -349,7 +366,7 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
           <dt>Setup</dt><dd class="big">$0</dd>
           <dt>Monthly</dt><dd>$500, flat, all year &mdash; $6,000. Runs in season, stays maintained through the quiet months.</dd>
           <dt>What it's worth</dt><dd>Our estimate, not a measured result: <b>8&ndash;12 staff hours a week</b> &mdash; roughly <b>$9,000 to $14,000 a year</b> at a $30/hr admin rate, against $6,000 in fees. Illustrative figure with no external source &mdash; your real number gets measured in the two-week free run.</dd>
-          <dt>Guarantee</dt><dd>If the two-week free run doesn't return at least 6 staff hours a week, you have paid nothing.</dd>
+          <dt>Guarantee</dt><dd>If the two-week free run doesn't return at least 6 staff hours a week, you have paid nothing (<a href="/terms/#on-file-test">how the hours are counted</a>).</dd>
           <dt>If we disappear</dt><dd>The workflow is documented and the credentials live in your own vault, so another provider can take it over.</dd>
           <dt>Early access</dt><dd>We set it up with you and run the first two weeks side by side with how you chase today. Reminders go out when you or we press the button; there is no mailbox reader, shared-folder sync or automatic Cara reply yet.</dd>
         </dl>
@@ -403,6 +420,28 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
   <p>We're Calas Automations, a new Winnipeg company with no customers yet. You deal directly with the people who do the work. Fixed price before we start &mdash; no hourly billing. Cancel any time and you're never billed again, and the workflow stays yours if you do.</p>
 </section>
 
+  <section id="faq">
+    <div class="sec-head"><p class="eyebrow">Questions</p><h2>Five things people ask.</h2></div>
+    <div class="faq-of">
+      <details><summary>Do I need an app?</summary><p>On File runs in your web browser; you sign in at onfile.calasautomations.com. Your clients need nothing installed: the requests and reminders reach them as emails.</p></details>
+      <details><summary>What if a client never sends the documents?</summary><p>On File keeps showing it as missing, with who was asked and when. Reminders go out when you or we press the button; nothing chases on its own yet. The conversation with the client is still yours.</p></details>
+      <details><summary>Who sees my data?</summary><p>We act as your service provider for the receipts, statements and signed forms and contact details you put in: we keep them confidential, use them only to run On File for you, let only our staff and the providers who need it see them, and delete them when you close your account. On File is stored on our server in Toronto, Canada. Reminder emails are sent through Resend (United States) and Bird (Netherlands). Details are in our <a href="/privacy/">Privacy Policy</a>.</p></details>
+      <details><summary>What if it gets something wrong?</summary><p>On File does not check whether a document is valid or enough. It tracks and chases. A person at your firm still reviews and accepts what comes in. Reminders go out only when someone presses the button.</p></details>
+      <details><summary>How do I cancel?</summary><p>Cancel any time and you are never billed again; your plan runs to the end of the period you paid for. Nothing is charged during the two-week pilot. Call (431) 244-9026 or email office@calasautomations.com. The workflow stays yours if you leave.</p></details>
+    </div>
+  </section>
+  <section id="data-handling">
+    <div class="databox">
+      <h2>How we handle your data</h2>
+      <ul>
+        <li>We act as your service provider: your clients' documents and contact details are used only to run On File for you.</li>
+        <li>Only our staff and the providers who need it to run the service can see them. We do not use your content to train AI models.</li>
+        <li>On File is stored on our server in Toronto, Canada. Reminder emails go through Resend (United States) and Bird (Netherlands).</li>
+        <li>When you close your account, we delete your data, unless the law requires us to keep it.</li>
+      </ul>
+      <p>Full detail: <a href="/privacy/">Privacy Policy</a> and <a href="/terms/#on-file-test">Terms</a>. We are a new company and do not claim any security certification.</p>
+    </div>
+  </section>
 </div>
 
 <div class="cta" id="contact">
@@ -414,8 +453,8 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
       <a class="btn" href="tel:+14312449026" data-cara>Ask Cara about the free two-week pilot</a>
-      <a class="btn ghost light" href="/demo/accounting/" target="_blank" rel="noopener" style="text-align:center;border:1px solid var(--rule);color:var(--ink)">Watch the demo (made-up data)</a>
-      <a class="btn ghost light" data-pay="onfile_monthly" href="/pay/" hidden style="display:none;text-align:center;border:1px solid var(--rule);color:var(--ink)">Monthly plan &mdash; C$500/mo</a>
+      <a class="textlink" href="/demo/accounting/" target="_blank" rel="noopener" style="text-align:center;color:var(--ink);font-weight:600;text-decoration:underline;min-height:44px;line-height:44px">Watch the demo (made-up data)</a>
+      <a class="textlink" data-pay="onfile_monthly" href="/pay/#onfile" hidden style="display:none;text-align:center;color:var(--ink);font-weight:600;text-decoration:underline;min-height:44px;line-height:44px">Finished the pilot? Subscribe, C$500/mo</a>
       <span class="eyebrow" style="text-align:center">Cara answers &middot; the team replies within one business day</span>
     </div>
   </div>

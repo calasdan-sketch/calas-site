@@ -628,7 +628,7 @@ select{font-family:inherit;font-size:16px;padding:9px 12px;border:1px solid var(
         <div class="mpanel" id="m2" role="tabpanel" aria-labelledby="tm2">
           <div class="cv"><div class="cvcard">
             <div class="cvhd"><span class="lg">P</span>
-              <span><span class="nm2">Prairie Ledger CPA</span><br><span class="sm">Secure upload for <b id="cvWho"></b></span></span></div>
+              <span><span class="nm2">Prairie Ledger CPA</span><br><span class="sm">Secure upload (demo) for <b id="cvWho"></b></span></span></div>
             <div id="cvForm">
               <div class="cvh" id="cvH">Just a few things left</div>
               <p class="cvp">If you could attach each file to its line below &mdash; a line only turns green when a file is attached to it. A photo of a paper copy works fine.</p>
@@ -641,7 +641,7 @@ select{font-family:inherit;font-size:16px;padding:9px 12px;border:1px solid var(
               <div class="tick">&#10003;</div>
               <h3 id="thName"></h3>
               <p class="g"><b>Thank you &mdash; that's everything we needed.</b><br>We'll take care of things from here, and we'll be in touch as soon as we have your return ready.</p>
-              <div class="rec"><div class="rt">&#10003; Received safely &mdash; here's what came in</div><ul id="thList"></ul></div>
+              <div class="rec"><div class="rt">&#10003; Received safely (demo) &mdash; here's what came in</div><ul id="thList"></ul></div>
               <p class="callus">We've just emailed you a copy of this.<br>Any questions at all, please call Sarah on (204) 555&#8209;0148.</p>
               <button class="again" id="cvAgain">Show the upload page again</button>
             </div></div>
@@ -758,7 +758,7 @@ select{font-family:inherit;font-size:16px;padding:9px 12px;border:1px solid var(
 
 <button class="hbtn" id="hbtn" aria-haspopup="dialog" aria-expanded="false"><span class="dot2"></span><span><b>Ask Cara</b> &middot; try to catch her out</span></button>
 <div class="hwin" id="hwin" role="dialog" aria-label="Cara, Prairie Ledger's assistant">
-  <div class="hhd"><span class="lg">C</span><div><b id="hdName">Cara &middot; Prairie Ledger's assistant</b><span id="hdSub">Answers in seconds &middot; Sarah is one word away</span></div><button id="hclose" aria-label="Close">&times;</button></div>
+  <div class="hhd"><span class="lg">C</span><div><b id="hdName">Cara &middot; Prairie Ledger's assistant</b><span id="hdSub">Answers quickly &middot; Sarah is one word away</span></div><button id="hclose" aria-label="Close">&times;</button></div>
   <div class="vtabs" id="vtabs" role="group" aria-label="Who Cara is speaking to"><span>Speaking to</span><button data-v="cpa" class="on" aria-pressed="true">a CPA client</button><button data-v="trades" aria-pressed="false">a subcontractor</button></div>
   <div class="hlog" id="hlog"></div>
   <div class="hchips" id="hchips"></div>
@@ -1544,7 +1544,7 @@ document.getElementById('run2').addEventListener('click',function(){play();docum
   function paint(){
     var p=P();
     hdName.textContent="Cara · "+p.firm+"'s assistant";
-    hdSub.textContent="Answers in seconds · "+p.staff+" is one word away";
+    hdSub.textContent="Answers quickly · "+p.staff+" is one word away";
     vtabs.querySelectorAll('button').forEach(function(b){
       var on=b.dataset.v===VERT;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false')});
   }
