@@ -42,6 +42,13 @@ nav.site-nav .more-menu a.all{border-top:1px solid #E3EBF0;margin-top:6px;border
   body header .mast nav.site-nav>a,body .cbar nav.site-nav>a,body header .mast nav.site-nav .more-btn{padding:8px 7px;font-size:16px}
   body header .mast nav.site-nav>a.nav-signin{margin-left:4px;padding:8px 11px}
 }
+@media(max-width:880px) and (min-width:761px){
+  body header .mast,body .cbar .cbar-in{padding:12px 14px;gap:8px}
+  body header .mast nav.site-nav>a,body .cbar nav.site-nav>a,body header .mast nav.site-nav .more-btn{padding:8px 5px;font-size:15px}
+  body header .mast nav.site-nav>a.nav-signin{padding:7px 8px;margin-left:2px}
+  body header .mast nav.site-nav>a.nav-cta{padding:8px 10px}
+  .lk-sub{letter-spacing:.14em}
+}
 @media(max-width:760px){
   body header .mast,body .cbar .cbar-in{flex-wrap:wrap;padding:8px 16px;gap:6px}
   .nav-toggle{display:inline-flex}
@@ -108,3 +115,5 @@ body .eyebrow,body .kicker{color:#4A5A66}
 /* ---------- quiet text links used in place of secondary buttons ---------- */
 .textlink{display:inline-flex;align-items:center;min-height:44px;padding:0 6px;font-weight:600;color:inherit;text-decoration:underline;text-underline-offset:3px;background:none!important;border:0!important;box-shadow:none!important}
 .hero-actions .textlink,.hero .textlink{color:#7CC4EA}
+
+.samp-top,.ledger>div+div h3,.kicker .n{color:#566370}
