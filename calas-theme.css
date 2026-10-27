@@ -7,7 +7,7 @@
    .sec-head/.lnsech h2) + gold flourishes + a gold top hairline. Never bare h1/h2,
    so app and widget UI labels and in-card headings keep their sizes. */
 
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
 
 :root{--gold:#F0C171;--gold-2:#D9A443;--accent:#155F87;--night:#0B2E45}
 
