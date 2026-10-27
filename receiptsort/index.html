@@ -264,7 +264,7 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
 2026-03-04,Home Depot,84.12,4.01,IMG_2231.jpg,
 2026-03-04,Petro-Canada,61.50,2.93,IMG_2232.jpg,
 2026-03-06,,23.80,,IMG_2240.jpg,<span class="rv">yes</span></pre>
-    <p class="caption">What the output looks like. The third row is a faded thermal receipt it couldn't read with confidence, so it says so rather than guessing.</p>
+    <p class="caption">What the output looks like. The third row is a faded thermal receipt it couldn't read with confidence, so it marks the row for review.</p>
   </section>
 
 <section id="see">
@@ -288,7 +288,7 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
         </tbody>
       </table>
     </div>
-    <p class="caption">Real output, nothing typed by hand. When ReceiptSort can&rsquo;t read a field with confidence it leaves it blank and marks the row <span class="mono">needs_review</span> &mdash; it never guesses.</p>
+    <p class="caption">Real output, nothing typed by hand. When ReceiptSort can&rsquo;t read a field with confidence it leaves it blank or marks the row <span class="mono">needs_review</span>. Always check the numbers. ReceiptSort works best on Canadian receipts in CAD.</p>
   </section>
 
   <section id="run">
@@ -307,7 +307,7 @@ header::after{content:"";display:block;height:2px;background:linear-gradient(90d
   <section>
     <div class="sec-head">
       <p class="eyebrow">Needs review</p>
-      <h2>It will get some wrong, and it will tell you which.</h2>
+      <h2>It will get some wrong. It marks the rows it knows it is unsure about, but always check the numbers.</h2>
       <p>Faded thermal paper, a crumpled photo taken in a truck, a receipt with three totals on it &mdash; when ReceiptSort isn't sure, the row is marked <span class="mono">needs_review</span> instead of quietly filled in. Check those rows against the originals. It's a sorter, not a bookkeeper, and it doesn't pretend to be.</p>
     </div>
     <div class="cols">

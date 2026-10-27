@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Calas ScamCatch demo · free scam checker · Calas Automations</title>
-<meta name="description" content="Try Calas ScamCatch with made-up messages: pick a suspicious text and see the scam signs it flags, right on the phone. Free. Nothing is uploaded.">
+<meta name="description" content="Try Calas ScamCatch with made-up messages: pick a suspicious text and see the scam signs it flags, right on the phone. Free. Your message stays on your phone.">
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -387,7 +387,7 @@ function openThread(id){
  var m=byId(id);if(!m)return;
  $("msgView").innerHTML='<div class="thread"><div class="thead"><button class="back" id="threadBack" type="button">&lsaquo; Back</button><span class="av" style="background:'+m.col+'">'+esc(m.av)+'</span><div><b>'+esc(m.from)+'</b><span>Text message</span></div></div>'+
   '<div class="tbody"><div class="tday">'+esc(m.time)+'</div><div class="bubble">'+linkify(m.text)+'</div></div>'+
-  '<div class="tfoot"><button class="gcheck" id="threadCheck" type="button" data-id="'+m.id+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Check with ScamCatch</button><p>Copies the words into ScamCatch on this phone. Nothing is uploaded.</p></div></div>';
+  '<div class="tfoot"><button class="gcheck" id="threadCheck" type="button" data-id="'+m.id+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Check with ScamCatch</button><p>Copies the words into ScamCatch on this phone. Your message stays on your phone.</p></div></div>';
  $("threadBack").addEventListener("click",showInbox);
  $("threadCheck").addEventListener("click",function(){checkText(m.text,m.id,"");});
 }

@@ -507,7 +507,7 @@
       <a class="lnk" href="#news">News</a>
       <a class="lnk" href="#community">Community</a>
       <a class="lnk" href="#honest">Honesty</a>
-      <a class="lnk" id="grademe-link" href="https://grademe.calasautomations.com/" target="_blank" rel="noopener" title="Photo a card or shoe: condition + price">Grade Me &#128247;</a>
+      
       <span class="stamp">Updated <b id="stamp">—</b></span>
     </nav>
   </div>
@@ -548,7 +548,7 @@
       <p class="vow rise" style="--i:4"><b>Our one rule:</b> we show a price only when a real source published it. No sold data, no number — we print "unknown" and move on. No hype, no buying bots.</p>
     </div>
     <aside class="readout rise" style="--i:3">
-      <div class="rh"><span><span class="dot"></span>Live read</span><span>net of fees</span></div>
+      <div class="rh"><span><span class="dot"></span>Prices as of <b id="readAsOf">the last refresh</b></span><span>net of fees</span></div>
       <h3>Delta Reign — Booster Box</h3>
       <div class="meta">Market est. · TCGplayer via TCGCSV</div>
       <div class="fig" id="heroFig">…</div>
@@ -649,7 +649,7 @@
   <section id="community">
     <div class="sh"><h2>Community</h2><p>talk drops with Winnipeg collectors</p></div>
     <div class="honest">
-      <div class="hcard"><h4>Dropwatch Discord</h4><p>Live restock alerts, pre-order heads-ups, and a channel for each set and shoe. No bots, no paid &ldquo;cook groups&rdquo;.</p>
+      <div class="hcard"><h4>Dropwatch Discord</h4><p>A place to talk drops with other Winnipeg collectors, with a channel for each set and shoe. No bots, no paid &ldquo;cook groups&rdquo;.</p>
         <p><a class="btn g" id="discordBtn" href="#" hidden>Join the Discord</a><span id="discordSoon" class="down">Opening soon.</span></p></div>
       <div class="hcard"><h4>Trade safely in Winnipeg</h4><p>Meeting a buyer or seller? Meet in a busy public place in daylight, bring a friend, never go to a stranger&rsquo;s home.</p></div>
       <div class="hcard"><h4>Advertise on Dropwatch</h4><p>Local card shop, sneaker store or event? Sponsored spots are clearly labelled and reach Winnipeg collectors right when they&rsquo;re deciding where to buy.</p><p>Call Cara: <a href="tel:+14312449026">431-244-9026</a></p></div>
@@ -663,7 +663,7 @@
       <div class="hcard"><h4><svg class="tick" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#4fd69c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Nothing is guaranteed</h4><p>Reselling is speculative — reprints, fees and dips are real, and some buys lose money. We show odds and the loss case, never promises.</p></div>
       <div class="hcard"><h4><svg class="tick" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#4fd69c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>No bots, ever</h4><p>Manual buying within posted limits only. Purchase bots break retailer rules and we won't build or use them.</p></div>
       <div class="hcard"><h4><svg class="tick" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#4fd69c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Real data or "unknown"</h4><p>Prices come from feeds and APIs that allow it. We never scrape sites that forbid it, and every number carries its source, date and comp count.</p></div>
-      <div class="hcard"><h4><svg class="tick" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#4fd69c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Your data stays yours</h4><p>Built free and local. Your watchlist and portfolio live in your own browser — no accounts, no cloud harvesting.</p></div>
+      <div class="hcard"><h4><svg class="tick" viewBox="0 0 20 20" fill="none"><path d="M4 10.5l4 4 8-9" stroke="#4fd69c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Your data stays yours</h4><p>Built free and local. What you type in, like the flip calculator and your Want / Have notes, stays in your own browser — no accounts, no cloud harvesting.</p></div>
     </div>
     <div class="ledger" style="margin-top:18px">
       <div><div class="score">0<span style="color:var(--ink-3)"> calls yet</span></div><div class="lx">public track record<br>starts with our first graded call</div></div>
@@ -711,7 +711,7 @@ const FALLBACK_DROPS = [
 ];
 /* prefer live prices from drops.js when present, else the baked fallback */
 const DROPS = ((window.DROPS && window.DROPS.length) ? window.DROPS : FALLBACK_DROPS).concat(window.SNEAKERS || [{
-  id:'sneaker-watch', cat:'Sneakers', group:'sneakers', when:'WATCHLIST', title:'Sneaker drops — coming next',
+  id:'sneaker-watch', cat:'Sneakers', group:'sneakers', when:'NEXT', title:'Sneaker drops — coming next',
   chips:['Release calendar', {t:'Sold data not connected yet', risk:true}], badge:'unknown', comp:null,
   basis:'Sneakers are next on Dropwatch. Until a real sold-price source is wired in, we list drops without a number rather than guess.'}]);
 
@@ -878,6 +878,7 @@ function runCalc(){
   const f=$('heroFig');
   f.textContent=(r.profit>=0?'+':'−')+'$'+Math.abs(r.profit).toFixed(2);
   f.className='fig '+(r.profit>=0?'pos':'neg');
+  const ra=$('readAsOf'); if(ra) ra.textContent=d.asof||'date not recorded';
 })();
 
 
@@ -895,7 +896,7 @@ function runCalc(){
   if(inv){const b=document.getElementById('discordBtn');b.href=inv;b.hidden=false;b.target='_blank';b.rel='noopener';document.getElementById('discordSoon').hidden=true}
 })();
 
-$('stamp').textContent = new Date().toISOString().slice(0,10);
+$('stamp').textContent = ((DROPS.find(x=>x.asof)||{}).asof) || 'date not recorded';
 renderFilters(); renderBento(); runCalc();
 
 /* ---- photo spinner: one photo per product, so "360" is a 3D turn of the photo with info on the back ---- */

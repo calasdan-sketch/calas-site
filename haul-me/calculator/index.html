@@ -145,7 +145,7 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
 
     <div class="card capture" id="capture">
       <h3>Want Haul Me to remember every load?</h3>
-      <p class="hint" style="font-size:14px">Drop your email and we'll send you early access, a free cost-per-mile cheat sheet, and the occasional tip. No spam.</p>
+      <p class="hint" style="font-size:14px">Drop your email and we'll tell you about Haul Me early access, plus the occasional tip. No spam.</p>
       <input id="lead_email" type="email" inputmode="email" placeholder="you@email.com" autocomplete="email">
       <label class="chk"><input type="checkbox" id="lead_consent"> Email me about Haul Me and other Calas Automations tools and news. Calas Automations Inc., 78 Claus Bay, Winnipeg MB R2G 2A1, 431-244-9026, office@calasautomations.com. You can unsubscribe at any time.</label>
       <input type="text" id="lead_hp" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
@@ -254,7 +254,7 @@ function sendLead(){
     body:JSON.stringify({email:em,consent:consent,context:'unit='+UNIT+' verdict='+(lastVerdict||'-'),website:hp})})
    .then(function(r){return r.json();})
    .then(function(d){
-     if(d&&d.ok){document.getElementById('capture').innerHTML='<h3>You\'re on the list.</h3><p class="hint" style="font-size:14px">We\'ll be in touch with early access and your cost-per-mile cheat sheet. Thanks for trying it!</p>';}
+     if(d&&d.ok){document.getElementById('capture').innerHTML='<h3>You\'re on the list.</h3><p class="hint" style="font-size:14px">We\'ll be in touch about early access. Thanks for trying it!</p>';}
      else{msg.style.color='var(--red)';msg.textContent='Could not send just now — please try again in a moment.';}
    })
    .catch(function(){msg.style.color='var(--red)';msg.textContent='Could not send — check your connection and try again.';});
