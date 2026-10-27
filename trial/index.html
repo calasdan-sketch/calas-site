@@ -195,8 +195,8 @@ body{font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;f
 body p,body li,body td,body th,body label,body input,body select,body textarea,body button,body dd,body dt{font-size:max(15px,1em)}
 body small,body .small,body .note,body .muted,body .hint,body figcaption,body .tag{font-size:max(14px,1em)}
 h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
-</style></head>
-<body>
+</style><link rel="stylesheet" href="/calas-nav.css?v=20261027a"></head>
+<body><a class="skip-link" href="#main">Skip to content</a>
 <style>#hdr{position:relative}#hdr::after{content:"";display:block;height:2px;background:linear-gradient(90deg,transparent,var(--gold,#F0C171),transparent)}</style>
 <header id="hdr">
   <div class="mast">
@@ -204,23 +204,34 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
       <span class="crestflip" aria-hidden="true"><span class="crest hdr face"></span><span class="crest hdr face back"></span></span>
       <span><span class="lk-name"><span class="r">Calas</span></span><span class="lk-rule"></span><span class="lk-sub">AUTOMATIONS</span></span>
     </a>
-    <nav>
-      <a href="/">Home</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="nt-bars" aria-hidden="true"></span><span class="nt-lab">Menu</span></button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
       <a href="/accounting/">On File</a>
-      <a href="/leadme/">Lead Me</a>
       <a href="/quote-me/">Quote Me</a>
-      <a href="/haul-me/">Haul Me</a>
-      <a href="/watchpost/">Watchpost</a>
-      <a href="/dispatchme/">Dispatch Me</a>
-      <a href="/receiptsort/">ReceiptSort</a>
-      <a href="/guardian/">ScamCatch</a>
       <a href="/pay/">Pricing</a>
+      <a href="/demo/">Demo</a>
+      <a href="/about/">About</a>
+      <div class="nav-more">
+        <button class="more-btn" type="button" aria-expanded="false" aria-controls="more-menu">More tools</button>
+        <span class="more-label">More tools</span>
+        <div class="more-menu" id="more-menu">
+          <a href="/trades/">On File for trades<small>Sub insurance and WCB tracking</small></a>
+          <a href="/leadme/">Lead Me<small>B2B lead finder and first emails</small></a>
+          <a href="/haul-me/">Haul Me<small>Cost per mile for owner-operators</small></a>
+          <a href="/watchpost/">Watchpost<small>Intrusion decoys and alerts</small></a>
+          <a href="/dispatchme/">Dispatch Me<small>Snow and lawn crews, Winnipeg</small></a>
+          <a href="/receiptsort/">ReceiptSort<small>Free receipts to spreadsheet</small></a>
+          <a href="/guardian/">ScamCatch<small>Free scam message checker</small></a>
+          <a href="/dropwatch/">Dropwatch<small>Free card and sneaker price tracker</small></a>
+          <a class="all" href="/tools/">All tools and prices</a>
+        </div>
+      </div>
       <a href="/signin/" class="nav-signin">Sign in</a>
-      <a class="nav-cta" href="/pay/">Get started</a>
+      <a class="nav-cta" href="/quote-me/app/">Start free</a>
     </nav>
   </div>
 </header>
-<main>
+<main id="main">
 <section class="calas-hero"><div class="calas-hero-in">
 <div class="eyebrow">Free trial &middot; Winnipeg</div>
 <a class="of-lockup" href="/" aria-label="Free trial &middot; Calas Automations"><span class="crest" aria-hidden="true"></span><span class="of-lk-text"><span class="of-lk-name">Free <span class="r">trial</span></span><span class="of-lk-sub">CALAS AUTOMATIONS</span></span></a>
@@ -313,4 +324,4 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
 </script>
 <script src="/pay/pay.js" defer></script>
 <script src="/cara/cara.js" data-app="site" defer></script>
-<script src="/calas-brandbar.js?v=20261015b" defer></script></body></html>
+<script src="/calas-nav.js?v=20261027a" defer></script><script src="/calas-brandbar.js?v=20261027a" defer></script></body></html>

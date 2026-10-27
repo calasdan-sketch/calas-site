@@ -1,4 +1,4 @@
-<!doctype html><html lang="en-CA"><head><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1">
+<!doctype html><html lang="en-CA"><head><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1">
 <title>Know which subs are insured before they're on site — Calas Automations, Winnipeg</title>
 <meta name="description" content="On File is built to help Winnipeg trades and GCs track subcontractor insurance and chase missing documents. Early access: we set it up with you and run the first two weeks side by side.">
 <link rel="canonical" href="https://calasautomations.com/trades/">
@@ -32,7 +32,7 @@
 <meta name="twitter:image" content="https://calasautomations.com/og/trades.jpg">
 <meta name="twitter:image:alt" content="Know which subs are insured on site: Are your subs insured right now?">
 <!-- og:end -->
-<link rel="stylesheet" href="/calas-glance.css?v=20261026a"></head><body>
+<link rel="stylesheet" href="/calas-glance.css?v=20261026a"><link rel="stylesheet" href="/calas-nav.css?v=20261027a"></head><body><a class="skip-link" href="#main">Skip to content</a>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -212,24 +212,34 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
       <span class="crestflip" aria-hidden="true"><span class="crest hdr face"></span><span class="crest hdr face back"></span></span>
       <span><span class="lk-name"><span class="r">Calas</span></span><span class="lk-rule"></span><span class="lk-sub">AUTOMATIONS</span></span>
     </a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/accounting/" class="on">On File</a>
-      <a href="/trades/" class="sub on">Trades</a>
-      <a href="/leadme/">Lead Me</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="nt-bars" aria-hidden="true"></span><span class="nt-lab">Menu</span></button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="/accounting/">On File</a>
       <a href="/quote-me/">Quote Me</a>
-      <a href="/haul-me/">Haul Me</a>
-      <a href="/watchpost/">Watchpost</a>
-      <a href="/dispatchme/">Dispatch Me</a>
-      <a href="/receiptsort/">ReceiptSort</a>
-      <a href="/guardian/">ScamCatch</a>
       <a href="/pay/">Pricing</a>
+      <a href="/demo/">Demo</a>
+      <a href="/about/">About</a>
+      <div class="nav-more">
+        <button class="more-btn on" type="button" aria-expanded="false" aria-controls="more-menu">More tools</button>
+        <span class="more-label">More tools</span>
+        <div class="more-menu" id="more-menu">
+          <a href="/trades/" aria-current="page">On File for trades<small>Sub insurance and WCB tracking</small></a>
+          <a href="/leadme/">Lead Me<small>B2B lead finder and first emails</small></a>
+          <a href="/haul-me/">Haul Me<small>Cost per mile for owner-operators</small></a>
+          <a href="/watchpost/">Watchpost<small>Intrusion decoys and alerts</small></a>
+          <a href="/dispatchme/">Dispatch Me<small>Snow and lawn crews, Winnipeg</small></a>
+          <a href="/receiptsort/">ReceiptSort<small>Free receipts to spreadsheet</small></a>
+          <a href="/guardian/">ScamCatch<small>Free scam message checker</small></a>
+          <a href="/dropwatch/">Dropwatch<small>Free card and sneaker price tracker</small></a>
+          <a class="all" href="/tools/">All tools and prices</a>
+        </div>
+      </div>
       <a href="/signin/" class="nav-signin">Sign in</a>
-      <a class="nav-cta" href="/pay/">Get started</a>
+      <a class="nav-cta" href="/quote-me/app/">Start free</a>
     </nav>
   </div>
 </header>
-<main>
+<main id="main">
 
 <div class="hero">
   <div class="hero-art" aria-hidden="true"></div>
@@ -402,4 +412,4 @@ footer{padding:20px 0;border-top:1px solid var(--rule)}
 </script>
 <script src="/pay/pay.js" defer></script>
 <script src="/cara/cara.js" data-app="onfile" defer></script>
-<script src="/calas-brandbar.js?v=20261015b" defer></script></body></html>
+<script src="/calas-nav.js?v=20261027a" defer></script><script src="/calas-brandbar.js?v=20261027a" defer></script></body></html>

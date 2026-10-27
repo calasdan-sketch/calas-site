@@ -90,7 +90,7 @@
 <meta name="twitter:image" content="https://calasautomations.com/og/quote-me.jpg">
 <meta name="twitter:image:alt" content="Quote Me — a priced quote from a 90-second voice note: Talk the job for ninety seconds.">
 <!-- og:end -->
-<link rel="stylesheet" href="/calas-glance.css?v=20261026a"></head><body>
+<link rel="stylesheet" href="/calas-glance.css?v=20261026a"><link rel="stylesheet" href="/calas-nav.css?v=20261027a"></head><body><a class="skip-link" href="#main">Skip to content</a>
 
 <header id="hdr">
   <div class="mast">
@@ -98,24 +98,35 @@
       <span class="crestflip" aria-hidden="true"><span class="crest hdr face"></span><span class="crest hdr face back"></span></span>
       <span><span class="lk-name"><span class="r">Calas</span></span><span class="lk-rule"></span><span class="lk-sub">AUTOMATIONS</span></span>
     </a>
-    <nav>
-      <a href="/">Home</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="nt-bars" aria-hidden="true"></span><span class="nt-lab">Menu</span></button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
       <a href="/accounting/">On File</a>
-      <a href="/leadme/">Lead Me</a>
-      <a href="/quote-me/" class="on">Quote Me</a>
-      <a href="/haul-me/">Haul Me</a>
-      <a href="/watchpost/">Watchpost</a>
-      <a href="/dispatchme/">Dispatch Me</a>
-      <a href="/receiptsort/">ReceiptSort</a>
-      <a href="/guardian/">ScamCatch</a>
+      <a href="/quote-me/" class="on" aria-current="page">Quote Me</a>
       <a href="/pay/">Pricing</a>
+      <a href="/demo/">Demo</a>
+      <a href="/about/">About</a>
+      <div class="nav-more">
+        <button class="more-btn" type="button" aria-expanded="false" aria-controls="more-menu">More tools</button>
+        <span class="more-label">More tools</span>
+        <div class="more-menu" id="more-menu">
+          <a href="/trades/">On File for trades<small>Sub insurance and WCB tracking</small></a>
+          <a href="/leadme/">Lead Me<small>B2B lead finder and first emails</small></a>
+          <a href="/haul-me/">Haul Me<small>Cost per mile for owner-operators</small></a>
+          <a href="/watchpost/">Watchpost<small>Intrusion decoys and alerts</small></a>
+          <a href="/dispatchme/">Dispatch Me<small>Snow and lawn crews, Winnipeg</small></a>
+          <a href="/receiptsort/">ReceiptSort<small>Free receipts to spreadsheet</small></a>
+          <a href="/guardian/">ScamCatch<small>Free scam message checker</small></a>
+          <a href="/dropwatch/">Dropwatch<small>Free card and sneaker price tracker</small></a>
+          <a class="all" href="/tools/">All tools and prices</a>
+        </div>
+      </div>
       <a href="/signin/" class="nav-signin">Sign in</a>
-      <a class="nav-cta" href="/pay/">Get started</a>
+      <a class="nav-cta" href="/quote-me/app/">Start free</a>
     </nav>
   </div>
 </header>
 
-<main>
+<main id="main">
 <section class="x-hero" aria-labelledby="qm-h1">
       <div class="hero-art"></div>
       <div class="hero-overlay"></div><div class="wrap">
@@ -300,7 +311,7 @@
 </script>
 <script src="/pay/pay.js" defer></script>
 <script src="/cara/cara.js" data-app="quoteme" defer></script>
-<script src="/calas-brandbar.js?v=20261015b" defer></script><script id="calas-calc-js">
+<script src="/calas-nav.js?v=20261027a" defer></script><script src="/calas-brandbar.js?v=20261027a" defer></script><script id="calas-calc-js">
 (function(){
   var f=function(n){return (n<0?'-':'')+'C$'+Math.round(Math.abs(n)).toLocaleString('en-CA')};
   document.querySelectorAll('[data-calc]').forEach(function(box){

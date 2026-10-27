@@ -26,9 +26,9 @@
 
   var css = '' +
     '.cc-btn{position:fixed;right:18px;left:auto;bottom:18px;width:auto;margin:0;z-index:2147483000;display:flex;align-items:center;gap:10px;background:#fff;color:#12212C;' +
-    'border:1px solid #D9E3EA;border-radius:999px;padding:11px 16px;font:500 14.5px "IBM Plex Sans",system-ui,sans-serif;cursor:pointer;' +
+    'border:1px solid #D9E3EA;border-radius:999px;padding:11px 16px;min-height:44px;font:500 14.5px "IBM Plex Sans",system-ui,sans-serif;cursor:pointer;' +
     'box-shadow:0 10px 30px -8px rgba(11,46,69,.35)}' +
-    '.cc-btn:hover,.cc-btn:focus-visible{border-color:#155F87;outline:none}' +
+    '.cc-btn:hover{border-color:#155F87}.cc-btn:focus-visible{border-color:#155F87;outline:3px solid #155F87;outline-offset:2px}' +
     '.cc-dot{width:10px;height:10px;border-radius:50%;background:#17794A;box-shadow:0 0 0 3px #E9F5EE}' +
     '.cc-win{position:fixed;right:18px;bottom:74px;z-index:2147483001;width:min(380px,calc(100vw - 36px));height:min(520px,calc(100vh - 110px));' +
     'background:#fff;border:1px solid #D9E3EA;border-radius:12px;box-shadow:0 24px 60px -20px rgba(11,46,69,.45);display:none;flex-direction:column;' +
@@ -56,7 +56,8 @@
     '.cc-win .cc-in button{align-self:flex-end;width:auto;min-width:0;margin:0;background:#155F87;color:#fff;border:0;border-radius:8px;' +
     'padding:7px 18px;font:600 14px "IBM Plex Sans",system-ui,sans-serif;cursor:pointer;box-shadow:none}' +
     '@media(max-width:560px){.cc-win{right:8px;left:8px;width:auto;bottom:62px;height:calc(100vh - 80px);height:calc(100dvh - 80px)}' +
-    '.cc-btn{right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));padding:7px 12px;gap:7px;font-size:13px;box-shadow:0 6px 18px -6px rgba(11,46,69,.4);transition:opacity .2s,transform .2s}' +
+    '.cc-btn{right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));width:48px;height:48px;padding:0;gap:0;justify-content:center;font-size:13px;box-shadow:0 6px 18px -6px rgba(11,46,69,.4);transition:opacity .2s,transform .2s}' +
+    '.cc-btn .cc-lab{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.cc-dot{width:14px;height:14px}' +
     '.cc-btn.cc-away{opacity:0;transform:translateY(10px);pointer-events:none}' +
     'body{padding-bottom:calc(56px + env(safe-area-inset-bottom,0px))}}' +
     '.cc-note{font-size:11.5px;color:#7A868F;padding:0 12px 9px;background:#fff}' +
@@ -66,7 +67,7 @@
   var btn = document.createElement('button');
   btn.className = 'cc-btn'; btn.type = 'button';
   btn.setAttribute('aria-haspopup', 'dialog'); btn.setAttribute('aria-expanded', 'false');
-  btn.innerHTML = '<span class="cc-dot" aria-hidden="true"></span><span><b>Ask Cara</b></span>';
+  btn.innerHTML = '<span class="cc-dot" aria-hidden="true"></span><span class="cc-lab"><b>Ask Cara</b></span>';
   var win = document.createElement('div');
   win.className = 'cc-win'; win.setAttribute('role', 'dialog'); win.setAttribute('aria-label', 'Chat with Cara');
   win.innerHTML = '<div class="cc-hd"><span class="cc-lg" aria-hidden="true">C</span><div><b>Cara</b><span>Calas Automations AI assistant</span></div>' +

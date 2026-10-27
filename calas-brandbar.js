@@ -26,19 +26,7 @@
     '.cbar .nav-cta:hover{background:#0E4A6B}' +
     '@media(max-width:1400px){.cbar .cbar-in{padding:16px 22px;gap:14px}.cbar nav{gap:11px}.cbar .nav-cta{padding:9px 12px}}' +
     '@media(max-width:760px){.cbar .cbar-in{padding:10px 16px}.cbar nav{gap:14px;font-size:16px}}' +
-    /* phone (2026-09-29, owner: the app needs the room): one slim row, menu behind a button */
-    '.cbar .cbar-menu{display:none;background:none;border:1px solid #C9D6DF;border-radius:6px;padding:6px 12px;font:600 14px "IBM Plex Sans",system-ui,sans-serif;color:#12212C;cursor:pointer}' +
-    '@media(max-width:760px){' +
-      '.cbar{position:static}' +
-      'body .cbar .cbar-in{padding:8px 14px;flex-wrap:nowrap}' +
-      '.cbar .crest{width:20px;height:28px}.cbar .name{font-size:16px}.cbar .sub{font-size:7px}' +
-      '.cbar .cbar-menu{display:inline-block}' +
-      'body .cbar nav{display:none}' +
-      'body .cbar.open .cbar-in{flex-wrap:wrap}' +
-      'body .cbar.open nav{display:flex;flex-direction:column;align-items:stretch;flex-basis:100%;gap:0;font-size:16px;padding:6px 0 4px}' +
-      'body .cbar.open nav a{padding:10px 2px;border-top:1px solid #EEF2F5;margin:0}' +
-      'body .cbar.open nav .nav-signin,body .cbar.open nav .nav-cta{margin-top:8px;text-align:center;border-top:0}' +
-    '}' +
+    '@media(max-width:760px){.cbar{position:static}}' +
     '@media(max-width:760px){.calas-in-app .cbar,.calas-in-app .cfoot{display:none}}' +
     /* inside an app the site bar scrolls away and the footer is dropped, so neither covers the app's own screens/bottom bar */
     '.calas-in-app .cbar{position:static}.calas-in-app .cfoot{display:none}' +
@@ -51,12 +39,13 @@
       '-webkit-mask:url(/favicon.png) center/contain no-repeat;mask:url(/favicon.png) center/contain no-repeat;' +
       'animation:cbarflip 6s linear infinite}' +
     '.cfoot .name{font-family:"Libre Baskerville",Georgia,serif;font-size:16px;font-weight:700;color:#155F87;line-height:1}' +
-    '.cfoot .sub{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:7.5px;letter-spacing:.22em;color:#6B7883;margin-top:2px}' +
-    '.cfoot nav{display:flex;flex-wrap:wrap;gap:10px 18px;font-size:13.5px;margin:6px 0 16px}' +
-    '.cfoot nav a{text-decoration:none;color:#4E5B66}' +
+    '.cfoot .sub{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:9px;letter-spacing:.22em;color:#566370;margin-top:2px}' +
+    '.cfoot nav{display:flex;flex-wrap:wrap;gap:0 6px;font-size:15px;margin:6px 0 12px}' +
+    '.cfoot nav a,.cfoot .fine a{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;box-sizing:border-box}' +
+    '.cfoot nav a{text-decoration:none;color:#3F4C57;font-size:15px}' +
     '.cfoot nav a:hover{color:#155F87}' +
-    '.cfoot .fine{font-size:12.5px;color:#6B7883;line-height:1.6}' +
-    '.cfoot .fine a{color:#4E5B66}' +
+    '.cfoot .fine{font-size:14px;color:#4E5B66;line-height:1.5}' +
+    '.cfoot .fine a{color:#0E4A6B;text-decoration:underline;padding:0 6px}' +
     '.cfoot .tag{font-family:"Libre Baskerville",Georgia,serif;font-size:14px;color:#12212C;margin:0 0 10px}';
 
   function ensureStyle() {
@@ -67,18 +56,40 @@
     (document.head || document.documentElement).appendChild(s);
   }
 
-  var NAV =
-    '<a href="/">Home</a>' +
-    '<a href="/about/">About</a>' +
+  // Footer list: every product, so nothing is only reachable through the "More tools" menu.
+  var FOOTNAV =
     '<a href="/accounting/">On File</a>' +
-    '<a href="/leadme/">Lead Me</a>' +
     '<a href="/quote-me/">Quote Me</a>' +
+    '<a href="/leadme/">Lead Me</a>' +
     '<a href="/haul-me/">Haul Me</a>' +
     '<a href="/watchpost/">Watchpost</a>' +
     '<a href="/dispatchme/">Dispatch Me</a>' +
     '<a href="/receiptsort/">ReceiptSort</a>' +
     '<a href="/guardian/">ScamCatch</a>' +
-    '<a href="/pay/">Pricing</a>';
+    '<a href="/dropwatch/">Dropwatch</a>' +
+    '<a href="/tools/">All tools</a>' +
+    '<a href="/pay/">Pricing</a>' +
+    '<a href="/demo/">Demo</a>' +
+    '<a href="/about/">About</a>';
+
+  // Header list for pages that have no menu of their own (same markup as the static pages).
+  var MORE = [['/trades/','On File for trades','Sub insurance and WCB tracking'],['/leadme/','Lead Me','B2B lead finder and first emails'],['/haul-me/','Haul Me','Cost per mile for owner-operators'],['/watchpost/','Watchpost','Intrusion decoys and alerts'],['/dispatchme/','Dispatch Me','Snow and lawn crews, Winnipeg'],['/receiptsort/','ReceiptSort','Free receipts to spreadsheet'],['/guardian/','ScamCatch','Free scam message checker'],['/dropwatch/','Dropwatch','Free card and sneaker price tracker']];
+  function headNav() {
+    var p = location.pathname;
+    function a(h, l) { var cur = p.indexOf(h) === 0 ? ' class="on" aria-current="page"' : ''; return '<a href="' + h + '"' + cur + '>' + l + '</a>'; }
+    var items = MORE.map(function (m) { return '<a href="' + m[0] + '">' + m[1] + '<small>' + m[2] + '</small></a>'; }).join('');
+    return a('/accounting/', 'On File') + a('/quote-me/', 'Quote Me') + a('/pay/', 'Pricing') + a('/demo/', 'Demo') + a('/about/', 'About') +
+      '<div class="nav-more"><button class="more-btn" type="button" aria-expanded="false" aria-controls="more-menu">More tools</button><span class="more-label">More tools</span>' +
+      '<div class="more-menu" id="more-menu">' + items + '<a class="all" href="/tools/">All tools and prices</a></div></div>' +
+      '<a href="/signin/" class="nav-signin">Sign in</a><a class="nav-cta" href="/quote-me/app/">Start free</a>';
+  }
+  function loadNavAssets() {
+    if (!document.querySelector('link[href*="calas-nav.css"]')) {
+      var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = '/calas-nav.css?v=20261027a'; document.head.appendChild(l);
+    }
+    if (window.__calasNavInit) { window.__calasNavInit(); return; }
+    var s = document.createElement('script'); s.src = '/calas-nav.js?v=20261027a'; document.head.appendChild(s);
+  }
 
   function injectMasthead() {
     if (document.querySelector('.mast, .lockup, .cbar')) return; // already branded
@@ -90,26 +101,21 @@
           '<span class="crest" aria-hidden="true"></span>' +
           '<span><span class="name">Calas</span><span class="sub">AUTOMATIONS</span></span>' +
         '</a>' +
-        '<button class="cbar-menu" type="button" aria-expanded="false">Menu</button>' +
-        '<nav aria-label="Primary">' + NAV + '<a class="nav-signin" href="/signin/">Sign in</a>' +
-          '<a class="nav-cta" href="tel:+14312449026" data-cara>Ask Cara</a>' +
-        '</nav>' +
+        '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="nt-bars" aria-hidden="true"></span><span class="nt-lab">Menu</span></button>' +
+        '<nav class="site-nav" id="site-nav" aria-label="Primary">' + headNav() + '</nav>' +
       '</div>';
     document.body.insertBefore(bar, document.body.firstChild);
     // a11y: skip-to-content link as the very first focusable element
     var main = document.querySelector('main') || bar.nextElementSibling;
     if (main && !main.id) main.id = 'main';
-    var skip = document.createElement('a');
-    skip.className = 'calas-skip';
-    skip.href = '#' + ((main && main.id) || 'main');
-    skip.textContent = 'Skip to content';
-    document.body.insertBefore(skip, document.body.firstChild);
-    var btn = bar.querySelector('.cbar-menu');
-    btn.addEventListener('click', function () {
-      var open = bar.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      btn.textContent = open ? 'Close' : 'Menu';
-    });
+    if (!document.querySelector('.skip-link,.calas-skip')) {
+      var skip = document.createElement('a');
+      skip.className = 'calas-skip';
+      skip.href = '#' + ((main && main.id) || 'main');
+      skip.textContent = 'Skip to content';
+      document.body.insertBefore(skip, document.body.firstChild);
+    }
+    loadNavAssets(); // the menu button and dropdown behaviour live in calas-nav.js
   }
 
   function footerHTML() {
@@ -119,7 +125,7 @@
         '<span><span class="name">Calas</span><span class="sub">AUTOMATIONS</span></span>' +
       '</a>' +
       '<p class="tag">Small automations, built properly.</p>' +
-      '<nav>' + NAV + '<a href="/signin/">Sign in</a></nav>' +
+      '<nav aria-label="Footer">' + FOOTNAV + '<a href="/signin/">Sign in</a></nav>' +
       '<p class="fine">Winnipeg, Manitoba &middot; prices in CAD plus GST/RST where applicable &middot; cancel any time, never billed again.<br>' +
       '&copy; ' + (new Date().getFullYear()) + ' Calas Automations Inc. &middot; ' + '<a href="/terms/">Terms</a> &middot; <a href="/privacy/">Privacy</a> &middot; ' +
       '<a href="tel:+14312449026" data-cara>Ask Cara</a> &middot; <a href="tel:+14312449026">Call (431) 244-9026</a> &middot; <a href="mailto:office@calasautomations.com">office@calasautomations.com</a></p>' +
@@ -170,15 +176,7 @@
     ensureStyle();
     injectMasthead();
     injectFooter();
-    showCurrentLink();
     routeSignin();
-  }
-
-  // Phones swipe the header links sideways; start with this page's link in view.
-  function showCurrentLink() {
-    var nav = document.querySelector('header .mast nav');
-    var on = nav && nav.querySelector('a.on');
-    if (on && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = on.offsetLeft - nav.offsetLeft - 40;
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
