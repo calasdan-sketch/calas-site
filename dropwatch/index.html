@@ -681,6 +681,7 @@
 
 <script src="drops.js" onerror="window.DROPS=null"></script>
 <script src="sneakers.js" onerror="window.SNEAKERS=null"></script>
+<script src="launches.js"></script>
 <script src="stores.js" onerror="window.STORES=null"></script>
 <script src="official.js" onerror="window.OFFICIAL=null"></script>
 <script src="links.js" onerror="window.DROPWATCH_LINKS=null"></script>
@@ -710,7 +711,9 @@ const FALLBACK_DROPS = [
    basis:'Pokémon prints sealed to demand; modern boxes often reprint and drift toward MSRP. The chase is graded singles, not boxes.'},
 ];
 /* prefer live prices from drops.js when present, else the baked fallback */
-const DROPS = ((window.DROPS && window.DROPS.length) ? window.DROPS : FALLBACK_DROPS).concat(window.SNEAKERS || [{
+/* sneaker launches dated before today (Winnipeg) are hidden, even if the data file is stale (launches.js) */
+const hidePast = list => (window.DWLaunches ? window.DWLaunches.upcoming(list) : list);
+const DROPS = ((window.DROPS && window.DROPS.length) ? window.DROPS : FALLBACK_DROPS).concat(window.SNEAKERS ? hidePast(window.SNEAKERS) : [{
   id:'sneaker-watch', cat:'Sneakers', group:'sneakers', when:'NEXT', title:'Sneaker drops — coming next',
   chips:['Release calendar', {t:'Sold data not connected yet', risk:true}], badge:'unknown', comp:null,
   basis:'Sneakers are next on Dropwatch. Until a real sold-price source is wired in, we list drops without a number rather than guess.'}]);
