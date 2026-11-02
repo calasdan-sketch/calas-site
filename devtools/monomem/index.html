@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Monomem — auditable shared memory for AI coding agents | Calas Automations</title>
+<meta name="description" content="Monomem is a free, open-source memory store from Calas Automations. Tell Claude, Cursor, Codex or Gemini something once and the rest already know it. Every note records who wrote it, is versioned, and is one undo away. Self-hosted, no API keys, no cloud.">
+<link rel="canonical" href="https://calasautomations.com/devtools/monomem/">
+<meta name="theme-color" content="#0B2E45">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Calas Automations">
+<meta property="og:locale" content="en_CA">
+<meta property="og:title" content="Monomem — auditable shared memory for AI coding agents">
+<meta property="og:description" content="Tell one agent something; the rest already know it. Every note records who wrote it, is versioned, and is one undo away. Self-hosted, MIT.">
+<meta property="og:url" content="https://calasautomations.com/devtools/monomem/">
+<meta property="og:image" content="https://calasautomations.com/og/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/calas-ui.css?v=20261001a">
+<link rel="stylesheet" href="/calas-theme.css?v=20261002a">
+<style>
+:root{
+  --paper:#fff;--sunk:#F1F6F9;--ink:#12212C;--ink-2:#4E5B66;--rule:#D9E3EA;
+  --accent:#155F87;--navy:#0B2E45;--gold:#F0C171;--gold-text:#8A5A12;--ok:#1C7A55;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0F2231;--sunk:#0A1722;--ink:#EEF4F8;--ink-2:#B2C3CF;--rule:#1E3A4D;--accent:#5CAAD6;--gold-text:#F0C171;--ok:#49C79A;
+}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.65}
+
+/* ---- hero: the neural-network canvas sits behind the words, never over them ---- */
+.hero{position:relative;background:var(--navy);overflow:hidden;isolation:isolate}
+/* #net, not `.hero canvas`: the shared calas-ui/theme stylesheets set a
+   position on canvas elements and win on specificity, which left this one in
+   flow and pushed the headline 564px down the page. The id keeps it absolute. */
+.hero canvas#net{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;margin:0;border:0}
+/* A vignette so the type always has contrast over whatever the animation is doing. */
+/* Lighter on the right, where there is no type, so the network is legible
+   there; heavier behind the headline so contrast never depends on which
+   frame the animation happens to be on. */
+.hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(100deg,rgba(11,46,69,.92) 0%,rgba(11,46,69,.86) 38%,rgba(11,46,69,.45) 72%,rgba(11,46,69,.30) 100%)}
+.hero .inner{position:relative;z-index:2;max-width:860px;margin:0 auto;padding:clamp(56px,9vw,112px) clamp(18px,4vw,32px)}
+.hero .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin:0 0 14px}
+.hero h1{font-family:"Libre Baskerville",Georgia,serif;font-size:clamp(32px,5.4vw,56px);line-height:1.12;margin:0 0 16px;color:#fff;max-width:16ch}
+.hero .lede{font-size:clamp(17px,2.1vw,20px);color:#CBD9E4;margin:0 0 10px;max-width:58ch}
+.hero .lede strong{color:#fff;font-weight:600}
+.hero .sub{font-size:15px;color:#9FB3C4;margin:0 0 30px;max-width:58ch}
+.cmd{display:inline-flex;align-items:center;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:15px;
+  background:#071E2E;border:1px solid #1E3A4D;border-radius:8px;padding:12px 16px;color:#EAF2F8}
+.cmd .p{color:var(--gold)}
+.cmdrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{display:inline-block;font-weight:600;font-size:15px;text-decoration:none;border-radius:8px;padding:13px 20px}
+.btn-g{background:var(--gold);color:#3A2708}
+.btn-o{border:1px solid #2A4A61;color:#DCE8F1}
+
+/* ---- body ---- */
+.wrap{max-width:860px;margin:0 auto;padding:clamp(36px,5vw,64px) clamp(18px,4vw,32px)}
+h2{font-family:"Libre Baskerville",Georgia,serif;font-size:clamp(22px,2.8vw,30px);margin:0 0 14px;color:var(--ink)}
+h3{font-size:17px;margin:0 0 6px;color:var(--ink)}
+p{font-size:17px;margin:0 0 16px}
+.muted{color:var(--ink-2)}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));margin:0 0 8px}
+.card{background:var(--sunk);border:1px solid var(--rule);border-left:3px solid var(--gold);border-radius:10px;padding:18px 20px}
+.card p{font-size:15px;margin:0;color:var(--ink-2)}
+code{font-family:"IBM Plex Mono",monospace;font-size:.92em;background:var(--sunk);border:1px solid var(--rule);border-radius:4px;padding:1px 5px}
+table{width:100%;border-collapse:collapse;margin:0 0 10px;font-size:15px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--rule)}
+th{font-weight:600;color:var(--ink-2);font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+td.num{font-family:"IBM Plex Mono",monospace}
+.zero{color:var(--ok);font-weight:600}
+.note{margin-top:30px;padding:20px 22px;background:var(--sunk);border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:8px;font-size:15px}
+.note p{font-size:15px;margin:0 0 10px}.note p:last-child{margin:0}
+a{color:var(--accent)}
+.shot{width:100%;border:1px solid var(--rule);border-radius:10px;display:block;margin:0 0 10px}
+.cap{font-size:13px;color:var(--ink-2);margin:0 0 4px}
+/* Must carry the #net id too: the base rule above is `.hero canvas#net` (it
+   needs the id to outrank the shared stylesheets), so a plain `.hero canvas`
+   selector here would lose on specificity and the canvas would stay visible.
+   Matching the id makes the two equal, and this one is later, so it wins. */
+@media(prefers-reduced-motion:reduce){.hero canvas#net{display:none}}
+</style>
+</head>
+<body>
+<script src="/calas-brandbar.js?v=20261027a" defer></script>
+
+<header class="hero">
+  <canvas id="net" aria-hidden="true"></canvas>
+  <div class="inner">
+    <p class="eyebrow">Calas Automations · Dev tools</p>
+    <h1>One memory, every assistant.</h1>
+    <p class="lede">Tell Claude, Cursor, Codex or Gemini something once and <strong>the rest already know it</strong> — one self-hosted SQLite file, over MCP or a plain REST API.</p>
+    <p class="sub">No API keys. No cloud. No hidden model calls. Every note records who wrote it, is versioned, and is one undo away.</p>
+    <div class="cmdrow">
+      <span class="cmd"><span class="p">$</span> npm i -g monomem</span>
+      <a class="btn btn-g" href="https://github.com/calasdan-sketch/monomem">Source on GitHub</a>
+      <a class="btn btn-o" href="https://www.npmjs.com/package/monomem">npm</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <h2>Shared memory is the easy half</h2>
+  <p>Plenty of tools will remember things for your AI. The question nobody answers is the one you ask after something goes wrong: <em>which agent wrote this, when, and what did it replace?</em></p>
+  <p>Monomem answers it. <code>written_by</code> is stamped by the server from the authenticated token and <strong>cannot be set by the caller</strong> — an agent cannot claim to be another agent. Every note keeps its earlier versions, every replacement is reversible, and every write is screened before it is stored.</p>
+
+  <div class="grid">
+    <div class="card"><h3>Provenance you can trust</h3><p>Server-stamped on every note. Not a field the client fills in.</p></div>
+    <div class="card"><h3>Version history</h3><p>20 earlier versions per note by default, up to 500, with restore.</p></div>
+    <div class="card"><h3>Supersede with undo</h3><p>Replacing a memory is a two-step, reversible operation.</p></div>
+    <div class="card"><h3>A write-time linter</h3><p>Secrets and prompt-injection patterns are caught before storage and quarantined.</p></div>
+    <div class="card"><h3>Namespace isolation</h3><p>Per token. Separate projects cannot read each other.</p></div>
+    <div class="card"><h3>Local by default</h3><p>One SQLite file on your machine. Two runtime dependencies.</p></div>
+  </div>
+
+  <h2 style="margin-top:44px">Numbers, not adjectives</h2>
+  <p class="muted">Every figure below is produced by a command in the repository, and the benchmarks run in CI on every release. A number we cannot reproduce does not go on this page.</p>
+  <table>
+    <tr><th>What is measured</th><th>Result</th></tr>
+    <tr><td>Memory-poisoning probes that reached a read</td><td class="num zero">0 of 25</td></tr>
+    <tr><td>Permission-leakage probes that leaked</td><td class="num zero">0 of 51</td></tr>
+    <tr><td>Recall@5, LongMemEval-S (470 questions)</td><td class="num">95.1&nbsp;%</td></tr>
+    <tr><td>Search time, median</td><td class="num">2.7&nbsp;ms</td></tr>
+    <tr><td>Direct runtime dependencies</td><td class="num">2</td></tr>
+  </table>
+
+  <h2 style="margin-top:44px">See it work</h2>
+  <p class="cap">One writer stores a note; a second, separately authenticated writer reads it back — and can show who wrote it.</p>
+  <img class="shot" src="monomem-demo.gif" alt="A terminal split in two. On the left, a writer authenticated as claude-code stores a note. On the right, a separate writer authenticated as gemini-cli asks a question and gets the answer back together with the line written_by: claude-code." loading="lazy" width="850" height="336">
+  <p class="muted" style="font-size:14px">Reconstructed from a real two-writer run against one store. The note, the server-stamped <code>written_by</code> and the 255&nbsp;ms read are reproduced exactly from the transcript in the repository; nothing is sped up.</p>
+
+  <h2 style="margin-top:44px">Getting started</h2>
+  <p>Requires <strong>Node.js 22.16 or newer, or 24 LTS</strong>. Node 23 is not supported at any version — its bundled SQLite ships without FTS5, which every search uses.</p>
+  <p><span class="cmd" style="font-size:14px"><span class="p">$</span> npx monomem setup</span></p>
+  <p>Setup finds Claude Code, Claude Desktop, Cursor, Codex, Gemini CLI, Muse, VS Code and Zed on your machine, shows you in plain words exactly what it will change, backs up every file it touches, and writes only after you agree. <code>monomem setup --undo</code> puts everything back.</p>
+
+  <div class="note">
+    <p><strong>Coming from OneMemory?</strong> Monomem is the same project under a new name — there is another product called OneMemory that got there first, so we moved.</p>
+    <p>Nothing you have is lost. Your notes stay where they are: if <code>~/.onememory</code> holds a store, Monomem opens it in place. Your <code>ONEMEMORY_*</code> settings still work, re-running setup will not duplicate your hooks, and the <code>onememory</code> command is kept as an alias. Nothing is urgent.</p>
+  </div>
+
+  <div class="note" style="border-left-color:var(--gold)">
+    <p><strong>What it does not do.</strong> Single-user, single-node SQLite — no clustering. Keyword extraction is English-oriented. The server binds <code>127.0.0.1</code> and ships no tunnel, so reaching it from a phone means putting your own authenticated tunnel in front of it. Exports carry each note's edit history, so an export can contain text you deliberately replaced.</p>
+  </div>
+
+  <p style="margin-top:34px" class="muted">MIT licensed. Built by <a href="/">Calas Automations Inc.</a> — <a href="https://github.com/calasdan-sketch/monomem">source</a> · <a href="https://www.npmjs.com/package/monomem">npm</a> · <a href="/devtools/">more dev tools</a></p>
+</main>
+
+<script>
+/* Neural-network hero.
+   Nodes drift slowly; an edge is drawn when two are close, and brightens as
+   they approach, so the structure forms and dissolves on its own. A pulse
+   travels an edge now and then, which is the only thing that moves quickly.
+
+   Deliberate constraints:
+   - prefers-reduced-motion stops it entirely (the canvas is hidden in CSS too).
+   - It pauses when the tab is hidden and when scrolled out of view, so it is
+     never burning a laptop battery behind another window.
+   - Node count scales with area and is capped, so a large monitor does not
+     turn an O(n^2) neighbour check into jank. */
+(function () {
+  var c = document.getElementById('net');
+  if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var ctx = c.getContext('2d', { alpha: false });
+  var GOLD = '240,193,113', LINE = '110,160,195';
+  var nodes = [], pulses = [], raf = 0, running = false, w = 0, h = 0, dpr = 1;
+
+  function size() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var r = c.getBoundingClientRect();
+    w = Math.max(1, r.width); h = Math.max(1, r.height);
+    c.width = Math.round(w * dpr); c.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    /* ~100 nodes at desktop width. The neighbour pass below is O(n^2), so this
+       is capped: 130 nodes is ~8.4k distance checks a frame, which stays well
+       inside a 16ms budget; a few hundred would not. */
+    var want = Math.min(130, Math.max(34, Math.round((w * h) / 7000)));
+    nodes = [];
+    for (var i = 0; i < want; i++) {
+      nodes.push({ x: Math.random() * w, y: Math.random() * h,
+                   vx: (Math.random() - .5) * .22, vy: (Math.random() - .5) * .22,
+                   r: Math.random() * 1.6 + 1 });
+    }
+    pulses = [];
+  }
+
+  function step() {
+    ctx.fillStyle = '#0B2E45'; ctx.fillRect(0, 0, w, h);
+    var LINK = Math.min(200, Math.max(140, w / 8)), i, j, a, b, dx, dy, d;
+
+    for (i = 0; i < nodes.length; i++) {
+      a = nodes[i];
+      a.x += a.vx; a.y += a.vy;
+      if (a.x < 0 || a.x > w) a.vx *= -1;
+      if (a.y < 0 || a.y > h) a.vy *= -1;
+    }
+    for (i = 0; i < nodes.length; i++) {
+      for (j = i + 1; j < nodes.length; j++) {
+        a = nodes[i]; b = nodes[j];
+        dx = a.x - b.x; dy = a.y - b.y; d = Math.sqrt(dx * dx + dy * dy);
+        if (d >= LINK) continue;
+        ctx.strokeStyle = 'rgba(' + LINE + ',' + (0.55 * (1 - d / LINK)).toFixed(3) + ')';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        if (Math.random() < 0.00035 && pulses.length < 14) pulses.push({ a: a, b: b, t: 0 });
+      }
+    }
+    for (i = 0; i < nodes.length; i++) {
+      a = nodes[i];
+      ctx.fillStyle = 'rgba(' + LINE + ',0.85)';
+      ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, 6.2832); ctx.fill();
+    }
+    for (i = pulses.length - 1; i >= 0; i--) {
+      var p = pulses[i]; p.t += 0.016;
+      if (p.t >= 1) { pulses.splice(i, 1); continue; }
+      var px = p.a.x + (p.b.x - p.a.x) * p.t, py = p.a.y + (p.b.y - p.a.y) * p.t;
+      var fade = Math.sin(p.t * Math.PI);
+      ctx.fillStyle = 'rgba(' + GOLD + ',' + (0.9 * fade).toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(px, py, 2.1, 0, 6.2832); ctx.fill();
+    }
+    raf = requestAnimationFrame(step);
+  }
+
+  function start() { if (!running) { running = true; raf = requestAnimationFrame(step); } }
+  function stop() { running = false; cancelAnimationFrame(raf); }
+
+  size();
+  start();
+  addEventListener('resize', function () { size(); }, { passive: true });
+  document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { es[0].isIntersecting ? start() : stop(); }, { threshold: 0 })
+      .observe(c);
+  }
+})();
+</script>
+</body>
+</html>
