@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Monomem — shared memory for AI coding agents that records who wrote what | Calas Automations</title>
-<meta name="description" content="Monomem is a free, open-source memory store from Calas Automations. Tell Claude, Cursor, Codex or Gemini something once and the rest already know it. Every note records who wrote it and keeps its earlier versions; replacements and edits can be undone, and deletes are permanent. Self-hosted, no API keys, no cloud.">
+<meta name="description" content="Monomem is a free, open-source memory store from Calas Automations. Tell Claude, Cursor, Codex or Gemini something once and the rest already know it. Every note records who wrote it and keeps its earlier versions. An agent can forget a note but never erase it; only you delete permanently. Self-hosted, no API keys, no cloud.">
 <link rel="canonical" href="https://calasautomations.com/devtools/monomem/">
 <meta name="theme-color" content="#0B2E45">
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="Calas Automations">
 <meta property="og:locale" content="en_CA">
 <meta property="og:title" content="Monomem — shared memory for AI coding agents that records who wrote what">
-<meta property="og:description" content="Tell one agent something; the rest already know it. Every note records who wrote it and keeps its earlier versions; replacements and edits can be undone, and deletes are permanent. Self-hosted, MIT.">
+<meta property="og:description" content="Tell one agent something; the rest already know it. Every note records who wrote it and keeps its earlier versions. An agent can forget a note but never erase it; only you delete permanently. Self-hosted, MIT.">
 <meta property="og:url" content="https://calasautomations.com/devtools/monomem/">
 <meta property="og:image" content="https://calasautomations.com/og/monomem.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -93,7 +93,7 @@ a{color:var(--accent)}
     <p class="eyebrow">Calas Automations · Dev tools</p>
     <h1>One memory, every assistant.</h1>
     <p class="lede">Tell Claude, Cursor, Codex or Gemini something once and <strong>the rest already know it</strong> — one self-hosted SQLite file, over MCP or a plain REST API.</p>
-    <p class="sub">No API keys. No cloud. No hidden model calls. Every note records who wrote it and keeps its earlier versions; replacements and edits can be undone, and deletes are permanent.</p>
+    <p class="sub">No API keys. No cloud. No hidden model calls. Every note records who wrote it and keeps its earlier versions. An agent can forget a note but never erase it; only you delete permanently.</p>
     <div class="cmdrow">
       <span class="cmd"><span class="p">$</span> npm i -g monomem</span>
       <a class="btn btn-g" href="https://github.com/calasdan-sketch/monomem">Source on GitHub</a>
@@ -106,12 +106,13 @@ a{color:var(--accent)}
 
   <h2>Shared memory is the easy half</h2>
   <p>Plenty of tools will remember things for your AI. The question nobody answers is the one you ask after something goes wrong: <em>which agent wrote this, when, and what did it replace?</em></p>
-  <p>Monomem answers it. <code>written_by</code> is stamped by the server from the authenticated token and <strong>cannot be set by the caller</strong> — an agent cannot claim to be another agent. Give each agent its own token to tell them apart; the default local setup marks every note <code>stdio</code>. Every note keeps its earlier versions, every replacement can be undone (a delete is permanent, by design), and every write is screened before it is stored.</p>
+  <p>Monomem answers it. <code>written_by</code> is stamped by the server from the authenticated token and <strong>cannot be set by the caller</strong> — an agent cannot claim to be another agent. Give each agent its own token to tell them apart; the default local setup marks every note <code>stdio</code>. Every note keeps its earlier versions, every replacement can be undone, an agent's "forget" can be undone too (only a person can delete permanently), and every write is screened before it is stored.</p>
 
   <div class="grid">
     <div class="card"><h3>Provenance you can trust</h3><p>Server-stamped on every note. Not a field the client fills in.</p></div>
     <div class="card"><h3>Version history</h3><p>20 earlier versions per note by default, up to 500, with restore.</p></div>
     <div class="card"><h3>Supersede with undo</h3><p>Replacing a memory is a two-step, reversible operation.</p></div>
+<div class="card"><h3>Agents forget, people delete</h3><p>When an agent deletes a note it is archived and can be restored. Only you can erase it for good.</p></div>
     <div class="card"><h3>A write-time linter</h3><p>Likely secrets are refused, and prompt-injection patterns are held for a person to review. It is pattern matching, so expect misses.</p></div>
     <div class="card"><h3>Namespace isolation</h3><p>Pin a token to one namespace and it cannot read the others. An unpinned token can read every namespace.</p></div>
     <div class="card"><h3>Local by default</h3><p>One SQLite file on your machine. Two runtime dependencies.</p></div>
