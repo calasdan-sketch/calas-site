@@ -543,7 +543,6 @@
       <p class="sub rise" style="--i:2">Dropwatch tracks Pokémon and sneaker releases and shows what you'd actually clear after fees, shipping, tax and exchange — with the downside in plain sight. Real sold data, or we say so.</p>
       <div class="cta rise" style="--i:3">
         <a class="btn p" href="#drops">See this week's drops</a>
-        <a class="btn g" href="#calc">Run a flip</a>
       </div>
       <p class="vow rise" style="--i:4"><b>Our one rule:</b> we show a price only when a real source published it. No sold data, no number — we print "unknown" and move on. No hype, no buying bots.</p>
     </div>
@@ -552,18 +551,18 @@
       <h3>Delta Reign — Booster Box</h3>
       <div class="meta">Market est. · TCGplayer via TCGCSV</div>
       <div class="fig" id="heroFig">…</div>
-      <div class="figlab">est. result in <b>US$</b> if you bought at US MSRP and resold today (TCGplayer prices are US dollars)</div>
+      <div class="figlab">est. result in <b>CAD</b> if you bought at US MSRP and resold today &mdash; converted from TCGplayer's US-dollar prices at <b id="fxNote">today's Bank of Canada rate</b></div>
       <div class="src"><span>Source: market estimate</span><span class="badge modeled">modeled</span></div>
     </aside>
   </section>
 
   <!-- REAL CARDS (images: TCGplayer product photos, prices: TCGCSV market, as of 2026-10-05) -->
   <section class="showcase" aria-label="Chase cards right now">
-    <figure class="pcard"><img src="https://tcgplayer-cdn.tcgplayer.com/product/676088_400w.jpg" alt="Pikachu ex 276/217 card" loading="lazy"><b>Pikachu ex · 276/217</b>Ascended Heroes <span class="px">~US$926</span></figure>
-    <figure class="pcard"><img src="https://tcgplayer-cdn.tcgplayer.com/product/517045_400w.jpg" alt="Charizard ex 199/165 card" loading="lazy"><b>Charizard ex · 199/165</b>Scarlet &amp; Violet 151 <span class="px">~US$343</span></figure>
-    <figure class="pcard"><img src="https://tcgplayer-cdn.tcgplayer.com/product/717605_400w.jpg" alt="Mew ex 152/128 card" loading="lazy"><b>Mew ex · 152/128</b>30th Celebration <span class="px">~US$93</span></figure>
+    <figure class="pcard"><img src="https://tcgplayer-cdn.tcgplayer.com/product/676088_400w.jpg" alt="Pikachu ex 276/217 card" loading="lazy"><b>Pikachu ex · 276/217</b>Ascended Heroes <span class="px" data-usd="926">~US$926</span></figure>
+    <figure class="pcard"><img src="https://tcgplayer-cdn.tcgplayer.com/product/517045_400w.jpg" alt="Charizard ex 199/165 card" loading="lazy"><b>Charizard ex · 199/165</b>Scarlet &amp; Violet 151 <span class="px" data-usd="343">~US$343</span></figure>
+    <figure class="pcard"><img src="https://tcgplayer-cdn.tcgplayer.com/product/717605_400w.jpg" alt="Mew ex 152/128 card" loading="lazy"><b>Mew ex · 152/128</b>30th Celebration <span class="px" data-usd="93">~US$93</span></figure>
   </section>
-  <p class="where" style="text-align:center;margin:-22px 0 30px"><span class="note">Market estimates (USD, TCGplayer via TCGCSV, Oct 5 2026) — modeled, not verified sales.</span></p>
+  <p class="where" style="text-align:center;margin:-22px 0 30px"><span class="note">Market estimates (TCGplayer via TCGCSV, Oct 5 2026, converted from USD to CAD at <span id="fxNote2">the Bank of Canada rate</span>) &mdash; modeled, not verified sales.</span></p>
 
   <!-- DROPS -->
   <section id="drops">
@@ -600,7 +599,7 @@
   <section id="calc">
     <div class="sh">
       <h2>Flip calculator</h2>
-      <p>we do the math · you bring the price</p>
+      <p>we do the math · opens with a real example below, clear it to run your own price</p>
     </div>
     <div class="calc">
       <div class="pane">
@@ -702,6 +701,27 @@ function evaluate({buy, sale, compCount=1, mkt=0.13, pay=0.029, ship=0, tax=0.12
   return {known:true, cost, net, profit, roi, tone, verdict};
 }
 
+/* ---- currency ---- every sourced price on this page (TCGplayer via TCGCSV) is
+   USD; Dropwatch displays CAD only. FX_USD_CAD is the USD->CAD multiplier.
+   Fallback is the Bank of Canada's last published daily rate as of this file's
+   last edit (2026-11-02) — used only until the live fetch below resolves, or if
+   it fails, and always labeled honestly rather than presented as live. ---- */
+let FX_USD_CAD = 1.3978, FX_ASOF = '2026-11-02', FX_LIVE = false;
+const usdToCad = usd => usd==null ? null : usd * FX_USD_CAD;
+const fmtCad = (cad, dp=2) => cad==null ? 'unknown' : 'C$' + cad.toFixed(dp);
+const fxLabel = () => (FX_LIVE ? 'the Bank of Canada rate' : 'a fallback rate, not live') + ` (1 USD = $${FX_USD_CAD.toFixed(4)} CAD, ${FX_ASOF})`;
+let calcUserTouched = false;
+function refreshFX(){
+  fetch('https://www.bankofcanada.ca/valet/observations/FXUSDCAD/json?recent=1')
+    .then(r=>r.json())
+    .then(j=>{
+      const obs = j.observations && j.observations[0];
+      const v = obs && obs.FXUSDCAD && parseFloat(obs.FXUSDCAD.v);
+      if(v){ FX_USD_CAD=v; FX_ASOF=obs.d; FX_LIVE=true; renderBento(); heroReadout(); }
+    })
+    .catch(()=>{ /* keep the dated fallback rate; the page already says so */ });
+}
+
 /* ---- data ---- live prices come from drops.js (window.DROPS), regenerated by
    engine/build_feed.py from TCGCSV. The array below is the offline fallback. ---- */
 const FALLBACK_DROPS = [
@@ -767,7 +787,7 @@ function oddsBlock(d){
     <span class="badge ${d.badge}">${badgeTxt}</span>
     <div class="verdict ${cls}">${verdict}</div>
     ${down?`<div class="down">${down}</div>`:''}
-    <div class="prov">${d.comp!=null?`Source: ${d.compLabel||'market est.'} · $${d.comp}`:'Source: calendar only'}</div>
+    <div class="prov">${d.comp!=null?`Source: ${d.compLabel||'market est.'} · ${fmtCad(usdToCad(d.comp))}`:'Source: calendar only'}</div>
   </div>`;
 }
 function chaseBlock(d){
@@ -775,8 +795,8 @@ function chaseBlock(d){
   const rows = d.chase.map(c =>
     `<div style="display:flex;justify-content:space-between;gap:10px">
        <span style="color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.name}</span>
-       <span style="color:var(--gold);flex:none">$${(+c.market).toFixed(2)}</span></div>`).join('');
-  const etb = d.etb!=null ? `<div style="display:flex;justify-content:space-between"><span style="color:var(--ink-2)">Elite Trainer Box</span><span style="color:var(--ink)">$${(+d.etb).toFixed(2)}</span></div>`:'';
+       <span style="color:var(--gold);flex:none">${fmtCad(usdToCad(+c.market))}</span></div>`).join('');
+  const etb = d.etb!=null ? `<div style="display:flex;justify-content:space-between"><span style="color:var(--ink-2)">Elite Trainer Box</span><span style="color:var(--ink)">${fmtCad(usdToCad(+d.etb))}</span></div>`:'';
   return `<div class="odds" style="position:relative">
     <span class="badge modeled">chase singles · modeled</span>
     <div class="prov" style="margin-top:8px;display:flex;flex-direction:column;gap:3px">${etb}${rows}</div>
@@ -832,6 +852,7 @@ function renderFilters(){
   document.getElementById('filters').innerHTML = CATS.map(([k,l])=>
     `<button class="chipbtn ${k===active?'on':''}" data-k="${k}">${l}</button>`).join('');
 }
+refreshFX();
 document.getElementById('filters').addEventListener('click',e=>{
   const b=e.target.closest('.chipbtn'); if(!b)return;
   active=b.dataset.k; renderFilters(); renderBento();
@@ -871,18 +892,39 @@ function runCalc(){
     <span>Net proceeds after fees<span>$${r.net.toFixed(2)}</span></span>
     <span>Break-even resale<span>$${round2(r.cost/(1-mkt-pay)+ship).toFixed(2)}</span></span>`;
 }
-['buy','sale','fee','pay','ship','tax'].forEach(id=>$(id).addEventListener('input',runCalc));
+['buy','sale','fee','pay','ship','tax'].forEach(id=>$(id).addEventListener('input',()=>{calcUserTouched=true; runCalc();}));
 
 /* hero readout: show the honest modeled result for the featured box at MSRP */
-(function heroReadout(){
-  const d=DROPS.find(x=>x.feature&&x.comp!=null);   // same live numbers as the feature card, both in US$
+function heroReadout(){
+  const d=DROPS.find(x=>x.feature&&x.comp!=null);   // sourced from TCGplayer, in USD
   if(!d) return;
-  const r=evaluate({buy:d.buy||0, sale:d.comp});
+  const buyCad=usdToCad(d.buy||0), compCad=usdToCad(d.comp);
+  const r=evaluate({buy:buyCad, sale:compCad});
   const f=$('heroFig');
   f.textContent=(r.profit>=0?'+':'−')+'$'+Math.abs(r.profit).toFixed(2);
   f.className='fig '+(r.profit>=0?'pos':'neg');
   const ra=$('readAsOf'); if(ra) ra.textContent=d.asof||'date not recorded';
-})();
+  document.querySelectorAll('#fxNote,#fxNote2').forEach(el=>{ el.textContent=fxLabel(); });
+  document.querySelectorAll('.px[data-usd]').forEach(el=>{
+    el.textContent='~'+fmtCad(usdToCad(+el.dataset.usd));
+  });
+
+  // Prefill the flip calculator with this SAME real, sourced comp (not a
+  // guess), already converted to CAD since the calculator's fields are
+  // labeled "(CAD)" — so a first-time visitor sees an actual worked CAD
+  // result right away instead of a blank "enter a price" box. Clearing the
+  // field removes the example and the calculator goes back to needing the
+  // user's own price. Skipped once the visitor has typed their own numbers,
+  // so a live FX update never overwrites what they entered.
+  const buyEl=$('buy'), saleEl=$('sale');
+  if(buyEl && saleEl && d.buy!=null && !calcUserTouched){
+    buyEl.value=round2(buyCad);
+    saleEl.value=Math.round(compCad);
+    saleEl.placeholder='';
+    runCalc();
+  }
+}
+heroReadout();
 
 
 /* ---- news list (official first) + Discord link ---- */
@@ -1003,7 +1045,7 @@ renderFilters(); renderBento(); runCalc();
     document.getElementById('ycal-tip').innerHTML=`<b>${dt.toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric'})}</b><br>`+
       list.map(x=>{
         const retail=(x.chips||[]).map(c=>typeof c==='string'?c:c.t).find(c=>/retail|ETB|box/i.test(c));
-        const value=x.comp!=null?`worth ~$${Math.round(x.comp)} (${x.compLabel||'market est.'})`:(x.etb!=null?`ETB worth ~$${Math.round(x.etb)}`:'resale value: unknown yet');
+        const value=x.comp!=null?`worth ~${fmtCad(usdToCad(x.comp),0)} (${x.compLabel||'market est.'})`:(x.etb!=null?`ETB worth ~${fmtCad(usdToCad(x.etb),0)}`:'resale value: unknown yet');
         const off=x.official?`<br><span style="color:#39ff88">&#10004; Date confirmed by The Pokémon Company</span> <a href="${x.official.url}" target="_blank" rel="noopener">official page &#8599;</a>`:'';
         const hasCard=DROPS.some(d=>d.id===x.id);
         const title=hasCard
