@@ -113,7 +113,7 @@ a{color:var(--accent)}
     <div class="card"><h3>Version history</h3><p>20 earlier versions per note by default, up to 500, with restore.</p></div>
     <div class="card"><h3>Supersede with undo</h3><p>Replacing a memory is a two-step, reversible operation.</p></div>
 <div class="card"><h3>Agents forget, people delete</h3><p>When an agent deletes a note it is archived and can be restored. Only you can erase it for good.</p></div>
-    <div class="card"><h3>A write-time linter</h3><p>Likely secrets are refused, and prompt-injection patterns are held for a person to review. It is pattern matching, so expect misses.</p></div>
+    <div class="card"><h3>A write-time linter</h3><p>Likely secrets are refused, and prompt-injection patterns, including rule overrides such as "ignore all budget limits", are held for a person to review. It is pattern matching, so expect misses.</p></div>
     <div class="card"><h3>Namespace isolation</h3><p>Pin a token to one namespace and it cannot read the others. An unpinned token can read every namespace.</p></div>
     <div class="card"><h3>Local by default</h3><p>One SQLite file on your machine. Two runtime dependencies.</p></div>
   </div>
@@ -122,7 +122,7 @@ a{color:var(--accent)}
   <p class="muted">Every figure below is produced by a command in the repository, and the benchmarks run in CI on every release. A number we cannot reproduce does not go on this page.</p>
   <table>
     <tr><th>What is measured</th><th>Result</th></tr>
-    <tr><td>Memory-poisoning probes that reached a read</td><td class="num zero">0 of 25</td></tr>
+    <tr><td>Memory-poisoning probes that reached a read</td><td class="num zero">0 of 34</td></tr>
     <tr><td>Permission-leakage probes that leaked</td><td class="num zero">0 of 51</td></tr>
     <tr><td>Recall@5, LongMemEval-S (470 questions)</td><td class="num">95.1&nbsp;%</td></tr>
     <tr><td>Search time, median</td><td class="num">2.7&nbsp;ms</td></tr>
