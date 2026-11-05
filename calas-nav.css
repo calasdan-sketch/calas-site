@@ -25,7 +25,8 @@ nav.site-nav .more-btn[aria-expanded="true"]::after{transform:rotate(-135deg);ma
 nav.site-nav .nav-more{position:relative;flex:none}
 nav.site-nav .more-label{display:none}
 nav.site-nav .more-menu{display:none;position:absolute;right:0;top:calc(100% + 6px);min-width:280px;background:#fff;border:1px solid #D9E3EA;border-top:3px solid #F0C171;border-radius:10px;box-shadow:0 22px 50px -18px rgba(11,46,69,.45);padding:8px;z-index:200}
-nav.site-nav .nav-more.open .more-menu{display:block}
+nav.site-nav .nav-more.open .more-menu{display:grid;grid-template-columns:1fr 1fr;gap:0 6px;min-width:600px}
+nav.site-nav .more-menu a.all{grid-column:1/-1}
 nav.site-nav .more-menu a{display:block;padding:11px 12px;border-radius:8px;text-decoration:none;color:#12212C;font:500 16px/1.3 "IBM Plex Sans",system-ui,sans-serif;white-space:nowrap}
 nav.site-nav .more-menu a small{display:block;color:#566370;font-size:14px;font-weight:400;margin-top:1px;white-space:normal}
 nav.site-nav .more-menu a:hover,nav.site-nav .more-menu a:focus-visible{background:#E6F0F6;color:#0E4A6B}

@@ -67,28 +67,29 @@
     '<a href="/receiptsort/">ReceiptSort</a>' +
     '<a href="/guardian/">ScamCatch</a>' +
     '<a href="/dropwatch/">Dropwatch</a>' +
+    '<a href="/devtools/">Dev Tools</a>' +
     '<a href="/tools/">All tools</a>' +
     '<a href="/pay/">Pricing</a>' +
     '<a href="/demo/">Demo</a>' +
     '<a href="/about/">About</a>';
 
   // Header list for pages that have no menu of their own (same markup as the static pages).
-  var MORE = [['/trades/','On File for trades','Sub insurance and WCB tracking'],['/leadme/','Lead Me','B2B lead finder and first emails'],['/haul-me/','Haul Me','Cost per mile for owner-operators'],['/watchpost/','Watchpost','Intrusion decoys and alerts'],['/dispatchme/','Dispatch Me','Snow and lawn crews, Winnipeg'],['/receiptsort/','ReceiptSort','Free receipts to spreadsheet'],['/guardian/','ScamCatch','Free scam message checker'],['/dropwatch/','Dropwatch','Free card and sneaker price tracker']];
+  var MORE = [['/trades/','On File for trades','Sub insurance and WCB tracking'],['/leadme/','Lead Me','B2B lead finder and first emails'],['/haul-me/','Haul Me','Cost per mile for owner-operators'],['/watchpost/','Watchpost','Intrusion decoys and alerts'],['/dispatchme/','Dispatch Me','Snow and lawn crews, Winnipeg'],['/receiptsort/','ReceiptSort','Free receipts to spreadsheet'],['/guardian/','ScamCatch','Free scam message checker'],['/dropwatch/','Dropwatch','Free card and sneaker price tracker'],['/devtools/','Dev Tools','Free open-source tools for AI developers'],['/demo/','Guided demos','Watch any tool in action']];
   function headNav() {
     var p = location.pathname;
     function a(h, l) { var cur = p.indexOf(h) === 0 ? ' class="on" aria-current="page"' : ''; return '<a href="' + h + '"' + cur + '>' + l + '</a>'; }
     var items = MORE.map(function (m) { return '<a href="' + m[0] + '">' + m[1] + '<small>' + m[2] + '</small></a>'; }).join('');
-    return a('/accounting/', 'On File') + a('/quote-me/', 'Quote Me') + a('/pay/', 'Pricing') + a('/demo/', 'Demo') + a('/about/', 'About') +
-      '<div class="nav-more"><button class="more-btn" type="button" aria-expanded="false" aria-controls="more-menu">More tools</button><span class="more-label">More tools</span>' +
+    return a('/accounting/', 'On File') + a('/quote-me/', 'Quote Me') + a('/pay/', 'Pricing') + a('/about/', 'About') +
+      '<div class="nav-more"><button class="more-btn" type="button" aria-expanded="false" aria-controls="more-menu">All tools</button><span class="more-label">All tools</span>' +
       '<div class="more-menu" id="more-menu">' + items + '<a class="all" href="/tools/">All tools and prices</a></div></div>' +
       '<a href="/signin/" class="nav-signin">Sign in</a><a class="nav-cta" href="/quote-me/app/">Start free</a>';
   }
   function loadNavAssets() {
     if (!document.querySelector('link[href*="calas-nav.css"]')) {
-      var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = '/calas-nav.css?v=20261027a'; document.head.appendChild(l);
+      var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = '/calas-nav.css?v=20261105a'; document.head.appendChild(l);
     }
     if (window.__calasNavInit) { window.__calasNavInit(); return; }
-    var s = document.createElement('script'); s.src = '/calas-nav.js?v=20261027a'; document.head.appendChild(s);
+    var s = document.createElement('script'); s.src = '/calas-nav.js?v=20261105a'; document.head.appendChild(s);
   }
 
   function injectMasthead() {
