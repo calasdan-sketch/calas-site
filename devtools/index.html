@@ -2,13 +2,13 @@
 <link rel="canonical" href="https://calasautomations.com/devtools/">
 <style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.nav-signin{font-weight:600;color:var(--ink) !important;border:1px solid currentColor;padding:8px 14px;border-radius:2px}
 </style><style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"><link rel="stylesheet" href="/calas-theme.css?v=20261002a">
-<meta property="og:title" content="Dev Tools — Calas Automations">
-<meta property="og:description" content="Free, open-source developer tools for the agent era: agent safety, code quality, and developer experience. Built by Calas Automations.">
+<meta property="og:title" content="Dev Tools — 39 tools for AI developers in five suites · Calas Automations">
+<meta property="og:description" content="39 developer tools in five suites: agent safety, agent running and cost, AI testing, code teams and server safety. 27 are free to install today. Built by Calas Automations, Winnipeg.">
 <meta property="og:image" content="https://calasautomations.com/hero-home.jpg">
 <meta property="og:url" content="https://calasautomations.com/devtools/">
 <meta name="twitter:card" content="summary_large_image">
-<title>Dev Tools — free open-source tools for AI developers · Calas Automations</title>
-<meta name="description" content="Free, open-source developer tools for the agent era: agent safety, code quality, and developer experience. pip install or npm install. Built by Calas Automations.">
+<title>Dev Tools — 39 tools for AI developers in five suites · Calas Automations</title>
+<meta name="description" content="39 developer tools in five suites: agent safety, agent running and cost, AI testing, code teams and server safety. 27 are free to install today. Built by Calas Automations, Winnipeg.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
@@ -108,6 +108,58 @@ footer{border-top:1px solid var(--rule);margin-top:0}
 </style>
 <link rel="stylesheet" href="/calas-nav.css?v=20261105b">
 <script src="/calas-nav.js?v=20261105b" defer></script>
+<style>
+/* dev tools 2026-11-05: neural background, suites */
+#neural{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+header{z-index:50}
+.hero{position:relative;background:radial-gradient(1100px 520px at 80% 15%,rgba(21,95,135,.55),transparent 70%),radial-gradient(700px 420px at 5% 100%,rgba(14,74,107,.6),transparent 70%),var(--night)}
+/* the site-wide hero photo stays; the hero is not its own layer so the net floats over the photo */
+.hero.dt:not(:has(> .hero-art)){position:static;isolation:auto}
+.hero .wrap,main,footer{position:relative;z-index:1}
+.hero .wrap{padding-top:72px;padding-bottom:68px;gap:18px}
+.hero h1{font-size:clamp(40px,5.6vw,76px);line-height:1.04;letter-spacing:-.015em;max-width:17ch}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--gold)}
+.hero p.lede{font-size:18px;max-width:660px}
+.pill{display:inline-flex;align-items:center;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:#CFE1EC;border:1px solid rgba(185,207,221,.35);border-radius:999px;padding:8px 16px;background:rgba(11,46,69,.5);width:fit-content}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px rgba(240,193,113,.18)}
+.stats{display:flex;gap:34px;flex-wrap:wrap;margin-top:8px}
+.stat b{display:block;font-family:"Libre Baskerville",Georgia,serif;font-size:32px;color:#fff;line-height:1.1}
+.stat span{color:var(--night-ink-2);font-size:15px}
+.crumb{color:var(--night-ink-2);font-size:15px;text-decoration:none;width:fit-content}
+.crumb:hover{color:#fff}
+.suites{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px}
+.suite{background:var(--surface);border:1px solid var(--rule);border-top:3px solid var(--red);border-radius:8px;padding:22px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s,border-color .15s}
+.suite:hover,.suite:focus-visible{border-color:var(--red);transform:translateY(-2px);box-shadow:0 18px 40px -22px rgba(11,46,69,.45)}
+.suite h3{font-size:20px}
+.suite p{color:var(--ink-2);font-size:15.5px;margin:0;flex:1}
+.suite .meta{font-family:"IBM Plex Mono",monospace;font-size:13.5px;letter-spacing:.06em;color:var(--ink-3);text-transform:uppercase}
+.suite .go{font-weight:600;color:var(--red)}
+.price{font-family:"Libre Baskerville",Georgia,serif;font-size:26px;color:var(--red);font-weight:700}
+.price small{font-family:"IBM Plex Sans",sans-serif;font-size:14.5px;color:var(--ink-3);font-weight:400}
+.bundle{margin-top:22px;background:var(--night);color:#fff;border:1px solid var(--night-rule);border-left:4px solid var(--gold);border-radius:8px;padding:26px 28px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+.bundle h3{font-size:22px;color:#fff}
+.bundle p{color:var(--night-ink-2);margin:6px 0 0;max-width:620px}
+.bundle .price{color:var(--gold);font-size:30px}
+.bundle .price small{color:var(--night-ink-2)}
+.pro{margin-top:26px;border:1px solid var(--rule);border-left:4px solid var(--gold);background:var(--surface);border-radius:8px;padding:24px 26px}
+.pro h3{font-size:20px}
+.pro p{color:var(--ink-2);margin:8px 0 0}
+.pro a.btn{display:inline-block;margin-top:14px;background:var(--red);color:#fff;text-decoration:none;font-weight:600;padding:11px 18px;border-radius:6px}
+.all-install{margin:0 0 26px}
+.all-install .install{white-space:normal;word-break:break-word}
+.sec-more{display:inline-block;margin-top:10px;font-weight:600;color:var(--red);text-decoration:none}
+.sec-more:hover{text-decoration:underline}
+.card{border-radius:8px}
+.badge.free{color:var(--ok);border-color:var(--ok-line)}
+.badge.always{color:#8a6414;border-color:#E9C98B}
+.card.soon{background:var(--sunk);border-style:dashed}
+.card.soon .desc{color:var(--ink-3)}
+.others{display:flex;gap:12px;flex-wrap:wrap}
+.others a{border:1px solid var(--rule);background:var(--surface);border-radius:999px;padding:9px 16px;text-decoration:none;color:var(--ink);font-weight:500}
+.others a:hover{border-color:var(--red);color:var(--red)}
+@media(max-width:640px){.hero .wrap{padding-top:48px;padding-bottom:48px}.bundle{padding:22px}}
+</style>
+<script src="/devtools/neural.js?v=20261105a" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -137,155 +189,277 @@ footer{border-top:1px solid var(--rule);margin-top:0}
   </div>
 </header>
 
-<div class="hero">
+
+<div class="hero dt">
   <div class="wrap">
-    <span class="eyebrow">Developer tools</span>
-    <h1>Dev Tools</h1>
-    <p class="lede">Built for the agent era. Open-source packages that make AI coding agents safer, code more trustworthy, and developers faster — installable in one command.</p>
-    <span class="freeline"><span class="dot"></span>Free and open source. Built by Calas Automations, Winnipeg.</span>
+    <a class="of-lockup" href="/devtools/" aria-label="Dev Tools by Calas Automations"><span class="crest" aria-hidden="true"></span><span class="of-lk-text"><span class="of-lk-name">Dev <span class="r">Tools</span></span><span class="of-lk-sub">BY CALAS AUTOMATIONS</span></span></a>
+    <span class="pill"><i></i>Developer tools &middot; five suites</span>
+    <h1>Tools that keep AI agents <em>safe, honest and on budget.</em></h1>
+    <p class="lede">39 developer tools, sorted into five suites, built by Calas Automations in Winnipeg. 27 are free to install today, and the rest are coming soon. Pro plans with hosted dashboards and alerts are on the way.</p>
+    <div class="stats"><div class="stat"><b>39</b><span>tools</span></div><div class="stat"><b>27</b><span>free to use today</span></div><div class="stat"><b>5</b><span>suites</span></div></div>
   </div>
 </div>
 
 <main id="main">
 <section>
   <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Agent safety</span>
-      <h2>Keep agents under control</h2>
-      <p>Guardrails, audits, and kill switches for AI agents running in production.</p>
+    <div class="sec-head"><span class="eyebrow">The five suites</span><h2>Pick the problem you have</h2><p>Each suite groups the tools for one kind of job. Open a suite for its install command and Pro price.</p></div>
+    <div class="suites">
+      <a class="suite" href="/devtools/agent-safety/"><span class="meta">10 tools &middot; 8 ready</span><h3>Agent Safety</h3><p>Keep AI agents under control. Teams running AI coding agents or MCP servers.</p><span class="price">C$29<small> /month Pro, coming soon</small></span><span class="go">See the suite &rarr;</span></a>
+      <a class="suite" href="/devtools/agent-ops/"><span class="meta">10 tools &middot; 8 ready</span><h3>Agent Running &amp; Cost</h3><p>Run AI agents without surprises. Companies running AI agents every day.</p><span class="price">C$29<small> /month Pro, coming soon</small></span><span class="go">See the suite &rarr;</span></a>
+      <a class="suite" href="/devtools/ai-testing/"><span class="meta">5 tools &middot; 4 ready</span><h3>AI Testing</h3><p>Prove the AI works before it ships. Developers building AI features.</p><span class="price">C$19<small> /month Pro, coming soon</small></span><span class="go">See the suite &rarr;</span></a>
+      <a class="suite" href="/devtools/code-teams/"><span class="meta">9 tools &middot; 7 ready</span><h3>Code Teams</h3><p>Trust what ships. Development teams, with or without AI agents.</p><span class="price">C$19<small> /month Pro, coming soon</small></span><span class="go">See the suite &rarr;</span></a>
+      <a class="suite" href="/devtools/server-safety/"><span class="meta">5 tools &middot; 0 ready</span><h3>Server Safety</h3><p>Know your servers will come back. IT staff and anyone looking after Linux servers.</p><span class="price">C$19<small> /month Pro, coming soon</small></span><span class="go">See the suite &rarr;</span></a>
     </div>
+    <div class="bundle">
+      <div><span class="eyebrow" style="color:var(--night-ink-2)">Everything &middot; coming soon</span><h3>All five suites, every new tool included</h3><p>One plan covers every suite, plus each new tool as it ships. It is not available yet; the free tools stay free either way.</p></div>
+      <div><div class="price">C$49<small> /month, one person</small></div><div style="color:var(--night-ink-2);font-size:15px;margin-top:4px">C$39 per person for teams of 3 or more</div><a class="btn" style="display:inline-block;margin-top:12px;background:var(--gold);color:var(--night);font-weight:600;text-decoration:none;padding:11px 18px;border-radius:6px" href="tel:+14312449026">Want it first? Call or text (431) 244-9026</a></div>
+    </div>
+  </div>
+</section>
+<section id="agent-safety">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Agent Safety</span><h2>Keep AI agents under control</h2><p>Guardrails, audits, approvals and kill switches, so an AI agent can&#x27;t overspend, leak a key or touch what it shouldn&#x27;t.</p><a class="sec-more" href="/devtools/agent-safety/">See the Agent Safety suite and Pro price &rarr;</a></div>
     <div class="grid">
-
       <div class="card">
-        <h3><span class="pkg">shortleash</span></h3>
-        <p class="desc">Circuit breaker for AI agent runs. Budget, spawn, token, and timeout guards with per-run receipts. Now includes planok's human approval gate.</p>
+        <h3><span class="pkg">shortleash</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Circuit breaker for AI coding-agent runs: budget, spawn, token and timeout guards with a receipt for every run.</p>
         <div class="install" data-cmd="pip install shortleash"><span class="prompt">$</span>&nbsp;pip install shortleash</div>
         <div class="links"><a href="https://pypi.org/project/shortleash/">PyPI</a><a href="https://github.com/calasdan-sketch/shortleash">GitHub</a></div>
       </div>
-
       <div class="card">
-        <h3><span class="pkg">mcp-audit</span></h3>
-        <p class="desc"><code class="mono">npm audit</code> for MCP servers. Scans for prompt injection, credential exfiltration, and misconfigurations. A–F security scoring.</p>
-        <div class="install" data-cmd="pip install mcp-audit"><span class="prompt">$</span>&nbsp;pip install mcp-audit</div>
-        <div class="links"><a href="https://pypi.org/project/mcp-audit/">PyPI</a><a href="https://github.com/calasdan-sketch/mcp-audit">GitHub</a></div>
+        <h3><span class="pkg">mcp-gradecard</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Security auditor for MCP server setups. Scans for prompt injection, credential leaks and misconfiguration, then grades A to F.</p>
+        <div class="install" data-cmd="pip install mcp-gradecard"><span class="prompt">$</span>&nbsp;pip install mcp-gradecard</div>
+        <div class="links"><a href="https://pypi.org/project/mcp-gradecard/">PyPI</a><a href="https://github.com/calasdan-sketch/mcp-gradecard">GitHub</a></div>
       </div>
-
       <div class="card">
-        <h3><span class="pkg">mcp-jail</span></h3>
-        <p class="desc">Runtime permission firewall for MCP servers. Policy enforcement and audit logging through a stdio proxy.</p>
-        <div class="install" data-cmd="pip install mcp-jail"><span class="prompt">$</span>&nbsp;pip install mcp-jail</div>
-        <div class="links"><a href="https://pypi.org/project/mcp-jail/">PyPI</a><a href="https://github.com/calasdan-sketch/mcp-jail">GitHub</a></div>
+        <h3><span class="pkg">mcp-leash</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Runtime permission firewall for MCP servers. Sits between the agent and the server, enforces a policy and logs every call.</p>
+        <div class="install" data-cmd="pip install mcp-leash"><span class="prompt">$</span>&nbsp;pip install mcp-leash</div>
+        <div class="links"><a href="https://pypi.org/project/mcp-leash/">PyPI</a><a href="https://github.com/calasdan-sketch/mcp-leash">GitHub</a></div>
       </div>
-
       <div class="card">
-        <h3><span class="pkg">@decnutz/warden</span></h3>
-        <p class="desc">Enterprise agent flight recorder. Runtime supervision for AI agent fleets: audit everything, live fleet view, one-tap kill switch.</p>
-        <div class="install" data-cmd="npm i @decnutz/warden"><span class="prompt">$</span>&nbsp;npm i @decnutz/warden</div>
-        <div class="links"><a href="https://www.npmjs.com/package/@decnutz/warden">npm</a><a href="https://github.com/calasdan-sketch/warden">GitHub</a></div>
+        <h3><span class="pkg">mcpdrift</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Pins your MCP servers&#x27; tools in a lockfile and fails the build when a server quietly changes what it offers.</p>
+        <div class="install" data-cmd="pip install mcpdrift"><span class="prompt">$</span>&nbsp;pip install mcpdrift</div>
+        <div class="links"><a href="https://pypi.org/project/mcpdrift/">PyPI</a><a href="https://github.com/calasdan-sketch/mcpdrift">GitHub</a></div>
       </div>
-
       <div class="card">
-        <h3><span class="pkg">ceasefire</span></h3>
-        <p class="desc">Merge-conflict prevention for parallel AI coding agents. Intent ledger, merge forecasting, and PR collision warnings — zero merge fights.</p>
-        <div class="install" data-cmd="npm i ceasefire"><span class="prompt">$</span>&nbsp;npm i ceasefire</div>
-        <div class="links"><a href="https://www.npmjs.com/package/ceasefire">npm</a><a href="https://github.com/calasdan-sketch/ceasefire">GitHub</a></div>
+        <h3><span class="pkg">delcred</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Short-lived, per-task credentials for AI agents, so an agent never holds a long-lived master key.</p>
+        <div class="install" data-cmd="pip install delcred"><span class="prompt">$</span>&nbsp;pip install delcred</div>
+        <div class="links"><a href="https://pypi.org/project/delcred/">PyPI</a><a href="https://github.com/calasdan-sketch/delcred">GitHub</a></div>
       </div>
-
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Code quality</span>
-      <h2>Trust what ships</h2>
-      <p>Deterministic checks that catch what reviews miss — before it reaches production.</p>
-    </div>
-    <div class="grid">
-
       <div class="card">
-        <h3><span class="pkg">pr-verify</span></h3>
-        <p class="desc">Deterministic trust for agent-authored PRs. Blame provenance, blast radius analysis, and a 0–100 risk score on every pull request.</p>
-        <div class="install" data-cmd="pip install pr-verify"><span class="prompt">$</span>&nbsp;pip install pr-verify</div>
-        <div class="links"><a href="https://pypi.org/project/pr-verify/">PyPI</a><a href="https://github.com/calasdan-sketch/pr-verify">GitHub</a></div>
-      </div>
-
-      <div class="card">
-        <h3><span class="pkg">promptregress</span></h3>
-        <p class="desc">pytest for prompts. Regression testing for LLM prompts, local-first — catch prompt drift before your users do.</p>
-        <div class="install" data-cmd="pip install promptregress"><span class="prompt">$</span>&nbsp;pip install promptregress</div>
-        <div class="links"><a href="https://pypi.org/project/promptregress/">PyPI</a><a href="https://github.com/calasdan-sketch/promptregress">GitHub</a></div>
-      </div>
-
-      <div class="card">
-        <h3><span class="pkg">adr-drift</span></h3>
-        <p class="desc">Deterministic architecture tests from arch.yaml and ADR constraints. Catches architectural drift before it ships.</p>
-        <div class="install" data-cmd="pip install adr-drift"><span class="prompt">$</span>&nbsp;pip install adr-drift</div>
-        <div class="links"><a href="https://pypi.org/project/adr-drift/">PyPI</a><a href="https://github.com/calasdan-sketch/adr-drift">GitHub</a></div>
-      </div>
-
-      <div class="card">
-        <h3><span class="pkg">flakebox</span></h3>
-        <p class="desc">Self-hosted flaky-test triage. Find and quarantine the tests wasting your CI minutes.</p>
-        <div class="install" data-cmd="pip install flakebox"><span class="prompt">$</span>&nbsp;pip install flakebox</div>
-        <div class="links"><a href="https://pypi.org/project/flakebox/">PyPI</a><a href="https://github.com/calasdan-sketch/flakebox">GitHub</a></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Developer experience</span>
-      <h2>Move faster</h2>
-      <p>Tools that remove the friction from everyday development work.</p>
-    </div>
-    <div class="grid">
-
-      <div class="card">
-        <h3><span class="pkg">standupguy</span></h3>
-        <p class="desc">Local-first standup notes from git ground truth. No more "what did I do yesterday."</p>
-        <div class="install" data-cmd="pip install standupguy"><span class="prompt">$</span>&nbsp;pip install standupguy</div>
-        <div class="links"><a href="https://pypi.org/project/standupguy/">PyPI</a><a href="https://github.com/calasdan-sketch/standupguy">GitHub</a></div>
-      </div>
-
-      <div class="card">
-        <h3><span class="pkg">sessionsteward</span></h3>
-        <p class="desc">Versioned snapshots for agent working state. Undo what compaction dropped.</p>
-        <div class="install" data-cmd="pip install sessionsteward"><span class="prompt">$</span>&nbsp;pip install sessionsteward</div>
-        <div class="links"><a href="https://pypi.org/project/sessionsteward/">PyPI</a><a href="https://github.com/calasdan-sketch/sessionsteward">GitHub</a></div>
-      </div>
-
-      <div class="card">
-        <h3><span class="pkg">stuntkey</span></h3>
-        <p class="desc">Your AI agent uses your API keys without seeing them. Keys stay in your computer&rsquo;s keychain, the agent gets a stand-in, every key gets a spending cap, and a leaked key is fixed in one command. Formerly OathKey and SafeEasyAPI.</p>
+        <h3><span class="pkg">stuntkey</span><span class="badge always">Always free</span></h3>
+        <p class="desc">Your AI agent uses your API keys without seeing them. Keys stay in your keychain; the agent only gets a stand-in. Beta, not independently reviewed.</p>
         <div class="install" data-cmd="pip install stuntkey"><span class="prompt">$</span>&nbsp;pip install stuntkey</div>
         <div class="links"><a href="/devtools/stuntkey/">About</a><a href="https://pypi.org/project/stuntkey/">PyPI</a><a href="https://github.com/calasdan-sketch/stuntkey">GitHub</a></div>
       </div>
-
       <div class="card">
-        <h3><span class="pkg">monomem</span></h3>
-        <p class="desc">Shared memory for AI coding agents. Tell one agent something and the rest already know it &mdash; every note records who wrote it and keeps its earlier versions, and replacements can be undone. Self-hosted, no API keys. Formerly OneMemory.</p>
+        <h3><span class="pkg">@decnutz/warden</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Flight recorder for AI agent fleets: audit everything, a live fleet view and a one-tap kill switch.</p>
+        <div class="install" data-cmd="npm i @decnutz/warden"><span class="prompt">$</span>&nbsp;npm i @decnutz/warden</div>
+        <div class="links"><a href="https://www.npmjs.com/package/@decnutz/warden">npm</a><a href="https://github.com/calasdan-sketch/warden">GitHub</a></div>
+      </div>
+      <div class="card soon">
+        <h3><span class="pkg">mcpgateway</span><span class="badge soon">Coming soon</span></h3>
+        <p class="desc">One process in front of all your MCP servers: one config, one audit trail.</p>
+        <div class="links"><a href="https://github.com/calasdan-sketch/mcpgateway">GitHub</a></div>
+      </div>
+      <div class="card soon">
+        <h3><span class="pkg">approveme</span><span class="badge soon">Coming soon</span></h3>
+        <p class="desc">One inbox for every agent action that needs your approval.</p>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">keycanary</span><span class="badge always">Always free</span></h3>
+        <p class="desc">Free benchmark of 61 ways an AI coding agent can leak an API key. Score any protection, including ours.</p>
+        <div class="links"><a href="https://github.com/calasdan-sketch/keycanary">GitHub</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="agent-ops">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Agent Running &amp; Cost</span><h2>Run AI agents without surprises</h2><p>See what agents cost, replay what they did, survive crashes and keep their memory straight.</p><a class="sec-more" href="/devtools/agent-ops/">See the Agent Running &amp; Cost suite and Pro price &rarr;</a></div>
+    <div class="grid">
+      <div class="card">
+        <h3><span class="pkg">agentfin</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Agent FinOps: what each agent costs and what it returns.</p>
+        <div class="install" data-cmd="pip install agentfin"><span class="prompt">$</span>&nbsp;pip install agentfin</div>
+        <div class="links"><a href="https://pypi.org/project/agentfin/">PyPI</a><a href="https://github.com/calasdan-sketch/agentfin">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">redbg</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">A debugger for agent sessions: record, replay, compare and fork tool-calling runs.</p>
+        <div class="install" data-cmd="pip install redbg"><span class="prompt">$</span>&nbsp;pip install redbg</div>
+        <div class="links"><a href="https://pypi.org/project/redbg/">PyPI</a><a href="https://github.com/calasdan-sketch/redbg">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">crashresume</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Proves an agent survives a crash or restart without losing its place or repeating actions.</p>
+        <div class="install" data-cmd="pip install crashresume"><span class="prompt">$</span>&nbsp;pip install crashresume</div>
+        <div class="links"><a href="https://pypi.org/project/crashresume/">PyPI</a><a href="https://github.com/calasdan-sketch/crashresume">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">idemkey</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Stops agents doing the same thing twice: safe retries for tool calls.</p>
+        <div class="install" data-cmd="pip install idemkey"><span class="prompt">$</span>&nbsp;pip install idemkey</div>
+        <div class="links"><a href="https://pypi.org/project/idemkey/">PyPI</a><a href="https://github.com/calasdan-sketch/idemkey">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">ctxfit</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Fits more into an agent&#x27;s context window by compressing it sensibly.</p>
+        <div class="install" data-cmd="pip install ctxfit"><span class="prompt">$</span>&nbsp;pip install ctxfit</div>
+        <div class="links"><a href="https://pypi.org/project/ctxfit/">PyPI</a><a href="https://github.com/calasdan-sketch/ctxfit">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">a2aops</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Toolkit for the A2A agent-to-agent protocol: validation, migration reports and a local test playground.</p>
+        <div class="install" data-cmd="pip install a2aops"><span class="prompt">$</span>&nbsp;pip install a2aops</div>
+        <div class="links"><a href="https://pypi.org/project/a2aops/">PyPI</a><a href="https://github.com/calasdan-sketch/a2aops">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">sessionsteward</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Versioned snapshots of an agent&#x27;s working notes: undo what got dropped.</p>
+        <div class="install" data-cmd="pip install sessionsteward"><span class="prompt">$</span>&nbsp;pip install sessionsteward</div>
+        <div class="links"><a href="https://pypi.org/project/sessionsteward/">PyPI</a><a href="https://github.com/calasdan-sketch/sessionsteward">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">monomem</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Shared memory for AI coding agents that records which agent wrote each note, keeps old versions and can undo changes.</p>
         <div class="install" data-cmd="npm i -g monomem"><span class="prompt">$</span>&nbsp;npm i -g monomem</div>
         <div class="links"><a href="/devtools/monomem/">About</a><a href="https://www.npmjs.com/package/monomem">npm</a><a href="https://github.com/calasdan-sketch/monomem">GitHub</a></div>
       </div>
-
-      <div class="card">
-        <h3><span class="pkg">@decnutz/contextrouter</span></h3>
-        <p class="desc">Cross-repo context routing for AI agents. Answers "which repos" — not "where in this repo."</p>
-        <div class="install" data-cmd="npm i @decnutz/contextrouter"><span class="prompt">$</span>&nbsp;npm i @decnutz/contextrouter</div>
-        <div class="links"><a href="https://www.npmjs.com/package/@decnutz/contextrouter">npm</a></div>
-      </div>
-
-      <div class="card">
+      <div class="card soon">
         <h3><span class="pkg">calas-gateway</span><span class="badge soon">Coming soon</span></h3>
-        <p class="desc">Multi-provider LLM gateway (Anthropic, OpenAI). Zero runtime dependencies, smart batching, cost tracking.</p>
-        <div class="links"><a href="https://github.com/calasdan-sketch/calas-gateway">GitHub</a></div>
+        <p class="desc">Local gateway that cuts AI token spend and keeps an honest ledger of what every call cost.</p>
       </div>
-
+      <div class="card soon">
+        <h3><span class="pkg">modeldrift</span><span class="badge soon">Coming soon</span></h3>
+        <p class="desc">Warns you when an AI provider quietly changes a model behind the same name.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="ai-testing">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">AI Testing</span><h2>Prove the AI works before it ships</h2><p>Tests for prompts, agent behaviour and search quality, so a model update can&#x27;t quietly break your product.</p><a class="sec-more" href="/devtools/ai-testing/">See the AI Testing suite and Pro price &rarr;</a></div>
+    <div class="grid">
+      <div class="card">
+        <h3><span class="pkg">prompt-assert</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Tests for prompts, like pytest: catch AI answers getting worse before your users notice.</p>
+        <div class="install" data-cmd="pip install prompt-assert"><span class="prompt">$</span>&nbsp;pip install prompt-assert</div>
+        <div class="links"><a href="https://pypi.org/project/prompt-assert/">PyPI</a><a href="https://github.com/calasdan-sketch/prompt-assert">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">promptpin</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Keeps prompts versioned in git, pins versions per environment and logs what was served.</p>
+        <div class="install" data-cmd="pip install promptpin"><span class="prompt">$</span>&nbsp;pip install promptpin</div>
+        <div class="links"><a href="https://pypi.org/project/promptpin/">PyPI</a><a href="https://github.com/calasdan-sketch/promptpin">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">passgate</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">A strict pass/fail gate for AI evaluations: a change must pass every round, not just on average.</p>
+        <div class="install" data-cmd="pip install passgate"><span class="prompt">$</span>&nbsp;pip install passgate</div>
+        <div class="links"><a href="https://pypi.org/project/passgate/">PyPI</a><a href="https://github.com/calasdan-sketch/passgate">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">rerankgate</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Quality gate for AI search (RAG): checks the retrieved results are good enough before the AI answers.</p>
+        <div class="install" data-cmd="pip install rerankgate"><span class="prompt">$</span>&nbsp;pip install rerankgate</div>
+        <div class="links"><a href="https://pypi.org/project/rerankgate/">PyPI</a><a href="https://github.com/calasdan-sketch/rerankgate">GitHub</a></div>
+      </div>
+      <div class="card soon">
+        <h3><span class="pkg">trajtest</span><span class="badge soon">Coming soon</span></h3>
+        <p class="desc">Tests what an agent actually did, step by step, in a safe mock world.</p>
+        <div class="links"><a href="https://github.com/calasdan-sketch/trajtest">GitHub</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="code-teams">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Code Teams</span><h2>Trust what ships</h2><p>Checks that catch what code reviews miss, especially when AI agents are writing the code.</p><a class="sec-more" href="/devtools/code-teams/">See the Code Teams suite and Pro price &rarr;</a></div>
+    <div class="grid">
+      <div class="card">
+        <h3><span class="pkg">pr-verify</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">A 0 to 100 risk score on every pull request, with where the change came from and what it could break.</p>
+        <div class="install" data-cmd="pip install pr-verify"><span class="prompt">$</span>&nbsp;pip install pr-verify</div>
+        <div class="links"><a href="https://pypi.org/project/pr-verify/">PyPI</a><a href="https://github.com/calasdan-sketch/pr-verify">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">ceasefire</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Stops parallel AI coding agents from editing the same code and fighting over merges.</p>
+        <div class="install" data-cmd="npm i ceasefire"><span class="prompt">$</span>&nbsp;npm i ceasefire</div>
+        <div class="links"><a href="https://www.npmjs.com/package/ceasefire">npm</a><a href="https://github.com/calasdan-sketch/ceasefire">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">adr-drift</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Turns your architecture decisions into tests, so the codebase can&#x27;t quietly drift from them.</p>
+        <div class="install" data-cmd="pip install adr-drift"><span class="prompt">$</span>&nbsp;pip install adr-drift</div>
+        <div class="links"><a href="https://pypi.org/project/adr-drift/">PyPI</a><a href="https://github.com/calasdan-sketch/adr-drift">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">flakebox</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Finds and quarantines flaky tests that waste build time. Self-hosted.</p>
+        <div class="install" data-cmd="pip install flakebox"><span class="prompt">$</span>&nbsp;pip install flakebox</div>
+        <div class="links"><a href="https://pypi.org/project/flakebox/">PyPI</a><a href="https://github.com/calasdan-sketch/flakebox">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">reldoctor</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Checks a Python release the way PyPI and pip will read it, before you publish.</p>
+        <div class="install" data-cmd="pip install reldoctor"><span class="prompt">$</span>&nbsp;pip install reldoctor</div>
+        <div class="links"><a href="https://pypi.org/project/reldoctor/">PyPI</a><a href="https://github.com/calasdan-sketch/reldoctor">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">portacheck</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Finds file paths that break on Windows before a teammate hits them.</p>
+        <div class="install" data-cmd="pip install portacheck"><span class="prompt">$</span>&nbsp;pip install portacheck</div>
+        <div class="links"><a href="https://pypi.org/project/portacheck/">PyPI</a><a href="https://github.com/calasdan-sketch/portacheck">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">standupguy</span><span class="badge always">Always free</span></h3>
+        <p class="desc">Standup notes written from what&#x27;s actually in git.</p>
+        <div class="install" data-cmd="pip install standupguy"><span class="prompt">$</span>&nbsp;pip install standupguy</div>
+        <div class="links"><a href="https://pypi.org/project/standupguy/">PyPI</a><a href="https://github.com/calasdan-sketch/standupguy">GitHub</a></div>
+      </div>
+      <div class="card soon">
+        <h3><span class="pkg">gitstory</span><span class="badge soon">Coming soon</span></h3>
+        <p class="desc">&quot;Why is this code like this?&quot; One command pulls the history, pull requests and issues behind any lines.</p>
+      </div>
+      <div class="card soon">
+        <h3><span class="pkg">licwatch</span><span class="badge soon">Coming soon</span></h3>
+        <p class="desc">Fails the build when a dependency changes its licence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="server-safety">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Server Safety</span><h2>Know your servers will come back</h2><p>Prove backups restore, reboots work and scheduled jobs actually run, before an outage proves otherwise.</p><a class="sec-more" href="/devtools/server-safety/">See the Server Safety suite and Pro price &rarr;</a></div>
+    <div class="grid">
+      <div class="card soon">
+        <h3><span class="pkg">backupproof</span><span class="badge soon">Coming soon</span></h3>
+        <p class="desc">Proves a backup actually restores, before you need it.</p>
+      </div>
+      <div class="card soon">
+        <h3><span class="pkg">bootproof</span><span class="badge soon">Coming soon</span></h3>
+        <p class="desc">Checks a Linux machine will come back up before you reboot it.</p>
+      </div>
+      <div class="card soon">
+        <h3><span class="pkg">cronlens</span><span class="badge soon">Coming soon</span></h3>
+        <p class="desc">Audits scheduled jobs for silent failures, overlaps and duplicates.</p>
+      </div>
+      <div class="card soon">
+        <h3><span class="pkg">logdrift</span><span class="badge soon">Coming soon</span></h3>
+        <p class="desc">Catches a service changing its log format before it breaks your dashboards.</p>
+      </div>
+      <div class="card soon">
+        <h3><span class="pkg">keywatch</span><span class="badge soon">Coming soon</span></h3>
+        <p class="desc">Shows who can still log in to your servers by SSH key, and what changed.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -294,7 +468,7 @@ footer{border-top:1px solid var(--rule);margin-top:0}
 <footer>
   <div class="wrap foot-row">
     <span>Calas Automations &middot; Winnipeg &middot; prices in CAD plus GST/RST where applicable</span>
-    <span>Small automations, built properly &middot; <a href="/accounting/">On File</a> &middot; <a href="/leadme/">Lead Me</a> &middot; <a href="/quote-me/">Quote Me</a> &middot; <a href="/haul-me/">Haul Me</a> &middot; <a href="/watchpost/">Watchpost</a> &middot; <a href="/dispatchme/">Dispatch Me</a> &middot; <a href="/receiptsort/">ReceiptSort</a> &middot; <a href="/guardian/">Guardian</a> &middot; <a href="/dropwatch/">Dropwatch</a> &middot; <a href="/devtools/">Dev Tools</a> &middot; <a href="/pay/">Pricing</a> &middot; 30 days&#39; notice to cancel, always</span>
+    <span>Small automations, built properly &middot; <a href="/accounting/">On File</a> &middot; <a href="/leadme/">Lead Me</a> &middot; <a href="/quote-me/">Quote Me</a> &middot; <a href="/haul-me/">Haul Me</a> &middot; <a href="/watchpost/">Watchpost</a> &middot; <a href="/dispatchme/">Dispatch Me</a> &middot; <a href="/receiptsort/">ReceiptSort</a> &middot; <a href="/guardian/">ScamCatch</a> &middot; <a href="/dropwatch/">Dropwatch</a> &middot; <a href="/devtools/">Dev Tools</a> &middot; <a href="/pay/">Pricing</a></span>
   </div>
 </footer>
 

@@ -1,0 +1,280 @@
+<!doctype html><html lang="en-CA"><head><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://calasautomations.com/devtools/ai-testing/">
+<style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.nav-signin{font-weight:600;color:var(--ink) !important;border:1px solid currentColor;padding:8px 14px;border-radius:2px}
+</style><style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"><link rel="stylesheet" href="/calas-theme.css?v=20261002a">
+<meta property="og:title" content="AI Testing suite — Dev Tools · Calas Automations">
+<meta property="og:description" content="AI Testing: Tests for prompts, agent behaviour and search quality, so a model update can&#x27;t quietly break your product. 5 tools, 4 free to install today. Pro C$19/month, coming soon.">
+<meta property="og:image" content="https://calasautomations.com/hero-home.jpg">
+<meta property="og:url" content="https://calasautomations.com/devtools/ai-testing/">
+<meta name="twitter:card" content="summary_large_image">
+<title>AI Testing suite — Dev Tools · Calas Automations</title>
+<meta name="description" content="AI Testing: Tests for prompts, agent behaviour and search quality, so a model update can&#x27;t quietly break your product. 5 tools, 4 free to install today. Pro C$19/month, coming soon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
+<style>
+:root{
+  --paper:#FFFFFF; --surface:#FFFFFF; --sunk:#F1F6F9;
+  --ink:#12212C; --ink-2:#4E5B66; --ink-3:#66717B;
+  --rule:#D9E3EA; --rule-2:#EAF0F4;
+  --red:#155F87; --red-2:#0E4A6B; --red-soft:#E6F0F6; --ok:#17794A; --ok-soft:#E9F5EE; --ok-line:#B7E0C7; --gold:#F0C171;
+  --night:#0B2E45; --night-2:#0E3A55; --night-ink:#FFFFFF; --night-ink-2:#B9CFDD;
+  --night-rule:#1E4A66;
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0B1A26; --surface:#102434; --sunk:#0D1F2C;
+    --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
+    --rule:#1F3A4D; --rule-2:#183041;
+    --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#E9F5EE; --ok-line:#2E5C48; --gold:#F0C171;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0B1A26; --surface:#102434; --sunk:#0D1F2C;
+  --ink:#EEF4F8; --ink-2:#B4C4CF; --ink-3:#8FA1AE;
+  --rule:#1F3A4D; --rule-2:#183041;
+  --red:#4FA3D1; --red-2:#7CC4EA; --red-soft:#12354B; --ok:#6FD9A2; --ok-soft:#E9F5EE; --ok-line:#2E5C48; --gold:#F0C171;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.55}
+h1,h2,h3{font-family:"Libre Baskerville",Baskerville,Georgia,serif;font-weight:700;text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0 0 12px}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:14.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+/* header — copied from site standard */
+header{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid transparent}
+header.stuck{border-bottom-color:var(--rule)}
+.mast{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 40px;max-width:1240px;margin:0 auto}
+.lockup{display:flex;align-items:center;gap:14px;text-decoration:none;perspective:400px}
+.crest{width:26px;height:36px;flex:none;background:var(--red);
+  -webkit-mask:url(/assets/crest-64857d0a0d.png) center/contain no-repeat;
+  mask:url(/assets/crest-64857d0a0d.png) center/contain no-repeat}
+@keyframes spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+.crestflip{display:inline-block;position:relative;width:26px;height:36px;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;animation:spin 6s linear infinite}.crestflip .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}.crestflip .back{transform:rotateY(180deg)}
+@media(prefers-reduced-motion:reduce){.crestflip{animation:none}}
+.lk-name{font-family:"Libre Baskerville",Georgia,serif;font-size:17px;font-weight:700;line-height:1.05;display:block;color:var(--ink)}
+.lk-name .r{color:var(--red)}
+.lk-rule{display:block;height:2px;background:var(--red);width:100%;margin:4px 0 3px}
+.lk-sub{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.24em;color:var(--ink-3);display:block}
+nav{display:flex;align-items:center;gap:14px;font-size:16px;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--ink-2)}
+nav a.on{color:var(--red);font-weight:600}
+nav a:hover{color:var(--red)}
+.nav-cta{background:var(--red);color:#fff !important;padding:9px 16px;border-radius:2px}
+@media(max-width:760px){.mast{flex-wrap:wrap}nav{gap:14px;font-size:15.5px}}
+
+/* hero */
+.hero{background-color:var(--night);color:var(--night-ink);overflow:hidden;border-bottom:1px solid var(--night-rule)}
+.hero .wrap{position:relative;display:flex;flex-direction:column;gap:14px;padding-top:64px;padding-bottom:56px}
+.hero .eyebrow{color:var(--night-ink-2)}
+.hero h1{color:#fff;font-size:clamp(30px,4vw,42px);line-height:1.12;margin-top:4px}
+.hero p.lede{color:var(--night-ink-2);font-size:17px;max-width:640px}
+.hero .freeline{display:inline-flex;align-items:center;gap:10px;margin-top:6px;color:var(--night-ink-2);font-size:15px}
+.hero .freeline .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
+
+/* tool sections */
+main{padding:8px 0 0}
+section{padding:48px 0;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0}
+.sec-head{max-width:680px;margin-bottom:26px}
+.sec-head h2{font-size:25px;margin-top:8px}
+.sec-head p{margin-top:8px;color:var(--ink-2)}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.card{border:1px solid var(--rule);background:var(--surface);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:10px}
+.card h3{font-size:19px}
+.card h3 .pkg{font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:500;color:var(--red)}
+.card p.desc{color:var(--ink-2);font-size:15.5px;margin:0;flex:1}
+.install{display:flex;align-items:center;gap:10px;background:var(--sunk);border:1px solid var(--rule-2);border-radius:4px;padding:10px 14px;font-family:"IBM Plex Mono",monospace;font-size:14.5px;overflow-x:auto;white-space:nowrap;cursor:pointer}
+.install:hover{border-color:var(--red)}
+.install .prompt{color:var(--ink-3);user-select:none}
+.card .links{display:flex;gap:14px;flex-wrap:wrap;font-size:14.5px}
+.card .links a{color:var(--red);text-decoration:none;font-weight:500}
+.card .links a:hover{text-decoration:underline}
+.badge{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--rule);border-radius:3px;padding:3px 8px;margin-left:10px;vertical-align:middle}
+.badge.soon{color:var(--red);border-color:var(--red)}
+
+footer{border-top:1px solid var(--rule);margin-top:0}
+.foot-row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:26px 40px;max-width:1240px;margin:0 auto;color:var(--ink-3);font-size:14.5px}
+.foot-row a{text-decoration:none;color:var(--ink-2)}
+.foot-row a:hover{color:var(--red)}
+</style>
+<link rel="stylesheet" href="/calas-nav.css?v=20261105b">
+<script src="/calas-nav.js?v=20261105b" defer></script>
+<style>
+/* dev tools 2026-11-05: neural background, suites */
+#neural{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+header{z-index:50}
+.hero{position:relative;background:radial-gradient(1100px 520px at 80% 15%,rgba(21,95,135,.55),transparent 70%),radial-gradient(700px 420px at 5% 100%,rgba(14,74,107,.6),transparent 70%),var(--night)}
+/* the site-wide hero photo stays; the hero is not its own layer so the net floats over the photo */
+.hero.dt:not(:has(> .hero-art)){position:static;isolation:auto}
+.hero .wrap,main,footer{position:relative;z-index:1}
+.hero .wrap{padding-top:72px;padding-bottom:68px;gap:18px}
+.hero h1{font-size:clamp(40px,5.6vw,76px);line-height:1.04;letter-spacing:-.015em;max-width:17ch}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--gold)}
+.hero p.lede{font-size:18px;max-width:660px}
+.pill{display:inline-flex;align-items:center;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:#CFE1EC;border:1px solid rgba(185,207,221,.35);border-radius:999px;padding:8px 16px;background:rgba(11,46,69,.5);width:fit-content}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px rgba(240,193,113,.18)}
+.stats{display:flex;gap:34px;flex-wrap:wrap;margin-top:8px}
+.stat b{display:block;font-family:"Libre Baskerville",Georgia,serif;font-size:32px;color:#fff;line-height:1.1}
+.stat span{color:var(--night-ink-2);font-size:15px}
+.crumb{color:var(--night-ink-2);font-size:15px;text-decoration:none;width:fit-content}
+.crumb:hover{color:#fff}
+.suites{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px}
+.suite{background:var(--surface);border:1px solid var(--rule);border-top:3px solid var(--red);border-radius:8px;padding:22px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s,border-color .15s}
+.suite:hover,.suite:focus-visible{border-color:var(--red);transform:translateY(-2px);box-shadow:0 18px 40px -22px rgba(11,46,69,.45)}
+.suite h3{font-size:20px}
+.suite p{color:var(--ink-2);font-size:15.5px;margin:0;flex:1}
+.suite .meta{font-family:"IBM Plex Mono",monospace;font-size:13.5px;letter-spacing:.06em;color:var(--ink-3);text-transform:uppercase}
+.suite .go{font-weight:600;color:var(--red)}
+.price{font-family:"Libre Baskerville",Georgia,serif;font-size:26px;color:var(--red);font-weight:700}
+.price small{font-family:"IBM Plex Sans",sans-serif;font-size:14.5px;color:var(--ink-3);font-weight:400}
+.bundle{margin-top:22px;background:var(--night);color:#fff;border:1px solid var(--night-rule);border-left:4px solid var(--gold);border-radius:8px;padding:26px 28px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+.bundle h3{font-size:22px;color:#fff}
+.bundle p{color:var(--night-ink-2);margin:6px 0 0;max-width:620px}
+.bundle .price{color:var(--gold);font-size:30px}
+.bundle .price small{color:var(--night-ink-2)}
+.pro{margin-top:26px;border:1px solid var(--rule);border-left:4px solid var(--gold);background:var(--surface);border-radius:8px;padding:24px 26px}
+.pro h3{font-size:20px}
+.pro p{color:var(--ink-2);margin:8px 0 0}
+.pro a.btn{display:inline-block;margin-top:14px;background:var(--red);color:#fff;text-decoration:none;font-weight:600;padding:11px 18px;border-radius:6px}
+.all-install{margin:0 0 26px}
+.all-install .install{white-space:normal;word-break:break-word}
+.sec-more{display:inline-block;margin-top:10px;font-weight:600;color:var(--red);text-decoration:none}
+.sec-more:hover{text-decoration:underline}
+.card{border-radius:8px}
+.badge.free{color:var(--ok);border-color:var(--ok-line)}
+.badge.always{color:#8a6414;border-color:#E9C98B}
+.card.soon{background:var(--sunk);border-style:dashed}
+.card.soon .desc{color:var(--ink-3)}
+.others{display:flex;gap:12px;flex-wrap:wrap}
+.others a{border:1px solid var(--rule);background:var(--surface);border-radius:999px;padding:9px 16px;text-decoration:none;color:var(--ink);font-weight:500}
+.others a:hover{border-color:var(--red);color:var(--red)}
+@media(max-width:640px){.hero .wrap{padding-top:48px;padding-bottom:48px}.bundle{padding:22px}}
+</style>
+<script src="/devtools/neural.js?v=20261105a" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header id="hdr">
+  <div class="mast">
+    <a class="lockup" href="/" aria-label="Calas Automations, home">
+      <span class="crestflip" aria-hidden="true"><span class="crest hdr face"></span><span class="crest hdr face back"></span></span>
+      <span><span class="lk-name"><span class="r">Calas</span></span><span class="lk-rule"></span><span class="lk-sub">AUTOMATIONS</span></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="nt-bars" aria-hidden="true"></span><span class="nt-lab">Menu</span></button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <a href="/accounting/">On File</a>
+      <a href="/leadme/">Lead Me</a>
+      <a href="/quote-me/">Quote Me</a>
+      <a href="/haul-me/">Haul Me</a>
+      <a href="/watchpost/">Watchpost</a>
+      <a href="/dispatchme/">Dispatch Me</a>
+      <div class="nav-more">
+        <button class="more-btn on" type="button" aria-expanded="false" aria-controls="more-menu">All tools</button>
+        <span class="more-label">All tools</span>
+        <div class="more-menu" id="more-menu"><a href="/trades/">On File for trades<small>Sub insurance and WCB tracking</small></a><a href="/receiptsort/">ReceiptSort<small>Free receipts to spreadsheet</small></a><a href="/guardian/">ScamCatch<small>Free scam message checker</small></a><a href="/dropwatch/">Dropwatch<small>Free card and sneaker price tracker</small></a><a href="/devtools/" aria-current="page">Dev Tools<small>Free open-source tools for AI developers</small></a><a href="/demo/">Guided demos<small>Watch any tool in action</small></a><a href="/pay/">Pricing<small>Every price in one place</small></a><a href="/about/">About<small>Who we are, Winnipeg</small></a><a class="all" href="/tools/">All tools and prices</a></div>
+      </div>
+      <a href="/signin/" class="nav-signin">Sign in</a>
+      <a class="nav-cta" href="/quote-me/app/">Start free</a>
+    </nav>
+  </div>
+</header>
+
+
+<div class="hero dt">
+  <div class="wrap">
+    <a class="crumb" href="/devtools/">&larr; All Dev Tools</a>
+    <a class="of-lockup" href="/devtools/ai-testing/" aria-label="AI Testing by Calas Automations"><span class="crest" aria-hidden="true"></span><span class="of-lk-text"><span class="of-lk-name">AI <span class="r">Testing</span></span><span class="of-lk-sub">BY CALAS AUTOMATIONS</span></span></a>
+    <span class="pill"><i></i>Dev Tools suite &middot; 5 tools</span>
+    <h1>Prove the AI works before <em>it ships.</em></h1>
+    <p class="lede">Tests for prompts, agent behaviour and search quality, so a model update can&#x27;t quietly break your product. Built for: Developers building AI features.</p>
+    <div class="stats"><div class="stat"><b>5</b><span>tools in this suite</span></div><div class="stat"><b>4</b><span>free to use today</span></div><div class="stat"><b>C$19</b><span>/month Pro, coming soon</span></div></div>
+  </div>
+</div>
+<main id="main">
+<section>
+  <div class="wrap">
+    <div class="all-install">
+      <span class="eyebrow">Install every free tool in this suite</span>
+      <div class="install" style="margin-top:10px" data-cmd="pip install prompt-assert promptpin passgate rerankgate"><span class="prompt">$</span>&nbsp;pip install prompt-assert promptpin passgate rerankgate</div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h3><span class="pkg">prompt-assert</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Tests for prompts, like pytest: catch AI answers getting worse before your users notice.</p>
+        <div class="install" data-cmd="pip install prompt-assert"><span class="prompt">$</span>&nbsp;pip install prompt-assert</div>
+        <div class="links"><a href="https://pypi.org/project/prompt-assert/">PyPI</a><a href="https://github.com/calasdan-sketch/prompt-assert">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">promptpin</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Keeps prompts versioned in git, pins versions per environment and logs what was served.</p>
+        <div class="install" data-cmd="pip install promptpin"><span class="prompt">$</span>&nbsp;pip install promptpin</div>
+        <div class="links"><a href="https://pypi.org/project/promptpin/">PyPI</a><a href="https://github.com/calasdan-sketch/promptpin">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">passgate</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">A strict pass/fail gate for AI evaluations: a change must pass every round, not just on average.</p>
+        <div class="install" data-cmd="pip install passgate"><span class="prompt">$</span>&nbsp;pip install passgate</div>
+        <div class="links"><a href="https://pypi.org/project/passgate/">PyPI</a><a href="https://github.com/calasdan-sketch/passgate">GitHub</a></div>
+      </div>
+      <div class="card">
+        <h3><span class="pkg">rerankgate</span><span class="badge free">Free &middot; open source</span></h3>
+        <p class="desc">Quality gate for AI search (RAG): checks the retrieved results are good enough before the AI answers.</p>
+        <div class="install" data-cmd="pip install rerankgate"><span class="prompt">$</span>&nbsp;pip install rerankgate</div>
+        <div class="links"><a href="https://pypi.org/project/rerankgate/">PyPI</a><a href="https://github.com/calasdan-sketch/rerankgate">GitHub</a></div>
+      </div>
+      <div class="card soon">
+        <h3><span class="pkg">trajtest</span><span class="badge soon">Coming soon</span></h3>
+        <p class="desc">Tests what an agent actually did, step by step, in a safe mock world.</p>
+        <div class="links"><a href="https://github.com/calasdan-sketch/trajtest">GitHub</a></div>
+      </div>
+    </div>
+    <div class="pro">
+      <span class="eyebrow">Pro &middot; coming soon</span>
+      <div class="price" style="margin-top:6px">C$19<small> /month per person</small></div>
+      <p>Pro for AI Testing is not available yet. It is planned to add a hosted dashboard, alerts and priority support for this suite. Every free tool on this page stays free. Or get all five suites for C$49/month.</p>
+      <a class="btn" href="tel:+14312449026">Want it first? Call or text (431) 244-9026</a>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Other suites</span><h2>More Dev Tools</h2></div>
+    <div class="others"><a href="/devtools/agent-safety/">Agent Safety</a><a href="/devtools/agent-ops/">Agent Running &amp; Cost</a><a href="/devtools/code-teams/">Code Teams</a><a href="/devtools/server-safety/">Server Safety</a></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>Calas Automations &middot; Winnipeg &middot; prices in CAD plus GST/RST where applicable</span>
+    <span>Small automations, built properly &middot; <a href="/accounting/">On File</a> &middot; <a href="/leadme/">Lead Me</a> &middot; <a href="/quote-me/">Quote Me</a> &middot; <a href="/haul-me/">Haul Me</a> &middot; <a href="/watchpost/">Watchpost</a> &middot; <a href="/dispatchme/">Dispatch Me</a> &middot; <a href="/receiptsort/">ReceiptSort</a> &middot; <a href="/guardian/">ScamCatch</a> &middot; <a href="/dropwatch/">Dropwatch</a> &middot; <a href="/devtools/">Dev Tools</a> &middot; <a href="/pay/">Pricing</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var hdr=document.getElementById('hdr');
+  function onScroll(){hdr.classList.toggle('stuck',window.scrollY>4)}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  document.querySelectorAll('.install[data-cmd]').forEach(function(el){
+    el.title='Click to copy';
+    el.addEventListener('click',function(){
+      var cmd=el.getAttribute('data-cmd');
+      function done(){var p=el.querySelector('.prompt');var t=document.createElement('span');t.textContent='copied';t.style.color='var(--ok)';t.style.marginLeft='auto';el.appendChild(t);setTimeout(function(){t.remove()},1200)}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(cmd).then(done).catch(function(){done()})}else{done()}
+    });
+  });
+})();
+</script>
+
+</body></html>
