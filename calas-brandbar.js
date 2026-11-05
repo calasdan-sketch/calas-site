@@ -74,22 +74,22 @@
     '<a href="/about/">About</a>';
 
   // Header list for pages that have no menu of their own (same markup as the static pages).
-  var MORE = [['/trades/','On File for trades','Sub insurance and WCB tracking'],['/leadme/','Lead Me','B2B lead finder and first emails'],['/haul-me/','Haul Me','Cost per mile for owner-operators'],['/watchpost/','Watchpost','Intrusion decoys and alerts'],['/dispatchme/','Dispatch Me','Snow and lawn crews, Winnipeg'],['/receiptsort/','ReceiptSort','Free receipts to spreadsheet'],['/guardian/','ScamCatch','Free scam message checker'],['/dropwatch/','Dropwatch','Free card and sneaker price tracker'],['/devtools/','Dev Tools','Free open-source tools for AI developers'],['/demo/','Guided demos','Watch any tool in action']];
+  var MORE = [['/trades/','On File for trades','Sub insurance and WCB tracking'],['/receiptsort/','ReceiptSort','Free receipts to spreadsheet'],['/guardian/','ScamCatch','Free scam message checker'],['/dropwatch/','Dropwatch','Free card and sneaker price tracker'],['/devtools/','Dev Tools','Free open-source tools for AI developers'],['/demo/','Guided demos','Watch any tool in action'],['/pay/','Pricing','Every price in one place'],['/about/','About','Who we are, Winnipeg']];
   function headNav() {
     var p = location.pathname;
     function a(h, l) { var cur = p.indexOf(h) === 0 ? ' class="on" aria-current="page"' : ''; return '<a href="' + h + '"' + cur + '>' + l + '</a>'; }
-    var items = MORE.map(function (m) { return '<a href="' + m[0] + '">' + m[1] + '<small>' + m[2] + '</small></a>'; }).join('');
-    return a('/accounting/', 'On File') + a('/quote-me/', 'Quote Me') + a('/pay/', 'Pricing') + a('/about/', 'About') +
-      '<div class="nav-more"><button class="more-btn" type="button" aria-expanded="false" aria-controls="more-menu">All tools</button><span class="more-label">All tools</span>' +
+    var items = MORE.map(function (m) { return '<a href="' + m[0] + '"' + (p.indexOf(m[0]) === 0 ? ' aria-current="page"' : '') + '>' + m[1] + '<small>' + m[2] + '</small></a>'; }).join('');
+    return a('/accounting/', 'On File') + a('/leadme/', 'Lead Me') + a('/quote-me/', 'Quote Me') + a('/haul-me/', 'Haul Me') + a('/watchpost/', 'Watchpost') + a('/dispatchme/', 'Dispatch Me') +
+      '<div class="nav-more"><button class="more-btn' + (MORE.some(function (m) { return p.indexOf(m[0]) === 0; }) ? ' on' : '') + '" type="button" aria-expanded="false" aria-controls="more-menu">All tools</button><span class="more-label">All tools</span>' +
       '<div class="more-menu" id="more-menu">' + items + '<a class="all" href="/tools/">All tools and prices</a></div></div>' +
       '<a href="/signin/" class="nav-signin">Sign in</a><a class="nav-cta" href="/quote-me/app/">Start free</a>';
   }
   function loadNavAssets() {
     if (!document.querySelector('link[href*="calas-nav.css"]')) {
-      var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = '/calas-nav.css?v=20261105a'; document.head.appendChild(l);
+      var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = '/calas-nav.css?v=20261105b'; document.head.appendChild(l);
     }
     if (window.__calasNavInit) { window.__calasNavInit(); return; }
-    var s = document.createElement('script'); s.src = '/calas-nav.js?v=20261105a'; document.head.appendChild(s);
+    var s = document.createElement('script'); s.src = '/calas-nav.js?v=20261105b'; document.head.appendChild(s);
   }
 
   function injectMasthead() {
