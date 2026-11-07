@@ -1,24 +1,5 @@
 {
-  "as_of": "2026-11-06",
-  "count": 1,
-  "drops": [
-    {
-      "id": "ptcg-mega-delta-reign-2026-11-06",
-      "category": "Pokemon TCG",
-      "title": "Mega Evolution \u2014 Delta Reign",
-      "release_date": "2026-11-06",
-      "region": "Canada / Winnipeg",
-      "reprint_risk": "high",
-      "flip_signal": "low",
-      "signal_basis": "Pokemon prints sealed to demand; modern sealed sets commonly reprint and drift toward MSRP. Chase sits in graded singles, not boxes.",
-      "source": "pokebeach.com announcements",
-      "source_type": "release_calendar",
-      "extras": {
-        "msrp_cad": {
-          "etb": 70,
-          "booster_box": 160
-        }
-      }
-    }
-  ]
+  "as_of": "2026-11-07",
+  "count": 0,
+  "drops": []
 }
