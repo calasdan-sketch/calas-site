@@ -6,7 +6,7 @@ array so the tour stays in step with the voice.
   python _tour/gen_voice.py --all                  # every demo
   python _tour/gen_voice.py --all --check          # count characters only
 
-Voice: ElevenLabs "Sarah" (Dan's pick for Cara/Kara) when ELEVENLABS_API_KEY is
+Voice: ElevenLabs "Sarah" when ELEVENLABS_API_KEY is
 set, otherwise the free local Kokoro voice (af_heart on 127.0.0.1:8880).
 The ElevenLabs path uses the Flash model (half a credit per character) and
 refuses to start if the account doesn't have enough characters left, so it

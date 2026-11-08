@@ -1,4 +1,4 @@
-/* calas-theme.css — 2026-10-02 sitewide editorial uplift (Dan).
+/* calas-theme.css — 2026-10-02 sitewide editorial uplift.
    Carries the Watchpost look — big Libre Baskerville display headings, white text
    with gold accent words, fancier hero spacing — to every page that ISN'T already
    on calas-editorial.css. Loaded LAST so it wins at equal specificity; `body` / `#lean`

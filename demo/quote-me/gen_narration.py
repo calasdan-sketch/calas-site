@@ -1,6 +1,6 @@
 """Narration for the Quote Me demo (/demo/quote-me/).
 
-Voice: ElevenLabs "Sarah" (Dan's choice, 2026-10-02) instead of Kokoro.
+Voice: ElevenLabs "Sarah" instead of Kokoro.
 Reads the API key from the ELEVENLABS_API_KEY environment variable - the key
 is never written in this file. Deletes any old clips first, writes
 narration/step-N.mp3 and prints DURS for the page's `durs` array. The LINES
@@ -19,7 +19,7 @@ import urllib.request
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "narration")
 
 # ElevenLabs "Sarah" (a built-in voice). eleven_multilingual_v2 is the default
-# high-quality model; change MODEL_ID if Dan prefers a different one.
+# high-quality model; change MODEL_ID if a different one is preferred.
 VOICE_ID = "EXAVITQu4vr4xnSDxMaL"  # Sarah
 MODEL_ID = "eleven_multilingual_v2"
 
