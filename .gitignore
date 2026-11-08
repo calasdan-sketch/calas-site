@@ -27,3 +27,10 @@ __pycache__/
 /rs/
 /promo/videos/
 /dropwatch-band.jpg
+
+# internal, never publish
+/promo/
+/bundles/
+/.codebase-memory/
+/-p/
+/graft/.cache/
