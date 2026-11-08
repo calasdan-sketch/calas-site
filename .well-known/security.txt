@@ -1,0 +1,7 @@
+# Calas Automations Inc. - security contact
+# Found a security problem in calasautomations.com or one of our apps? Please tell us privately first.
+Contact: mailto:office@calasautomations.com
+Contact: tel:+1-431-244-9026
+Expires: 2027-11-07T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://calasautomations.com/.well-known/security.txt

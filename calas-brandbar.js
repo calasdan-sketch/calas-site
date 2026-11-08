@@ -82,7 +82,23 @@
     return a('/accounting/', 'On File') + a('/leadme/', 'Lead Me') + a('/quote-me/', 'Quote Me') + a('/haul-me/', 'Haul Me') + a('/watchpost/', 'Watchpost') + a('/dispatchme/', 'Dispatch Me') +
       '<div class="nav-more"><button class="more-btn' + (MORE.some(function (m) { return p.indexOf(m[0]) === 0; }) ? ' on' : '') + '" type="button" aria-expanded="false" aria-controls="more-menu">All tools</button><span class="more-label">All tools</span>' +
       '<div class="more-menu" id="more-menu">' + items + '<a class="all" href="/tools/">All tools and prices</a></div></div>' +
-      '<a href="/signin/" class="nav-signin">Sign in</a><a class="nav-cta" href="/quote-me/app/">Start free</a>';
+      '<a href="/signin/" class="nav-signin">Sign in</a>' + ctaNav(p);
+  }
+  // The header's primary CTA used to be hardcoded to Quote Me's signup on every page,
+  // so a visitor on On File, Dropwatch, etc. who clicked "Start free" was silently sent
+  // to a different product's app instead of that page's own path to start. Route it by
+  // the page you're actually on: Quote Me's own self-serve app on Quote Me pages, On
+  // File's actual onboarding (a phone call — sign-up there is manual, not self-serve) on
+  // its pages, and a neutral pricing link elsewhere rather than guessing a signup flow
+  // that may not exist yet for tools still "listed only."
+  function ctaNav(p) {
+    if (p.indexOf('/quote-me/') === 0) {
+      return '<a class="nav-cta" href="/quote-me/app/">Start free</a>';
+    }
+    if (p.indexOf('/accounting/') === 0 || p.indexOf('/trades/') === 0) {
+      return '<a class="nav-cta" href="tel:+14312449026" data-cara>Call for the free pilot</a>';
+    }
+    return '<a class="nav-cta" href="/pay/">See pricing</a>';
   }
   function loadNavAssets() {
     if (!document.querySelector('link[href*="calas-nav.css"]')) {

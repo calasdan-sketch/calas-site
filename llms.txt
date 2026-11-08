@@ -1,0 +1,30 @@
+# Calas Automations
+
+> Calas Automations Inc. (pronounced "CAL-us", sometimes written "Callus") is a Manitoba company in Winnipeg, Canada, founded in 2026. It builds small, honest software tools that take repeat paperwork off small businesses. Prices are public, in Canadian dollars, with no setup fees. It is a new company with no customers yet, so it publishes no testimonials, only prices, written guarantees and demos that use made-up data.
+
+Contact: office@calasautomations.com, (431) 244-9026. Website assistant: Cara (AI).
+
+## Paid tools
+
+- [Quote Me](https://calasautomations.com/quote-me/): a 90-second voice note becomes a priced quote from your own rate card; you review it before it is sent. For trades and contractors. C$99/month per shop; free 14-day trial with no card; 60-day refund.
+- [On File](https://calasautomations.com/accounting/): keeps the list of documents each client or subcontractor still owes you and sends the reminder emails when you press the button. For accounting firms and [trades with subcontractors](https://calasautomations.com/trades/) (insurance certificates, WCB clearance). Early access, set up with you. C$500/month flat; free two-week pilot.
+- [Lead Me](https://calasautomations.com/leadme/): finds local businesses that fit what you sell, reads their sites, scores the fit and drafts first emails; sending is by button press. C$199, C$599 or C$1,200 a month.
+- [Haul Me](https://calasautomations.com/haul-me/): real cost per mile and a green/yellow/red call on each load for owner-operator truckers. From C$39/month (C$19 founding); 30-day money back.
+- [Watchpost](https://calasautomations.com/watchpost/): decoy logins and files that alert you when someone touches them. Detection and reporting only, no 24/7 monitoring. C$79/month per location; first month free.
+- [Dispatch Me](https://calasautomations.com/dispatchme/): introduces Winnipeg properties to independent snow and lawn crews; fee agreed in writing per contract.
+
+## Free tools
+
+- [ReceiptSort](https://calasautomations.com/receiptsort/): receipt photos and PDFs into one spreadsheet, on your own device.
+- [ScamCatch](https://calasautomations.com/guardian/): checks a message for common scam signs.
+- [Permit Checker](https://calasautomations.com/permits/): general information about Winnipeg building permits. Not advice.
+- [Load calculator](https://calasautomations.com/haul-me/calculator/): single-load cost check for truckers.
+- [Dropwatch](https://calasautomations.com/dropwatch/): dated prices for trading cards and sneakers.
+
+## More
+
+- [All tools and prices](https://calasautomations.com/tools/)
+- [Pricing and checkout](https://calasautomations.com/pay/)
+- [Demos with made-up data](https://calasautomations.com/demo/)
+- [About](https://calasautomations.com/about/)
+- [Terms](https://calasautomations.com/terms/) and [Privacy](https://calasautomations.com/privacy/)
