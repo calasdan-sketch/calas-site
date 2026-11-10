@@ -106,7 +106,7 @@ a{color:var(--accent)}
 
   <h2>Shared memory is the easy half</h2>
   <p>Plenty of tools will remember things for your AI. The question nobody answers is the one you ask after something goes wrong: <em>which agent wrote this, when, and what did it replace?</em></p>
-  <p>Monomem answers it. <code>written_by</code> is stamped by the server from the authenticated token and <strong>cannot be set by the caller</strong> — an agent cannot claim to be another agent. Give each agent its own token to tell them apart; the default local setup marks every note <code>stdio</code>. Every note keeps its earlier versions, every replacement can be undone, an agent's "forget" can be undone too (only a person can delete permanently), and every write is screened before it is stored.</p>
+  <p>Monomem answers it. <code>written_by</code> is stamped by the server from the authenticated token and <strong>cannot be set by the caller</strong> — an agent cannot claim to be another agent. Give each agent its own token to tell them apart; in the default local setup each app is labelled from its config file (<code>stdio:cursor</code>, <code>stdio:claude-code</code>), which tells your apps apart but is not proof. Every note keeps its earlier versions, every replacement can be undone, an agent's "forget" can be undone too (only a person can delete permanently), and every write is screened before it is stored.</p>
 
   <div class="grid">
     <div class="card"><h3>Provenance you can trust</h3><p>Server-stamped on every note. Not a field the client fills in.</p></div>
@@ -122,10 +122,11 @@ a{color:var(--accent)}
   <p class="muted">Every figure below is produced by a command in the repository, and the benchmarks run in CI on every release. A number we cannot reproduce does not go on this page.</p>
   <table>
     <tr><th>What is measured</th><th>Result</th></tr>
-    <tr><td>Memory-poisoning probes that reached a read</td><td class="num zero">0 of 34</td></tr>
+    <tr><td>Memory-poisoning probes that reached a read</td><td class="num zero">0 of 36</td></tr>
     <tr><td>Permission-leakage probes that leaked</td><td class="num zero">0 of 51</td></tr>
-    <tr><td>Recall@5, LongMemEval-S (470 questions)</td><td class="num">95.1&nbsp;%</td></tr>
-    <tr><td>Search time, median</td><td class="num">2.7&nbsp;ms</td></tr>
+    <tr><td>Known poisoning attacks in <code>monomem drill</code> that reach the agent</td><td class="num">2 of 22 (both named)</td></tr>
+    <tr><td>Recall@5, LongMemEval-S (470 questions), keyword only</td><td class="num">96.6&nbsp;%</td></tr>
+    <tr><td>Search time, median</td><td class="num">2.8&nbsp;ms</td></tr>
     <tr><td>Direct runtime dependencies</td><td class="num">2</td></tr>
   </table>
 
@@ -147,6 +148,16 @@ a{color:var(--accent)}
   <div class="note" style="border-left-color:var(--gold)">
     <p><strong>What it does not do.</strong> Single-user, single-node SQLite — no clustering. Keyword extraction is English-oriented. The server binds <code>127.0.0.1</code> and ships no tunnel, so reaching it from a phone means putting your own authenticated tunnel in front of it. Exports carry each note's edit history, so an export can contain text you deliberately replaced.</p>
   </div>
+
+  <h2 id="teams" style="margin-top:44px">Using it at work? We set it up with your team</h2>
+  <p>Monomem stays free. If your team wants one shared memory without spending a week on it, we set it up with you, remotely, over a video call.</p>
+  <div class="grid">
+    <div class="card"><h3>Team setup &middot; C$500</h3><p>For up to 5 people (C$50 per extra person). One shared Monomem server, a key and a limit for each person, private notes kept private, nightly backups, and a 30-minute walkthrough for the team. About half a day, done on a screen-share.</p></div>
+    <div class="card"><h3>Memory security check &middot; from C$1,200</h3><p>We run the 22-attack poisoning drill on your setup, review which AI tools can write to your memory and with what permissions, and give you a plain-English report with fixes. Starts only after a signed scope.</p></div>
+    <div class="card"><h3>Support &middot; C$99/month</h3><p>Optional, after a setup: help when something breaks, adding and removing people, and upgrades.</p></div>
+  </div>
+  <p><strong>How it works:</strong> a short free call to agree what you need, a written scope and a Stripe invoice, then the setup call. Your own person types every command on your own machines while we guide; we never ask for your passwords, keys or remote access. Prices are in Canadian dollars.</p>
+  <p>Book a call: <a href="mailto:office@calasautomations.com?subject=Monomem%20team%20setup">office@calasautomations.com</a> or call or text <a href="tel:+14312449026">(431) 244-9026</a>.</p>
 
   <p style="margin-top:34px" class="muted">MIT licensed. Built by <a href="/">Calas Automations Inc.</a> — <a href="https://github.com/calasdan-sketch/monomem">source</a> · <a href="https://www.npmjs.com/package/monomem">npm</a> · <a href="/devtools/">more dev tools</a></p>
 </main>
