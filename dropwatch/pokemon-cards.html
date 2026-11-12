@@ -115,9 +115,9 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
-  /* The free API sometimes returns 500/502 or is slow: retry a few times before giving up. */
+  /* The free card API fails about half the time with 500 errors or dropped connections (measured 2026-11-12), so retry up to 8 times before giving up. */
   async function getJSON(url, tries) {
-    tries = tries || 4; var err;
+    tries = tries || 8; var err;
     for (var i = 0; i < tries; i++) {
       var ctl = new AbortController(), t = setTimeout(function () { ctl.abort(); }, 30000);
       try {
@@ -126,7 +126,7 @@
         err = new Error('HTTP ' + r.status);
         if (r.status < 500 && r.status !== 429) throw err;
       } catch (e) { clearTimeout(t); err = e; }
-      await sleep(1200 * (i + 1));
+      await sleep(Math.min(700 * (i + 1), 3000));
     }
     throw err;
   }
