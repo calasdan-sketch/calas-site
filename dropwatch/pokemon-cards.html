@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dropwatch Pokémon Card Prices (CAD)</title>
+<style>
+  /* Brand tokens: change these four lines to match the Dropwatch site. */
+  :root{--bg:#0e1116;--surface:#171c24;--border:#262e3a;--text:#e8edf3;--dim:#8d99a8;--accent:#ffcb05;--accent-ink:#1a1a1a;--green:#3fb950;--red:#f85149}
+  @media (prefers-color-scheme: light){:root{--bg:#f5f6f8;--surface:#fff;--border:#dde1e7;--text:#1b2430;--dim:#5b6675;--accent:#d99a00;--accent-ink:#fff;--green:#1a7f37;--red:#cf222e}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 16px 48px}
+  header{padding:22px 0 8px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
+  header a{color:var(--dim);text-decoration:none;font-size:13px}header a:hover{color:var(--text)}
+  h1{margin:0;font-size:24px}h1 span{color:var(--accent)}
+  .sub{color:var(--dim);font-size:13px;margin:2px 0 0}
+  .tabs{display:flex;gap:6px;margin:14px 0;flex-wrap:wrap}
+  .tabs button{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:8px;font:600 14px inherit;font-family:inherit;cursor:pointer;min-height:40px}
+  .tabs button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+  .bar input,.bar select{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font:inherit;min-height:40px}
+  .bar input{flex:1 1 240px}
+  .bar button{background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:9px 18px;font:600 14px inherit;font-family:inherit;cursor:pointer;min-height:40px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;display:flex;flex-direction:column;gap:6px;text-align:left;color:inherit;font:inherit}
+  .card:hover{border-color:var(--accent)}
+  .card img{width:100%;aspect-ratio:5/7;object-fit:contain;background:var(--bg);border-radius:6px}
+  .card .n{font-weight:600;font-size:14px;line-height:1.25}
+  .card .s{color:var(--dim);font-size:12px}
+  .price{font:700 17px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--green)}
+  .price.none{color:var(--dim);font-weight:500;font-size:13px}
+  .var{color:var(--dim);font-size:11px}
+  .pager{display:flex;gap:10px;align-items:center;justify-content:center;margin:18px 0}
+  .pager button{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 14px;cursor:pointer;min-height:38px;font:inherit}
+  .pager button:disabled{opacity:.4;cursor:default}
+  .msg{padding:16px;border:1px dashed var(--border);border-radius:10px;color:var(--dim)}
+  .msg.err{color:var(--red);border-color:var(--red)}
+  .note{color:var(--dim);font-size:12.5px;margin:10px 0}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:8px 10px;border-top:1px solid var(--border);vertical-align:top}
+  th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);border-top:0}
+  td.num,th.num{text-align:right;font-family:ui-monospace,Menlo,monospace;white-space:nowrap}
+  .tw{overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+  .modal.open{display:flex}
+  .box{background:var(--surface);border:1px solid var(--border);border-radius:12px;max-width:760px;width:100%;max-height:92vh;overflow:auto;padding:18px;display:grid;grid-template-columns:minmax(0,240px) 1fr;gap:18px;position:relative}
+  .box img{width:100%;border-radius:8px}
+  .box .x{position:absolute;top:8px;right:10px;background:none;border:0;color:var(--dim);font-size:24px;cursor:pointer;line-height:1}
+  @media (max-width:620px){.box{grid-template-columns:1fr}.box img{max-width:240px;margin:0 auto}}
+  footer{color:var(--dim);font-size:12px;margin-top:28px;border-top:1px solid var(--border);padding-top:14px}
+  a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1><span>Dropwatch</span> Pokémon Card Prices</h1>
+      <p class="sub" id="fxline">Loading exchange rates…</p>
+    </div>
+    <a id="back" href="/">← Back to Dropwatch</a>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="on" data-m="dir">Card directory</button>
+    <button data-m="top">Most valuable cards (right now)</button>
+    <button data-m="rec">Record-value collectables</button>
+  </div>
+
+  <section id="v-dir">
+    <form class="bar" id="f">
+      <input id="q" type="search" placeholder="Search any Pokémon card, e.g. Pikachu, Charizard ex, Mewtwo" autocomplete="off">
+      <select id="set"><option value="">All sets</option></select>
+      <select id="sort">
+        <option value="name">Sort: name A–Z</option>
+        <option value="-set.releaseDate">Sort: newest sets first</option>
+        <option value="set.releaseDate">Sort: oldest sets first</option>
+        <option value="price">Sort: price high to low (within this page)</option>
+      </select>
+      <button type="submit">Search</button>
+    </form>
+    <div id="dir-out"></div>
+    <div class="pager" id="pager"></div>
+  </section>
+
+  <section id="v-top" hidden><div id="top-out"></div></section>
+  <section id="v-rec" hidden><div id="rec-out"></div></section>
+
+  <footer>
+    Card data and prices come from the <a href="https://pokemontcg.io" target="_blank" rel="noopener">Pokémon TCG API</a>, which republishes TCGplayer (US dollars) and Cardmarket (euros) prices. Everything is converted to Canadian dollars with the exchange rate shown at the top. Prices are indicative market figures for raw (ungraded) cards, are updated by the sources on their own schedule (the date is shown per card), and can be thin or out of date for very rare cards. They are not offers to buy or sell. Dropwatch is not affiliated with Nintendo, The Pokémon Company, TCGplayer or Cardmarket.
+  </footer>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true"><div class="box" id="box"></div></div>
+
+<script>
+(function () {
+  'use strict';
+  var DROPWATCH_URL = './';              // the Dropwatch home page (this file sits in the same folder)
+  document.getElementById('back').href = DROPWATCH_URL;
+  var API = 'https://api.pokemontcg.io/v2', PAGE = 24;
+  var FX = { usd: null, eur: null, date: '' };
+  var st = { m: 'dir', page: 1, total: 0, cards: [] };
+  var VARIANT_ORDER = ['normal', 'holofoil', 'reverseHolofoil', 'unlimitedNormal', 'unlimitedHolofoil', '1stEditionNormal', '1stEditionHolofoil'];
+  var VARIANT_LABEL = { normal: 'Normal', holofoil: 'Holofoil', reverseHolofoil: 'Reverse holo', unlimitedNormal: 'Unlimited', unlimitedHolofoil: 'Unlimited holo', '1stEditionNormal': '1st Edition', '1stEditionHolofoil': '1st Edition holo' };
+  var SELECT = 'id,name,number,rarity,images,set,tcgplayer,cardmarket';
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+  /* The free API sometimes returns 500/502 or is slow: retry a few times before giving up. */
+  async function getJSON(url, tries) {
+    tries = tries || 4; var err;
+    for (var i = 0; i < tries; i++) {
+      var ctl = new AbortController(), t = setTimeout(function () { ctl.abort(); }, 30000);
+      try {
+        var r = await fetch(url, { signal: ctl.signal }); clearTimeout(t);
+        if (r.ok) return await r.json();
+        err = new Error('HTTP ' + r.status);
+        if (r.status < 500 && r.status !== 429) throw err;
+      } catch (e) { clearTimeout(t); err = e; }
+      await sleep(1200 * (i + 1));
+    }
+    throw err;
+  }
+
+  /* ---------- money ---------- */
+  function cad(n) { return n == null || !isFinite(n) ? '' : new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: n >= 1000 ? 0 : 2 }).format(n); }
+  function toCad(v, cur) { var r = cur === 'EUR' ? FX.eur : FX.usd; return v != null && r ? v * r : null; }
+  async function loadFx() {
+    try {
+      var u = await getJSON('https://api.frankfurter.app/latest?from=USD&to=CAD', 3);
+      var e = await getJSON('https://api.frankfurter.app/latest?from=EUR&to=CAD', 3);
+      FX.usd = u.rates.CAD; FX.eur = e.rates.CAD; FX.date = u.date;
+      $('fxline').textContent = 'All values in Canadian dollars (CAD). Rates on ' + FX.date + ': 1 USD = ' + FX.usd.toFixed(4) + ' CAD, 1 EUR = ' + FX.eur.toFixed(4) + ' CAD.';
+    } catch (e) {
+      $('fxline').innerHTML = '<span style="color:var(--red)">Could not load the exchange rate, so prices cannot be shown in CAD right now. Reload to try again.</span>';
+    }
+  }
+
+  /* ---------- price logic ---------- */
+  function variants(c) {
+    var out = [], p = c.tcgplayer && c.tcgplayer.prices;
+    if (p) Object.keys(p).forEach(function (k) {
+      var v = p[k]; if (!v) return; var m = v.market != null ? v.market : v.mid;
+      if (m != null && m > 0) out.push({ key: k, label: VARIANT_LABEL[k] || k, market: m, low: v.low, high: v.high });
+    });
+    out.sort(function (a, b) { var ia = VARIANT_ORDER.indexOf(a.key), ib = VARIANT_ORDER.indexOf(b.key); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
+    return out;
+  }
+  function cmTrend(c) { var p = c.cardmarket && c.cardmarket.prices; return p && p.trendPrice > 0 ? p.trendPrice : null; }
+  /* headline price: the most common printing's TCGplayer market price; else Cardmarket trend; else none */
+  function headline(c) {
+    var v = variants(c);
+    if (v.length) return { cad: toCad(v[0].market, 'USD'), label: v[0].label + (v.length > 1 ? ' · ' + (v.length - 1) + ' more printing' + (v.length > 2 ? 's' : '') : ''), src: 'TCGplayer', date: c.tcgplayer.updatedAt };
+    var t = cmTrend(c);
+    if (t) return { cad: toCad(t, 'EUR'), label: 'Trend price', src: 'Cardmarket', date: c.cardmarket.updatedAt };
+    return null;
+  }
+  /* highest value across every printing and both sources, for ranking */
+  function topValue(c) {
+    var best = null; variants(c).forEach(function (v) { var x = toCad(v.market, 'USD'); if (x != null && (best == null || x > best)) best = x; });
+    var t = cmTrend(c); if (t) { var y = toCad(t, 'EUR'); if (y != null && (best == null || y > best)) best = y; }
+    return best;
+  }
+
+  /* ---------- card tile + detail ---------- */
+  function tile(c, rank, top) {
+    var h = top ? { cad: topValue(c), label: 'Highest printing or source', src: 'see details', date: '' } : headline(c), img = c.images && c.images.small;
+    return '<button type="button" class="card" data-id="' + esc(c.id) + '">' +
+      (img ? '<img loading="lazy" src="' + esc(img) + '" alt="' + esc(c.name) + '">' : '') +
+      '<div class="n">' + (rank ? '#' + rank + ' ' : '') + esc(c.name) + '</div>' +
+      '<div class="s">' + esc(c.set ? c.set.name : '') + ' · ' + esc(c.number || '') + (c.rarity ? ' · ' + esc(c.rarity) : '') + '</div>' +
+      (h && h.cad != null ? '<div class="price">' + cad(h.cad) + '</div><div class="var">' + esc(h.label) + ' · ' + esc(h.src) + (h.date ? ' · ' + esc(h.date) : '') + '</div>' : '<div class="price none">No price listed</div>') +
+      '</button>';
+  }
+  function detail(c) {
+    var v = variants(c), rows = v.map(function (x) {
+      return '<tr><td>' + esc(x.label) + '</td><td class="num">' + cad(toCad(x.low, 'USD')) + '</td><td class="num"><b>' + cad(toCad(x.market, 'USD')) + '</b></td><td class="num">' + cad(toCad(x.high, 'USD')) + '</td></tr>';
+    }).join('');
+    var cm = c.cardmarket && c.cardmarket.prices, t = cmTrend(c);
+    return '<button class="x" type="button" aria-label="Close" data-close="1">×</button>' +
+      '<div>' + (c.images && c.images.large ? '<img src="' + esc(c.images.large) + '" alt="' + esc(c.name) + '">' : '') + '</div>' +
+      '<div><h2 style="margin:0 0 2px">' + esc(c.name) + '</h2><p class="sub">' + esc(c.set ? c.set.name : '') + ' · ' + esc(c.set ? c.set.series : '') + ' · #' + esc(c.number || '') + (c.rarity ? ' · ' + esc(c.rarity) : '') + '</p>' +
+      (rows ? '<h3 style="margin:14px 0 6px;font-size:13px">TCGplayer (US market), in CAD</h3><div class="tw"><table><tr><th>Printing</th><th class="num">Low</th><th class="num">Market</th><th class="num">High</th></tr>' + rows + '</table></div><p class="note">Updated ' + esc(c.tcgplayer.updatedAt) + '. Market = recent sale average. <a target="_blank" rel="noopener" href="' + esc(c.tcgplayer.url) + '">View on TCGplayer</a></p>' : '<p class="note">No TCGplayer price listed for this card.</p>') +
+      (t ? '<h3 style="margin:14px 0 6px;font-size:13px">Cardmarket (Europe), in CAD</h3><div class="tw"><table><tr><th>Measure</th><th class="num">Value</th></tr>' +
+        '<tr><td>Trend price</td><td class="num"><b>' + cad(toCad(t, 'EUR')) + '</b></td></tr>' +
+        (cm.lowPrice > 0 ? '<tr><td>Lowest listing</td><td class="num">' + cad(toCad(cm.lowPrice, 'EUR')) + '</td></tr>' : '') +
+        (cm.avg30 > 0 ? '<tr><td>30-day average</td><td class="num">' + cad(toCad(cm.avg30, 'EUR')) + '</td></tr>' : '') +
+        '</table></div><p class="note">Updated ' + esc(c.cardmarket.updatedAt) + '. <a target="_blank" rel="noopener" href="' + esc(c.cardmarket.url) + '">View on Cardmarket</a></p>' : '') +
+      '<p class="note">Sources can disagree, and very rare cards trade rarely, so treat these as a guide.</p></div>';
+  }
+  function openCard(id) {
+    var c = st.cards.filter(function (x) { return x.id === id; })[0]; if (!c) return;
+    $('box').innerHTML = detail(c); $('modal').classList.add('open');
+  }
+  $('modal').addEventListener('click', function (e) { if (e.target === $('modal') || (e.target.getAttribute && e.target.getAttribute('data-close'))) $('modal').classList.remove('open'); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') $('modal').classList.remove('open'); });
+  document.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('.card[data-id]'); if (b) openCard(b.getAttribute('data-id')); });
+
+  /* ---------- directory ---------- */
+  function buildQuery() {
+    var parts = [], q = $('q').value.trim().replace(/[^\p{L}\p{N}\s'&.-]/gu, ' ').split(/\s+/).filter(Boolean);
+    q.forEach(function (w) { parts.push('name:' + w.replace(/[.&'-]/g, '*') + '*'); });
+    var s = $('set').value; if (s) parts.push('set.id:' + s);
+    return parts.join(' ');
+  }
+  async function loadDir() {
+    if (!FX.usd) await loadFx();
+    var out = $('dir-out'), sort = $('sort').value;
+    out.innerHTML = '<div class="msg">Loading cards…</div>'; $('pager').innerHTML = '';
+    var qs = 'page=' + st.page + '&pageSize=' + PAGE + '&select=' + SELECT, q = buildQuery();
+    if (q) qs += '&q=' + encodeURIComponent(q);
+    qs += '&orderBy=' + encodeURIComponent(sort === 'price' ? 'name' : sort);
+    try {
+      var j = await getJSON(API + '/cards?' + qs);
+      st.cards = j.data || []; st.total = j.totalCount || 0;
+      var list = st.cards.slice();
+      if (sort === 'price') list.sort(function (a, b) { return (topValue(b) || -1) - (topValue(a) || -1); });
+      out.innerHTML = list.length ? '<p class="note">' + st.total.toLocaleString('en-CA') + ' card' + (st.total === 1 ? '' : 's') + ' found. Click a card for every printing and price source.</p><div class="grid">' + list.map(function (c) { return tile(c); }).join('') + '</div>' : '<div class="msg">No cards match that search.</div>';
+      var pages = Math.max(1, Math.ceil(st.total / PAGE));
+      $('pager').innerHTML = '<button id="pp" ' + (st.page <= 1 ? 'disabled' : '') + '>← Previous</button><span>Page ' + st.page + ' of ' + pages.toLocaleString('en-CA') + '</span><button id="pn" ' + (st.page >= pages ? 'disabled' : '') + '>Next →</button>';
+      $('pp').onclick = function () { st.page--; loadDir(); window.scrollTo(0, 0); };
+      $('pn').onclick = function () { st.page++; loadDir(); window.scrollTo(0, 0); };
+    } catch (e) {
+      out.innerHTML = '<div class="msg err">The card database did not answer (' + esc(e.message) + '). It is a free service that is sometimes slow. <a href="#" id="retry">Try again</a></div>';
+      $('retry').onclick = function (ev) { ev.preventDefault(); loadDir(); };
+    }
+  }
+  async function loadSets() {
+    try {
+      var j = await getJSON(API + '/sets?select=id,name,series,releaseDate&orderBy=-releaseDate&pageSize=250');
+      $('set').innerHTML = '<option value="">All sets</option>' + (j.data || []).map(function (s) { return '<option value="' + esc(s.id) + '">' + esc(s.name) + ' (' + esc(s.series) + ')</option>'; }).join('');
+    } catch (e) { /* the set filter just stays on "All sets" */ }
+  }
+  $('f').addEventListener('submit', function (e) { e.preventDefault(); st.page = 1; loadDir(); });
+  $('set').addEventListener('change', function () { st.page = 1; loadDir(); });
+  $('sort').addEventListener('change', function () { st.page = 1; loadDir(); });
+
+  /* ---------- most valuable cards right now ---------- */
+  var TOP_FIELDS = ['tcgplayer.prices.holofoil.market', 'tcgplayer.prices.normal.market', 'tcgplayer.prices.reverseHolofoil.market', 'tcgplayer.prices.1stEditionHolofoil.market', 'tcgplayer.prices.unlimitedHolofoil.market', 'tcgplayer.prices.1stEditionNormal.market', 'cardmarket.prices.trendPrice'];
+  async function loadTop() {
+    var out = $('top-out'); if (out.getAttribute('data-done')) return;
+    if (!FX.usd) await loadFx();
+    out.innerHTML = '<div class="msg">Finding the highest-priced cards across every printing type…</div>';
+    var res = await Promise.all(TOP_FIELDS.map(function (f) {
+      return getJSON(API + '/cards?pageSize=30&select=' + SELECT + '&orderBy=' + encodeURIComponent('-' + f)).then(function (j) { return j.data || []; }, function () { return null; });
+    }));
+    var failed = res.filter(function (r) { return r === null; }).length, seen = {}, all = [];
+    res.forEach(function (r) { (r || []).forEach(function (c) { if (!seen[c.id]) { seen[c.id] = 1; all.push(c); } }); });
+    if (!all.length) { out.innerHTML = '<div class="msg err">The card database did not answer. Reload to try again.</div>'; return; }
+    all.sort(function (a, b) { return (topValue(b) || -1) - (topValue(a) || -1); });
+    all = all.filter(function (c) { return topValue(c); }).slice(0, 50); st.cards = st.cards.concat(all);
+    out.innerHTML = '<p class="note">The 50 highest-priced raw cards in the database right now, ranked by the highest price across every printing and both sources. Market figures for very rare cards can be thin or stale, so a few entries may be outliers. For sale records of graded cards, see the next tab.' + (failed ? ' (' + failed + ' of ' + TOP_FIELDS.length + ' lookups failed, so this list may be incomplete. Reload to retry.)' : '') + '</p><div class="grid">' + all.map(function (c, i) { return tile(c, i + 1, true); }).join('') + '</div>';
+    if (!failed) out.setAttribute('data-done', '1');
+  }
+
+  /* ---------- record-value collectables (reported sales, not live prices) ---------- */
+  var REC = [
+    { n: 'Pikachu Illustrator (1998 CoroCoro promo), PSA 10', usd: 16490000, when: 'Feb 2026', note: 'Record for any Pokémon card. Previously valued at about US$5.275 million in July 2021 (part cash, part trade).' },
+    { n: 'Topsun Charizard Blue Back (1997 Japanese), PSA 10', usd: 493230, when: 'Jan 2021', note: 'Goldin Auctions.' },
+    { n: 'Silver Second Tournament No. 2 Trophy Pikachu (1998), PSA 10', usd: 444000, when: '2023', note: 'Trophy card given to tournament winners.' },
+    { n: 'Base Set Shadowless Holo Charizard #4, PSA 10', usd: 420000, when: 'Mar 2022', note: 'Sources differ on whether this copy is 1st Edition.' },
+    { n: 'Blastoise #009/165R Commissioned Presentation Galaxy Star Hologram (1998), CGC 8.5', usd: 360000, when: 'Jan 2021', note: 'Wizards of the Coast presentation card.' },
+    { n: 'Third Tournament Bronze Trophy Pikachu (1998), PSA 10', usd: 324000, when: 'Nov 2024', note: '' },
+    { n: 'Japanese Base Set Holo Charizard, no rarity symbol, Arita autograph #6, PSA 10', usd: 324000, when: 'Apr 2022', note: '' },
+    { n: 'First Gold First Tournament Trophy Pikachu No. 1 (1997)', usd: 314707, when: 'Apr 2025', note: 'Grade not stated by the source.' }
+  ];
+  function loadRec() {
+    var out = $('rec-out'); if (out.getAttribute('data-done')) return;
+    var rows = REC.map(function (r, i) {
+      return '<tr><td class="num">' + (i + 1) + '</td><td><b>' + esc(r.n) + '</b>' + (r.note ? '<div class="sub">' + esc(r.note) + '</div>' : '') + '</td><td>' + esc(r.when) + '</td><td class="num">US$' + r.usd.toLocaleString('en-CA') + '</td><td class="num">' + (FX.usd ? '<span style="color:var(--green)">' + cad(r.usd * FX.usd) + '</span>' : '…') + '</td></tr>';
+    }).join('');
+    out.innerHTML = '<p class="note">These are reported sale prices of individual graded or one-of-a-kind items, not live market values. The sources state prices with a "$" and do not name the currency; they are treated here as US dollars. The CAD column converts at today\'s rate, not the rate on the sale day. Compiled from press reports on 2026-11-12; auction results are often disputed or private, so verify before quoting.</p>' +
+      '<div class="tw"><table><tr><th class="num">#</th><th>Item</th><th>Sold</th><th class="num">Reported price</th><th class="num">Today in CAD</th></tr>' + rows + '</table></div>' +
+      '<p class="note">Sources: <a target="_blank" rel="noopener" href="https://abc7news.com/post/logan-pauls-pikachu-illustrator-pokmon-card-sells-record-165m-auction/18609638/">ABC7 (Pikachu Illustrator, 2026)</a> · <a target="_blank" rel="noopener" href="https://www.cllct.com/sports-collectibles/sports-cards/the-10-most-valuable-pokemon-cards-of-all-time">Cllct top-10 list</a> · <a target="_blank" rel="noopener" href="https://comicbook.com/gaming/list/most-expensive-pokemon-cards-ever-sold-2026-including-logan-paul-pikachu/">ComicBook.com list</a>. Sealed products and non-card items are not included yet.</p>';
+    if (FX.usd) out.setAttribute('data-done', '1');
+  }
+
+  /* ---------- tabs + boot ---------- */
+  document.querySelector('.tabs').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-m]'); if (!b) return; st.m = b.getAttribute('data-m');
+    Array.prototype.forEach.call(document.querySelectorAll('.tabs button'), function (x) { x.classList.toggle('on', x === b); });
+    $('v-dir').hidden = st.m !== 'dir'; $('v-top').hidden = st.m !== 'top'; $('v-rec').hidden = st.m !== 'rec';
+    if (st.m === 'top') loadTop(); else if (st.m === 'rec') { (FX.usd ? Promise.resolve() : loadFx()).then(loadRec); }
+  });
+  loadFx(); loadSets(); loadDir();
+})();
+</script>
+</body>
+</html>
