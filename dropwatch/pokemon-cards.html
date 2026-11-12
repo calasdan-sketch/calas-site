@@ -131,8 +131,8 @@
   function toCad(v, cur) { var r = cur === 'EUR' ? FX.eur : FX.usd; return v != null && r ? v * r : null; }
   async function loadFx() {
     try {
-      var u = await getJSON('https://api.frankfurter.app/latest?from=USD&to=CAD', 3);
-      var e = await getJSON('https://api.frankfurter.app/latest?from=EUR&to=CAD', 3);
+      var u = await getJSON('https://api.frankfurter.dev/v1/latest?base=USD&symbols=CAD', 3);
+      var e = await getJSON('https://api.frankfurter.dev/v1/latest?base=EUR&symbols=CAD', 3);
       FX.usd = u.rates.CAD; FX.eur = e.rates.CAD; FX.date = u.date;
       $('fxline').textContent = 'All values in Canadian dollars (CAD). Rates on ' + FX.date + ': 1 USD = ' + FX.usd.toFixed(4) + ' CAD, 1 EUR = ' + FX.eur.toFixed(4) + ' CAD.';
     } catch (e) {
