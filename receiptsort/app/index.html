@@ -145,8 +145,8 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
   <p class="note" id="savednote" style="margin-top:2px"></p>
   <p class="swipe" aria-hidden="true">&larr; Swipe the table sideways to see every column &rarr;</p>
   <div class="wrap"><table class="rs">
-    <thead><tr><th>File</th><th>Status</th><th>Date</th><th>Vendor</th><th>Subtotal</th><th>GST</th><th>PST / RST / QST</th><th>Sales tax</th><th>Total</th><th>Currency</th><th>Category</th></tr></thead>
-    <tbody id="rows"><tr><td colspan="11" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr></tbody>
+    <thead><tr><th>File</th><th>Status</th><th>Date</th><th>Vendor</th><th>Subtotal</th><th>GST</th><th>PST / RST / QST</th><th>Sales tax</th><th>Total</th><th>Currency</th><th>Category</th><th></th></tr></thead>
+    <tbody id="rows"><tr><td colspan="12" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr></tbody>
   </table></div>
   <div id="summary" class="summary" hidden></div>
   <div id="viewer" class="viewer" hidden tabindex="-1" role="dialog" aria-label="Receipt photo — tap to close"><img alt="Receipt photo"></div>
@@ -385,7 +385,7 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
     renderCTA(s);
   }
   function render() {
-    if (!rows.length) { tbody.innerHTML = '<tr><td colspan="11" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr>'; }
+    if (!rows.length) { tbody.innerHTML = '<tr><td colspan="12" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr>'; }
     else tbody.innerHTML = rows.map(function (r, i) {
       var ok = r.status === 'ok', cur = r.currency || 'CAD';
       function num(k, label) { return '<td class="num" data-label="' + label + '"><input data-i="' + i + '" data-k="' + k + '" inputmode="decimal" value="' + esc(fmt(r[k])) + '" aria-label="' + label + '"></td>'; }
@@ -397,7 +397,8 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
         '<td data-label="Vendor"><input data-i="' + i + '" data-k="vendor" value="' + esc(r.vendor) + '" aria-label="Vendor"></td>' +
         num('subtotal', 'Subtotal') + num('gst', 'GST') + num('pst', 'PST / RST / QST') + num('sales_tax', 'Sales tax') + num('total', 'Total') +
         '<td data-label="Currency"><input data-i="' + i + '" data-k="currency" value="' + esc(cur) + '" aria-label="Currency"></td>' +
-        '<td data-label="Category"><input data-i="' + i + '" data-k="category" value="' + esc(r.category) + '" aria-label="Category"></td></tr>';
+        '<td data-label="Category"><input data-i="' + i + '" data-k="category" value="' + esc(r.category) + '" aria-label="Category"></td>' +
+        '<td data-label="Remove"><button type="button" class="btn ghost" data-rm="' + i + '" aria-label="Remove ' + esc(r.file) + ' from the list" style="padding:6px 10px;white-space:nowrap">Remove</button></td></tr>';
     }).join('');
     var review = rows.filter(function (r) { return r.status !== 'ok'; }).length;
     $('count').textContent = rows.length ? rows.length + ' receipt' + (rows.length === 1 ? '' : 's') + (review ? ' · ' + review + ' to check' : '') : '';
@@ -409,6 +410,12 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
   // Tap a preview: show the photo big (the original if it was added this visit, else the saved preview).
   var viewer = $('viewer');
   tbody.addEventListener('click', function (e) {
+    var rm = e.target.closest && e.target.closest('[data-rm]');
+    if (rm) {
+      var idx = +rm.dataset.rm, r2 = rows[idx];
+      if (r2 && r2.id && originals[r2.id]) { URL.revokeObjectURL(originals[r2.id]); delete originals[r2.id]; }
+      rows.splice(idx, 1); render(); return;
+    }
     var b = e.target.closest && e.target.closest('[data-view]'); if (!b) return;
     var r = rows[+b.dataset.view]; if (!r) return;
     viewer.querySelector('img').src = originals[r.id] || r.thumb;
@@ -425,9 +432,17 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
     render();
   });
 
+  function fileKey(f) { return f.name + '|' + f.size + '|' + f.lastModified; }
   function run(list) {
     var files = [].slice.call(list || []).filter(function (f) { return /^image\//.test(f.type) || /pdf$/i.test(f.type) || /\.(pdf|jpe?g|png|heic|webp)$/i.test(f.name); });
     if (!files.length || busy) return;
+    // Same name + size + modified time as a row already in the list = the same photo picked again
+    // (re-selected, dropped twice, restored from a past visit). Skip it instead of adding a second row -
+    // this list feeds accounting, so one receipt must never become two.
+    var seen = {}; rows.forEach(function (r) { if (r.size != null && r.lastModified != null) seen[r.file + '|' + r.size + '|' + r.lastModified] = true; });
+    var dupes = 0;
+    files = files.filter(function (f) { var k = fileKey(f); if (seen[k]) { dupes++; return false; } seen[k] = true; return true; });
+    if (!files.length) { statusEl.textContent = dupes + ' file' + (dupes === 1 ? '' : 's') + ' already in the list — skipped as duplicate' + (dupes === 1 ? '' : 's') + '.'; return; }
     busy = true; bar.style.display = 'block'; render();
     var done = 0;
     statusEl.textContent = 'Getting ready… the first time takes a few seconds while the reader downloads.';
@@ -436,15 +451,15 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
         reading = 'Reading ' + (done + 1) + ' of ' + files.length + ': ' + f.name;
         statusEl.textContent = reading;
         return readFile(f).then(function (r) {
-          r.file = f.name; r.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+          r.file = f.name; r.size = f.size; r.lastModified = f.lastModified; r.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
           if (!/pdf$/i.test(f.type)) originals[r.id] = URL.createObjectURL(f);
           rows.push(r);
-        }, function () { rows.push({ file: f.name, date: null, vendor: null, subtotal: null, gst: null, pst: null, sales_tax: null, total: null, currency: 'CAD', category: 'Uncategorized', status: 'needs_review (could not read)', reason: 'could not open this file — try a clearer photo or a JPG/PNG' }); })
+        }, function () { rows.push({ file: f.name, size: f.size, lastModified: f.lastModified, date: null, vendor: null, subtotal: null, gst: null, pst: null, sales_tax: null, total: null, currency: 'CAD', category: 'Uncategorized', status: 'needs_review (could not read)', reason: 'could not open this file — try a clearer photo or a JPG/PNG' }); })
           .then(function () { done++; fill.style.width = (done / files.length * 100) + '%'; render(); });
       });
     }, Promise.resolve()).then(function () {
       busy = false; bar.style.display = 'none'; fill.style.width = '0';
-      statusEl.textContent = 'Done. Check anything marked "Check this", then download.'; render();
+      statusEl.textContent = (dupes ? dupes + ' duplicate file' + (dupes === 1 ? '' : 's') + ' skipped. ' : '') + 'Done. Check anything marked "Check this", then download.'; render();
     });
   }
   $('files').addEventListener('change', function (e) { run(e.target.files); e.target.value = ''; });
