@@ -147,7 +147,7 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
 <script>
 function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var msg='Free receipt-to-spreadsheet tool — drag in your receipt photos, get one CSV. Nothing leaves your device. '+url;if(navigator.share){navigator.share({title:'ReceiptSort — free',text:msg,url:url}).catch(function(){});}else{var b=e&&e.target;navigator.clipboard.writeText(msg).then(function(){if(b){b.textContent='Link copied';setTimeout(function(){b.textContent='Share this free tool';},1500);}}).catch(function(){});}}
 </script>
-<script src="/receiptsort/app/parse.js"></script>
+<script src="/receiptsort/app/parse.js?v=20261113b"></script><!-- bump ?v= (and sw.js) whenever parse.js changes: browsers keep it 4h -->
 <script>
 (function () {
   'use strict';
