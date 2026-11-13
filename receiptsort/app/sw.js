@@ -1,7 +1,7 @@
 // ReceiptSort offline support: its own page, rules and the reading engine are kept
 // on the device after the first use. Receipts themselves are never stored or sent.
-const CACHE = 'receiptsort-v5';
-const OWN = ['/receiptsort/app/', '/receiptsort/app/index.html', '/receiptsort/app/parse.js?v=20261113b', '/receiptsort/app/manifest.json'];
+const CACHE = 'receiptsort-v6';
+const OWN = ['/receiptsort/app/', '/receiptsort/app/index.html', '/receiptsort/app/parse.js?v=20261113c', '/receiptsort/app/manifest.json'];
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(OWN))); self.skipWaiting(); });
 self.addEventListener('activate', (e) => {
   e.waitUntil(caches.keys().then((k) => Promise.all(k.filter((x) => x !== CACHE).map((x) => caches.delete(x)))).then(() => self.clients.claim()));

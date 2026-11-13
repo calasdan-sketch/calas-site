@@ -68,7 +68,13 @@ main{padding-bottom:110px} /* room under the fixed "Ask Cara" chat button so it 
 main{max-width:1240px}.top .in{max-width:1240px}
 td input[data-k=date]{min-width:11ch}td input[data-k=vendor],td input[data-k=category]{min-width:15ch}
 td.num input{min-width:8ch}td input[data-k=currency]{min-width:5ch}
-td.fn{max-width:14ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
+td.fn{max-width:14ch;font-size:14px}
+td.fn .fname{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.thumb{display:block;padding:0;margin:0 0 4px;border:1px solid var(--rule);border-radius:6px;background:none;cursor:zoom-in}
+.thumb img{display:block;width:56px;height:74px;object-fit:cover;object-position:top;border-radius:5px}
+.viewer{position:fixed;inset:0;z-index:2147483646;background:rgba(5,15,25,.9);display:flex;align-items:center;justify-content:center;padding:16px;cursor:zoom-out}
+.viewer[hidden]{display:none}
+.viewer img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px}
 @media (max-width:1240px) and (min-width:601px){.swipe{display:block}}
 @media (max-width:600px){
   main{padding-bottom:130px}
@@ -81,7 +87,9 @@ td.fn{max-width:14ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;f
   table.rs td:last-child{border-bottom:0}
   table.rs td::before{content:attr(data-label);flex:0 0 36%;font:500 11px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
   table.rs td input{flex:1 1 auto;min-width:0;width:auto;border-color:var(--rule);text-align:right}
-  table.rs td.fn{font-weight:600;overflow-wrap:anywhere}
+  table.rs td.fn{font-weight:600;overflow-wrap:anywhere;max-width:none;gap:12px}
+  table.rs td.fn .fname{white-space:normal;flex:1 1 auto;text-align:right}
+  table.rs .thumb img{width:72px;height:96px}
   table.rs td.empty{display:block;text-align:center}
   table.rs td.empty::before{content:none}
   .tools .btn{flex:1 1 100%}
@@ -141,13 +149,14 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
     <tbody id="rows"><tr><td colspan="11" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr></tbody>
   </table></div>
   <div id="summary" class="summary" hidden></div>
+  <div id="viewer" class="viewer" hidden tabindex="-1" role="dialog" aria-label="Receipt photo — tap to close"><img alt="Receipt photo"></div>
   <p class="note">The CSV opens in Excel, Google Sheets, Numbers or your accounting software. Tip: add this page to your home screen to use it like an app, even offline after the first use.</p>
   <div class="cta" id="cta">Chasing clients for their receipts? <b>On File</b> by Calas Automations does the chasing for you. <a href="/accounting/">See On File &rarr;</a></div>
 </main>
 <script>
 function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var msg='Free receipt-to-spreadsheet tool — drag in your receipt photos, get one CSV. Nothing leaves your device. '+url;if(navigator.share){navigator.share({title:'ReceiptSort — free',text:msg,url:url}).catch(function(){});}else{var b=e&&e.target;navigator.clipboard.writeText(msg).then(function(){if(b){b.textContent='Link copied';setTimeout(function(){b.textContent='Share this free tool';},1500);}}).catch(function(){});}}
 </script>
-<script src="/receiptsort/app/parse.js?v=20261113b"></script><!-- bump ?v= (and sw.js) whenever parse.js changes: browsers keep it 4h -->
+<script src="/receiptsort/app/parse.js?v=20261113c"></script><!-- bump ?v= (and sw.js) whenever parse.js changes: browsers keep it 4h -->
 <script>
 (function () {
   'use strict';
@@ -195,7 +204,8 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
   }
   // Find the receipt in the photo (the big bright area) using a tiny copy, so it's instant.
   // Falls back to the whole photo when the paper can't be told apart from the background.
-  var FIND_SIZE = 300, MIN_PAPER = 0.08;
+  // PAPER_EDGE/PAPER_PAD are generous on purpose: a crop that trims the bottom (the totals) is worse than a loose one.
+  var FIND_SIZE = 300, MIN_PAPER = 0.08, PAPER_EDGE = 0.3, PAPER_PAD = 0.06;
   function findPaper(bmp) {
     var full = { x: 0, y: 0, w: bmp.width, h: bmp.height };
     var k = Math.min(1, FIND_SIZE / Math.max(bmp.width, bmp.height));
@@ -208,34 +218,47 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
     for (y = 0; y < h; y++) for (x = 0; x < w; x++) if (lum[y * w + x] > th) { cols[x]++; rows[y]++; }
     function span(a) {
       var max = Math.max.apply(null, a), lo = -1, hi = -1;
-      for (var j = 0; j < a.length; j++) if (a[j] >= max * 0.5) { if (lo < 0) lo = j; hi = j; }
+      for (var j = 0; j < a.length; j++) if (a[j] >= max * PAPER_EDGE) { if (lo < 0) lo = j; hi = j; }
       return [lo, hi];
     }
     var sx = span(cols), sy = span(rows);
     if (sx[0] < 0 || sy[0] < 0) return full;
     var bw = sx[1] - sx[0] + 1, bh = sy[1] - sy[0] + 1;
     if (bw * bh < MIN_PAPER * w * h) return full;
-    var pad = Math.round(Math.max(bw, bh) * 0.03);
+    var pad = Math.round(Math.max(bw, bh) * PAPER_PAD);
     var x0 = Math.max(0, sx[0] - pad), y0 = Math.max(0, sy[0] - pad);
     var x1 = Math.min(w, sx[1] + 1 + pad), y1 = Math.min(h, sy[1] + 1 + pad);
     return { x: Math.round(x0 / k), y: Math.round(y0 / k), w: Math.round((x1 - x0) / k), h: Math.round((y1 - y0) / k) };
   }
   // Photo -> canvas: fix phone rotation, zoom in on the receipt, greyscale, boost contrast.
   // The receipt is drawn READ_WIDTH pixels wide: big enough for small print, small enough to be quick on phones.
-  var READ_WIDTH = 1200, MAX_HEIGHT = 4000, MAX_ZOOM = 4;
+  // FULL_SIZE: the whole photo is also kept (long side 2000px) as a backup reading, in case the crop missed part.
+  var READ_WIDTH = 1200, MAX_HEIGHT = 4000, MAX_ZOOM = 4, FULL_SIZE = 2000, THUMB_W = 180;
+  function greyCanvas(bmp, box, s) {
+    var c = document.createElement('canvas'); c.width = Math.round(box.w * s); c.height = Math.round(box.h * s);
+    var g = c.getContext('2d'); g.imageSmoothingQuality = 'high';
+    g.drawImage(bmp, box.x, box.y, box.w, box.h, 0, 0, c.width, c.height);
+    var d = g.getImageData(0, 0, c.width, c.height), p = d.data, lo = 255, hi = 0, i, v;
+    for (i = 0; i < p.length; i += 4) { v = p[i] * .299 + p[i + 1] * .587 + p[i + 2] * .114; p[i] = v; if (v < lo) lo = v; if (v > hi) hi = v; }
+    var span = Math.max(1, hi - lo);
+    for (i = 0; i < p.length; i += 4) { v = (p[i] - lo) * 255 / span; p[i] = p[i + 1] = p[i + 2] = v; }
+    g.putImageData(d, 0, 0); return c;
+  }
+  // -> { crop: zoomed receipt, full: whole photo (or null if the crop IS the whole photo), thumb: small colour preview }
   function prepImage(blob) {
     return createImageBitmap(blob, { imageOrientation: 'from-image' }).then(function (bmp) {
-      var box = findPaper(bmp);
-      var s = Math.min(READ_WIDTH / box.w, MAX_HEIGHT / box.h, MAX_ZOOM);
-      var c = document.createElement('canvas'); c.width = Math.round(box.w * s); c.height = Math.round(box.h * s);
-      var g = c.getContext('2d'); g.imageSmoothingQuality = 'high';
-      g.drawImage(bmp, box.x, box.y, box.w, box.h, 0, 0, c.width, c.height);
+      var whole = { x: 0, y: 0, w: bmp.width, h: bmp.height }, box = findPaper(bmp);
+      var cropped = box.w < bmp.width * 0.95 || box.h < bmp.height * 0.95;
+      var out = {
+        crop: greyCanvas(bmp, box, Math.min(READ_WIDTH / box.w, MAX_HEIGHT / box.h, MAX_ZOOM)),
+        full: cropped ? greyCanvas(bmp, whole, Math.min(1, FULL_SIZE / Math.max(bmp.width, bmp.height))) : null
+      };
+      var t = document.createElement('canvas'), ts = THUMB_W / box.w; // preview = the receipt itself
+      t.width = THUMB_W; t.height = Math.round(box.h * ts);
+      t.getContext('2d').drawImage(bmp, box.x, box.y, box.w, box.h, 0, 0, t.width, t.height);
+      out.thumb = t.toDataURL('image/jpeg', 0.6);
       if (bmp.close) bmp.close();
-      var d = g.getImageData(0, 0, c.width, c.height), p = d.data, lo = 255, hi = 0, i, v;
-      for (i = 0; i < p.length; i += 4) { v = p[i] * .299 + p[i + 1] * .587 + p[i + 2] * .114; p[i] = v; if (v < lo) lo = v; if (v > hi) hi = v; }
-      var span = Math.max(1, hi - lo);
-      for (i = 0; i < p.length; i += 4) { v = (p[i] - lo) * 255 / span; p[i] = p[i + 1] = p[i + 2] = v; }
-      g.putImageData(d, 0, 0); return c;
+      return out;
     });
   }
   // Black-and-white copy (Otsu threshold). Clears paper grain and shadows that make
@@ -258,25 +281,34 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
   }
   // Read a picture up to three ways and keep the reading whose numbers check out best.
   // Each pass: [picture to read, layout]. Later passes only run if the earlier ones missed something.
-  var PASSES = [['smooth', '6'], ['sharp', '6'], ['grey', '6']];
+  // Each pass: [which picture, how to clean it]. Later passes only run if the earlier ones missed something.
+  var PASSES = [['crop', 'smooth'], ['full', 'smooth'], ['crop', 'sharp'], ['crop', 'grey']];
   function score(r) {
     return (r.status === 'ok' ? 100 : 0) + (r.total != null ? 10 : 0) +
       ['date', 'vendor', 'subtotal', 'gst', 'pst', 'sales_tax'].filter(function (k) { return r[k] != null; }).length;
   }
-  function readPicture(canvas) {
-    var best = null;
+  function goodEnough(r) {
+    // No subtotal = nothing to cross-check (e.g. gas receipts); numbers that don't add up = try again.
+    return r.status === 'ok' || (r.total != null && r.date && r.vendor && r.subtotal == null);
+  }
+  function readPicture(pics) {
+    var tries = [];
     return PASSES.reduce(function (p, pass) {
       return p.then(function () {
-        // Good enough: stop. Extra readings only run when something important is still missing.
-        // (No subtotal = nothing to cross-check, e.g. gas receipts; numbers that don't add up = try again.)
-        if (best && (best.status === 'ok' || (best.total != null && best.date && best.vendor && best.subtotal == null))) return;
-        var img = pass[0] === 'grey' ? canvas : binarize(canvas, pass[0] === 'smooth');
-        return ocr(img, pass[1]).then(function (text) {
-          var row = RSParse.extract(text);
-          if (!best || score(row) > score(best)) best = row;
-        });
+        if (tries.some(function (t) { return goodEnough(t.row); })) return;
+        var src = pics[pass[0]]; if (!src) return;
+        var img = pass[1] === 'grey' ? src : binarize(src, pass[1] === 'smooth');
+        return ocr(img, '6').then(function (text) { tries.push({ text: text, row: RSParse.extract(text) }); });
       });
-    }, Promise.resolve()).then(function () { return best; });
+    }, Promise.resolve()).then(function () {
+      tries.sort(function (a, b) { return score(b.row) - score(a.row); });
+      var best = tries[0];
+      if (!best) return RSParse.extract('');
+      // Borrow a cleanly read date / vendor from another reading of the same photo (amounts are never mixed).
+      var hints = {};
+      tries.forEach(function (t) { if (!hints.date && t.row.date) hints.date = t.row.date; if (!hints.vendor && t.row.vendor) hints.vendor = t.row.vendor; });
+      return (!best.row.date || !best.row.vendor) ? RSParse.extract(best.text, hints) : best.row;
+    });
   }
   function readPdf(file) {
     return pdfLib().then(function (lib) { return file.arrayBuffer().then(function (buf) { return lib.getDocument({ data: buf }).promise; }); })
@@ -298,19 +330,27 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
             if (text) return RSParse.extract(text);
             // scanned PDF (no text layer): read page 1 as a picture
             var vp = ps[0].getViewport({ scale: 2 }), c = document.createElement('canvas'); c.width = vp.width; c.height = vp.height;
-            return ps[0].render({ canvasContext: c.getContext('2d'), viewport: vp }).promise.then(function () { return readPicture(c); });
+            return ps[0].render({ canvasContext: c.getContext('2d'), viewport: vp }).promise.then(function () { return readPicture({ crop: c }); });
           });
         });
       });
   }
   function readFile(file) {
     var isPdf = /pdf$/i.test(file.type) || /\.pdf$/i.test(file.name);
-    return isPdf ? readPdf(file) : prepImage(file).then(readPicture);
+    if (isPdf) return readPdf(file);
+    return prepImage(file).then(function (pics) { return readPicture(pics).then(function (r) { r.thumb = pics.thumb; return r; }); });
   }
+  // Full-size photos for "tap to enlarge", kept in memory only for this visit (never stored or sent).
+  var originals = {};
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function fmt(v) { return v === null || v === undefined || v === '' ? '' : Number(v).toFixed(2); }
-  function save() { try { localStorage.setItem('rs_rows', JSON.stringify(rows)); } catch (e) {} }
+  function save() {
+    try { localStorage.setItem('rs_rows', JSON.stringify(rows)); } catch (e) {
+      // Device storage full: keep the numbers, drop the little preview pictures.
+      try { localStorage.setItem('rs_rows', JSON.stringify(rows.map(function (r) { var c = {}; for (var k in r) if (k !== 'thumb') c[k] = r[k]; return c; }))); } catch (e2) {}
+    }
+  }
   function restore() { try { var j = localStorage.getItem('rs_rows'); if (j) { var a = JSON.parse(j); if (Array.isArray(a)) rows = a; } } catch (e) {} }
   function renderCTA(s) {
     var cta = $('cta'); if (!cta) return;
@@ -350,7 +390,8 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
       var ok = r.status === 'ok', cur = r.currency || 'CAD';
       function num(k, label) { return '<td class="num" data-label="' + label + '"><input data-i="' + i + '" data-k="' + k + '" inputmode="decimal" value="' + esc(fmt(r[k])) + '" aria-label="' + label + '"></td>'; }
       var why = !ok && r.reason ? '<span class="why">' + esc(r.reason) + '</span>' : '';
-      return '<tr><td class="fn" data-label="File" title="' + esc(r.file) + '">' + esc(r.file) + '</td>' +
+      var thumb = r.thumb ? '<button type="button" class="thumb" data-view="' + i + '" aria-label="Show the photo of ' + esc(r.file) + '"><img src="' + esc(r.thumb) + '" alt=""></button>' : '';
+      return '<tr><td class="fn" data-label="File" title="' + esc(r.file) + '">' + thumb + '<span class="fname">' + esc(r.file) + '</span></td>' +
         '<td data-label="Status"><span class="pill ' + (ok ? 'ok' : 'rev') + '">' + (ok ? (cur === 'CAD' ? 'OK' : 'OK (' + esc(cur) + ')') : 'Check this') + '</span>' + why + '</td>' +
         '<td data-label="Date"><input data-i="' + i + '" data-k="date" value="' + esc(r.date) + '" placeholder="YYYY-MM-DD" aria-label="Date"></td>' +
         '<td data-label="Vendor"><input data-i="' + i + '" data-k="vendor" value="' + esc(r.vendor) + '" aria-label="Vendor"></td>' +
@@ -365,6 +406,17 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
     renderSummary();
     save();
   }
+  // Tap a preview: show the photo big (the original if it was added this visit, else the saved preview).
+  var viewer = $('viewer');
+  tbody.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-view]'); if (!b) return;
+    var r = rows[+b.dataset.view]; if (!r) return;
+    viewer.querySelector('img').src = originals[r.id] || r.thumb;
+    viewer.hidden = false; viewer.focus();
+  });
+  function closeViewer() { viewer.hidden = true; viewer.querySelector('img').removeAttribute('src'); }
+  viewer.addEventListener('click', closeViewer);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !viewer.hidden) closeViewer(); });
   tbody.addEventListener('change', function (e) {
     var el = e.target; if (!el.dataset || el.dataset.i === undefined) return;
     var r = rows[+el.dataset.i], k = el.dataset.k, v = el.value.trim();
@@ -384,7 +436,9 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
         reading = 'Reading ' + (done + 1) + ' of ' + files.length + ': ' + f.name;
         statusEl.textContent = reading;
         return readFile(f).then(function (r) {
-          r.file = f.name; rows.push(r);
+          r.file = f.name; r.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+          if (!/pdf$/i.test(f.type)) originals[r.id] = URL.createObjectURL(f);
+          rows.push(r);
         }, function () { rows.push({ file: f.name, date: null, vendor: null, subtotal: null, gst: null, pst: null, sales_tax: null, total: null, currency: 'CAD', category: 'Uncategorized', status: 'needs_review (could not read)', reason: 'could not open this file — try a clearer photo or a JPG/PNG' }); })
           .then(function () { done++; fill.style.width = (done / files.length * 100) + '%'; render(); });
       });
@@ -410,7 +464,7 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
   function rsToday() { return new Date().toISOString().slice(0, 10); }
   $('dlacct').addEventListener('click', function () { rsDownload('receipts-accounting-' + rsToday() + '.csv', RSParse.toAccountingCSV(rows)); });
   $('print').addEventListener('click', function () { window.print(); });
-  $('clear').addEventListener('click', function () { if (!busy) { rows = []; statusEl.textContent = ''; try { localStorage.removeItem('rs_rows'); } catch (e) {} render(); } });
+  $('clear').addEventListener('click', function () { if (!busy) { rows = []; statusEl.textContent = ''; Object.keys(originals).forEach(function (k) { URL.revokeObjectURL(originals[k]); }); originals = {}; try { localStorage.removeItem('rs_rows'); } catch (e) {} render(); } });
   restore(); render();
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('/receiptsort/app/sw.js').catch(function () {});
 })();

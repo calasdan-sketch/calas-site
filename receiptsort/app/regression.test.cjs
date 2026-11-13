@@ -76,8 +76,11 @@ test('NO wrong-total case is ever ok (any receipt that fails its own arithmetic)
 test('needs_review when subtotal and tax are both missing, even with a total line', () => {
   const r = P.extract('Tim Hortons\n2026-09-15\nCoffee 2.00\nTotal 2.00\n');
   assert.equal(r.total, 2.00); assert.ok(review(r)); assert.match(r.reason, /no subtotal or tax/);
-  assert.ok(review(P.extract('Shop\n2026-10-02\nGST 0.50\nTotal 10.50')));
-  assert.match(P.extract('Shop\n2026-10-02\nGST 0.50\nTotal 10.50').reason, /no subtotal line/);
+  // 2026-11-13: GST that is exactly 5% of (total - GST) proves the subtotal, so this one is OK now.
+  assert.equal(P.extract('Shop\n2026-10-02\nGST 0.50\nTotal 10.50').subtotal, 10.00);
+  // A tax that is not a real rate still can't be checked.
+  assert.ok(review(P.extract('Shop\n2026-10-02\nGST 0.70\nTotal 10.50')));
+  assert.match(P.extract('Shop\n2026-10-02\nGST 0.70\nTotal 10.50').reason, /no subtotal line/);
 });
 
 test('"sous-total", "Total Tax", "sales tax", QST, RST columns', () => {

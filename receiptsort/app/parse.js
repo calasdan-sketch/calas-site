@@ -11,16 +11,21 @@
   'use strict';
   // Money: 12.47  1,234.56  4,80  1.234,56  (needs exactly two decimals; dates are masked out first)
   var MONEY = /(?<![\d.,])(\d{1,3}(?:[.,]\d{3})+[.,]\d{2}|\d+[.,]\d{2})(?!\d)(?![.,]\d)/g;
+  var MON = 'jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?';
   var DATE_PATTERNS = [
     [/\b(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})\b/, 'ymd'], // 2026-10-15, 2026/10/15, 2026.10.15
     [/\b(\d{1,2})\/(\d{1,2})\/(\d{4})\b/, 'mdy_or_dmy'],
     [/\b(\d{1,2})\/(\d{1,2})\/(\d{2})\b/, 'mdy2'],
     [/\b(\d{1,2})[.\-](\d{1,2})[.\-](\d{4})\b/, 'dmy_dotted'],
-    [/\b([A-Z][a-z]{2,8})\.? (\d{1,2}),? (\d{4})\b/, 'mon_d_y'],
-    [/\b(\d{1,2}) ([A-Z][a-z]{2,8})\.? (\d{4})\b/, 'd_mon_y']
+    // Month names in any case and spacing: "Nov 13, 2026", "NOV 13 2026", "Nov13/26", "13-NOV-2026", "13NOV26"
+    // (day and year need something between them, so "NOV-2026" is never read as Nov 20 '26)
+    [new RegExp('\\b(' + MON + ')\\.?[\\s\\-\\/]?(\\d{1,2})(?:st|nd|rd|th)?(?:,\\s*|[\\s\\-\\/]{1,2})(\\d{4}|\\d{2})(?!\\d)', 'i'), 'mon_d_y'],
+    [new RegExp('\\b(\\d{1,2})[\\s\\-\\/]?(' + MON + ')\\.?[\\s\\-\\/,]{0,2}(\\d{4}|\\d{2})(?!\\d)', 'i'), 'd_mon_y']
   ];
   // Used to blank dates out of a line before looking for money, so 21.10.2026 is never read as 21.10.
-  var DATE_MASK = /\b\d{4}[-\/.]\d{1,2}[-\/.]\d{1,2}\b|\b\d{1,2}[\/.\-]\d{1,2}[\/.\-]\d{2,4}\b|\b[A-Z][a-z]{2,8}\.? \d{1,2},? \d{4}\b|\b\d{1,2} [A-Z][a-z]{2,8}\.? \d{4}\b/g;
+  var DATE_MASK = new RegExp('\\b\\d{4}[-\\/.]\\d{1,2}[-\\/.]\\d{1,2}\\b|\\b\\d{1,2}[\\/.\\-]\\d{1,2}[\\/.\\-]\\d{2,4}\\b|' +
+    '\\b(?:' + MON + ')\\.?[\\s\\-\\/]?\\d{1,2}(?:st|nd|rd|th)?,?[\\s\\-\\/]{0,2}(?:\\d{4}|\\d{2})(?!\\d)|' +
+    '\\b\\d{1,2}[\\s\\-\\/]?(?:' + MON + ')\\.?[\\s\\-\\/,]{0,2}(?:\\d{4}|\\d{2})(?!\\d)', 'gi');
   var MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
   var TOTAL_WORDS = /\b(grand\s*total|total\s*(?:due|paid|amount)?|amount\s*due|balance\s*due|netto\s*total)\b/i;
   var TOTAL_EXCLUDE = /total\s*(savings?|saved|discounts?|items?|qty|points|rewards)/i;
@@ -77,6 +82,13 @@
     return t.getUTCFullYear() === y && t.getUTCMonth() === mo - 1 && t.getUTCDate() === d ? y + '-' + pad(mo) + '-' + pad(d) : null;
   }
 
+  // "Nov", "NOV", "November", "Sept" -> 11 / 9. Other words ("Store", "Pump") -> 0.
+  function monthOf(word) {
+    var w = String(word).toLowerCase(), mo = MONTHS[w.slice(0, 3)];
+    if (!mo) return 0;
+    var full = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'][mo - 1];
+    return full.indexOf(w) === 0 || w === 'sept' ? mo : 0;
+  }
   function parseDate(text) {
     for (var i = 0; i < DATE_PATTERNS.length; i++) {
       var m = DATE_PATTERNS[i][0].exec(text), kind = DATE_PATTERNS[i][1];
@@ -88,8 +100,11 @@
         if (a > 12 && b <= 12) { d = a; mo = b; }
         else if (b > 12 && a <= 12) { mo = a; d = b; }
         else return null; // ambiguous, e.g. 03/04/2026 or 03.04.2026: don't guess
-      } else if (kind === 'mon_d_y') { mo = MONTHS[m[1].slice(0, 3).toLowerCase()]; d = +m[2]; y = +m[3]; if (!mo) continue; }
-      else { d = +m[1]; mo = MONTHS[m[2].slice(0, 3).toLowerCase()]; y = +m[3]; if (!mo) continue; }
+      } else {
+        var name = kind === 'mon_d_y' ? m[1] : m[2];
+        mo = monthOf(name); d = kind === 'mon_d_y' ? +m[2] : +m[1]; y = +m[3]; if (y < 100) y += 2000;
+        if (!mo) continue;
+      }
       var ok = validDate(y, mo, d);
       if (ok) return ok;
     }
@@ -98,6 +113,21 @@
 
   function amountOnLine(line) { var v = allMoney(line); return v.length ? v[v.length - 1] : null; }
   function round2(n) { return Math.round((n + Number.EPSILON) * 100) / 100; }
+
+  // Tax-included receipts (gas, coffee) print no subtotal. When every tax on the receipt is exactly a
+  // Canadian rate of (total - taxes), that difference IS the subtotal: worked out and checked, not guessed.
+  var GST_RATES = [0.05, 0.13, 0.14, 0.15];            // GST, HST (ON / PEI old / Atlantic)
+  var PST_RATES = [0.06, 0.07, 0.08, 0.09975, 0.10];   // SK, MB/BC, ON-era, QC QST, PEI-era
+  function isRateOf(tax, base, rates) {
+    return rates.some(function (k) { return Math.abs(base * k - tax) <= 0.015; });
+  }
+  function deriveSubtotal(r) {
+    if (r.subtotal !== null || r.total === null || r.gst === null || r.salesTax !== null) return;
+    var sub = round2(r.total - r.gst - (r.pst || 0));
+    if (sub <= 0 || !isRateOf(r.gst, sub, GST_RATES)) return;
+    if (r.pst !== null && !isRateOf(r.pst, sub, PST_RATES)) return;
+    r.subtotal = sub; r.subtotalWorkedOut = true;
+  }
 
   // Reads subtotal, the tax columns and the total. The total is taken ONLY from a "total" line.
   function parseAmounts(text) {
@@ -117,6 +147,7 @@
       else if (GST_WORDS.test(ln) && r.gst === null && amt < 10000) r.gst = amt;
       else if ((isTotalTax || SALESTAX_WORDS.test(ln)) && r.salesTax === null && amt < 10000) r.salesTax = amt;
     });
+    deriveSubtotal(r);
     var taxes = (r.gst || 0) + (r.pst || 0) + (r.salesTax || 0);
     if (r.total === null) {
       r.reasons.push(r.totalLineSeen ? 'the total line had no readable amount' : 'no "total" line found');
@@ -138,7 +169,9 @@
     if (/US\s?\$|\bUSD\b|\bU\.?S\.? dollars?\b/i.test(t)) found.push('USD');
     if (/\u20ac|\bEUR\b|\beuros?\b/i.test(t)) found.push('EUR');
     if (/\u00a3|\bGBP\b/i.test(t)) found.push('GBP');
-    var other = /\b(AUD|NZD|MXN|CHF|JPY|HKD|TWD|CNY|INR)\b/.exec(t);
+    // Rarer codes only count right next to an amount ("INR 35.09", "35.09 CNY"): the photo
+    // reader often spells INR/CNY/etc. out of smudges, which flagged Canadian receipts as foreign.
+    var other = /\b(AUD|NZD|MXN|CHF|JPY|HKD|TWD|CNY|INR)\s*\$?\s*\d+[.,]\d{2}\b/.exec(t) || /\d[.,]\d{2}\s*(AUD|NZD|MXN|CHF|JPY|HKD|TWD|CNY|INR)\b/.exec(t);
     if (other) found.push(other[1]);
     var cad = /\bCAD\b|\bC\$|\bCDN\b/i.test(t);
     var all = found.slice(); if (cad) all.push('CAD');
@@ -158,6 +191,23 @@
     }
     return null;
   }
+  // A chain name near the top beats the first line, which is often a logo the reader can't spell.
+  // (Street-name brands like Bell or Shaw are left out on purpose: "123 Bell Ave" is not a vendor.)
+  var BRANDS = ['Petro-Canada', 'Shell', 'Esso', 'Husky', 'Chevron', 'Ultramar', 'Pioneer', 'Co-op', 'Domo', 'Circle K', '7-Eleven',
+    'Tim Hortons', "McDonald's", 'Subway', 'Starbucks', 'A&W', "Wendy's", 'KFC', 'Dairy Queen', 'Pizza Hut', 'Boston Pizza', 'Second Cup',
+    'Home Depot', 'Rona', "Lowe's", 'Canadian Tire', 'Princess Auto', 'Home Hardware', 'Kent', 'Napa Auto Parts', 'Kal Tire', 'Fountain Tire',
+    'Staples', 'Walmart', 'Costco', 'Dollarama', 'Best Buy', 'Safeway', 'Sobeys', 'Superstore', 'No Frills', 'Shoppers Drug Mart', 'London Drugs',
+    'Giant Tiger', 'IKEA', 'Canada Post', 'Purolator', 'FedEx', 'Air Canada', 'WestJet', 'Impark', 'Telus', 'Rogers'];
+  var BRAND_RES = BRANDS.map(function (b) {
+    var pat = b.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/'/g, "'?").replace(/[\s-]+/g, '[\\s-]?');
+    return [b, new RegExp('(^|[^A-Za-z])' + pat + '(?![A-Za-z])', 'i')];
+  });
+  function brandIn(text) {
+    var head = String(text).split(/\r?\n/).slice(0, 12).join('\n');
+    for (var i = 0; i < BRAND_RES.length; i++) if (BRAND_RES[i][1].test(head)) return BRAND_RES[i][0];
+    return null;
+  }
+
   // Does the vendor text look like real words, not OCR noise?
   function vendorLooksReal(s) {
     if (!s || /\uFFFD/.test(s)) return false;
@@ -173,12 +223,17 @@
     return true;
   }
 
-  function extract(text) {
+  function extract(text, hints) {
     text = String(text == null ? '' : text);
     var a = parseAmounts(text), cur = detectCurrency(text), reasons = a.reasons.slice();
-    var vendor = parseVendor(text);
-    if (vendor && !vendorLooksReal(vendor)) { reasons.push('vendor text is unclear'); vendor = null; }
+    var vendor = parseVendor(text), brand = brandIn(text);
+    // Use the chain name unless the top line already names it (keeps "Tim Hortons #2231" store numbers).
+    if (brand && !(vendor && brand.toLowerCase().replace(/[^a-z]/g, '') && vendor.toLowerCase().replace(/[^a-z]/g, '').indexOf(brand.toLowerCase().replace(/[^a-z]/g, '')) >= 0)) vendor = brand;
+    else if (vendor && !vendorLooksReal(vendor)) { vendor = null; if (!(hints && hints.vendor)) reasons.push('vendor text is unclear'); }
     var date = parseDate(text);
+    // hints: date/vendor read cleanly from another reading of the same photo (amounts are never mixed).
+    if (!vendor && hints && hints.vendor) vendor = hints.vendor;
+    if (!date && hints && hints.date) date = hints.date;
     if (!vendor && reasons.indexOf('vendor text is unclear') < 0) reasons.push('no vendor found');
     if (!date) reasons.push('date missing or ambiguous');
     if ((text.match(/\uFFFD/g) || []).length >= 2) reasons.push('some text was unreadable (blurry?)');
