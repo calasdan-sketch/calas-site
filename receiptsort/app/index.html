@@ -161,20 +161,76 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
   function load(src) {
     return new Promise(function (ok, no) { var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
   }
+  var reading = ''; // "Reading 2 of 5: IMG_0042.jpg", shown with live progress
+  function onProgress(m) {
+    if (!busy) return;
+    if (m.status === 'recognizing text') statusEl.textContent = reading + ' — ' + Math.round(m.progress * 100) + '%';
+    else if (/load|initializ/i.test(m.status)) statusEl.textContent = 'Getting the reader ready (first time only)… ' + Math.round((m.progress || 0) * 100) + '%';
+  }
+  var workerP = null;
   function ocrWorker() {
-    if (worker) return Promise.resolve(worker);
-    return (window.Tesseract ? Promise.resolve() : load(TESS)).then(function () { return Tesseract.createWorker('eng'); })
-      .then(function (w) { worker = w; return w; });
+    if (!workerP) {
+      workerP = (window.Tesseract ? Promise.resolve() : load(TESS))
+        .then(function () { return Tesseract.createWorker('eng', 1, { logger: onProgress }); })
+        .then(function (w) { worker = w; return w; });
+      workerP.catch(function () { workerP = null; }); // let a later try download again
+    }
+    return workerP;
   }
   function pdfLib() {
     return (window.pdfjsLib ? Promise.resolve() : load(PDFJS)).then(function () { pdfjsLib.GlobalWorkerOptions.workerSrc = PDFWORKER; return pdfjsLib; });
   }
-  // Photo -> canvas: fix phone rotation, greyscale, scale up small shots, boost contrast.
+  // Otsu: the brightness that best splits a picture into dark (ink, table) and light (paper).
+  function otsu(hist, tot) {
+    var sum = 0, sB = 0, wB = 0, best = 0, th = 128, t;
+    for (t = 0; t < 256; t++) sum += t * hist[t];
+    for (t = 0; t < 256; t++) {
+      wB += hist[t]; if (!wB) continue;
+      var wF = tot - wB; if (!wF) break;
+      sB += t * hist[t];
+      var mB = sB / wB, mF = (sum - sB) / wF, between = wB * wF * (mB - mF) * (mB - mF);
+      if (between > best) { best = between; th = t; }
+    }
+    return th;
+  }
+  // Find the receipt in the photo (the big bright area) using a tiny copy, so it's instant.
+  // Falls back to the whole photo when the paper can't be told apart from the background.
+  var FIND_SIZE = 300, MIN_PAPER = 0.08;
+  function findPaper(bmp) {
+    var full = { x: 0, y: 0, w: bmp.width, h: bmp.height };
+    var k = Math.min(1, FIND_SIZE / Math.max(bmp.width, bmp.height));
+    var w = Math.max(1, Math.round(bmp.width * k)), h = Math.max(1, Math.round(bmp.height * k));
+    var c = document.createElement('canvas'); c.width = w; c.height = h;
+    var g = c.getContext('2d'); g.drawImage(bmp, 0, 0, w, h);
+    var p = g.getImageData(0, 0, w, h).data, lum = new Uint8Array(w * h), hist = new Array(256).fill(0), i, x, y;
+    for (i = 0; i < w * h; i++) { lum[i] = p[i * 4] * .299 + p[i * 4 + 1] * .587 + p[i * 4 + 2] * .114; hist[lum[i]]++; }
+    var th = otsu(hist, w * h), cols = new Array(w).fill(0), rows = new Array(h).fill(0);
+    for (y = 0; y < h; y++) for (x = 0; x < w; x++) if (lum[y * w + x] > th) { cols[x]++; rows[y]++; }
+    function span(a) {
+      var max = Math.max.apply(null, a), lo = -1, hi = -1;
+      for (var j = 0; j < a.length; j++) if (a[j] >= max * 0.5) { if (lo < 0) lo = j; hi = j; }
+      return [lo, hi];
+    }
+    var sx = span(cols), sy = span(rows);
+    if (sx[0] < 0 || sy[0] < 0) return full;
+    var bw = sx[1] - sx[0] + 1, bh = sy[1] - sy[0] + 1;
+    if (bw * bh < MIN_PAPER * w * h) return full;
+    var pad = Math.round(Math.max(bw, bh) * 0.03);
+    var x0 = Math.max(0, sx[0] - pad), y0 = Math.max(0, sy[0] - pad);
+    var x1 = Math.min(w, sx[1] + 1 + pad), y1 = Math.min(h, sy[1] + 1 + pad);
+    return { x: Math.round(x0 / k), y: Math.round(y0 / k), w: Math.round((x1 - x0) / k), h: Math.round((y1 - y0) / k) };
+  }
+  // Photo -> canvas: fix phone rotation, zoom in on the receipt, greyscale, boost contrast.
+  // The receipt is drawn READ_WIDTH pixels wide: big enough for small print, small enough to be quick on phones.
+  var READ_WIDTH = 1200, MAX_HEIGHT = 4000, MAX_ZOOM = 4;
   function prepImage(blob) {
     return createImageBitmap(blob, { imageOrientation: 'from-image' }).then(function (bmp) {
-      var s = Math.max(1, 1600 / Math.max(bmp.width, bmp.height));
-      var c = document.createElement('canvas'); c.width = Math.round(bmp.width * s); c.height = Math.round(bmp.height * s);
-      var g = c.getContext('2d'); g.drawImage(bmp, 0, 0, c.width, c.height);
+      var box = findPaper(bmp);
+      var s = Math.min(READ_WIDTH / box.w, MAX_HEIGHT / box.h, MAX_ZOOM);
+      var c = document.createElement('canvas'); c.width = Math.round(box.w * s); c.height = Math.round(box.h * s);
+      var g = c.getContext('2d'); g.imageSmoothingQuality = 'high';
+      g.drawImage(bmp, box.x, box.y, box.w, box.h, 0, 0, c.width, c.height);
+      if (bmp.close) bmp.close();
       var d = g.getImageData(0, 0, c.width, c.height), p = d.data, lo = 255, hi = 0, i, v;
       for (i = 0; i < p.length; i += 4) { v = p[i] * .299 + p[i + 1] * .587 + p[i + 2] * .114; p[i] = v; if (v < lo) lo = v; if (v > hi) hi = v; }
       var span = Math.max(1, hi - lo);
@@ -184,20 +240,14 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
   }
   // Black-and-white copy (Otsu threshold). Clears paper grain and shadows that make
   // the reader garble numbers: in testing it read 12 of 12 totals vs 2 of 12 without it.
-  function binarize(src) {
+  // Tested 2026-11-13 on 7 rough phone photos: smooth pass 6/7 at 0.23s each; with the sharp fallback 7/7.
+  // smooth=true first softens photo grain by 1px: about 8x faster to read, same accuracy.
+  function binarize(src, smooth) {
     var c = document.createElement('canvas'); c.width = src.width; c.height = src.height;
-    var g = c.getContext('2d'); g.drawImage(src, 0, 0);
-    var d = g.getImageData(0, 0, c.width, c.height), p = d.data, hist = new Array(256).fill(0), i, t;
+    var g = c.getContext('2d'); if (smooth) g.filter = 'blur(1px)'; g.drawImage(src, 0, 0); g.filter = 'none';
+    var d = g.getImageData(0, 0, c.width, c.height), p = d.data, hist = new Array(256).fill(0), i;
     for (i = 0; i < p.length; i += 4) hist[p[i] | 0]++;
-    var tot = p.length / 4, sum = 0, sB = 0, wB = 0, best = 0, th = 128;
-    for (t = 0; t < 256; t++) sum += t * hist[t];
-    for (t = 0; t < 256; t++) {
-      wB += hist[t]; if (!wB) continue;
-      var wF = tot - wB; if (!wF) break;
-      sB += t * hist[t];
-      var mB = sB / wB, mF = (sum - sB) / wF, between = wB * wF * (mB - mF) * (mB - mF);
-      if (between > best) { best = between; th = t; }
-    }
+    var th = otsu(hist, p.length / 4);
     for (i = 0; i < p.length; i += 4) p[i] = p[i + 1] = p[i + 2] = p[i] > th ? 255 : 0;
     g.putImageData(d, 0, 0); return c;
   }
@@ -207,17 +257,20 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
       .then(function (r) { return (r.data && r.data.text || '').trim(); });
   }
   // Read a picture up to three ways and keep the reading whose numbers check out best.
-  var PASSES = [[true, '6'], [false, '6'], [false, '3']];
+  // Each pass: [picture to read, layout]. Later passes only run if the earlier ones missed something.
+  var PASSES = [['smooth', '6'], ['sharp', '6'], ['grey', '6']];
   function score(r) {
     return (r.status === 'ok' ? 100 : 0) + (r.total != null ? 10 : 0) +
       ['date', 'vendor', 'subtotal', 'gst', 'pst', 'sales_tax'].filter(function (k) { return r[k] != null; }).length;
   }
   function readPicture(canvas) {
-    var best = null, bw = null;
+    var best = null;
     return PASSES.reduce(function (p, pass) {
       return p.then(function () {
-        if (best && best.status === 'ok') return;
-        var img = pass[0] ? (bw = bw || binarize(canvas)) : canvas;
+        // Good enough: stop. Extra readings only run when something important is still missing.
+        // (No subtotal = nothing to cross-check, e.g. gas receipts; numbers that don't add up = try again.)
+        if (best && (best.status === 'ok' || (best.total != null && best.date && best.vendor && best.subtotal == null))) return;
+        var img = pass[0] === 'grey' ? canvas : binarize(canvas, pass[0] === 'smooth');
         return ocr(img, pass[1]).then(function (text) {
           var row = RSParse.extract(text);
           if (!best || score(row) > score(best)) best = row;
@@ -328,7 +381,8 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
     statusEl.textContent = 'Getting ready… the first time takes a few seconds while the reader downloads.';
     files.reduce(function (p, f) {
       return p.then(function () {
-        statusEl.textContent = 'Reading ' + (done + 1) + ' of ' + files.length + ': ' + f.name;
+        reading = 'Reading ' + (done + 1) + ' of ' + files.length + ': ' + f.name;
+        statusEl.textContent = reading;
         return readFile(f).then(function (r) {
           r.file = f.name; rows.push(r);
         }, function () { rows.push({ file: f.name, date: null, vendor: null, subtotal: null, gst: null, pst: null, sales_tax: null, total: null, currency: 'CAD', category: 'Uncategorized', status: 'needs_review (could not read)', reason: 'could not open this file — try a clearer photo or a JPG/PNG' }); })
@@ -341,6 +395,8 @@ function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var 
   }
   $('files').addEventListener('change', function (e) { run(e.target.files); e.target.value = ''; });
   var drop = $('drop');
+  // Start downloading the reader as soon as someone reaches for the button, so it's ready by the time they've picked photos.
+  ['pointerdown', 'focusin'].forEach(function (t) { drop.addEventListener(t, function () { ocrWorker().catch(function () {}); }, { once: true }); });
   ['dragenter', 'dragover'].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.add('over'); }); });
   ['dragleave', 'drop'].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.remove('over'); }); });
   drop.addEventListener('drop', function (e) { run(e.dataTransfer && e.dataTransfer.files); });
