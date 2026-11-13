@@ -13,6 +13,14 @@ test('ambiguous dates are left blank, never guessed', () => {
   assert.equal(P.parseDate('13/04/2026'), '2026-04-13');
   assert.equal(P.parseDate('Sep 14, 2026'), '2026-09-14');
   assert.equal(P.parseDate('2026-02-30'), null);
+  assert.equal(P.parseDate('2026/10/15'), '2026-10-15');
+  assert.equal(P.parseDate('2026.10.5'), '2026-10-05');
+  assert.equal(P.parseDate('2826/10/15'), null); // OCR misread year
+});
+
+test('a slash-dated receipt keeps its amounts (date not read as money)', () => {
+  const r = P.extract('STAPLES\n2026/10/15\nSUB-TOTAL 19.48\nHST 13% 2.53\nTOTAL DUE 22.01\n');
+  assert.deepEqual([r.date, r.subtotal, r.gst, r.total, r.status], ['2026-10-15', 19.48, 2.53, 22.01, 'ok']);
 });
 
 test('no total line and a tie for the biggest amount -> needs review', () => {

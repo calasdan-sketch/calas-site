@@ -12,7 +12,7 @@
   // Money: 12.47  1,234.56  4,80  1.234,56  (needs exactly two decimals; dates are masked out first)
   var MONEY = /(?<![\d.,])(\d{1,3}(?:[.,]\d{3})+[.,]\d{2}|\d+[.,]\d{2})(?!\d)(?![.,]\d)/g;
   var DATE_PATTERNS = [
-    [/\b(\d{4})-(\d{2})-(\d{2})\b/, 'ymd'],
+    [/\b(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})\b/, 'ymd'], // 2026-10-15, 2026/10/15, 2026.10.15
     [/\b(\d{1,2})\/(\d{1,2})\/(\d{4})\b/, 'mdy_or_dmy'],
     [/\b(\d{1,2})\/(\d{1,2})\/(\d{2})\b/, 'mdy2'],
     [/\b(\d{1,2})[.\-](\d{1,2})[.\-](\d{4})\b/, 'dmy_dotted'],
@@ -20,7 +20,7 @@
     [/\b(\d{1,2}) ([A-Z][a-z]{2,8})\.? (\d{4})\b/, 'd_mon_y']
   ];
   // Used to blank dates out of a line before looking for money, so 21.10.2026 is never read as 21.10.
-  var DATE_MASK = /\b\d{4}-\d{2}-\d{2}\b|\b\d{1,2}[\/.\-]\d{1,2}[\/.\-]\d{2,4}\b|\b[A-Z][a-z]{2,8}\.? \d{1,2},? \d{4}\b|\b\d{1,2} [A-Z][a-z]{2,8}\.? \d{4}\b/g;
+  var DATE_MASK = /\b\d{4}[-\/.]\d{1,2}[-\/.]\d{1,2}\b|\b\d{1,2}[\/.\-]\d{1,2}[\/.\-]\d{2,4}\b|\b[A-Z][a-z]{2,8}\.? \d{1,2},? \d{4}\b|\b\d{1,2} [A-Z][a-z]{2,8}\.? \d{4}\b/g;
   var MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
   var TOTAL_WORDS = /\b(grand\s*total|total\s*(?:due|paid|amount)?|amount\s*due|balance\s*due|netto\s*total)\b/i;
   var TOTAL_EXCLUDE = /total\s*(savings?|saved|discounts?|items?|qty|points|rewards)/i;
@@ -71,6 +71,8 @@
   }
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function validDate(y, mo, d) {
+    // A misread year (2826, 1026) is treated as no date, so the row gets flagged instead of passing.
+    if (y < 2000 || y > new Date().getFullYear() + 1) return null;
     var t = new Date(Date.UTC(y, mo - 1, d));
     return t.getUTCFullYear() === y && t.getUTCMonth() === mo - 1 && t.getUTCDate() === d ? y + '-' + pad(mo) + '-' + pad(d) : null;
   }
