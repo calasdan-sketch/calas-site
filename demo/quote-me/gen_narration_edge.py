@@ -23,7 +23,7 @@ LINES = [
     "Press Send, and the customer gets one link by email. In this demo, nothing is actually sent.",
     "She reads it, types her name to accept, and pays the deposit from her bank account or a card, right there.",
     "Dave is told the moment it's done. The job is booked before the truck leaves the driveway.",
-    "Quote Me is ninety-nine dollars a month per shop, with no setup fee. If it hasn't collected a real deposit for you in sixty days, those two months are refunded.",
+    "Quote Me is ninety-nine dollars a month per shop, with no setup fee. Try it free for fourteen days, no card needed.",
     "That's the tour. Now try it yourself: pick a job or type your own, and build a quote.",
 ]
 
