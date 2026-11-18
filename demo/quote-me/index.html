@@ -399,7 +399,7 @@ details.rate summary{cursor:pointer;font-size:16.5px;color:var(--accent);font-we
     <p class="fl">A voice note on site becomes a priced quote from your own rate card. The customer accepts by typing their name and pays the deposit before the truck leaves. Built in Winnipeg by Calas Automations.</p>
   </div>
   <div class="legal">
-    <p>C$99/mo per shop, no setup fee, no contract. Try it free for 14 days, no card needed. If it isn't for you, ask within 60 days and we refund every payment. <a href="/pay/#quoteme">See pricing</a>.</p>
+    <p>C$99/mo per shop, no setup fee, no contract. Try it free for 14 days, no card needed. <a href="/pay/#quoteme">See pricing</a>.</p>
     <p>&copy; 2026 Calas Automations &middot; Winnipeg, Manitoba. Demo only &mdash; made-up shop and customers.</p>
   </div>
 </div></footer>
@@ -753,7 +753,7 @@ function accept(){
     '<div class="kv"><span>Stripe’s fee on it</span><span class="mono">CA'+money(fee)+'</span></div>'+
     '<div class="kv"><span>Balance on completion</span><span class="mono">CA'+money(r2(t.total-t.dep))+'</span></div>'+
     '<p class="fn">'+(S.method==='pad'?'A bank debit is authorized on the spot; the money confirms over the following business days. ':'')+'Deposits go straight to the shop’s own Stripe account. Fees use Stripe Canada’s published rates (card 2.9% + CA$0.30; bank debit 1% + CA$0.40, capped at CA$5.00), checked 21 Sept 2026.</p>'+
-    '<div class="offer"><a class="run" href="/pay/#quoteme">Get Quote Me for your shop &rarr;</a><span>C$99/mo per shop, no setup fee. 14-day free trial, no card. 60-day money-back guarantee.</span></div>';
+    '<div class="offer"><a class="run" href="/pay/#quoteme">Get Quote Me for your shop &rarr;</a><span>C$99/mo per shop, no setup fee. 14-day free trial, no card.</span></div>';
   $('nName').textContent=S.acceptName;
 }
 
