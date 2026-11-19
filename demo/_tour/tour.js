@@ -97,6 +97,7 @@
     setVoiceLabel();
   }
   function removeOverlay() {
+    if (state && state.follow) { clearInterval(state.follow); state.follow = null; }
     ['cursor', 'cap', 'bar', 'skip', 'voice'].forEach(function (k) {
       var n = ui[k]; if (n && n.parentNode) n.parentNode.removeChild(n);
       ui[k] = null;
@@ -159,10 +160,18 @@
       var now = sample();
       still = now === last ? still + 1 : 0;
       last = now;
-      if (still >= 2 || ++tries > 30) return;
+      if (still >= 2 || ++tries > 55) return;
       return sleep(70).then(poll);
     }
-    return sleep(first).then(poll);
+    return sleep(first).then(poll).then(function () {
+      // Still not on screen (the page was scrolling somewhere else): jump straight to it.
+      if (state.stopped) return;
+      var r = node.getBoundingClientRect(), vh = window.innerHeight;
+      if (r.bottom < 40 || r.top > vh - 40) {
+        try { node.scrollIntoView({ behavior: 'auto', block: 'center' }); } catch (e) {}
+        return sleep(80);
+      }
+    });
   }
 
   function hit(a, b) { return a.l < b.r && a.r > b.l && a.t < b.b && a.b > b.t; }
@@ -183,7 +192,10 @@
      right and left of the target; if the target fills the window, the caption goes
      to the opposite edge of the window from the cursor. */
   function placeCaption(node, cx, cy, opts) {
-    var vw = window.innerWidth, vh = window.innerHeight, pad = 10, gap = 14;
+    var vw = window.innerWidth, vh = window.innerHeight, pad = 10, gap = 14, top0 = pad;
+    // keep clear of the site's sticky header when it is showing
+    var hdr = document.querySelector('.cbar, #hdr');
+    if (hdr) { var hr = hdr.getBoundingClientRect(); if (hr.top <= 0 && hr.bottom > 0 && hr.bottom < vh / 3 && /fixed|sticky/.test(getComputedStyle(hdr).position)) top0 = hr.bottom + 6; }
     ui.cap.style.maxWidth = Math.min(360, vw - 2 * pad) + 'px';
     var w = ui.cap.offsetWidth, h = ui.cap.offsetHeight;
     var keep = [], tb = box(node, vw, vh);
@@ -195,9 +207,9 @@
     // the Voice / Skip buttons, bottom left
     var buttons = { l: 0, t: vh - 112, r: 196, b: vh };
     function clampX(x) { return Math.min(Math.max(pad, x), vw - w - pad); }
-    function clampY(y) { return Math.min(Math.max(pad, y), vh - h - pad); }
+    function clampY(y) { return Math.min(Math.max(top0, y), vh - h - pad); }
     function rect(x, y) { return { l: x, t: y, r: x + w, b: y + h }; }
-    function inside(c) { return c.l >= pad - 1 && c.t >= pad - 1 && c.r <= vw - pad + 1 && c.b <= vh - pad + 1; }
+    function inside(c) { return c.l >= pad - 1 && c.t >= top0 - 1 && c.r <= vw - pad + 1 && c.b <= vh - pad + 1; }
     function clear(c) {
       if (hit(c, buttons)) return false;
       for (var k = 0; k < keep.length; k++) if (hit(c, keep[k])) return false;
@@ -210,7 +222,7 @@
     for (var i = 0; i < tries.length; i++) if (inside(tries[i]) && clear(tries[i])) return tries[i];
     // Nothing fits beside the target: dock at the top or bottom edge, whichever
     // covers less of it; on a tie, the edge away from the cursor.
-    var top = rect(clampX(cx - w / 2), pad), bot = rect(clampX(cx - w / 2), vh - h - pad);
+    var top = rect(clampX(cx - w / 2), top0), bot = rect(clampX(cx - w / 2), vh - h - pad);
     if (hit(bot, buttons)) {
       if (vw - 196 - pad >= w) bot = rect(Math.max(196, bot.l), bot.t); else bot = rect(bot.l, buttons.t - h - 6);
     }
@@ -218,6 +230,30 @@
     var ct = cost(top), cb = cost(bot);
     if (Math.abs(ct - cb) < 1) return cy < vh / 2 ? bot : top;
     return ct < cb ? top : bot;
+  }
+
+  /* While a line is being spoken the page can still move under the caption (the
+     demo opens a panel, a list grows, the visitor scrolls). Keep the cursor on the
+     target and the caption off it. */
+  function follow(node, i, opts) {
+    if (state.follow) clearInterval(state.follow);
+    state.follow = null;
+    if (!node) return;
+    function key() { var r = node.getBoundingClientRect(); return [Math.round(r.left), Math.round(r.top), Math.round(r.width), Math.round(r.height)].join(','); }
+    var last = key();
+    state.follow = setInterval(function () {
+      if (state.stopped || !ui.cap || !state.at || state.at.step !== i) { clearInterval(state.follow); state.follow = null; return; }
+      var now = key();
+      if (now === last) return;
+      last = now;
+      var vw = window.innerWidth, vh = window.innerHeight, r = node.getBoundingClientRect();
+      if (!r.width && !r.height) return;
+      var cx = Math.min(Math.max(8, r.left + r.width * (opts.px != null ? opts.px : 0.5)), vw - 20);
+      var cy = Math.min(Math.max(8, r.top + r.height * (opts.py != null ? opts.py : 0.5)), vh - 24);
+      ui.cursor.style.left = (cx - 3) + 'px'; ui.cursor.style.top = (cy - 3) + 'px';
+      var c = placeCaption(node, cx, cy, opts);
+      ui.cap.style.left = Math.round(c.l) + 'px'; ui.cap.style.top = Math.round(c.t) + 'px';
+    }, 280);
   }
 
   function point(target, i, opts) {
@@ -243,6 +279,8 @@
       ui.cap.setAttribute('data-step', i);
       var c = placeCaption(node, cx, cy, opts);
       ui.cap.style.left = Math.round(c.l) + 'px'; ui.cap.style.top = Math.round(c.t) + 'px'; ui.cap.style.opacity = '1';
+      state.at = { step: i, node: node, avoid: opts.avoid || null };
+      follow(node, i, opts);
       return say(i);
     });
   }
@@ -421,6 +459,7 @@
       if (document.readyState === 'complete') go(); else window.addEventListener('load', go);
     },
     replay: function () { stop(); again(); },
-    running: function () { return !!(state && !state.stopped); }
+    running: function () { return !!(state && !state.stopped); },
+    at: function () { return state && state.at || null; }   // current step and target, for tests
   };
 })();

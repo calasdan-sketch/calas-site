@@ -1674,7 +1674,7 @@ build();renderPlan();setDay(0);render();
         .then(function(){t.tap('#hsend');return t.sleep(2200)})
         // Close the chat so the result is in plain view for the last three steps and at the end.
         .then(function(){if(CalasTour.running())chat().close();return whenOutcome(t)})
-        .then(function(){return t.point('#outcome .side.after .big',6,{avoid:'#outcome .cmp'})})
+        .then(function(){return t.point('#outcome .side.after .big',6)})
         .then(function(){return t.point('#outcome a.offer',7,{avoid:'#outcome .side.after'})})
         .then(function(){return t.point('#outcome .cmp',8)});
     }

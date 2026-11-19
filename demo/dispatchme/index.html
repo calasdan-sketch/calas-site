@@ -699,7 +699,7 @@ CalasTour.start({
         return t.point("#addCard", 3, { py: 0.35 });
       })
       .then(function () { return t.sleep(1200); })
-      .then(function () { return t.point("#stormBtn", 4); })
+      .then(function () { return t.point("#stormBtn", 4, { avoid: "#snow" }); })
       .then(function () { t.tap("#stormBtn"); return t.sleep(700); })
       .then(function () { return t.point("#lot-kw", 5, { px: 0.3, py: 0.9 }); })
       .then(function () { return t.point("#lot-sv", 6, { px: 0.3, py: 0.9 }); })
