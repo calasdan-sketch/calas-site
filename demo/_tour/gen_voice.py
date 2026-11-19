@@ -31,7 +31,23 @@ SARAH_VOICE_ID = "EXAVITQu4vr4xnSDxMaL"  # ElevenLabs premade "Sarah"
 EL_MODEL = "eleven_flash_v2_5"
 EL_CREDITS_PER_CHAR = 0.5
 # spelled for the ear only; the captions keep the real wording
-SAY_AS = [(re.compile(r"\bLead Me\b"), "Leed Me")]
+SAY_AS = [(re.compile(r"\bLead Me\b"), "Leed Me"),
+          (re.compile(r"\bCalas\b"), "Callis")]
+# every clip is levelled to the same loudness so no demo is louder than another
+LOUDNORM = "loudnorm=I=-19:TP=-3:LRA=11"
+
+
+def spoken(text: str) -> str:
+    for pattern, said in SAY_AS:
+        text = pattern.sub(said, text)
+    return text
+
+
+def level(path: str) -> None:
+    tmp = path + ".tmp.mp3"
+    subprocess.check_call(["ffmpeg", "-v", "error", "-y", "-i", path, "-af", LOUDNORM,
+                           "-ar", "44100", "-ac", "1", "-b:a", "128k", tmp])
+    os.replace(tmp, path)
 DURS_RE = re.compile(r"\b(durs|DURS)(\s*[:=]\s*)\[[^\]]*\]")
 
 
@@ -54,8 +70,7 @@ def el_credits_left() -> int:
 
 def say_elevenlabs(text: str) -> bytes:
     voice = os.environ.get("ELEVENLABS_VOICE_ID") or SARAH_VOICE_ID
-    for pattern, spoken in SAY_AS:
-        text = pattern.sub(spoken, text)
+    text = spoken(text)
     return _el_request(f"/v1/text-to-speech/{voice}?output_format=mp3_44100_128",
                        {"text": text, "model_id": EL_MODEL,
                         "voice_settings": {"stability": 0.6, "similarity_boost": 0.8, "style": 0.0,
@@ -63,7 +78,7 @@ def say_elevenlabs(text: str) -> bytes:
 
 
 def say_kokoro(text: str) -> bytes:
-    body = json.dumps({"model": "kokoro", "input": text, "voice": "af_heart", "speed": 1.0,
+    body = json.dumps({"model": "kokoro", "input": spoken(text), "voice": "af_heart", "speed": 1.0,
                        "response_format": "mp3"}).encode()
     req = urllib.request.Request("http://127.0.0.1:8880/v1/audio/speech", data=body,
                                  headers={"Content-Type": "application/json"})
@@ -110,6 +125,7 @@ def regenerate(demo: str, steps: list | None, say) -> None:
             shutil.copy2(path, backup)
         with open(path, "wb") as fh:
             fh.write(say(text))
+        level(path)
         durs[i] = duration(path)
         print(f"  {demo} step {i}: {durs[i]}s")
     write_durs(demo, durs)
