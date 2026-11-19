@@ -198,7 +198,7 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
 <meta property="og:site_name" content="Calas Automations">
 <meta property="og:locale" content="en_CA">
 <meta property="og:title" content="Haul Me — the rate that still pays for fuel">
-<meta property="og:description" content="A broker calls with a load and you have about ten seconds to answer. Haul Me works out the rate that still pays for fuel, the truck and you. Two weeks free.">
+<meta property="og:description" content="A broker calls with a load and you have about ten seconds to answer. Haul Me works out the rate that still pays for fuel, the truck and you. 30-day money-back guarantee.">
 <meta property="og:url" content="https://calasautomations.com/demo/haul-me/">
 <meta property="og:image" content="https://calasautomations.com/og/demo-haul-me.jpg">
 <meta property="og:image:width" content="1200">
@@ -206,7 +206,7 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
 <meta property="og:image:alt" content="Haul Me — the rate that still pays for fuel: Know your floor rate before you say yes.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Haul Me — the rate that still pays for fuel">
-<meta name="twitter:description" content="A broker calls with a load and you have about ten seconds to answer. Haul Me works out the rate that still pays for fuel, the truck and you. Two weeks free.">
+<meta name="twitter:description" content="A broker calls with a load and you have about ten seconds to answer. Haul Me works out the rate that still pays for fuel, the truck and you. 30-day money-back guarantee.">
 <meta name="twitter:image" content="https://calasautomations.com/og/demo-haul-me.jpg">
 <meta name="twitter:image:alt" content="Haul Me — the rate that still pays for fuel: Know your floor rate before you say yes.">
 <!-- og:end -->
@@ -225,7 +225,7 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
     <div class="who"><b>Red Willow Transport</b>Signed in as Kelly &middot; Owner-operator &middot; 1 truck</div>
   </div>
   <div class="controls">
-    <a class="getlink" id="getlink" href="/pay/#haulme">Get this for your trucks &middot; from C$39/mo &rarr;</a>
+    <a class="getlink" id="getlink" href="/pay/#haulme">Get this for your trucks &middot; from C$19/mo &rarr;</a>
     <button class="run" id="topCheck" type="button">Check a load</button>
     <button class="ghost" id="reset" type="button">Start over</button>
   </div>
@@ -616,7 +616,7 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
     "It also shows your floor rate: the lowest rate per loaded kilometre you can counter down to without losing money.",
     "Worried about fuel? Drag the fuel slider to see what a price jump does to the call, right away.",
     "Every load goes into a running log, totalled by broker and by lane, with a one-click CSV export, so you see who actually makes you money.",
-    "Haul Me is $39 a month for up to three trucks, or $99 for up to twenty. Flat, not per truck, with a thirty-day money-back guarantee.",
+    "Haul Me is $39 a month for up to three trucks, or $99 for up to twenty. The first fifty sign-ups pay $19 a month, locked for three years. And there's a thirty-day money-back guarantee.",
     "Now it's your turn. Change the costs, try your own loads, and see what the numbers say."
   ];
   var DURS = [8.27, 9.01, 7.57, 5.94, 7.2, 8.64, 6.32, 5.25, 8.78, 9.43, 4.64];
@@ -657,6 +657,13 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
       durs: DURS,
       audioBase: 'narration/step-',
       onReplay: reset,
+      end: {
+        name: 'Haul Me',
+        does: 'Works out your real cost per km (or mile) and gives a green, yellow or red call on any load.',
+        offer: 'Owner-operator C$39 a month (up to 3 trucks). Small fleet C$99 a month (up to 20). Founding C$19 a month for the first 50, locked for 3 years. No setup fee.',
+        terms: 'Guarantee: 30 days, money back, no questions asked.',
+        cta: { label: 'Get started \u2014 from C$19/mo', href: '/pay/#haulme' }
+      },
       script: function (t) {
         return go(t, '#brand', 0, { px: 0.2 })
           .then(function () { return go(t, '#costFields', 1, { py: 0.35 }); })
@@ -680,7 +687,7 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
           .then(function () {
             return Promise.all([go(t, '#logCard', 8, { py: 0.3 }), t.sleep(4200).then(function () { t.tap('#tabBroker'); })]);
           })
-          .then(function () { return go(t, '#offer', 9); })
+          .then(function () { return go(t, '#offer', 9, { avoid: ['#priceH', '#priceH + p', '.plans'] }); })
           .then(function () { return go(t, '#costsCard', 10, { py: 0.2 }); });
       }
     });

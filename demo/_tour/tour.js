@@ -224,6 +224,8 @@
     if (state.stopped) return Promise.resolve();
     opts = opts || {};
     var node = q(target);
+    // a target that is not shown (inside a closed panel, say) is treated as "no target"
+    if (node && !node.getClientRects().length) node = null;
     if (node) { try { node.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: opts.block || 'center' }); } catch (e) {} }
     return settle(node).then(function () {
       if (state.stopped || !ui.cursor) return;

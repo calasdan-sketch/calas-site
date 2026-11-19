@@ -338,7 +338,7 @@ details.rate summary{cursor:pointer;font-size:16.5px;color:var(--accent);font-we
         <details class="rate">
           <summary>Dave's rate card (made-up)</summary>
           <table class="ratetab" id="rateTab"></table>
-          <p class="fn">Your own labour rate, markups and usual parts. In the real app you send us your rate card and we load it.</p>
+          <p class="fn">Your own labour rate, markups and usual parts. In the real app you type your prices in once (about 5 minutes) or paste a price list and edit it.</p>
         </details>
       </div>
     </section>
@@ -387,7 +387,7 @@ details.rate summary{cursor:pointer;font-size:16.5px;color:var(--accent);font-we
     </aside>
   </div>
 
-  <p class="foot">Made-up shop, customers, prices and times. In the real app the voice note is turned into text, the quote is priced from the rate card you give us, the link goes out by email (text message is on the way), and deposits are paid into the shop's own Stripe account. Calas Automations never holds client funds.</p>
+  <p class="foot">Made-up shop, customers, prices and times. In the real app the voice note is turned into text, the quote is priced from your own rate card, the link goes out by email, not as a text message, and deposits are paid into the shop's own Stripe account. Calas Automations never holds client funds.</p>
 </div></main>
 
 <footer class="sitefoot"><div class="wrap">
@@ -693,19 +693,38 @@ function build(){
   },700);
 }
 
-var recording=false;
+var recording=false,listening=null,heard=0;
+/* The tour opens on this: the voice note already being recorded (the wave and the
+   clock run), so the first frame shows the product doing something. Pressing the
+   mic, or the tour's next step, turns it into text as before. */
+function listen(){
+  if(recording||building||S.sent||listening||S.lines.length||$('job').value)return;
+  var mic=$('mic');
+  mic.classList.add('live');$('micLab').textContent='Listening…';$('micSub').textContent='Demo voice note: furnace service. No microphone used.';
+  $('recbar').hidden=false;heard=0;$('recTime').textContent='0:00';
+  listening=setInterval(function(){heard++;$('recTime').textContent='0:'+('0'+Math.min(heard,59)).slice(-2);},1000);
+}
+function stopListening(restore){
+  if(!listening)return;
+  clearInterval(listening);listening=null;
+  if(restore){
+    var mic=$('mic');mic.classList.remove('live');$('recbar').hidden=true;heard=0;
+    $('micLab').textContent='Play a sample voice note';$('micSub').textContent='Demo: plays the example job below. No microphone used.';
+  }
+}
 function playVoice(){
   if(recording||building||S.sent)return;
+  stopListening(false);
   var ex=S.ex||EXAMPLES[0];S.ex=ex;renderChips();
   recording=true;
   var mic=$('mic'),ta=$('job');
   mic.classList.add('live');mic.disabled=true;$('micLab').textContent='Listening…';$('micSub').textContent='Demo voice note: '+ex.label.toLowerCase();
   $('recbar').hidden=false;ta.value='';
-  var words=ex.text.split(' '),n=words.length,step=3600/n,secs=84;
+  var words=ex.text.split(' '),n=words.length,step=3600/n,secs=84,base=Math.min(heard,40);heard=0;
   words.forEach(function(w,i){
     later(function(){
       ta.value=words.slice(0,i+1).join(' ');
-      var s=Math.round(secs*(i+1)/n);$('recTime').textContent=Math.floor(s/60)+':'+('0'+s%60).slice(-2);
+      var s=Math.round(base+(secs-base)*(i+1)/n);$('recTime').textContent=Math.floor(s/60)+':'+('0'+s%60).slice(-2);
       if(i===n-1){
         recording=false;mic.classList.remove('live');mic.disabled=false;$('recbar').hidden=true;
         $('micLab').textContent='Play the voice note again';$('micSub').textContent='Turned into text below. Edit anything, then build.';
@@ -715,6 +734,7 @@ function playVoice(){
 }
 function pickExample(id){
   if(recording)return;
+  stopListening(true);
   for(var i=0;i<EXAMPLES.length;i++)if(EXAMPLES[i].id===id)S.ex=EXAMPLES[i];
   $('job').value=S.ex.text;$('nomatch').hidden=true;
   renderChips();
@@ -758,7 +778,7 @@ function accept(){
 }
 
 function resetAll(){
-  clearTimers();building=false;recording=false;
+  clearTimers();building=false;recording=false;stopListening(true);
   S=fresh();
   $('job').value='';$('nomatch').hidden=true;
   var mic=$('mic');mic.classList.remove('live');mic.disabled=false;$('recbar').hidden=true;
@@ -772,7 +792,7 @@ function resetAll(){
 /* ---------- wiring ---------- */
 $('mic').addEventListener('click',playVoice);
 $('chips').addEventListener('click',function(e){var b=e.target.closest('[data-ex]');if(b)pickExample(b.getAttribute('data-ex'));});
-$('job').addEventListener('input',function(){ if(!recording&&S.ex&&$('job').value!==S.ex.text){S.ex=null;renderChips();} });
+$('job').addEventListener('input',function(){ if(!recording)stopListening(true); if(!recording&&S.ex&&$('job').value!==S.ex.text){S.ex=null;renderChips();} });
 $('build').addEventListener('click',build);
 $('buildTop').addEventListener('click',function(){
   if(!$('job').value.trim()){$('job').focus();}
@@ -798,7 +818,7 @@ $('pscr').addEventListener('click',function(e){if(e.target.closest('#cAccept'))a
 renderRate();
 resetAll();
 
-window.QuoteMeDemo={reset:resetAll,parse:parse};
+window.QuoteMeDemo={reset:resetAll,parse:parse,listen:listen,stopListening:stopListening};
 })();
 </script>
 
@@ -825,7 +845,16 @@ window.QuoteMeDemo={reset:resetAll,parse:parse};
   function tapDuring(t,sel,ms){ return t.sleep(ms).then(function(){ t.tap(sel); }); }
   CalasTour.start({
     lines:LINES, durs:DURS, audioBase:'narration/step-',
+    onStart:function(){ window.QuoteMeDemo.listen(); },
     onReplay:function(){ window.QuoteMeDemo.reset(); window.scrollTo(0,0); },
+    onEnd:function(){ window.QuoteMeDemo.stopListening(true); },
+    end:{
+      name:'Quote Me',
+      does:'Turns a 90-second voice note into a priced quote from your own rate card.',
+      offer:'C$99 a month for the whole shop, one flat price with no per-user charge, no setup fee, early access.',
+      terms:'14-day free trial with no card.',
+      cta:{label:'Start your 14-day free trial', href:'/quote-me/app/?signup=1'}
+    },
     script:function(t){
       return t.point('.hello h1',0)
         .then(function(){ return Promise.all([t.point('#mic',1), tapDuring(t,'#mic',3200)]); })
@@ -843,7 +872,7 @@ window.QuoteMeDemo={reset:resetAll,parse:parse};
         })
         .then(function(){ t.tap('#cAccept'); return t.sleep(1000); })
         .then(function(){ return t.point('#notif h3',10); })
-        .then(function(){ return t.point('.getlink',11); })
+        .then(function(){ return t.point('#notif .offer .run',11,{avoid:'#notif .offer'}); })
         .then(function(){ return t.point(null,12); });
     }
   });

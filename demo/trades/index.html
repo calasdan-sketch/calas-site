@@ -15,7 +15,7 @@
 <meta name="twitter:image" content="https://calasautomations.com/og/demo-trades.jpg">
 <meta name="twitter:image:alt" content="Know who is covered before they walk on site: Track your subs' insurance and WCB papers">
 <!-- og:end -->
-<link rel="canonical" href="https://calasautomations.com/demo/trades/"></head><body><div id="honesty-banner" style="background:#EAF2F7;color:#0B2E45;border-bottom:1px solid #155F87;padding:8px 16px;font:13px/1.4 system-ui,sans-serif;text-align:center">Demo with made-up data. On File is in early access: sign-up is manual and we set it up with you by hand, with a free two-week pilot. In this simulation &ldquo;Automatic&rdquo; shows the schedule that runs only after daily chasing is switched on for a customer, and the voice-over describes that mode. Not live yet: the mailbox reader. Not built: folder sync. Cara only drafts replies.</div>
+<link rel="canonical" href="https://calasautomations.com/demo/trades/"></head><body><details id="honesty-banner" style="background:#EAF2F7;color:#0B2E45;border-bottom:1px solid #155F87;padding:8px 16px;font:13px/1.4 system-ui,sans-serif;text-align:center"><summary style="cursor:pointer;display:inline-block;list-style:none">Demo with made-up data. On File is in early access. <span style="text-decoration:underline;white-space:nowrap">What is live and what is not</span></summary><p style="margin:6px auto 2px;max-width:980px">Demo with made-up data. On File is in early access: sign-up is manual and we set it up with you by hand, with a free two-week pilot. In this simulation &ldquo;Automatic&rdquo; shows the schedule that runs only after daily chasing is switched on for a customer, and the voice-over describes that mode. Not live yet: the mailbox reader. Not built: folder sync. Cara only drafts replies.</p></details>
 <title>On File</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1137,7 +1137,12 @@ document.getElementById('run2').addEventListener('click',function(){play();docum
     out:['Certificate of insurance','WCB clearance letter'],
     got:[{d:'Signed lien waiver',day:'the 3rd'}],
     expired:'your certificate expired on March 31'};
-  function P(){
+  /* Cara stays with the client she greeted (PIN), even while the run moves on to
+     other clients behind the chat. The tour also freezes that client's file as it
+     was at the greeting, so the greeting and the answer always agree. */
+  var PIN=null, FROZEN=null, freezeNext=false;
+  function P(){ return FROZEN || Pat(PIN==null?CIDX:PIN); }
+  function Pat(CIDX){
     var c=C[CIDX];
     if(VERT==='trades'){
       return {v:'trades',firm:'Northgate Construction',staff:'Dave',phone:'(204) 555-0172',
@@ -1194,7 +1199,7 @@ document.getElementById('run2').addEventListener('click',function(){play();docum
     M.escalated=true;
     feed('call','☎','<b>'+p.person+'</b> — '+why+'. On '+p.staff+"'s call list with the transcript.");
     alog('call',p.company,why+' · escalated to '+p.staff+' · transcript attached');
-    if(p.v==='cpa')pill(CIDX,'p-call',p.staff+' to call');
+    if(p.v==='cpa')pill(PIN==null?CIDX:PIN,'p-call',p.staff+' to call');
   }
   function stopChase(p,why,hard){
     M.stopped=!!hard; M.dropped=true;
@@ -1528,6 +1533,8 @@ document.getElementById('run2').addEventListener('click',function(){play();docum
   }
 
   function greet(){
+    PIN=CIDX;FROZEN=null;
+    if(freezeNext){try{FROZEN=JSON.parse(JSON.stringify(Pat(PIN)))}catch(e){FROZEN=null}}
     var p=P(),O=p.out;
     log.innerHTML='';resetMem();
     chatTurns=[{role:'user',content:buildRules()},{role:'assistant',content:"Understood — I'll stay in character as Cara and follow those rules."}];
@@ -1556,8 +1563,13 @@ document.getElementById('run2').addEventListener('click',function(){play();docum
     paint();greet();inp.focus();});
 
   function open(){win.classList.add('on');btn.setAttribute('aria-expanded','true');
-    if(!opened){opened=true;paint();greet()} inp.focus()}
+    if(!opened){opened=true;paint();greet()}
+    else if(!FROZEN&&PIN!==CIDX&&Pat(CIDX).company!==P().company){paint();greet()}  // a different client is on screen now: start over with them
+    inp.focus()}
   function close(){win.classList.remove('on');btn.setAttribute('aria-expanded','false')}
+  window.OnFileChat={open:function(){if(!win.classList.contains('on'))open()},close:close,
+    freeze:function(on){freezeNext=!!on;if(!on)FROZEN=null},
+    restart:function(){close();opened=false;FROZEN=null}};
   btn.addEventListener('click',function(){win.classList.contains('on')?close():open()});
   document.getElementById('hclose').addEventListener('click',close);
   document.getElementById('hsend').addEventListener('click',function(){send()});
@@ -1604,176 +1616,70 @@ build();renderPlan();setDay(0);render();
 })();
 </script>
 
+<script src="/demo/_tour/tour.js"></script>
 <script>
-/* ---------- Guided tour: Cara's voice + an animated cursor walk a visitor through On File ---------- */
+/* ---------- Guided tour: Cara's voice + an animated cursor walk a visitor through On File.
+   2026-11-19: runs on the shared engine (/demo/_tour/tour.js) like every other demo. ---------- */
 (function(){
   'use strict';
-  var LINES=["Welcome to On File. This is Northgate Construction, and these are their subcontractors. First, switch to Automatic, and the whole run plays through on its own.", "Press Send once. On File chases each sub for their W C B clearance and certificate of insurance, before they set foot on site.", "Every sub is right here. Click any row to see what's on file, what's expired, and who still owes you paperwork.", "You can see the exact email or call going out to each sub. Nothing is hidden from you.", "Your subs can ask Cara instead of phoning your office to find out what they still owe.", "Cara answers right away, from that sub's actual file. Anything that needs a person goes straight to your office.", "And this is what it saves. Hours your office isn't spending on the phone, and no sub on site without clearance.", "Ready to see this with your own subs? This is where you'd start.", "That's the tour. Click around freely now."];
+  var LINES=["Welcome to On File. This is Northgate Construction, and these are their subcontractors. First, switch to Automatic, and the whole run plays through on its own.", "Press Send once. On File chases each sub for their W C B clearance and certificate of insurance, before they set foot on site.", "Every sub is right here. Click any row to see what's on file, what's expired, and who still owes you paperwork.", "You can see the exact email or call going out to each sub. Nothing is hidden from you.", "Your subs can ask Cara instead of phoning your office to find out what they still owe.", "Cara answers right away, from that sub's actual file. Anything that needs a person goes straight to your office.", "And this is the result in this made-up run: hours your office isn't spending on the phone. It is an estimate, not a promise.", "Ready to see this with your own subs? This is where you'd start.", "That's the tour. Click around freely now."];
   var DURS=[9.29, 7.66, 6.87, 4.64, 4.32, 6.64, 6.46, 3.2, 2.04];
-  var AUDIO_BASE='narration/step-';
-  var overlay=null,cursorEl=null,capEl=null,skipBtn=null,muteBtn=null;
   var tourBtn=document.getElementById('tourBtn');
-  var aborted=false,resolveWait=null,current=null,muted=false;
-  var reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var clips=LINES.map(function(_,i){var a=new Audio(AUDIO_BASE+i+'.mp3');a.preload='auto';a.volume=0.55;return a});
-
-  function sleep(ms){
-    return new Promise(function(res){
-      var done=false;
-      function fire(){if(done)return;done=true;resolveWait=null;res();}
-      resolveWait=fire;
-      setTimeout(fire,reduceMotion?Math.min(ms,300):ms);
-    });
-  }
-  /* Play clip i and resolve when it ends (or after its known length + a little, if audio is blocked). */
-  function say(i){
-    if(aborted)return Promise.resolve();
-    var a=clips[i];
-    if(!a)return sleep(1300);
-    return new Promise(function(res){
-      var done=false;
-      function fire(){if(done)return;done=true;resolveWait=null;a.onended=null;a.onerror=null;res();}
-      resolveWait=fire;
-      a.onended=fire;a.onerror=fire;
-      a.muted=muted;
-      current=a;
-      try{a.currentTime=0}catch(e){}
-      var p;try{p=a.play()}catch(e){}
-      if(p&&p.catch)p.catch(function(){});
-      setTimeout(fire,(DURS[i]||4)*1000+600);
-    });
-  }
-  function stopAudio(){
-    if(current){try{current.pause();current.currentTime=0}catch(e){}current=null}
-  }
   function q(sel){return document.querySelector(sel)}
-  function buildOverlay(){
-    overlay=document.createElement('div');
-    overlay.style.cssText='position:fixed;inset:0;z-index:9998;pointer-events:none';
-    cursorEl=document.createElement('div');
-    cursorEl.style.cssText='position:fixed;left:-40px;top:-40px;width:26px;height:26px;z-index:9999;'+
-      'transition:left .55s cubic-bezier(.4,0,.2,1),top .55s cubic-bezier(.4,0,.2,1),transform .15s ease;'+
-      'filter:drop-shadow(0 3px 8px rgba(0,0,0,.35))';
-    cursorEl.innerHTML='<svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 2l16 7-6.5 2.2L11 18z" fill="#155F87" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>';
-    capEl=document.createElement('div');
-    capEl.style.cssText='position:fixed;left:-999px;top:-999px;z-index:9999;max-width:340px;'+
-      'background:#12212C;color:#fff;font:14.5px "IBM Plex Sans",-apple-system,sans-serif;padding:11px 15px;'+
-      'border-radius:8px;box-shadow:0 8px 26px rgba(0,0,0,.32);transition:left .55s ease,top .55s ease,opacity .3s ease;'+
-      'line-height:1.45;opacity:0';
-    var btnCss='position:fixed;z-index:10000;pointer-events:auto;'+
-      'background:#12212C;color:#fff;border:0;border-radius:20px;padding:9px 16px;'+
-      'font:13.5px "IBM Plex Sans",-apple-system,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.3)';
-    skipBtn=document.createElement('button');
-    skipBtn.textContent='Skip tour ✕';
-    skipBtn.style.cssText=btnCss+';bottom:18px;left:18px';
-    skipBtn.addEventListener('click',endTour);
-    muteBtn=document.createElement('button');
-    muteBtn.style.cssText=btnCss+';bottom:64px;left:18px';
-    muteBtn.setAttribute('aria-label','Mute or unmute the voice');
-    setMuteLabel();
-    muteBtn.addEventListener('click',function(){muted=!muted;clips.forEach(function(a){a.muted=muted});setMuteLabel()});
-    document.body.appendChild(overlay);
-    document.body.appendChild(cursorEl);
-    document.body.appendChild(capEl);
-    document.body.appendChild(skipBtn);
-    document.body.appendChild(muteBtn);
+  function chat(){return window.OnFileChat||{freeze:function(){},restart:function(){},open:function(){},close:function(){}}}
+  function label(txt){if(!tourBtn)return;var t=tourBtn.lastChild;if(t&&t.nodeType===3)t.textContent=txt}
+  /* The result block appears when the run ends: wait for it, a few seconds at most. */
+  function whenOutcome(t){
+    var n=0;
+    return (function poll(){
+      var o=q('#outcome');
+      if((o&&!o.hidden)||++n>40||!CalasTour.running())return Promise.resolve();
+      return t.sleep(250).then(poll);
+    })();
   }
-  function setMuteLabel(){if(muteBtn)muteBtn.textContent=muted?'🔇 Turn on voice':'🔊 Voice on'}
-  function removeOverlay(){
-    [overlay,cursorEl,capEl,skipBtn,muteBtn].forEach(function(el){if(el&&el.parentNode)el.parentNode.removeChild(el)});
-    overlay=cursorEl=capEl=skipBtn=muteBtn=null;
-  }
-  /* Move the cursor to el, show caption i, and speak line i. Resolves when the voice finishes. */
-  function point(el,i,opts){
-    if(aborted)return Promise.resolve();
-    opts=opts||{};
-    if(el){try{el.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'center'})}catch(e){}}
-    return sleep(reduceMotion?60:380).then(function(){
-      if(aborted||!cursorEl)return;
-      var cx=window.innerWidth/2,cy=160;
-      if(el){
-        var r=el.getBoundingClientRect();
-        cx=r.left+r.width*(opts.px!=null?opts.px:0.5); cy=r.top+r.height*(opts.py!=null?opts.py:0.5);
-        cursorEl.style.left=(cx-3)+'px';cursorEl.style.top=(cy-3)+'px';
-      }
-      var capW=340,capX=Math.min(Math.max(10,cx-capW/2),window.innerWidth-capW-10);
-      var capY=cy>150?cy-90:cy+34;
-      capEl.style.left=capX+'px';capEl.style.top=capY+'px';capEl.style.opacity='1';
-      capEl.textContent=LINES[i];
-      return say(i);
-    });
-  }
-  function tap(el){
-    if(aborted||!el||!cursorEl)return;
-    cursorEl.style.transform='scale(.8)';
-    setTimeout(function(){if(cursorEl)cursorEl.style.transform='scale(1)'},150);
-    try{el.click()}catch(e){}
-  }
-  function endTour(){
-    if(aborted)return;
-    aborted=true;
-    stopAudio();
-    if(resolveWait)resolveWait();
-    removeOverlay();
-    if(tourBtn){
-      tourBtn.disabled=false;
-      var t=tourBtn.lastChild;
-      if(t&&t.nodeType===3)t.textContent=' Watch again · 60 sec';
+  CalasTour.start({
+    lines:LINES, durs:DURS, audioBase:'narration/step-',
+    onStart:function(){if(tourBtn)tourBtn.disabled=true},
+    onEnd:function(){chat().freeze(false);if(tourBtn){tourBtn.disabled=false;label(' Watch again · 60 sec')}},
+    onReplay:function(){
+      chat().restart();
+      var r=q('#reset');if(r)r.click();
+      q('#startCard').hidden=false;q('#liveRow').hidden=true;document.body.classList.add('pre');
+      window.scrollTo(0,0);
+    },
+    end:{
+      name:'On File for trades',
+      does:'Keeps a list of each sub\u2019s certificates of insurance, WCB clearance, lien waivers and permits, with expiry dates.',
+      offer:'C$500 a month, flat, no setup fee.',
+      terms:'Nothing is charged during the two-week pilot.',
+      cta:{label:'Ask about the free two-week pilot: (431) 244-9026', href:'tel:+14312449026'}
+    },
+    script:function(t){
+      return t.point('#setSum',0)
+        .then(function(){t.tap('#auto button[data-a="on"]');return t.sleep(350)})
+        .then(function(){return t.point('#run2',1)})
+        .then(function(){t.tap('#run2');return t.sleep(2600)})
+        .then(function(){return t.point(q('#w0 .row')||q('.row'),2)})
+        .then(function(){t.tap(q('#w0 .row')||q('.row'));return t.sleep(500)})
+        .then(function(){return t.point('#tm1',3)})
+        .then(function(){t.tap('#tm1');return t.sleep(500)})
+        .then(function(){return t.point('#hbtn',4)})
+        // Cara keeps talking about the client she greeted, even while the run moves on behind her.
+        .then(function(){if(CalasTour.running()){chat().freeze(true);chat().open();t.tap(null)}return t.sleep(500)})
+        .then(function(){
+          var inp=q('#hinp');
+          if(inp&&CalasTour.running()){try{inp.value='What do you still need from me?';inp.dispatchEvent(new Event('input',{bubbles:true}))}catch(e){}}
+          return t.point('#hsend',5);
+        })
+        .then(function(){t.tap('#hsend');return t.sleep(2200)})
+        // Close the chat so the result is in plain view for the last three steps and at the end.
+        .then(function(){if(CalasTour.running())chat().close();return whenOutcome(t)})
+        .then(function(){return t.point('#outcome .side.after .big',6,{avoid:'#outcome .cmp'})})
+        .then(function(){return t.point('#outcome a.offer',7,{avoid:'#outcome .side.after'})})
+        .then(function(){return t.point('#outcome .cmp',8)});
     }
-  }
-  function runTour(){
-    if(!aborted&&overlay)return; // already running
-    aborted=false;
-    clips.forEach(function(a){try{a.load()}catch(e){}});
-    buildOverlay();
-    if(tourBtn)tourBtn.disabled=true;
-    var s=Promise.resolve();
-    s=s.then(function(){return point(q('#auto button[data-a="on"]'),0)});
-    s=s.then(function(){tap(q('#auto button[data-a="on"]'))});
-    s=s.then(function(){return sleep(350)});
-    s=s.then(function(){return point(q('#run2'),1)});
-    s=s.then(function(){tap(q('#run2'))});
-    s=s.then(function(){return sleep(2600)});
-    s=s.then(function(){return point(q('#w0 .row')||q('.row'),2)});
-    s=s.then(function(){tap(q('#w0 .row')||q('.row'))});
-    s=s.then(function(){return sleep(500)});
-    s=s.then(function(){return point(q('#tm1'),3)});
-    s=s.then(function(){tap(q('#tm1'))});
-    s=s.then(function(){return sleep(500)});
-    s=s.then(function(){return point(q('#hbtn'),4)});
-    s=s.then(function(){tap(q('#hbtn'))});
-    s=s.then(function(){return sleep(500)});
-    s=s.then(function(){
-      if(aborted)return;
-      var inp=q('#hinp');
-      if(inp){try{inp.value='What do you still need from me?';inp.dispatchEvent(new Event('input',{bubbles:true}))}catch(e){}}
-      return point(q('#hsend'),5);
-    });
-    s=s.then(function(){tap(q('#hsend'))});
-    s=s.then(function(){return sleep(2200)});
-    s=s.then(function(){return point(q('.kpi .v.tl')||q('.tally'),6)});
-    s=s.then(function(){return point(q('.getlink'),7)});
-    s=s.then(function(){return point(null,8)});
-    s=s.then(function(){return sleep(600)});
-    s=s.then(function(){endTour()});
-  }
-  if(tourBtn)tourBtn.addEventListener('click',runTour);
-  // 2026-09-29 owner: the tour starts by itself, no play button. Browsers allow
-  // no sound until the visitor touches the page, so it opens with captions and
-  // the first click or key press anywhere turns the voice on.
-  function voiceOn(e){
-    if(skipBtn&&e.target===skipBtn)return;
-    if(muted){muted=false;clips.forEach(function(a){a.muted=false});setMuteLabel();}
-    if(current&&current.paused){try{var p=current.play();if(p&&p.catch)p.catch(function(){})}catch(err){}}
-    window.removeEventListener('pointerdown',voiceOn,true);window.removeEventListener('keydown',voiceOn,true);
-  }
-  window.addEventListener('pointerdown',voiceOn,true);window.addEventListener('keydown',voiceOn,true);
-  function autoStart(){
-    var loaded=clips.map(function(a){return new Promise(function(r){if(a.readyState>=4)return r();
-      a.addEventListener('canplaythrough',r,{once:true});a.addEventListener('error',r,{once:true});try{a.load()}catch(e){r()}})});
-    Promise.race([Promise.all(loaded),new Promise(function(r){setTimeout(r,6000)})]).then(function(){setTimeout(runTour,900)});
-  }
-  if(document.readyState==='complete')autoStart();else window.addEventListener('load',autoStart);
+  });
+  if(tourBtn)tourBtn.addEventListener('click',function(){CalasTour.replay()});
 })();
 </script>
 

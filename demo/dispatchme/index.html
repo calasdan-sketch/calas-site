@@ -227,7 +227,7 @@ button{cursor:pointer}
     <div class="who" id="who"><b>Riverbend Property Group</b>Signed in as Priya &middot; Property manager</div>
   </div>
   <div class="controls">
-    
+    <a class="getlink" id="getlink" href="/dispatchme/">Find a crew for your lots &middot; nothing upfront &rarr;</a>
     <button class="ghost" id="reset" type="button">Start over</button>
   </div>
 </div></div>
@@ -683,6 +683,12 @@ CalasTour.start({
   durs: [6.73, 6.64, 6.62, 6.13, 6.64, 6.97, 6.18, 6.97, 4.41, 7.63, 7.06],
   audioBase: "narration/step-",
   onReplay: function () { window.DispatchDemo.reset(); window.scrollTo(0, 0); },
+  end: {
+    name: "Dispatch Me",
+    does: "Dispatch Me helps commercial and industrial properties in Winnipeg find a snow crew. We are signing up our first crews.",
+    offer: "15 to 30 percent of each filled contract, agreed in writing before any job. We invoice the fee after the work. Nothing upfront, no retainer.",
+    cta: { label: "Call (431) 244-9026", href: "tel:+14312449026" }
+  },
   script: function (t) {
     return t.point("#who", 0)
       .then(function () { t.tap("#lot-pc .row"); return t.sleep(350); })
@@ -701,7 +707,8 @@ CalasTour.start({
       .then(function () { return t.point("#feed", 8, { py: 0.7 }); })
       .then(function () { return t.sleep(900); })
       .then(function () { return t.point("#kpis", 9); })
-      .then(function () { return t.point(".appbar .getlink", 10); });
+      .then(function () { window.scrollTo({ top: 0, behavior: "smooth" }); return t.sleep(900); })
+      .then(function () { return t.point("#getlink", 10); });
   }
 });
 </script>

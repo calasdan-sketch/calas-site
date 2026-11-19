@@ -523,13 +523,19 @@ function open(t,id){
 CalasTour.start({
  lines:lines,durs:durs,audioBase:"narration/step-",
  onReplay:function(){GuardianDemo.reset();},
+ end:{
+  name:"Calas ScamCatch",
+  does:"Paste a suspicious text, or screenshot it \u2014 ScamCatch flags the scam signs, right on your phone.",
+  offer:"ScamCatch is free. ScamCatch Family is C$9.99 a month or C$99 a year, plus tax.",
+  cta:{label:"Open ScamCatch \u2014 free",href:"/guardian/"}
+ },
  script:function(t){
   GuardianDemo.reset();
   return t.point("#phoneMsgs",0,{py:.35})
    .then(function(){return t.point("#m-parcel",1);})
    .then(function(){t.tap("#m-parcel");return t.sleep(900);})
    .then(function(){t.tap("#threadCheck");return t.sleep(1300);})
-   .then(function(){return t.point("#gMarks",2,{py:0});})
+   .then(function(){return t.point("#gMarks",2,{py:0,avoid:"#gVerdict"});})
    .then(function(){return t.point("#gFlags",3,{py:0});})
    .then(function(){return open(t,"bank");})
    .then(function(){return t.point("#gVerdict",4,{py:0});})
