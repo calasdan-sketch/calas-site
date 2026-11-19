@@ -32,7 +32,7 @@ EL_MODEL = "eleven_flash_v2_5"
 EL_CREDITS_PER_CHAR = 0.5
 # spelled for the ear only; the captions keep the real wording
 SAY_AS = [(re.compile(r"\bLead Me\b"), "Leed Me"),
-          (re.compile(r"\bCalas\b"), "Callis")]
+          (re.compile(r"\bCalas\b"), "Callus")]
 # every clip is levelled to the same loudness so no demo is louder than another
 LOUDNORM = "loudnorm=I=-19:TP=-3:LRA=11"
 
