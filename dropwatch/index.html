@@ -3,18 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https://tcgplayer-cdn.tcgplayer.com https://static.nike.com https://images.footlocker.com https://press.pokemon.com; connect-src 'self' https://www.bankofcanada.ca; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="icon" type="image/svg+xml" href="logo.svg">
 <title>Pokémon Card &amp; Sneaker Flip Calculator (Canada) — Dropwatch</title>
 <link rel="canonical" href="https://calasautomations.com/dropwatch/">
-<meta name="description" content="Dropwatch tracks collectible releases — Pokémon, sneakers and cards — and shows your real, net-of-fees resale odds. Real sold data or we say unknown. No hype, no bots. Winnipeg / Canada. By Calas Automations.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="description" content="Dropwatch tracks collectible releases — Pokémon, sneakers and cards — and shows your real, net-of-fees resale odds. Real sold data or we say unknown. No hype, no bots. Winnipeg / Canada. By Calas Automations Inc.">
 <style>
+/* Fonts are served from this site (SIL Open Font License; Outfit, IBM Plex Mono). Nothing is fetched from Google, so a visitor's address is not sent there. */
+@font-face{font-family:'Outfit';font-style:normal;font-weight:400;font-display:swap;src:url(font-outfit-400.woff2) format('woff2')}
+@font-face{font-family:'Outfit';font-style:normal;font-weight:500;font-display:swap;src:url(font-outfit-500.woff2) format('woff2')}
+@font-face{font-family:'Outfit';font-style:normal;font-weight:600;font-display:swap;src:url(font-outfit-600.woff2) format('woff2')}
+@font-face{font-family:'Outfit';font-style:normal;font-weight:800;font-display:swap;src:url(font-outfit-800.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(font-plexmono-400.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(font-plexmono-500.woff2) format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url(font-plexmono-600.woff2) format('woff2')}
+
   :root{
     /* off-black base (never #000), one primary accent, restrained secondary */
     --bg:#0b0d12; --bg-2:#10131b; --panel:#141824; --line:#232838;
-    --ink:#eef1f8; --ink-2:#9aa3bd; --ink-3:#6b7390;
+    --ink:#eef1f8; --ink-2:#9aa3bd; --ink-3:#8089a6;   /* was #6b7390: 3.8:1 on panels, below the 4.5:1 WCAG AA minimum for small text */
     --accent:#38e0d4;              /* electric cyan — the single accent */
     --accent-ink:#06211f;
     --gold:#e8b765;               /* used only on the featured/holographic card */
@@ -110,7 +117,8 @@
   .brand .n{font-weight:800;letter-spacing:.14em;font-size:15px}
   .brand .n small{display:block;color:var(--ink-3);font-size:9.5px;letter-spacing:.26em;font-weight:500}
   nav{display:flex;align-items:center;gap:26px}
-  nav a{color:var(--ink-2);font-size:14px;transition:color .2s var(--ease)}
+  nav a{color:var(--ink-2);font-size:14px;transition:color .2s var(--ease);white-space:nowrap}
+  @media(min-width:761px) and (max-width:1180px){nav{gap:16px} nav .stamp{display:none}}
   nav a:hover{color:var(--ink)}
   .stamp{font-family:var(--mono);font-size:11px;color:var(--ink-3);border:1px solid var(--line);
     border-radius:999px;padding:5px 11px}
@@ -152,7 +160,7 @@
   .dot{width:7px;height:7px;border-radius:50%;background:var(--pos);box-shadow:0 0 0 3px rgba(79,214,156,.18);
     display:inline-block;margin-right:7px;animation:pulse 2.6s var(--ease) infinite}
   @keyframes pulse{50%{opacity:.4}}
-  .readout h3{margin:14px 0 2px;font-size:19px;font-weight:600}
+  .readout h2,.readout h3{margin:14px 0 2px;font-size:19px;font-weight:600}
   .readout .meta{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
   .fig{font-family:var(--mono);font-weight:600;font-size:34px;margin:16px 0 2px;letter-spacing:-.01em}
   .fig.neg{color:var(--neg)} .fig.pos{color:var(--pos)}
@@ -347,12 +355,17 @@
   @media (min-width:1700px) and (max-width:2159px){.wrap{margin-left:max(0px,calc(100vw - var(--maxw) - 500px));margin-right:0} header .wrap{margin:0 auto}}
   @media (max-width:1829px){#ycal-wrap{max-width:560px;margin:18px auto 0}}
   /* phones: 2 months per row, normal size, so dates stay readable and nothing spills off-screen */
+  #ycal-earlier{display:none}
   @media(max-width:600px){
     .ycal{zoom:1}
     #ycal-wrap{max-width:none;margin:18px 12px 0}
     .ycal-grid{grid-template-columns:repeat(2,1fr);gap:12px 14px}
     .ym-days span{font-size:13px;line-height:24px}
+    /* phones: months that are already over fold away so upcoming drops are the first thing you see */
+    #ycal-grid:not(.showall) .ym.past{display:none}
+    #ycal-earlier{display:block;margin:12px auto 0;background:none;border:1px solid rgba(46,242,255,.5);color:#2ef2ff;border-radius:8px;padding:10px 14px;min-height:44px;font:inherit;cursor:pointer}
   }
+  #ycal-earlier[hidden]{display:none!important}
 
   /* ---- click a photo: enlarge to centre, drag to spin it in 3D ---- */
   .pics img,.showcase img{cursor:zoom-in}
@@ -445,6 +458,59 @@
   @media(prefers-reduced-motion:reduce){.dwfig,.dwscan,.dweye,.dwtrace,.dwring{animation:none}.dwfig{transform:scale(1.08)}}
   .brand .n .wm{display:inline-flex;align-items:center;line-height:1;font-weight:900;font-style:italic;letter-spacing:-.5px;font-size:26px;color:var(--volt);-webkit-text-stroke:1.4px #05121d;paint-order:stroke fill;text-shadow:0 0 10px rgba(56,224,212,.45),2px 3px 0 rgba(0,0,0,.55)}
   .brand .omk{width:1.15em;height:1.15em;flex:0 0 auto;margin:0 -.02em;position:relative;top:.04em}
+
+  /* ===== expert-1 additions (2026-11-07): lookup, watchlist, calc presets, grading, stale banner ===== */
+  [hidden]{display:none!important}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .field select,.lk-bar input,.gt input,.wl input,.wl select{width:100%;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;
+    color:var(--ink);font-family:var(--mono);font-size:16px;padding:11px 13px}
+  .field select:focus,.lk-bar input:focus,.gt input:focus,.wl input:focus,.wl select:focus{outline:none;border-color:var(--accent)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .field.chk label{display:flex;align-items:center;gap:10px;cursor:pointer;color:var(--ink)}
+  .field.chk input{width:auto;accent-color:var(--accent)}
+  .field .help a{color:var(--accent);text-decoration:underline}
+  .tabs{display:flex;gap:8px;margin:-8px 0 18px}
+  .whatif{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+  .whatif b{color:var(--ink-2);display:block;margin-bottom:4px;font-weight:600}
+  .whatif span{display:flex;justify-content:space-between;margin:3px 0}
+  .gt{width:100%;border-collapse:collapse;margin-top:14px}
+  .gt th{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-align:left;padding:0 6px 6px 0;font-weight:500}
+  .gt td{padding:0 8px 8px 0}
+  .gt td:first-child input{font-family:var(--display)}
+  .stale{background:rgba(232,183,101,.12);border-bottom:1px solid rgba(232,183,101,.4);color:var(--warn);font-family:var(--mono);font-size:13px;text-align:center;padding:8px 16px}
+  .stale.old{background:rgba(232,113,107,.14);border-color:rgba(232,113,107,.45);color:var(--neg)}
+  .lk-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .lk-bar input{flex:1;min-width:220px}
+  .lk-row{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:10px}
+  .lk-row img{width:64px;height:88px;object-fit:contain;border-radius:6px;background:var(--bg-2)}
+  .lk-row .ph{width:64px;height:88px;border-radius:6px;background:var(--bg-2)}
+  .lk-row h4{margin:0 0 2px;font-size:17px;font-weight:600;overflow-wrap:anywhere}
+  .lk-row .meta{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+  .lk-row .px{text-align:right;font-family:var(--mono)}
+  .lk-row .px b{display:block;font-size:20px;color:var(--volt)}
+  .lk-row .px span{font-size:11px;color:var(--ink-3)}
+  .lk-row .acts{grid-column:2/-1;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .lk-row .warn,.warnline{font-family:var(--mono);font-size:11.5px;color:var(--warn)}
+  .lk-row .up{color:var(--pos)} .lk-row .dn{color:var(--neg)}
+  .mini{font-family:var(--mono);font-size:12px;padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--ink);cursor:pointer;text-decoration:none;display:inline-block}
+  .mini:hover{border-color:var(--volt);color:var(--volt)}
+  .wform{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;padding-top:6px}
+  .wform label{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);display:block;margin-bottom:4px}
+  .wform input,.wform select{min-width:110px;width:auto;padding:8px 10px;font-size:15px}
+  .wl{background:rgba(20,24,36,.88);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:26px}
+  .wl h3{margin:0 0 10px;font-size:20px}
+  .wl .rv2{color:var(--ink-2);margin:0 0 12px;max-width:62ch;font-size:15px}
+  .wl-item{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .wl-item:last-child{border-bottom:0}
+  .wl-item.hit{outline:1px solid var(--pos);border-radius:10px;padding:10px;background:rgba(79,214,156,.07)}
+  .hitmsg{color:var(--pos);font-family:var(--mono);font-size:13.5px;margin:0 0 10px}
+  .movers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+  .movers .mv{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;font-family:var(--mono);font-size:12.5px}
+  .movers .mv h4{margin:0 0 8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+  .movers .mv div{display:flex;justify-content:space-between;gap:10px;margin:3px 0}
+  @media(max-width:700px){.movers{grid-template-columns:1fr}.lk-row{grid-template-columns:52px 1fr}.lk-row .px{grid-column:2;text-align:left}.lk-row img,.lk-row .ph{width:52px;height:72px}}
+  .where .st.btn{font-family:inherit;cursor:pointer;font-size:inherit}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
@@ -502,25 +568,19 @@
     </div>
     <nav>
       <a class="lnk" href="#drops">Drops</a>
-      <a class="lnk" href="#trade">Want / Have</a>
-      <a class="lnk" href="#calc">Flip calculator</a>
-      <a class="lnk" href="#news">News</a>
       <a class="lnk" href="pokemon-cards.html">Pokémon prices</a>
-      <a class="lnk" href="#community">Community</a>
+      <a class="lnk" href="#calc">Flip calculator</a>
+      <a class="lnk" href="#lookup">My collection</a>
+      <a class="lnk" href="#trade">Want / Have</a>
+      <a class="lnk" href="#news">News</a>
       <a class="lnk" href="#honest">Honesty</a>
       
       <span class="stamp">Updated <b id="stamp">—</b></span>
     </nav>
   </div>
 </header>
+<div id="stale" class="stale" role="status" hidden></div>
 
-<aside id="ycal-wrap" aria-label="Release calendar for the year"><div class="ycal">
-  <div class="ycal-head"><button type="button" id="ycal-prev" aria-label="Previous year">&lsaquo;</button><b id="ycal-year"></b><button type="button" id="ycal-next" aria-label="Next year">&rsaquo;</button></div>
-  <div class="ycal-today" id="ycal-today"></div>
-  <div class="ycal-grid" id="ycal-grid"></div>
-  <div class="ycal-key"><span><i style="background:#2ef2ff;box-shadow:0 0 6px #2ef2ff"></i>Pokémon &amp; cards</span><span><i style="background:#ff2bd6;box-shadow:0 0 6px #ff2bd6"></i>Sneakers</span><span><i style="background:transparent;outline:2px solid #f0c171;box-shadow:0 0 6px #ffea00"></i>&#9889; High-value (gold box)</span><span><i style="background:transparent;outline:2px dashed #39ff88"></i>Pre-orders open</span><span><i style="background:rgba(255,255,255,.2);outline:2px solid #fff"></i>Today</span></div>
-  <div class="ycal-tip" id="ycal-tip" aria-live="polite">Tap a glowing day to see what drops.</div>
-</div></aside>
 
 
 
@@ -549,21 +609,30 @@
     </div>
     <aside class="readout rise" style="--i:3">
       <div class="rh"><span><span class="dot"></span>Prices as of <b id="readAsOf">the last refresh</b></span><span>net of fees</span></div>
-      <h3>Delta Reign — Booster Box</h3>
+      <h2 id="heroTitle">Delta Reign — Booster Box</h2>
       <div class="meta">Market est. · TCGplayer via TCGCSV</div>
       <div class="fig" id="heroFig">…</div>
-      <div class="figlab">est. result in <b>CAD</b> if you bought at US MSRP and resold today &mdash; converted from TCGplayer's US-dollar prices at <b id="fxNote">today's Bank of Canada rate</b></div>
+      <div class="figlab">est. result in <b>CAD</b> if you bought one box at an <b>assumed <span id="heroAssume">US$160</span></b> (not a checked store price) and resold at today's TCGplayer market estimate on eBay.ca, after fees and 12% Manitoba tax &mdash; converted at <b id="fxNote">today's Bank of Canada rate</b></div>
       <div class="src"><span>Source: market estimate</span><span class="badge modeled">modeled</span></div>
     </aside>
   </section>
 
+  <section id="ycal-wrap" aria-label="Release calendar for the year"><div class="ycal">
+    <div class="ycal-head"><button type="button" id="ycal-prev" aria-label="Previous year">&lsaquo;</button><b id="ycal-year"></b><button type="button" id="ycal-next" aria-label="Next year">&rsaquo;</button></div>
+    <div class="ycal-today" id="ycal-today"></div>
+    <div class="ycal-grid" id="ycal-grid"></div>
+    <button type="button" id="ycal-earlier" hidden></button>
+    <div class="ycal-key"><span><i style="background:#2ef2ff;box-shadow:0 0 6px #2ef2ff"></i>Pokémon &amp; cards</span><span><i style="background:#ff2bd6;box-shadow:0 0 6px #ff2bd6"></i>Sneakers</span><span><i style="background:transparent;outline:2px solid #f0c171;box-shadow:0 0 6px #ffea00"></i>&#9889; High-value (gold box)</span><span><i style="background:transparent;outline:2px dashed #39ff88"></i>Pre-orders open</span><span><i style="background:rgba(255,255,255,.2);outline:2px solid #fff"></i>Today</span></div>
+    <div class="ycal-tip" id="ycal-tip" aria-live="polite">Tap a glowing day to see what drops.</div>
+  </div></section>
+
   <!-- REAL CARDS (images: TCGplayer product photos, prices: TCGCSV market, as of 2026-10-05) -->
-  <section class="showcase" aria-label="Chase cards right now">
+  <section class="showcase" aria-label="Top chase cards in the tracked sets">
     <figure class="pcard"><img src="https://tcgplayer-cdn.tcgplayer.com/product/676088_400w.jpg" alt="Pikachu ex 276/217 card" loading="lazy"><b>Pikachu ex · 276/217</b>Ascended Heroes <span class="px" data-usd="926">~US$926</span></figure>
     <figure class="pcard"><img src="https://tcgplayer-cdn.tcgplayer.com/product/517045_400w.jpg" alt="Charizard ex 199/165 card" loading="lazy"><b>Charizard ex · 199/165</b>Scarlet &amp; Violet 151 <span class="px" data-usd="343">~US$343</span></figure>
     <figure class="pcard"><img src="https://tcgplayer-cdn.tcgplayer.com/product/717605_400w.jpg" alt="Mew ex 152/128 card" loading="lazy"><b>Mew ex · 152/128</b>30th Celebration <span class="px" data-usd="93">~US$93</span></figure>
   </section>
-  <p class="where" style="text-align:center;margin:-22px 0 30px"><span class="note">Market estimates (TCGplayer via TCGCSV, Oct 5 2026, converted from USD to CAD at <span id="fxNote2">the Bank of Canada rate</span>) &mdash; modeled, not verified sales.</span></p>
+  <p class="where" style="text-align:center;margin:-22px 0 30px"><span class="note" id="showNote">Market estimates (TCGplayer via TCGCSV, Oct 5 2026, converted from USD to CAD at <span id="fxNote2">the Bank of Canada rate</span>) &mdash; modeled, not verified sales.</span></p>
 
   <!-- DROPS -->
   <section id="drops">
@@ -576,6 +645,44 @@
   </section>
 
   <!-- FLIP CALCULATOR -->
+  <!-- PRICE LOOKUP + WATCHLIST + CALENDAR REMINDERS -->
+  <section id="lookup">
+    <div class="sh"><h2>Quick price check &amp; your collection</h2><p>every English Pok&eacute;mon set · prices in CAD</p></div>
+    <div id="moversBox" class="movers" hidden></div>
+    <div class="lk-bar">
+      <label for="q" class="sr">Search a card or sealed product</label>
+      <input id="q" type="search" placeholder="Try &quot;Charizard ex 199/165&quot; or &quot;151 booster box&quot;" autocomplete="off" enterkeyhint="search">
+      <div class="seg2" role="group" aria-label="Show">
+        <button type="button" class="chipbtn on" data-kind="all" aria-pressed="true">All</button>
+        <button type="button" class="chipbtn" data-kind="single" aria-pressed="false">Cards</button>
+        <button type="button" class="chipbtn" data-kind="sealed" aria-pressed="false">Sealed</button>
+      </div>
+    </div>
+    <p class="note" id="lkNote">Opens a ~1 MB price list the first time you search. Prices are TCGplayer market estimates (US dollars) shown in CAD: <b>modeled, not verified sales</b>. Only cards and boxes worth US$10 or more are listed: for every card, with pictures and each printing, use <a href="pokemon-cards.html">Pok&eacute;mon prices</a>.</p>
+    <div id="lkRes" aria-live="polite"></div>
+    <div class="wl" id="wl" hidden>
+      <h3>Your watchlist</h3>
+      <div id="wlHits" role="status"></div>
+      <div id="wlList"></div>
+      <p class="note">Saved on this device only. Targets are checked when you open this page: Dropwatch has no server that could message you. For reminders that reach your phone, use the drop calendar below.</p>
+    </div>
+    <div class="wl" id="own">
+      <h3>Your collection</h3>
+      <div class="field" style="max-width:340px"><label for="ownPreset">If you sold on</label><select id="ownPreset"></select></div>
+      <div id="ownTotals" role="status"></div>
+      <div id="ownList"></div>
+      <p><button type="button" class="mini" id="ownCsv" hidden>Download as a spreadsheet (CSV)</button></p>
+      <p class="note">Saved on this device only: we never see it, and clearing your browser data removes it. Search a card above and tap Add to collection. Values are TCGplayer market estimates (<b>modeled, not verified sales</b>) after that marketplace&rsquo;s fees, before postage and tax.</p>
+    </div>
+    <div class="wl" id="cal">
+      <h3>Put the drops in your own calendar</h3>
+      <p class="rv2">A calendar file of every upcoming Pok&eacute;mon and sneaker release, with a reminder the day before and the morning of that your own calendar app shows. Dropwatch itself sends nothing and never sees your email or number.</p>
+      <p><a class="btn p" id="icsAll" href="dropwatch.ics" download="dropwatch.ics">Download drop calendar</a>
+         <a class="btn g" id="icsSub" href="#" hidden>Subscribe (auto-updates)</a></p>
+      <p class="note">Dates come from official press pages and store calendars and can change: check the official page before you queue. Sneaker times are Winnipeg time.</p>
+    </div>
+  </section>
+
   <!-- WANT / HAVE (local trades, prototype: saved in this browser only) -->
   <section id="trade">
     <div class="sh">
@@ -600,30 +707,89 @@
   <section id="calc">
     <div class="sh">
       <h2>Flip calculator</h2>
-      <p>we do the math · opens with a real example below, clear it to run your own price</p>
+      <p>fees read from each marketplace&rsquo;s own page · edit anything</p>
     </div>
-    <div class="calc">
+    <div class="tabs" role="tablist" aria-label="Calculator type">
+      <button type="button" class="chipbtn on" role="tab" id="tab-flip" aria-selected="true" aria-controls="panel-flip" data-tab="flip">Flip it</button>
+      <button type="button" class="chipbtn" role="tab" id="tab-grade" aria-selected="false" aria-controls="panel-grade" data-tab="grade" tabindex="-1">Grade it first?</button>
+    </div>
+    <div class="calc" id="panel-flip" role="tabpanel" aria-labelledby="tab-flip">
       <div class="pane">
         <div class="field">
-          <label for="buy">What you'd pay (CAD)</label>
-          <input id="buy" type="number" inputmode="decimal" value="160" min="0" step="1">
+          <label for="preset">Where you would sell it</label>
+          <select id="preset"></select>
+          <div class="help" id="presetNote"></div>
         </div>
         <div class="field">
-          <label for="sale">Resale price you found (CAD) <span class="help">— paste a real sold price you saw</span></label>
-          <input id="sale" type="number" inputmode="decimal" value="0" min="0" step="1">
+          <label for="buy" id="buyLab">What you&rsquo;d pay (CAD)</label>
+          <input id="buy" type="number" inputmode="decimal" value="160" min="0" step="any">
+        </div>
+        <div class="field chk"><label><input type="checkbox" id="usd"> I&rsquo;m buying in US dollars</label></div>
+        <div class="field">
+          <label for="sale">Resale price you found (CAD) <span class="help">&mdash; a real sold price you saw</span></label>
+          <input id="sale" type="number" inputmode="decimal" value="0" min="0" step="any">
+        </div>
+        <div class="field">
+          <label for="want">I want to keep at least (CAD) <span class="help">&mdash; optional: shows the price to list at</span></label>
+          <input id="want" type="number" inputmode="decimal" value="0" min="0" step="any">
         </div>
         <div class="adv">
-          <div class="field"><label for="fee">Marketplace fee %</label><input id="fee" type="number" value="13" min="0" step="0.1"></div>
-          <div class="field"><label for="pay">Payment fee %</label><input id="pay" type="number" value="2.9" min="0" step="0.1"></div>
-          <div class="field"><label for="ship">Shipping (CAD)</label><input id="ship" type="number" value="0" min="0" step="1"></div>
-          <div class="field"><label for="tax">Buy tax % (MB 12)</label><input id="tax" type="number" value="12" min="0" step="0.1"></div>
+          <div class="field"><label for="prov">Province (buy tax)</label><select id="prov"></select></div>
+          <div class="field"><label for="tax">Buy tax %</label><input id="tax" type="number" value="12" min="0" step="any"></div>
+        </div>
+        <div class="adv" style="margin-top:12px">
+          <div class="field"><label for="shipin">Shipping in (CAD)</label><input id="shipin" type="number" value="0" min="0" step="any"></div>
+          <div class="field"><label for="extra">Duty / brokerage (CAD)</label><input id="extra" type="number" value="0" min="0" step="any"></div>
+          <div class="field"><label for="ship">Shipping out (CAD)</label><input id="ship" type="number" value="0" min="0" step="any"></div>
+        </div>
+        <div class="adv" style="margin-top:12px" id="usdRow" hidden>
+          <div class="field"><label for="fxm">Card / bank FX markup %</label><input id="fxm" type="number" value="2.5" min="0" step="any"></div>
+        </div>
+        <div class="adv" style="margin-top:12px" id="mktTaxRow">
+          <div class="field" id="btaxField"><label for="btax">Sales tax the buyer pays %</label><input id="btax" type="number" value="13" min="0" step="any"><div class="help">eBay takes its fee on your price plus this tax</div></div>
+          <div class="field"><label for="ftax">Tax on the marketplace&rsquo;s fees %</label><input id="ftax" type="number" value="5" min="0" step="any"><div class="help">eBay.ca adds GST to its fees</div></div>
+        </div>
+        <div class="adv" style="margin-top:12px" id="customRow" hidden>
+          <div class="field"><label for="fee">Marketplace fee %</label><input id="fee" type="number" value="13" min="0" step="any"></div>
+          <div class="field"><label for="pay">Payment fee %</label><input id="pay" type="number" value="2.9" min="0" step="any"></div>
         </div>
       </div>
       <div class="pane result">
         <h3>Your take-home</h3>
-        <div class="big" id="cProfit">enter a price</div>
-        <div class="rv" id="cVerdict">Paste a resale price you've actually seen and we'll strip every fee, shipping and tax to show what really lands in your pocket — including if it's a loss.</div>
+        <div class="big" id="cProfit" aria-live="polite">enter a price</div>
+        <div class="rv" id="cVerdict">Paste a resale price you&rsquo;ve actually seen and we&rsquo;ll strip every fee, shipping and tax to show what really lands in your pocket, including if it&rsquo;s a loss.</div>
         <div class="breakdown" id="cBreak" hidden></div>
+        <div class="whatif" id="cWhatIf" hidden></div>
+        <div class="rv" id="cList" hidden></div>
+        <div class="help" id="cClamp" role="status" hidden></div>
+        <p style="margin:14px 0 0"><button type="button" class="mini" id="shareBtn">Copy a link to this calculation</button> <span class="help" id="shareMsg" role="status"></span></p>
+        <input id="shareUrl" type="text" readonly hidden aria-label="Link to this calculation" style="width:100%;margin-top:6px">
+      </div>
+    </div>
+    <div class="calc" id="panel-grade" role="tabpanel" aria-labelledby="tab-grade" hidden>
+      <div class="pane">
+        <p class="note" style="margin-top:0">Grading can turn a C$50 card into C$300, or into C$50 minus about C$90 in costs. Type the prices you actually saw <b>sold</b> for each grade. The grading fee and shipping below are <b>example numbers, not a quote</b>: use your grader&rsquo;s current price list.</p>
+        <div class="adv">
+          <div class="field"><label for="g-raw">Raw card cost (CAD)</label><input id="g-raw" type="number" inputmode="decimal" value="50" min="0" step="any"></div>
+          <div class="field"><label for="g-fee">Grading fee (USD, example)</label><input id="g-fee" type="number" inputmode="decimal" value="25" min="0" step="any"></div>
+          <div class="field"><label for="g-ship">Round-trip shipping (USD, example)</label><input id="g-ship" type="number" inputmode="decimal" value="20" min="0" step="any"></div>
+          <div class="field"><label for="g-fxm">FX markup %</label><input id="g-fxm" type="number" value="2.5" min="0" step="any"></div>
+        </div>
+        <div class="adv" style="margin-top:12px">
+          <div class="field"><label for="g-preset">Where you would sell it graded</label><select id="g-preset"></select></div>
+          <div class="field"><label for="g-shipout">Shipping out (CAD)</label><input id="g-shipout" type="number" inputmode="decimal" value="0" min="0" step="any"></div>
+        </div>
+        <table class="gt" aria-label="Sold price and odds for each grade">
+          <thead><tr><th scope="col">Grade</th><th scope="col">Sold price (CAD)</th><th scope="col">Your odds %</th></tr></thead>
+          <tbody id="gRows"></tbody>
+        </table>
+        <p class="help" id="gOdds"></p>
+      </div>
+      <div class="pane result">
+        <h3>Worth grading?</h3>
+        <div class="big" id="gBig" aria-live="polite">enter prices</div>
+        <div class="rv" id="gVerdict">Fill in at least one sold price. With none, we say &ldquo;unknown&rdquo; instead of guessing what your card grades to.</div>
+        <div class="breakdown" id="gBreak" hidden></div>
       </div>
     </div>
   </section>
@@ -675,10 +841,14 @@
 <footer>
   <div class="wrap fb">
     <div><b>DROPWATCH</b> &middot; by Calas Automations Inc., Winnipeg<br>Know the real odds before you buy.</div>
-    <div style="text-align:right">Questions? Call Cara: 431-244-9026 &middot; <a href="https://calasautomations.com">calasautomations.com</a> &middot; <a href="https://calasautomations.com/terms/">Terms</a> &middot; <a href="https://calasautomations.com/privacy/">Privacy</a><br>Not financial advice. Collectibles can lose value.<br><small>Unofficial fan site, not affiliated with or endorsed by The Pok&eacute;mon Company, Nintendo, Nike or any retailer. Product names and images belong to their owners. Some store links may earn us a commission, at no extra cost to you.</small></div>
+    <div style="text-align:right">Questions? Call Cara: 431-244-9026 &middot; <a href="https://calasautomations.com">calasautomations.com</a> &middot; <a href="https://calasautomations.com/terms/">Terms</a> &middot; <a href="https://calasautomations.com/privacy/">Privacy</a><br>Not financial advice. Collectibles can lose value.<br><small>Unofficial fan site, not affiliated with or endorsed by The Pok&eacute;mon Company, Nintendo, Creatures, GAME FREAK, Nike, TCGplayer, eBay, StockX, GOAT or any retailer or marketplace named here. Pok&eacute;mon and Pok&eacute;mon character names are trademarks of Nintendo, Creatures and GAME FREAK; other product names, brands and images belong to their owners and are used only to identify the products. <span id="affNote" hidden>Some store links earn us a commission, at no extra cost to you, and are marked &ldquo;sponsored&rdquo;.</span></small></div>
   </div>
 </footer>
 
+<script src="fees.js" onerror="window.DW_FEES=null"></script>
+<script src="dwmath.js"></script>
+<script src="dwcore.js"></script>
+<script src="movers.js" onerror="window.DW_MOVERS=null"></script>
 <script src="drops.js" onerror="window.DROPS=null"></script>
 <script src="sneakers.js" onerror="window.SNEAKERS=null"></script>
 <script src="launches.js"></script>
@@ -760,9 +930,9 @@ const FINDER = {
 };
 const APPS = {'Nike SNKRS app':1,'adidas Confirmed app':1};
 function storeLink(x){
-  if(APPS[x]) return `<span class="st">${x}</span>`;
+  if(APPS[x]) return `<span class="st">${hx(x)}</span>`;
   const url = FINDER[x] || 'https://www.google.com/maps/search/'+encodeURIComponent(x.replace(/s$/,'')+' Winnipeg');
-  return `<a class="st" href="${url}" target="_blank" rel="noopener" title="Locations &amp; opening hours">${x} &#8599;</a>`;
+  return `<a class="st" href="${hx(safeHref(url))}" target="_blank" rel="noopener" title="Locations &amp; opening hours">${hx(x)} &#8599;</a>`;
 }
 function whereBlock(d){
   const list = d.where || (/mcdonald/i.test(d.title) ? WHERE.promo : WHERE[d.group]);
@@ -774,28 +944,28 @@ const CATS = [['all','All'],['pokemon','Pokémon'],['sneakers','Sneakers'],['car
 let active='all';
 
 function oddsBlock(d){
-  const bEval = (d.comp!=null) ? evaluate({buy:d.buy||0, sale:d.comp, compCount:1}) : null;
+  const bEval = modeledEval(d);
   const badgeTxt = d.badge==='sold'?'sold data':d.badge==='modeled'?'modeled':'unknown';
   let verdict, cls='', down='';
   if(d.badge==='unknown' || !bEval){
     verdict = 'No real sold data yet — we won’t guess.';
     cls='';
   } else {
-    verdict = bEval.verdict; cls = bEval.tone==='neg'?'neg':bEval.tone==='warn'?'warn':'';
-    down = d.badge==='modeled' ? 'Based on a modeled market price, not a verified sale — treat as a hint, not a fact.' : '';
+    verdict = verdictFor(bEval); cls = bEval.profit<=0?'neg':(bEval.roi!=null&&bEval.roi<0.15)?'warn':'';
+    down = d.badge==='modeled' ? `Assumes you paid US$${hx(d.buy)} (our assumed box price, not a checked store price) and resell on eBay.ca. A modeled market price, not a verified sale: treat as a hint, not a fact.` : '';
   }
   return `<div class="odds">
-    <span class="badge ${d.badge}">${badgeTxt}</span>
-    <div class="verdict ${cls}">${verdict}</div>
+    <span class="badge ${hx(d.badge)}">${badgeTxt}</span>
+    <div class="verdict ${cls}">${hx(verdict)}</div>
     ${down?`<div class="down">${down}</div>`:''}
-    <div class="prov">${d.comp!=null?`Source: ${d.compLabel||'market est.'} · ${fmtCad(usdToCad(d.comp))}`:'Source: calendar only'}</div>
+    <div class="prov">${d.comp!=null?`Source: ${hx(d.compLabel||'market est.')} · ${fmtCad(usdToCad(d.comp))}`:'Source: calendar only'}</div>
   </div>`;
 }
 function chaseBlock(d){
   if(!d.chase || !d.chase.length) return '';
   const rows = d.chase.map(c =>
     `<div style="display:flex;justify-content:space-between;gap:10px">
-       <span style="color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.name}</span>
+       <span style="color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${hx(c.name)}</span>
        <span style="color:var(--gold);flex:none">${fmtCad(usdToCad(+c.market))}</span></div>`).join('');
   const etb = d.etb!=null ? `<div style="display:flex;justify-content:space-between"><span style="color:var(--ink-2)">Elite Trainer Box</span><span style="color:var(--ink)">${fmtCad(usdToCad(+d.etb))}</span></div>`:'';
   return `<div class="odds" style="position:relative">
@@ -811,33 +981,43 @@ function relBlock(d){
 }
 function picsBlock(d){
   if(!d.pics||!d.pics.length) return '';
-  return `<div class="pics">${d.pics.map(p=>`<figure><img src="${p.img}" alt="${p.name}" loading="lazy">${p.label}</figure>`).join('')}</div>`;
+  return `<div class="pics">${d.pics.map(p=>`<figure><img src="${hx(safeHref(p.img))}" alt="${hx(p.name)}" loading="lazy" referrerpolicy="no-referrer">${hx(p.label)}</figure>`).join('')}</div>`;
 }
 function preorderBlock(d){
   const p = (window.PREORDERS||{})[d.id];
   if(!p) return '';
   const tag = ok => ok===true?'<b style="color:var(--volt)">open</b>':ok===false?'<span style="color:var(--ink-3)">sold out</span>':'';
-  const shops = p.shops.map(s=>`<div style="margin-top:8px"><a class="st" href="${s.url}" target="_blank" rel="noopener">${s.name} &#8599;</a> <span class="note" style="display:inline">${s.ships}</span>
-    ${s.items.map(([n,pr,ok])=>`<div style="display:flex;justify-content:space-between;gap:10px;font-size:12.5px"><span>${n}</span><span>${pr?`<b class="money">${pr}</b> `:''}${tag(ok)}</span></div>`).join('')}</div>`).join('');
-  return `<div class="where"><b>Pre-orders</b> <span class="note" style="display:inline">checked ${fmtDate(p.checked)}</span>${shops}<span class="note">${p.note}</span></div>`;
+  const shops = p.shops.map(s=>`<div style="margin-top:8px"><a class="st" href="${hx(safeHref(s.url))}" target="_blank" rel="noopener">${hx(s.name)} &#8599;</a> <span class="note" style="display:inline">${hx(s.ships)}</span>
+    ${s.items.map(([n,pr,ok])=>`<div style="display:flex;justify-content:space-between;gap:10px;font-size:12.5px"><span>${hx(n)}</span><span>${pr?`<b class="money">${hx(pr)}</b> `:''}${tag(ok)}</span></div>`).join('')}</div>`).join('');
+  return `<div class="where"><b>Pre-orders</b> <span class="note" style="display:inline">checked ${fmtDate(p.checked)}</span>${shops}<span class="note">${hx(p.note)}</span></div>`;
+}
+/* "Check real sold prices" links (we only link out, never fetch those sites) + add to calendar + use retail in calculator */
+function actionsBlock(d){
+  const links = window.DWCore ? DWCore.compLinks(d.title, d.group).map(l=>`<a class="st" href="${hx(safeHref(l.url))}" target="_blank" rel="noopener noreferrer">${hx(l.label)} &#8599;</a>`).join('') : '';
+  const cal = d.release ? `<button type="button" class="st btn" data-act="cal" data-id="${hx(d.id)}">+ Add to calendar</button>` : '';
+  const use = (d.group==='sneakers' && retailOfCard(d)) ? `<button type="button" class="st btn" data-act="use" data-id="${hx(d.id)}">Use retail price in calculator</button>` : '';
+  if(!links && !cal) return '';
+  return `<div class="where"><b>Check real sold prices</b><br>${links}${cal}${use}
+    <span class="note">Opens each site in a new tab. Find what the same item actually sold for, then type it into the calculator.</span></div>`;
 }
 function cardHTML(d,i){
   const foil = d.feature ? 'feature foil':'';
-  const chips = d.chips.map(c => typeof c==='string'
-    ? `<span class="chip">${c}</span>`
-    : `<span class="chip ${c.risk?'risk':''}">${c.t}</span>`).join('').replace(/(C?\$[\d,]+(?:\.\d+)?)/g,'<b class="money">$1</b>');
-  return `<article class="card ${foil} rise" id="card-${d.id}" style="--i:${i}" data-g="${d.group}" data-out="${/out\s*now/i.test(d.when||'')?'1':'0'}">
-    ${d.pics&&d.pics.length?picsBlock(d):(ART[d.group]?`<div class="art ${d.group}" aria-hidden="true">${ART[d.group]}</div>`:'')}
-    <div class="ctop"><span class="when">${d.when}</span><span class="cat">${d.cat}</span></div>
-    ${d.asof?`<div class="prov" style="margin-top:4px">prices as of ${d.asof}</div>`:''}
-    <h3>${d.title}</h3>
+  const chips = (d.chips||[]).map(c => typeof c==='string'
+    ? `<span class="chip">${hx(c)}</span>`
+    : `<span class="chip ${c.risk?'risk':''}">${hx(c.t)}</span>`).join('').replace(/(C?\$[\d,]+(?:\.\d+)?)/g,'<b class="money">$1</b>');
+  return `<article class="card ${foil} rise" id="card-${hx(d.id)}" style="--i:${i}" data-g="${hx(d.group)}" data-out="${/out\s*now/i.test(d.when||'')?'1':'0'}">
+    ${d.pics&&d.pics.length?picsBlock(d):(ART[d.group]?`<div class="art ${hx(d.group)}" aria-hidden="true">${ART[d.group]}</div>`:'')}
+    <div class="ctop"><span class="when">${hx(d.when)}</span><span class="cat">${hx(d.cat)}</span></div>
+    ${d.asof?`<div class="prov" style="margin-top:4px">prices as of ${hx(d.asof)}</div>`:''}
+    <h3>${hx(d.title)}</h3>
     ${relBlock(d)}
     <div class="chips">${chips}</div>
-    <p class="down" style="position:relative;margin-top:2px">${d.basis}</p>
+    <p class="down" style="position:relative;margin-top:2px">${hx(d.basis)}</p>
     ${preorderBlock(d)}
     ${whereBlock(d)}
     ${chaseBlock(d)}
     ${oddsBlock(d)}
+    ${actionsBlock(d)}
   </article>`;
 }
 function renderBento(){
@@ -853,6 +1033,52 @@ function renderFilters(){
   document.getElementById('filters').innerHTML = CATS.map(([k,l])=>
     `<button class="chipbtn ${k===active?'on':''}" data-k="${k}">${l}</button>`).join('');
 }
+/* ---- expert-1 (2026-11-07): safe text, marketplace-accurate calculator, grading, calendar, freshness ----
+   dwmath.js / dwcore.js / fees.js are loaded above; each fallback below keeps the page usable if one fails to load. */
+const hx = (window.DWCore && DWCore.esc) || (t => String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])));
+const safeHref = u => (window.DWCore ? DWCore.safeUrl(u) : (/^https?:\/\//i.test(String(u||'')) ? String(u) : '#'));
+const FEES = window.DW_FEES || {presets:[{id:'custom',label:'Custom (type your own fees)',verified:false,note:'Fee list unavailable: type your own.',tiers:[{from:0,pct:13}],flat_under:null,flat_over:null,flat_threshold:10,flat_currency:'CAD',extra_pct:2.9}],
+  tax_provinces:[{code:'MB',name:'Manitoba',rate:12,verified:true}],checked_on:''};
+const presetById = id => FEES.presets.find(p=>p.id===id) || FEES.presets[0];
+const cadMoney = (v,sign) => (sign && v>0 ? '+' : v<0 ? '−' : '') + 'C$' + Math.abs(v).toFixed(2);
+const pct0 = v => Math.round(v*100) + '%';
+function legacyEval(o){ /* only used if dwmath.js failed to load: the old flat-percentage model */
+  const mk=(o.overridePct!=null?o.overridePct:13)/100, py=(o.overrideExtraPct!=null?o.overrideExtraPct:2.9)/100;
+  const cost=round2((o.buy*(o.buyCurrency==='USD'?o.fx:1)+(o.shipIn||0)+(o.extraIn||0))*(1+(o.taxPct||0)/100));
+  if(!(o.sale>0)) return {known:false,cost};
+  const net=round2(o.sale*(1-mk-py)-(o.shipOut||0)), profit=round2(net-cost);
+  return {known:true,cost,fees:{total:round2(o.sale*(mk+py)),pct_fee:round2(o.sale*mk),flat_fee:0,extra_fee:round2(o.sale*py)},net,profit,roi:cost?round2(profit/cost):null,breakeven:round2(cost/(1-mk-py)+(o.shipOut||0))};
+}
+const calcEval = o => window.DWMath ? DWMath.evaluate(o) : legacyEval(o);
+function verdictFor(r,o){
+  if(!(r.cost>0)) return `You’d keep ${cadMoney(r.net)} after fees${o&&o.shipOut?' and postage':''}. Type what you paid (or would pay) to see the profit or loss.`;
+  if(r.profit<=0) return `Likely loses money: you’d keep ${cadMoney(r.net)} after fees on a ${cadMoney(r.cost)} all-in cost.`;
+  if(r.roi!=null && r.roi<0.15) return `Thin margin (${pct0(r.roi)}) before your time: easy to lose to a reprint or a dip.`;
+  return `Looks like about ${cadMoney(r.profit,true)} (${pct0(r.roi)}) after fees and tax, if it really sells at that price.`;
+}
+/* Modeled result for a sealed product card, in CAD. `buy` on a card is an ASSUMED US$ price, never a verified MSRP. */
+function modeledEval(d){
+  if(d.comp==null || !(d.buy>0)) return null;
+  return calcEval({buy:usdToCad(d.buy), sale:usdToCad(d.comp), preset:presetById('ebay_ca_cards'), taxPct:12, fx:FX_USD_CAD});
+}
+function retailOfCard(d){
+  const c=(d.chips||[]).map(c=>typeof c==='string'?c:c.t).find(c=>/retail/i.test(c));
+  const v=c?parseFloat(String(c).replace(/[^0-9.]/g,'')):0; return v>0?v:0;
+}
+function dlFile(name,text,mime){
+  const a=document.createElement('a'), url=URL.createObjectURL(new Blob([text],{type:mime||'text/plain'}));
+  a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+function calendarEvents(){
+  const today=(window.DWLaunches?DWLaunches.winnipegToday():new Date().toISOString().slice(0,10));
+  const evs=[], seen=new Set();
+  DROPS.forEach(d=>{ if(d.release && d.release>=today && !seen.has(d.id)){ seen.add(d.id); evs.push({id:d.id,title:d.title,date:d.release,time:d.time,note:d.cat||''}); } });
+  const names=new Set(evs.map(e=>e.title.toLowerCase().replace(/[^a-z0-9]/g,'')));
+  (((window.OFFICIAL||{}).schedule)||[]).forEach(o=>{ const n=(o.product||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+    if(o.release>=today && n && !names.has(n)) evs.push({id:'official-'+n,title:o.product,date:o.release,url:o.url,note:'Official date from the Pokemon Company press site.'}); });
+  return evs.sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:0);
+}
+
 refreshFX();
 document.getElementById('filters').addEventListener('click',e=>{
   const b=e.target.closest('.chipbtn'); if(!b)return;
@@ -874,58 +1100,208 @@ function jumpTo(id, grp, anchor){
   return true;
 }
 
-/* ---- calculator wiring ---- */
+/* ---- calculator wiring (marketplace presets, province tax, US buying, what-if, break-even) ---- */
 const $ = id => document.getElementById(id);
-function runCalc(){
-  const buy=+$('buy').value||0, sale=+$('sale').value||0;
-  const mkt=(+$('fee').value||0)/100, pay=(+$('pay').value||0)/100;
-  const ship=+$('ship').value||0, tax=(+$('tax').value||0)/100;
-  const r=evaluate({buy, sale, mkt, pay, ship, tax});
-  const pEl=$('cProfit'), vEl=$('cVerdict'), bEl=$('cBreak');
-  if(!r.known){ pEl.textContent='enter a price'; pEl.className='big';
-    vEl.textContent='Paste a resale price you’ve actually seen and we’ll strip every fee, shipping and tax to show what really lands in your pocket — including if it’s a loss.';
-    bEl.hidden=true; return; }
-  pEl.textContent=(r.profit>=0?'+':'−')+'$'+Math.abs(r.profit).toFixed(2);
-  pEl.className='big '+(r.profit>=0?'pos':'neg');
-  vEl.textContent=r.verdict;
-  bEl.hidden=false;
-  bEl.innerHTML=`<span><b>All-in cost</b><b>$${r.cost.toFixed(2)}</b></span>
-    <span>Net proceeds after fees<span>$${r.net.toFixed(2)}</span></span>
-    <span>Break-even resale<span>$${round2(r.cost/(1-mkt-pay)+ship).toFixed(2)}</span></span>`;
+function fillCalcControls(){
+  $('preset').innerHTML = FEES.presets.map(p=>`<option value="${hx(p.id)}">${hx(p.label)}</option>`).join('');
+  $('preset').value = FEES.presets.some(p=>p.id==='ebay_ca_cards') ? 'ebay_ca_cards' : FEES.presets[0].id;
+  $('prov').innerHTML = FEES.tax_provinces.map(t=>`<option value="${hx(t.code)}">${hx(t.name)} (${t.rate}%${t.verified?'':', not re-checked'})</option>`).join('');
+  $('prov').value = FEES.tax_provinces.some(t=>t.code==='MB') ? 'MB' : FEES.tax_provinces[0].code;
 }
-['buy','sale','fee','pay','ship','tax'].forEach(id=>$(id).addEventListener('input',()=>{calcUserTouched=true; runCalc();}));
+function fillGradePreset(){
+  const ok=FEES.presets.filter(p=>p.id!=='custom');
+  $('g-preset').innerHTML=ok.map(p=>`<option value="${hx(p.id)}">${hx(p.label)}</option>`).join('');
+  $('g-preset').value=ok.some(p=>p.id==='ebay_ca_cards')?'ebay_ca_cards':ok[0].id;
+  $('ownPreset').innerHTML=$('g-preset').innerHTML; $('ownPreset').value=$('g-preset').value;
+}
+function syncPresetUI(setDefaults){
+  const p=presetById($('preset').value), custom=p.id==='custom';
+  $('customRow').hidden=!custom;
+  $('btaxField').hidden=!(p.gross_base&&p.gross_base.length);
+  if(setDefaults){ $('btax').value=p.buyer_tax_default||0; $('ftax').value=p.fee_tax_default||0; }
+  $('presetNote').innerHTML = hx(p.note||'') + (p.verified ? ` <b>Checked ${hx(p.checked_on)}</b> · <a href="${hx(safeHref(p.source))}" target="_blank" rel="noopener">fee page &#8599;</a>` : '');
+}
+function syncBuyUI(){
+  const usd=$('usd').checked;
+  $('usdRow').hidden=!usd;
+  $('buyLab').textContent = usd ? 'What you’d pay (US dollars)' : 'What you’d pay (CAD)';
+}
+/* a typed number made safe: blank/negative -> 0, absurdly large -> capped (and we say so) */
+let calcClamped=false;
+const PCT_IDS=['tax','fxm','fee','pay','g-fxm','btax','ftax'];
+function numIn(id){
+  const el=$(id), max=PCT_IDS.includes(id)?100:1e7, raw=+el.value;
+  if(isFinite(raw)&&raw>max || raw===Infinity) calcClamped=true;
+  return window.DWMath?DWMath.clampNum(el.value,max):Math.min(Math.max(0,raw||0),max);
+}
+function calcInputs(){
+  const n = id => numIn(id), p=presetById($('preset').value), custom=p.id==='custom';
+  return {buy:n('buy'), sale:n('sale'), preset:p, taxPct:n('tax'), shipIn:n('shipin'), extraIn:n('extra'), shipOut:n('ship'),
+    buyCurrency:$('usd').checked?'USD':'CAD', fx:FX_USD_CAD, fxMarkupPct:n('fxm'),
+    overridePct: custom ? n('fee') : null, overrideExtraPct: custom ? n('pay') : null,
+    buyerTaxPct: (p.gross_base&&p.gross_base.length) ? n('btax') : 0, feeTaxPct: n('ftax')};
+}
+function runCalc(){
+  calcClamped=false;
+  const o=calcInputs(), r=calcEval(o);
+  const cl=$('cClamp'); cl.hidden=!calcClamped; if(calcClamped) cl.textContent='One of your numbers was bigger than we can work with, so it was capped (C$10,000,000 or 100%). Check what you typed.';
+  const lEl=$('cList'), want=numIn('want');
+  if(want>0 && window.DWMath){
+    const lp=DWMath.priceForProfit(r.cost,want,o.preset,o.shipOut,o.fx,o.overridePct,o.overrideExtraPct,o.buyerTaxPct,o.feeTaxPct);
+    lEl.hidden=false;
+    lEl.textContent = lp==null ? 'No resale price would leave you '+cadMoney(want)+' after these fees.' : 'To keep at least '+cadMoney(want)+' after fees'+(o.shipOut?' and postage':'')+', list it at '+cadMoney(lp)+' or more (your all-in cost is '+cadMoney(r.cost)+').';
+  } else lEl.hidden=true;
+  const pEl=$('cProfit'), vEl=$('cVerdict'), bEl=$('cBreak'), wEl=$('cWhatIf');
+  if(!r.known){ pEl.textContent='enter a price'; pEl.className='big';
+    vEl.textContent='Paste a resale price you’ve actually seen and we’ll strip every fee, shipping and tax to show what really lands in your pocket, including if it’s a loss.';
+    bEl.hidden=true; wEl.hidden=true; return; }
+  pEl.textContent=cadMoney(r.profit,true);
+  pEl.className='big '+(r.profit>=0?'pos':'neg');
+  vEl.textContent=verdictFor(r,o)+(o.shipOut>0?'':' Shipping out is C$0: if you will mail it, type your postage, it comes out of your pocket.');
+  const f=r.fees||{total:0};
+  bEl.hidden=false;
+  bEl.innerHTML=`<span><b>All-in cost</b><b>${cadMoney(r.cost)}</b></span>
+    <span>Marketplace fees${f.fee_tax?' (incl. '+cadMoney(f.fee_tax)+' tax on fees)':''}<span>${cadMoney(f.total)}</span></span>
+    <span>You keep after fees${o.shipOut?' and shipping':''}<span>${cadMoney(r.net)}</span></span>
+    <span>Break-even resale price<span>${r.breakeven==null?'n/a':cadMoney(r.breakeven)}</span></span>
+    <span>Return on cost<span>${r.roi==null?'n/a':pct0(r.roi)}</span></span>`;
+  if(window.DWMath && o.sale>0){
+    const rows=DWMath.whatIfLower(o);
+    wEl.hidden=false;
+    wEl.innerHTML='<b>If it sells for less than you hoped</b>'+rows.map(x=>`<span>${pct0(x.drop)} lower (${cadMoney(x.sale)})<span>${cadMoney(x.profit,true)}</span></span>`).join('');
+  } else wEl.hidden=true;
+  /* eBay.ca drops its sneaker fee from 13.6% to 8% (and waives the per-order fee) from C$150: a price just under that costs real money */
+  const tr=o.preset.threshold_rule;
+  const grossTh=(o.preset.gross_base||[]).includes('threshold'), bt=grossTh?(o.buyerTaxPct||0):0;
+  const line=tr?Math.ceil(tr.at_least/(1+bt/100)*100-1e-9)/100:0;   /* your price at which the total (with buyer tax) reaches the line */
+  if(tr && window.DWMath && o.sale>=line*0.8 && o.sale<line){
+    const up=DWMath.evaluate(Object.assign({},o,{sale:line})), gain=up.profit-r.profit;
+    if(gain>0){ wEl.hidden=false; wEl.insertAdjacentHTML('afterbegin',`<b style="color:var(--volt)">Pricing tip</b><span style="display:block;margin-bottom:8px">${hx(o.preset.label)} charges ${tr.pct_high}% when the total sale${bt?' (your price plus the buyer&rsquo;s '+bt+'% tax)':''} is ${cadMoney(tr.at_least)} or more (${tr.pct_low}% below). Listing at ${cadMoney(line)} instead would leave you ${cadMoney(gain)} better off.</span>`); }
+  }
+}
+fillCalcControls(); fillGradePreset(); syncPresetUI(true); syncBuyUI();
+['buy','sale','fee','pay','ship','tax','shipin','extra','fxm','want','btax','ftax'].forEach(id=>$(id).addEventListener('input',()=>{calcUserTouched=true; runCalc();}));
+$('g-preset').addEventListener('change',runGrade);
+function calcSnapshot(){ return {preset:$('preset').value,buy:$('buy').value,sale:$('sale').value,tax:$('tax').value,shipIn:$('shipin').value,extra:$('extra').value,shipOut:$('ship').value,fxm:$('fxm').value,fee:$('fee').value,pay:$('pay').value,want:$('want').value,btax:$('btax').value,ftax:$('ftax').value,usd:$('usd').checked}; }
+$('shareBtn').addEventListener('click',()=>{
+  const url=location.href.split('#')[0]+'#'+DWCore.encodeCalc(calcSnapshot()), box=$('shareUrl'), msg=$('shareMsg');
+  box.hidden=false; box.value=url; box.focus(); box.select();
+  const ok=()=>{msg.textContent='Link copied.'}, no=()=>{msg.textContent='Select the link and copy it.'};
+  try{ navigator.clipboard.writeText(url).then(ok,no); }catch(e){ no(); }
+});
+function applyShared(){
+  const d=window.DWCore&&DWCore.decodeCalc(location.hash,FEES.presets.map(p=>p.id)); if(!d) return;
+  const set=(id,v)=>{ if(v!=null) $(id).value=v; };
+  if(d.preset){ $('preset').value=d.preset; syncPresetUI(true); }
+  set('buy',d.buy); set('sale',d.sale); set('tax',d.tax); set('shipin',d.shipIn); set('extra',d.extra); set('ship',d.shipOut); set('fxm',d.fxm); set('fee',d.fee); set('pay',d.pay); set('want',d.want); set('btax',d.btax); set('ftax',d.ftax);
+  $('usd').checked=!!d.usd; calcUserTouched=true; syncPresetUI(); syncBuyUI(); showTab('flip');
+  runCalc(); setTimeout(()=>{ try{ $('calc').scrollIntoView(); }catch(e){} },300);
+}
+applyShared(); addEventListener('hashchange',applyShared);
+$('preset').addEventListener('change',()=>{calcUserTouched=true; syncPresetUI(true); runCalc();});
+$('usd').addEventListener('change',()=>{calcUserTouched=true; syncBuyUI(); runCalc();});
+$('prov').addEventListener('change',()=>{const t=FEES.tax_provinces.find(x=>x.code===$('prov').value); if(t){ $('tax').value=t.rate; } calcUserTouched=true; runCalc();});
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+document.querySelector('.tabs').addEventListener('keydown',e=>{ if(e.key==='ArrowRight'||e.key==='ArrowLeft'){ showTab(document.getElementById('tab-flip').getAttribute('aria-selected')==='true'?'grade':'flip'); document.querySelector('[data-tab][aria-selected="true"]').focus(); }});
+function showTab(t){
+  ['flip','grade'].forEach(k=>{ const on=k===t, b=$('tab-'+k);
+    b.classList.toggle('on',on); b.setAttribute('aria-selected',on); b.tabIndex=on?0:-1; $('panel-'+k).hidden=!on; });
+}
 
-/* hero readout: show the honest modeled result for the featured box at MSRP */
+/* ---- grading calculator ---- */
+const GRADE_ROWS = ['PSA 10','PSA 9','PSA 8','Lower grade / damaged'];
+$('gRows').innerHTML = GRADE_ROWS.map((g,i)=>`<tr><td><input id="g-l${i}" value="${hx(g)}" maxlength="30" aria-label="Grade ${i+1} name"></td>
+  <td><input id="g-p${i}" type="number" inputmode="decimal" min="0" step="any" placeholder="sold price" aria-label="Sold price for grade ${i+1}"></td>
+  <td><input id="g-o${i}" type="number" inputmode="decimal" min="0" max="100" step="any" placeholder="%" aria-label="Odds percent for grade ${i+1}"></td></tr>`).join('');
+function runGrade(){
+  calcClamped=false; const n=id=>numIn(id);
+  const vals={}, odds={}; let oddsSum=0;
+  GRADE_ROWS.forEach((_,i)=>{ const lab=($('g-l'+i).value||('Grade '+(i+1))).trim()||('Grade '+(i+1)); const key=vals.hasOwnProperty(lab)?lab+' ('+(i+1)+')':lab;
+    const price=+$('g-p'+i).value; vals[key]=price>0?Math.min(price,1e7):null; const o=Math.min(100,n('g-o'+i)); odds[key]=o/100; oddsSum+=o; });
+  $('gOdds').textContent = oddsSum? `Your odds add up to ${Math.round(oddsSum*10)/10}%.`+(Math.abs(oddsSum-100)>0.5?' They should add to 100%: a grade with no price is left out of the average, not counted as a loss.':'') : '';
+  const bigEl=$('gBig'), vEl=$('gVerdict'), bEl=$('gBreak');
+  if(!window.DWMath){ bigEl.textContent='unavailable'; vEl.textContent='The calculator file did not load. Reload the page.'; bEl.hidden=true; return; }
+  const gp=presetById($('g-preset').value);
+  const g=DWMath.gradingEvaluate({rawCostCad:n('g-raw'),gradeValuesCad:vals,gradeOdds:odds,gradingFeeUsd:n('g-fee'),shipRoundtripUsd:n('g-ship'),fx:FX_USD_CAD,fxMarkup:n('g-fxm')/100,
+    preset:gp,fx:FX_USD_CAD,shipOutCad:n('g-shipout')});
+  if(!g.known){ bigEl.textContent='unknown'; bigEl.className='big'; vEl.textContent=g.verdict; bEl.hidden=true; return; }
+  bigEl.textContent=cadMoney(g.expected,true)+' expected'; bigEl.className='big '+(g.expected>=0?'pos':'neg');
+  vEl.textContent=g.verdict;
+  const rows=g.outcomes.filter(o=>o.profit!=null).slice().sort((a,b)=>a.profit-b.profit);
+  bEl.hidden=false;
+  bEl.innerHTML=`<span><b>Cost to grade (fee + shipping + FX)</b><b>${cadMoney(g.gradingCost)}</b></span>
+    <span><b>All-in cost with the raw card</b><b>${cadMoney(g.allIn)}</b></span>`+
+    rows.map((o,i)=>`<span>${i===0?'Worst case: ':''}${hx(o.grade)} (${Math.round(o.probability*100)}%)<span>${cadMoney(o.profit,true)}</span></span>`).join('')+
+    `<span>Break-even grade<span>${g.breakEven?hx(g.breakEven):'none'}</span></span>
+     <span>Fees used: ${hx(gp.label)}${gp.verified?' (checked '+hx(gp.checked_on)+')':''}<span></span></span>`;
+}
+['g-raw','g-fee','g-ship','g-fxm','g-shipout'].concat(GRADE_ROWS.flatMap((_,i)=>['g-l'+i,'g-p'+i,'g-o'+i])).forEach(id=>$(id).addEventListener('input',runGrade));
+
+/* hero readout: show the honest modeled result for the featured box at an ASSUMED price */
 function heroReadout(){
   const d=DROPS.find(x=>x.feature&&x.comp!=null);   // sourced from TCGplayer, in USD
   if(!d) return;
-  const buyCad=usdToCad(d.buy||0), compCad=usdToCad(d.comp);
-  const r=evaluate({buy:buyCad, sale:compCad});
+  const r=modeledEval(d);
   const f=$('heroFig');
-  f.textContent=(r.profit>=0?'+':'−')+'$'+Math.abs(r.profit).toFixed(2);
-  f.className='fig '+(r.profit>=0?'pos':'neg');
+  if(r && r.known){ f.textContent=cadMoney(r.profit,true); f.className='fig '+(r.profit>=0?'pos':'neg'); }
+  const t=$('heroTitle'); if(t) t.textContent=d.title+' · booster box';
+  const ab=$('heroAssume'); if(ab) ab.textContent='US$'+d.buy;
   const ra=$('readAsOf'); if(ra) ra.textContent=d.asof||'date not recorded';
   document.querySelectorAll('#fxNote,#fxNote2').forEach(el=>{ el.textContent=fxLabel(); });
   document.querySelectorAll('.px[data-usd]').forEach(el=>{
     el.textContent='~'+fmtCad(usdToCad(+el.dataset.usd));
   });
 
-  // Prefill the flip calculator with this SAME real, sourced comp (not a
-  // guess), already converted to CAD since the calculator's fields are
-  // labeled "(CAD)" — so a first-time visitor sees an actual worked CAD
-  // result right away instead of a blank "enter a price" box. Clearing the
-  // field removes the example and the calculator goes back to needing the
-  // user's own price. Skipped once the visitor has typed their own numbers,
+  // Prefill the flip calculator with this SAME sourced comp (already in CAD) so a first-time visitor sees a worked
+  // result right away. Clearing the field removes the example. Skipped once the visitor has typed their own numbers,
   // so a live FX update never overwrites what they entered.
   const buyEl=$('buy'), saleEl=$('sale');
   if(buyEl && saleEl && d.buy!=null && !calcUserTouched){
-    buyEl.value=round2(buyCad);
-    saleEl.value=Math.round(compCad);
+    buyEl.value=round2(usdToCad(d.buy));
+    saleEl.value=round2(usdToCad(d.comp));
     saleEl.placeholder='';
     runCalc();
   }
 }
 heroReadout();
+
+/* ---- the showcase row is built from today's data, not a frozen list ---- */
+function renderShowcase(){
+  const box=document.querySelector('.showcase'); if(!box) return;
+  const pool=[]; DROPS.forEach(d=>(d.chase||[]).forEach(c=>{ if(c.pid && c.market>0) pool.push({c, set:d.title, asof:d.asof}); }));
+  pool.sort((a,b)=>b.c.market-a.c.market);
+  const seen=new Set(), top=[]; pool.forEach(x=>{ if(top.length<3 && !seen.has(x.c.pid)){ seen.add(x.c.pid); top.push(x); } });
+  const note=$('showNote');
+  if(!top.length){ if(note) note.innerHTML=`Frozen example prices from Oct 5 2026 (today’s feed has no chase cards): older than the rest of the page. Market estimates, modeled, not verified sales.`; return; }
+  box.innerHTML = top.map(x=>`<figure class="pcard"><img src="${hx(window.DWCore?DWCore.imageUrl(x.c.pid,400):'')}" alt="${hx(x.c.name)} card" loading="lazy" referrerpolicy="no-referrer"><b>${hx(x.c.name)}</b>${hx(x.set)} <span class="px" data-usd="${hx(x.c.market)}">~US$${hx(Math.round(x.c.market))}</span></figure>`).join('');
+  if(note) note.innerHTML=`Market estimates (TCGplayer via TCGCSV, ${hx(top[0].asof||'date not recorded')}, converted to CAD at <span id="fxNote2">the Bank of Canada rate</span>): modeled, not verified sales.`;
+  document.querySelectorAll('#fxNote2').forEach(el=>{ el.textContent=fxLabel(); });
+  document.querySelectorAll('.px[data-usd]').forEach(el=>{ el.textContent='~'+fmtCad(usdToCad(+el.dataset.usd)); });
+}
+renderShowcase();
+
+/* ---- card buttons: add to calendar / use retail price ---- */
+document.getElementById('bento').addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]'); if(!b) return;
+  const d=DROPS.find(x=>x.id===b.dataset.id); if(!d) return;
+  if(b.dataset.act==='cal' && window.DWCore){ dlFile('dropwatch-'+String(d.id).replace(/[^a-z0-9-]/gi,'-').slice(0,60)+'.ics',
+    DWCore.buildIcs([{id:d.id,title:d.title,date:d.release,time:d.time,note:d.cat||''}]),'text/calendar'); }
+  if(b.dataset.act==='use'){ calcUserTouched=true; $('buy').value=retailOfCard(d); $('usd').checked=false; syncBuyUI(); $('sale').value=''; showTab('flip'); runCalc();
+    $('calc').scrollIntoView({behavior:'smooth'}); $('sale').focus(); }
+});
+
+/* ---- freshness: never let an old snapshot pass as current ---- */
+(function(){
+  const asofs=DROPS.map(d=>d.asof).filter(Boolean).sort(); const newest=asofs[asofs.length-1];
+  const today=(window.DWLaunches?DWLaunches.winnipegToday():new Date().toISOString().slice(0,10));
+  const fr=window.DWCore?DWCore.freshness(newest,today):{level:'unknown',days:null};
+  const el=document.getElementById('stale');
+  if(el && (fr.level==='aging'||fr.level==='stale'||fr.level==='unknown')){
+    el.hidden=false; el.classList.toggle('old',fr.level!=='aging');
+    el.textContent = fr.level==='unknown' ? 'We can’t tell how old the prices on this page are. Treat them as old.' :
+      `Prices on this page are ${fr.days} days old (last refresh ${newest}). The daily update may have missed a run: treat the numbers as old.`;
+  }
+})();
 
 
 /* ---- news list (official first) + Discord link ---- */
@@ -935,14 +1311,15 @@ heroReadout();
   const off=(window.OFFICIAL&&OFFICIAL.schedule)||[];
   const up=off.filter(o=>o.release>=today).slice(-4).reverse();
   const recent=off.filter(o=>o.release<today).slice(0,2);
-  const card=(o,label)=>`<div class="hcard"><h4><span style="color:#39ff88">&#10004;</span> ${o.product}</h4><p>${label} <b>${new Date(o.release+'T12:00:00').toLocaleDateString('en-CA',{weekday:'short',month:'long',day:'numeric',year:'numeric'})}</b></p><p><a href="${o.url}" target="_blank" rel="noopener">Official page &#8599;</a></p></div>`;
-  const posts=(window.POSTS||[]).map(p=>`<div class="hcard"><h4>${p.title}</h4><p class="down">${p.date}</p><p>${p.body}</p></div>`);
+  const card=(o,label)=>`<div class="hcard"><h4><span style="color:#39ff88">&#10004;</span> ${hx(o.product)}</h4><p>${label} <b>${new Date(o.release+'T12:00:00').toLocaleDateString('en-CA',{weekday:'short',month:'long',day:'numeric',year:'numeric'})}</b></p><p><a href="${hx(safeHref(o.url))}" target="_blank" rel="noopener">Official page &#8599;</a></p></div>`;
+  const posts=(window.POSTS||[]).map(p=>`<div class="hcard"><h4>${hx(p.title)}</h4><p class="down">${hx(p.date)}</p><p>${hx(p.body)}</p></div>`);
   box.innerHTML=up.map(o=>card(o,'Releases')).concat(recent.map(o=>card(o,'Released'))).concat(posts).join('')||'<p class="down">No confirmed news right now.</p>';
   const inv=(window.DROPWATCH_LINKS||{}).discord;
   if(inv){const b=document.getElementById('discordBtn');b.href=inv;b.hidden=false;b.target='_blank';b.rel='noopener';document.getElementById('discordSoon').hidden=true}
 })();
 
 $('stamp').textContent = ((DROPS.find(x=>x.asof)||{}).asof) || 'date not recorded';
+{ const L=window.DROPWATCH_LINKS||{}; const an=document.getElementById('affNote'); if(an && L.affiliate && Object.keys(L.affiliate).length) an.hidden=false; }
 renderFilters(); renderBento(); runCalc();
 
 /* ---- photo spinner: one photo per product, so "360" is a 3D turn of the photo with info on the back ---- */
@@ -959,7 +1336,7 @@ renderFilters(); renderBento(); runCalc();
     const val=provs.length?provs[provs.length-1]:'';
     im.src=img.currentSrc||img.src; im.alt=img.alt||title;
     st.classList.toggle('wide', !!(card&&card.dataset.g==='sneakers'));
-    back.innerHTML=`<b>${title}</b><span>${price}</span>${val?`<span class="v">${val.replace(/^Source:\s*/,'')}</span>`:''}<span style="font-size:12px;opacity:.7">Dropwatch &middot; by Calas Automations</span>`;
+    back.innerHTML=`<b>${hx(title)}</b><span>${hx(price)}</span>${val?`<span class="v">${hx(val.replace(/^Source:\s*/,''))}</span>`:''}<span style="font-size:12px;opacity:.7">Dropwatch &middot; by Calas Automations Inc.</span>`;
     ry=-18; rx=6; vy=0; apply(); lastFocus=document.activeElement; ov.classList.add('on'); document.getElementById('spin-x').focus();
     if(!matchMedia('(prefers-reduced-motion:reduce)').matches){ vy=4; raf=requestAnimationFrame(coast); }
   }
@@ -1012,9 +1389,12 @@ renderFilters(); renderBento(); runCalc();
         cells+=hit?`<span class="${cls}" tabindex="0" role="button" data-d="${iso}" title="${hit.map(x=>x.title).join(' · ').replace(/"/g,'&quot;')}"${delay}>${d}${rare?ZAP:''}</span>`
                   :`<span class="${cls}">${d}</span>`;
       }
-      h+=`<div class="ym"><h5>${M[m]}</h5><div class="ym-days">${cells}</div></div>`;
+      const past=(year===now.getFullYear()&&m<now.getMonth())?' past':'';
+      h+=`<div class="ym${past}"><h5>${M[m]}</h5><div class="ym-days">${cells}</div></div>`;
     }
     document.getElementById('ycal-grid').innerHTML=h;
+    const pastN=document.querySelectorAll('#ycal-grid .ym.past').length, tg=document.getElementById('ycal-earlier');
+    if(tg){tg.hidden=!pastN; tg.textContent=document.getElementById('ycal-grid').classList.contains('showall')?'Hide earlier months':'Show '+pastN+' earlier month'+(pastN===1?'':'s');}
   }
   const DAY=['Su','Mo','Tu','We','Th','Fr','Sa'];
   const fmt=t=>{const [h,m]=t.split(':').map(Number);const hh=((h+11)%12)+1;return hh+(m?':'+String(m).padStart(2,'0'):'')+(h<12||h===24?'am':'pm')};
@@ -1061,6 +1441,7 @@ renderFilters(); renderBento(); runCalc();
   grid.addEventListener('click',e=>{const t=e.target.closest('[data-d]'); if(t) show(t.dataset.d, t);});
   document.getElementById('ycal-tip').addEventListener('click',e=>{const j=e.target.closest('[data-jump]'); if(j){e.preventDefault(); jumpTo(j.dataset.jump, j.dataset.grp, j);}});
   grid.addEventListener('keydown',e=>{const t=e.target.closest('[data-d]'); if(t&&(e.key==='Enter'||e.key===' ')){e.preventDefault();show(t.dataset.d, t);}});
+  document.getElementById('ycal-earlier').onclick=()=>{document.getElementById('ycal-grid').classList.toggle('showall');draw();};
   document.getElementById('ycal-prev').onclick=()=>{year--;draw();};
   document.getElementById('ycal-next').onclick=()=>{year++;draw();};
   draw();
@@ -1072,7 +1453,7 @@ renderFilters(); renderBento(); runCalc();
 (function(){
   const KEY='dw_trades', side={k:'want'};
   const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []}};
+  const load=()=>{try{const v=JSON.parse(localStorage.getItem(KEY));return Array.isArray(v)?v.filter(p=>p&&typeof p==='object'&&(p.side==='want'||p.side==='have')&&isFinite(+p.price)).map(p=>Object.assign({},p,{item:String(p.item||''),cat:String(p.cat||''),cond:String(p.cond||''),area:String(p.area||''),price:+p.price,t:+p.t||0,id:String(p.id)})).slice(0,500):[]}catch(e){return []}};
   const save=v=>{try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}};
   const norm=t=>t.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
   function matches(p,all){ // a want meets a have for the same item at or under the want price
@@ -1083,7 +1464,7 @@ renderFilters(); renderBento(); runCalc();
     document.getElementById('tposts').innerHTML=all.length?all.map(p=>{const m=matches(p,all);return `<div class="post">
       <span class="tag ${p.side}">${p.side==='want'?'WANT':'HAVE'}</span>
       <div><h4>${esc(p.item)}</h4><div class="meta">${esc(p.cat)}${p.cond?' · '+esc(p.cond):''} · ${esc(p.area)}</div>
-      ${m?`<div class="match">&#10003; ${m} local match${m>1?'es':''} at your price</div>`:''}</div>
+      ${m?`<div class="match">&#10003; ${m} of your own post${m>1?'s':''} match${m>1?'':'es'} at this price</div>`:''}</div>
       <span class="px">C$${(+p.price).toFixed(0)}</span></div>`}).join(''):
       '<p class="meta" style="font-family:var(--mono);color:var(--ink-3)">No posts yet. Post a want or a have and matches show up here.</p>';
   }
@@ -1112,5 +1493,147 @@ document.querySelectorAll('#mkt-rail .chartwrap').forEach(function(wrap){
 });})();
 </script>
 
+<script>
+/* ---- price lookup, watchlist and movers (expert-1). The ~1 MB price list loads only when needed. ---- */
+(function(){
+  const $=id=>document.getElementById(id), hx=DWCore.esc, WKEY='dw_watch';
+  /* The product page says Dropwatch has no alerts or watchlist yet, so the watchlist ships switched off.
+     Turn it on only together with a product-page change: window.DW_FEATURES={watchlist:true} before this script. */
+  const WATCH_ON=!!(window.DW_FEATURES&&window.DW_FEATURES.watchlist);
+  if(WATCH_ON) $('wl').hidden=false;
+  let INDEX=null, BYKEY=null, loading=null, kind='all', timer=0, lastQ='';
+  const loadWatch=()=>{try{const v=JSON.parse(localStorage.getItem(WKEY));return Array.isArray(v)?v.filter(w=>w&&typeof w.key==='string'&&isFinite(+w.targetCad)&&+w.targetCad>0).map(w=>Object.assign({},w,{targetCad:+w.targetCad,name:String(w.name||''),dir:w.dir==='above'?'above':'below'})).slice(0,100):[]}catch(e){return []}};
+  const saveWatch=v=>{try{localStorage.setItem(WKEY,JSON.stringify(v))}catch(e){}};
+  const loadScript=src=>new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>rej(new Error(src));document.head.appendChild(s)});
+  function ensureIndex(){
+    if(INDEX) return Promise.resolve(INDEX); if(loading) return loading;
+    loading=Promise.all([loadScript('cards.js'),loadScript('history.js').catch(()=>null)]).then(()=>{
+      INDEX=window.DW_CARDS; if(!INDEX||!INDEX.rows) throw new Error('no data');
+      BYKEY=new Map(INDEX.rows.map(r=>[DWCore.rowKey(r),r])); return INDEX; });
+    loading.catch(()=>{loading=null}); return loading;
+  }
+  const cad=usd=>usd*FX_USD_CAD, money=v=>'C$'+(v>=100?Math.round(v).toLocaleString('en-CA'):v.toFixed(2));
+  function spark(pts){
+    if(!pts||pts.length<2) return '';
+    const v=pts.map(p=>p[1]), mn=Math.min.apply(null,v), mx=Math.max.apply(null,v), sp=(mx-mn)||1, W=90, H=22;
+    const d=pts.map((p,i)=>(i?'L':'M')+(i/(pts.length-1)*W).toFixed(1)+' '+(H-2-(p[1]-mn)/sp*(H-4)).toFixed(1)).join(' ');
+    return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Price over the last ${pts.length} days"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
+  }
+  function changeHtml(key){
+    const pts=DWCore.seriesFor(window.DW_HISTORY,key), ch=DWCore.pctChange(pts);
+    if(!ch) return '';
+    const up=ch.pct>=0;
+    return `<span class="${up?'up':'dn'}">${up?'▲':'▼'} ${Math.abs(ch.pct)}% in ${ch.days} day${ch.days===1?'':'s'}</span> ${spark(pts)}`;
+  }
+  function rowHtml(hit){
+    const r=hit.row, key=DWCore.rowKey(r), c=cad(r[6]), low=r[7]>0?cad(r[7]):null;
+    const meta=[hit.set.name, r[3], r[4], r[5]&&r[5]!=='Normal'?r[5]:''].filter(Boolean).map(hx).join(' · ');
+    const thin=DWCore.thinMarket(r)?`<div class="warn">The market price (${money(c)}) and the lowest listing (${money(low)}) are far apart: few sellers, so this price may not be real. Check sold prices before you act.</div>`:'';
+    const links=DWCore.compLinks(r[1]+(r[3]?' '+r[3]:''),'pokemon').map(l=>`<a class="mini" href="${hx(DWCore.safeUrl(l.url))}" target="_blank" rel="noopener noreferrer">${hx(l.label)} &#8599;</a>`).join('');
+    const watched=loadWatch().some(w=>w.key===key);
+    return `<article class="lk-row" data-key="${hx(key)}">
+      <img src="${hx(DWCore.imageUrl(r[0],200))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph'}))">
+      <div><h4>${hx(r[1])}</h4><div class="meta">${meta}</div>${thin}<div class="meta">${changeHtml(key)}</div></div>
+      <div class="px"><b>${money(c)}</b><span>US$${r[6].toFixed(2)} · market est.${low?`<br>lowest listing ${money(low)}`:''}</span></div>
+      <div class="acts"><span class="badge modeled">modeled</span>
+        ${WATCH_ON?`<button type="button" class="mini" data-do="watch">${watched?'Edit watch':'Watch'}</button>`:''}
+        <button type="button" class="mini" data-do="own">Add to collection</button>
+        <button type="button" class="mini" data-do="calc">Use in calculator</button>${links}</div>
+      <div class="wform" hidden></div><div class="wform oform" hidden></div></article>`;
+  }
+  function render(q){
+    const box=$('lkRes'); lastQ=q;
+    if(!q.trim()){ box.innerHTML=''; return; }
+    ensureIndex().then(()=>{
+      if(lastQ!==q) return;
+      const hits=DWCore.search(INDEX,q,{kind,limit:30});
+      const note=`<p class="note">Prices as of ${hx(INDEX.asof)} · converted at ${hx(fxLabel())} · TCGplayer market estimates, modeled, not verified sales.</p>`;
+      box.innerHTML = hits.length ? note+hits.map(rowHtml).join('') : `<p class="note">Nothing matches &ldquo;${hx(q)}&rdquo;. Only cards and boxes worth US$10 or more are listed: try fewer words or a set name.</p>`;
+    }).catch(()=>{ if(lastQ===q) box.innerHTML='<p class="note">Couldn&rsquo;t load the price list (offline?). <button type="button" class="mini" id="lkRetry">Try again</button></p>'; });
+  }
+  $('q').addEventListener('input',e=>{ clearTimeout(timer); const q=e.target.value; if(q.trim()) $('lkRes').innerHTML='<p class="note">Loading prices…</p>'; timer=setTimeout(()=>render(q),180); });
+  $('q').addEventListener('focus',()=>{ ensureIndex().catch(()=>{}); },{once:true});
+  document.querySelector('.seg2').addEventListener('click',e=>{ const b=e.target.closest('[data-kind]'); if(!b) return; kind=b.dataset.kind;
+    document.querySelectorAll('.seg2 .chipbtn').forEach(x=>{const on=x===b; x.classList.toggle('on',on); x.setAttribute('aria-pressed',on)}); render($('q').value); });
+  $('lkRes').addEventListener('click',e=>{
+    if(e.target.id==='lkRetry'){ render($('q').value); return; }
+    const btn=e.target.closest('[data-do]'), row=e.target.closest('.lk-row'); if(!btn||!row) return;
+    const r=BYKEY&&BYKEY.get(row.dataset.key); if(!r) return;
+    if(btn.dataset.do==='calc'){ calcUserTouched=true; $('sale').value=Math.round(cad(r[6])); $('usd').checked=false; syncBuyUI(); showTab('flip'); runCalc(); $('calc').scrollIntoView({behavior:'smooth'}); $('buy').focus(); }
+    if(btn.dataset.do==='watch'){ const f=row.querySelector('.wform'); if(!f.hidden){ f.hidden=true; return; }
+      const cur=loadWatch().find(w=>w.key===row.dataset.key), c=cad(r[6]);
+      f.hidden=false;
+      f.innerHTML=`<div><label for="wd-${hx(r[0])}">Tell me when it is</label><select id="wd-${hx(r[0])}" data-f="dir"><option value="below">at or below</option><option value="above">at or above</option></select></div>
+        <div><label for="wt-${hx(r[0])}">Target (CAD)</label><input id="wt-${hx(r[0])}" data-f="t" type="number" inputmode="decimal" min="0.01" step="any" value="${hx(cur?cur.targetCad:Math.round(c*0.9))}"></div>
+        <button type="button" class="mini" data-do="save">Save to watchlist</button>`;
+      if(cur) f.querySelector('[data-f=dir]').value=cur.dir; f.querySelector('input').focus(); }
+    if(btn.dataset.do==='own'){ const f=row.querySelector('.oform'); if(!f.hidden){ f.hidden=true; return; }
+      f.hidden=false;
+      f.innerHTML=`<div><label for="oq-${hx(r[0])}">How many</label><input id="oq-${hx(r[0])}" data-f="q" type="number" inputmode="numeric" min="1" max="9999" step="1" value="1"></div>
+        <div><label for="oc-${hx(r[0])}">You paid for ONE (CAD, all in)</label><input id="oc-${hx(r[0])}" data-f="c" type="number" inputmode="decimal" min="0" step="any" placeholder="what it cost you"></div>
+        <button type="button" class="mini" data-do="ownsave">Save to collection</button>`;
+      f.querySelector('[data-f=c]').focus(); }
+    if(btn.dataset.do==='ownsave'){ const f=row.querySelector('.oform'), q=Math.floor(+f.querySelector('[data-f=q]').value), c=f.querySelector('[data-f=c]').value;
+      if(!(q>=1)){ f.querySelector('[data-f=q]').focus(); return; }
+      if(c===''||!(+c>=0)){ f.querySelector('[data-f=c]').focus(); return; }
+      saveOwn(DWCore.addOwn(loadOwn(),{key:row.dataset.key,name:r[1],setName:(INDEX.sets[r[2]]||{}).name||'',number:r[3],sub:r[5],qty:Math.min(q,9999),costCad:Math.min(+c,1e7),addedIso:INDEX.asof}));
+      f.hidden=true; renderOwn(); $('own').scrollIntoView({behavior:'smooth',block:'nearest'}); }
+    if(btn.dataset.do==='save'){ const f=row.querySelector('.wform'), t=+f.querySelector('[data-f=t]').value;
+      if(!(t>0)){ f.querySelector('[data-f=t]').focus(); return; }
+      saveWatch(DWCore.addWatch(loadWatch(),{key:row.dataset.key,name:r[1],setName:(INDEX.sets[r[2]]||{}).name||'',number:r[3],sub:r[5],dir:f.querySelector('[data-f=dir]').value,targetCad:t,addedIso:INDEX.asof,addedCad:Math.round(cad(r[6])*100)/100}));
+      f.hidden=true; row.querySelector('[data-do=watch]').textContent='Edit watch'; renderWatch(); }
+  });
+  function renderWatch(){
+    const list=loadWatch(), box=$('wlList'), hits=$('wlHits');
+    if(!list.length){ box.innerHTML='<p class="note" style="margin:0 0 6px">Nothing watched yet. Search a card above and tap Watch.</p>'; hits.innerHTML=''; return; }
+    const got=!!INDEX;
+    const met=got?DWCore.checkTargets(list,k=>{const r=BYKEY.get(k);return r?r[6]:null},FX_USD_CAD):[];
+    const metKeys=new Set(met.map(m=>m.item.key));
+    hits.innerHTML = met.length ? met.map(m=>`<p class="hitmsg">Target met: ${hx(m.item.name)} is ${money(m.cad)} (you wanted ${m.item.dir==='above'?'at or above':'at or below'} ${money(m.item.targetCad)}).</p>`).join('') : '';
+    box.innerHTML=list.map(w=>{ const r=got&&BYKEY.get(w.key);
+      return `<div class="wl-item${metKeys.has(w.key)?' hit':''}" data-key="${hx(w.key)}"><div><b>${hx(w.name)}</b> <span class="meta" style="font-family:var(--mono);font-size:12px;color:var(--ink-3)">${[w.setName,w.number,w.sub&&w.sub!=='Normal'?w.sub:''].filter(Boolean).map(hx).join(' · ')}</span><br>
+        <span style="font-family:var(--mono);font-size:13px;color:var(--ink-2)">${r?`now ${money(cad(r[6]))}`:got?'no longer listed (under US$10 or removed)':'price not loaded yet'} · target ${w.dir==='above'?'≥':'≤'} ${money(w.targetCad)}</span></div>
+        <button type="button" class="mini" data-do="unwatch" aria-label="Stop watching ${hx(w.name)}">Remove</button></div>`; }).join('');
+  }
+  /* ---- your collection: what you paid vs what it would likely fetch, after fees (this device only) ---- */
+  const OKEY='dw_own';
+  const loadOwn=()=>{try{return DWCore.cleanOwn(JSON.parse(localStorage.getItem(OKEY)))}catch(e){return []}};
+  const saveOwn=v=>{try{localStorage.setItem(OKEY,JSON.stringify(v))}catch(e){}};
+  let ownRows=[];
+  function renderOwn(){
+    const list=loadOwn(), box=$('ownList'), tot=$('ownTotals'), csv=$('ownCsv');
+    csv.hidden=!list.length;
+    if(!list.length){ box.innerHTML='<p class="note" style="margin:0 0 6px">Nothing here yet. Search a card above and tap Add to collection.</p>'; tot.innerHTML=''; ownRows=[]; return; }
+    if(!window.DWMath){ box.innerHTML='<p class="note">The calculator file did not load. Reload the page.</p>'; return; }
+    const got=!!INDEX, preset=presetById($('ownPreset').value);
+    ownRows=DWCore.portfolioRows(list,k=>{const r=got&&BYKEY.get(k);return r?r[6]:null},FX_USD_CAD,sale=>sale-DWMath.sellerFees(sale,preset,FX_USD_CAD).total);
+    const t=DWCore.portfolioTotals(ownRows), sgn=v=>v>0?'+':'', m2=v=>(v<0?'−':'')+'C$'+Math.abs(v).toLocaleString('en-CA',{minimumFractionDigits:2,maximumFractionDigits:2});
+    tot.innerHTML = got ? `<p class="hitmsg" style="margin:0 0 10px">${t.priced} of ${t.n} priced · you paid ${m2(t.paidPriced)} for those · you would keep about <b>${m2(t.netCad)}</b> after fees · <b class="${t.profitCad>=0?'up':'dn'}">${sgn(t.profitCad)}${m2(t.profitCad)}</b>${t.unpriced?` · ${t.unpriced} not priced (paid ${m2(t.paidUnpriced)}, left out of the total)`:''}</p>` : '<p class="note">Loading prices…</p>';
+    box.innerHTML=ownRows.map(r=>{ const w=r.item, row=got&&BYKEY.get(w.key), thin=row&&DWCore.thinMarket(row);
+      return `<div class="wl-item" data-key="${hx(w.key)}"><div><b>${hx(w.name)}</b> <span class="meta" style="font-family:var(--mono);font-size:12px;color:var(--ink-3)">${[w.setName,w.number,w.sub&&w.sub!=='Normal'?w.sub:''].filter(Boolean).map(hx).join(' · ')}</span><br>
+        <span style="font-family:var(--mono);font-size:13px;color:var(--ink-2)">${w.qty} × paid ${m2(w.costCad)} · ${r.known?`now ${m2(r.eachCad)} each · you would keep ${m2(r.netCad)}${w.qty>1?' for all '+w.qty:''} · <b class="${r.profitCad>=0?'up':'dn'}">${sgn(r.profitCad)}${m2(r.profitCad)}</b>`:got?'no longer listed (under US$10 or removed): not priced':'price not loaded yet'}</span>${thin?'<br><span class="warn" style="display:inline-block;margin-top:4px">Thin market: the market price and the lowest listing are far apart, so this value may not be real.</span>':''}</div>
+        <button type="button" class="mini" data-do="unown" aria-label="Remove ${hx(w.name)} from your collection">Remove</button></div>`; }).join('');
+  }
+  $('ownList').addEventListener('click',e=>{ const b=e.target.closest('[data-do=unown]'); if(!b) return; const k=b.closest('.wl-item').dataset.key; saveOwn(loadOwn().filter(w=>w.key!==k)); renderOwn(); });
+  $('ownPreset').addEventListener('change',renderOwn);
+  $('ownCsv').addEventListener('click',()=>{ if(ownRows.length) dlFile('dropwatch-collection.csv','\ufeff'+DWCore.ownCsv(ownRows),'text/csv'); });
+  renderOwn();
+  if(loadOwn().length) ensureIndex().then(renderOwn).catch(()=>{ $('ownTotals').innerHTML='<p class="note">Couldn&rsquo;t load prices right now (offline?).</p>'; });
+  $('wlList').addEventListener('click',e=>{ const b=e.target.closest('[data-do=unwatch]'); if(!b) return; const k=b.closest('.wl-item').dataset.key; saveWatch(loadWatch().filter(w=>w.key!==k)); renderWatch(); });
+  if(WATCH_ON) renderWatch();
+  if(WATCH_ON && loadWatch().length) ensureIndex().then(renderWatch).catch(()=>{ $('wlHits').innerHTML='<p class="note">Couldn&rsquo;t check your targets right now (offline?).</p>'; });
+
+  /* movers: shown only when Dropwatch has at least two real days of its own price snapshots */
+  (function(){ const m=window.DW_MOVERS, box=$('moversBox'); if(!m||!box) return; box.hidden=false;
+    if(!(m.n_days>=2)||(!m.up.length&&!m.down.length)){ box.style.display='block';
+      box.innerHTML=`<p class="note" style="margin:0">Price history: tracking since ${hx(m.first||'today')} (${m.n_days||0} day${m.n_days===1?'':'s'}). Risers and fallers appear once we have two days of our own snapshots: we won&rsquo;t show a change we haven&rsquo;t measured.</p>`; return; }
+    const col=(t,rows)=>`<div class="mv"><h4>${t}</h4>${rows.map(x=>`<div><span>${hx(x.name)}${x.number?' '+hx(x.number):''}</span><span>${x.pct>0?'+':''}${x.pct}% <small>(${x.days}d)</small></span></div>`).join('')||'<div>none</div>'}</div>`;
+    box.innerHTML=col('Biggest risers',m.up)+col('Biggest fallers',m.down)+`<p class="note" style="grid-column:1/-1;margin:0">Changes in TCGplayer&rsquo;s modeled market price over the days we have, from ${hx(m.first)} to ${hx(m.last)}. Thin markets swing a lot: check sold prices before you act.</p>`; })();
+
+  /* calendar buttons */
+  $('icsAll').addEventListener('click',e=>{ e.preventDefault(); const ev=calendarEvents(); if(!ev.length){ alert('No upcoming drops with a date right now.'); return; } dlFile('dropwatch.ics',DWCore.buildIcs(ev),'text/calendar'); });
+  if(/^https?:$/.test(location.protocol)){ const s=$('icsSub'); s.hidden=false; s.href='webcal://'+location.host+location.pathname.replace(/[^/]*$/,'')+'dropwatch.ics'; }
+})();
+</script>
 </body>
 </html>
