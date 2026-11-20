@@ -1,0 +1,70 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Calas Automations Inc.//Dropwatch//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Dropwatch drops
+X-WR-TIMEZONE:America/Winnipeg
+X-WR-CALDESC:Pokemon and sneaker release dates from Dropwatch (Winnipeg). R
+ elease dates can change. Check the official page before you travel or queu
+ e. Not financial advice.
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:fl-nike-ja-4-code-red@dropwatch.calasautomations.com
+DTSTAMP:20261119T232550Z
+DTSTART:20261119T140000Z
+DTEND:20261119T143000Z
+SUMMARY:Dropwatch: Nike Ja 4 Code Red
+DESCRIPTION:Sneakers · Foot Locker Release dates can change. Check the off
+ icial page before you travel or queue. Not financial advice.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dropwatch: Nike Ja 4 Code Red
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dropwatch: Nike Ja 4 Code Red
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fl-adidas-adizero-formotion-f50@dropwatch.calasautomations.com
+DTSTAMP:20261119T232550Z
+DTSTART:20261120T140000Z
+DTEND:20261120T143000Z
+SUMMARY:Dropwatch: adidas AdiZero Formotion F50
+DESCRIPTION:Sneakers · Foot Locker Release dates can change. Check the off
+ icial page before you travel or queue. Not financial advice.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dropwatch: adidas AdiZero Formotion F50
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dropwatch: adidas AdiZero Formotion F50
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fl-nike-air-foamposite-one-mummy-duck@dropwatch.calasautomations.com
+DTSTAMP:20261119T232550Z
+DTSTART:20261127T140000Z
+DTEND:20261127T143000Z
+SUMMARY:Dropwatch: Nike Air Foamposite One Mummy Duck
+DESCRIPTION:Sneakers · Foot Locker Release dates can change. Check the off
+ icial page before you travel or queue. Not financial advice.
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dropwatch: Nike Air Foamposite One Mummy Duck
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dropwatch: Nike Air Foamposite One Mummy Duck
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+END:VCALENDAR

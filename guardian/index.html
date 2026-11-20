@@ -105,60 +105,39 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
 <p style="margin:14px 0 0;font-size:14px;opacity:.8">Questions? Call Cara, our assistant: <a href="tel:+14312449026" data-cara style="color:#F0C171">431-244-9026</a>. Cancel any time from your account.</p>
 </section>
 
+<script src="/guardian/scamrules.js"></script>
 <script src="/guardian/scamcheck.js"></script>
 
 <footer>Calas ScamCatch &middot; <a href="/" style="color:inherit">Calas Automations</a>, Winnipeg</footer>
 
 </div>
 <script>
-const RULES=[
- ["moved_platform",2,"Asked to move off the app to WhatsApp/Telegram/Signal fast — a known scam move to get off a platform that can ban them.",[/whatsapp/i,/telegram/i,/signal app/i,/add me on (whatsapp|telegram|hangouts)/i,/text me on my (personal|other) (number|phone)/i]],
- ["cant_video",3,"Gave an excuse to avoid a live video call — the strongest catfish tell; a stolen photo can't hold a real-time chat.",[/camera('?s)? (broken|not working)/i,/can'?t (video ?call|facetime|do video)/i,/my webcam is broken/i,/no signal for video/i]],
- ["overseas_worker_story",2,"Overseas military / oil rig / ship engineer / doctor-on-a-mission story — a common cover that pre-explains why they can't meet or video.",[/stationed in/i,/peacekeeping mission/i,/oil rig/i,/on a (cargo|container) ship/i,/deployed overseas/i,/military base overseas/i]],
- ["financial_hardship_story",3,"A sudden emergency (hospital bill, customs fee, stuck traveler) right as money is asked for — the classic pressure point.",[/customs (fee|hold)/i,/hospital bill/i,/stuck at the airport/i,/my (account|card) is frozen/i,/can'?t access my (money|funds|account) (right now|currently)/i]],
- ["crypto_investment",4,"Steering toward a crypto investment or trading platform — the 'pig-butchering' pattern: build trust, then move to fake investing.",[/crypto (platform|exchange|trading)/i,/invest(ing)? in (crypto|bitcoin|usdt|ethereum)/i,/my (broker|mentor|uncle) taught me (crypto|trading)/i,/crypto (investor|investment|opportunity)/i,/(double|triple|multiply|10x) (it|your money|your investment)/i,/i will (double|triple) (it|your)/i,/guaranteed (returns|profit)/i,/double your (money|investment)/i]],
- ["gift_card_request",4,"Asked for gift cards — no legitimate partner, official, or business is ever paid in gift cards.",[/gift card/i,/itunes card/i,/google play card/i,/steam card/i,/amazon gift/i]],
- ["wire_or_crypto_request",4,"Asked to send money by wire or crypto — both are effectively unrecoverable once sent, which is why scammers prefer them.",[/wire (me|transfer)/i,/western union/i,/moneygram/i,/send (bitcoin|usdt|crypto|eth) to/i,/my wallet address/i,/\bwire (it|the money|the funds|to my|to this|to the)\b/i,/(send|transfer) (it|the money) (by|via) wire/i,/bank transfer to my/i]],
- ["secrecy_request",2,"Asked to keep the relationship or money secret from friends/family/bank — isolation is a control tactic.",[/don'?t tell (your|anyone)/i,/keep this between us/i,/our little secret/i,/do not tell (your|anyone)/i,/don'?t (let|tell) (your )?(family|kids|children|husband|wife|friends)/i,/the bank (won'?t|wouldn'?t) understand/i]],
- ["parcel_fee",3,"A 'your package is on hold' text asking for a fee or new details — Canada Post, Purolator and couriers don't ask for payment or card details by text.",[/(package|parcel|shipment|delivery)[^.]{0,80}(on hold|held|undeliverable|could not be delivered|failed|suspended)/i,/(redelivery|re-delivery|shipping|delivery|customs) (fee|charge|payment)/i,/update your (delivery|shipping) (address|details|information)/i]],
- ["bank_impersonation",4,"Claims your bank account or card is locked and wants you to act now — real banks never ask you to confirm details from a text link.",[/unusual (sign-?in|login|activity)/i,/(card|account) (has been |is |was )?(locked|suspended|frozen|restricted|disabled)/i,/verify your (account|identity|card)/i,/confirm your (banking|card|account) (details|information)/i]],
- ["government_impersonation",4,"Pretends to be the CRA or Service Canada about a refund, debt or arrest — the CRA doesn't text payment demands, threats or refund links.",[/\b(CRA|canada revenue agency|service canada|revenue canada)\b[^.]{0,100}(refund|owe|owing|arrest|warrant|penalt|benefit|deposit|audit)/i,/(arrest warrant|police will|legal action) [^.]{0,40}(unless|if you (do not|don'?t))/i]],
- ["odd_link",2,"A link to an unusual web address (.top, .click, .live, .xyz and similar) — real banks, couriers and the CRA use their own well-known websites.",[/https?:\/\/[^\s\/]+\.(top|click|live|xyz|info|shop|icu|buzz|online|site|vip|cfd|sbs)(?=[\/\s:?#]|$)/i]],
- ["pressure_deadline",1,"A tight deadline (24 hours, final notice) — pressure is used so you don't stop and check.",[/within (24|48|12) hours/i,/final (notice|warning)/i,/act (now|immediately|today)/i,/\burgent(ly)?\b/i,/as soon as possible|asap/i,/(immediately|right away) or/i]],
- ["love_bombing_pace",1,"Declared strong love or marriage within days — real relationships rarely move this fast; scammers do it to short-circuit caution.",[/i (love|adore) you/i,/marry me/i,/soulmate/i,/i'?ve never felt this way/i,/destiny brought us together/i]]
-];
-const ADVICE={
-0:"Nothing matched our rules. Still: never send money, gift cards, or crypto to someone you haven't met in person.",
-1:"A little caution is warranted. Ask for a live video call on your terms (a random gesture, a specific word) before this goes further.",
-2:"Several common tactics showed up. Do not send money, gift cards, or crypto. Ask for a live, unscripted video call today.",
-3:"This matches a well-documented scam pattern closely. Stop sending anything of value now. Reverse-image-search their photos and search their exact wording — scam scripts get reused word-for-word.",
-4:"This is a strong match for a known scam. Do not send or invest anything else. If money already moved, tell your bank, and report at antifraudcentre-centreantifraude.ca (Canada)."
-};
+/* The scam rules live in /guardian/scamrules.js (generated from the Watchpost app's rules, so the app and this page
+   always give the same answer). Everything below runs on this phone; the message is never sent anywhere. */
 const LABEL=["No signal","Low","Moderate","High","Critical"];
 const COLOR=["#17794A","#8a6d1a","#b5651d","#b23b2e","#8b1a1a"];
-function level(s){if(s<=0)return 0;if(s<=3)return 1;if(s<=6)return 2;if(s<=10)return 3;return 4;}
-function esc(s){return s.replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
 function scoreMessage(t){
- t=(t||"").trim();
- if(!t)return {score:0,lvl:0,signals:[]};
- var score=0,signals=[];
- for(var i=0;i<RULES.length;i++){
-  var w=RULES[i][1],why=RULES[i][2],pats=RULES[i][3];
-  for(var j=0;j<pats.length;j++){var m=t.match(pats[j]);if(m){signals.push(why);score+=w;break;}}
- }
- return {score:score,lvl:level(score),signals:signals};
+ if(!window.ScamRules)return {score:0,lvl:0,label:LABEL[0],signals:[],cats:[],advice:"",note:"",failed:true};
+ return ScamRules.score(t||"");
 }
 var lastReport=null;
 function extractIdentifiers(t){var out=[];function add(l,a){if(a){var u=[];a.forEach(function(x){x=x.trim();if(x&&u.indexOf(x)<0)u.push(x);});if(u.length)out.push(l+": "+u.join(", "));}}add("Email",t.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g));add("Phone",t.match(/\+?\d[\d\s().-]{7,}\d/g));add("Crypto wallet",t.match(/\b(0x[a-fA-F0-9]{40}|bc1[a-z0-9]{20,60}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})\b/g));add("Handle",t.match(/@[A-Za-z0-9_]{2,}/g));add("Link",t.match(/https?:\/\/[^\s]+/g));return out;}
 function render(){
  var msg=document.getElementById("msg").value;
- var r=scoreMessage(msg);
- lastReport={msg:msg,r:r,ids:extractIdentifiers(msg||"")};
  var el=document.getElementById("result");
- var html='<span class="badge" style="background:'+COLOR[r.lvl]+'">'+LABEL[r.lvl]+' · '+r.score+' pts</span>';
- if(r.signals.length===0){html+='<div class="sig">No known scam patterns matched. That is not proof of safety — it only means nothing tripped our rules.</div>';}
- for(var k=0;k<r.signals.length;k++){html+='<div class="sig">'+esc(r.signals[k])+'</div>';}
- html+='<div class="advice">'+esc(ADVICE[r.lvl])+'</div>';
+ if(!msg.trim()){el.innerHTML='<div class="sig">Paste the message first, or tap Check a screenshot.</div>';el.style.display="block";document.getElementById("msg").focus();return;}
+ var r=scoreMessage(msg);
+ if(r.failed){el.innerHTML='<div class="sig">The checker did not load. Check your connection and reload this page. Nothing was checked.</div>';el.style.display="block";return;}
+ var fr=r.lang==="fr";
+ lastReport={msg:msg,r:r,ids:extractIdentifiers(msg||"")};
+ var html='<span class="badge" style="background:'+COLOR[r.lvl]+'">'+esc(r.label)+' · '+r.score+' pts'+'</span>';
+ html+='<div class="advice" style="margin:12px 0"><span style="display:block;font-weight:700">'+(fr?"Quoi faire":"What to do")+'</span>'+esc(r.advice.replace(/ -- /g," — "))+'</div>';
+ if(r.signals.length){html+='<p class="small" style="margin:4px 0 0;font-weight:600">'+(fr?"Pourquoi":"Why")+'</p>';}
+ if(r.signals.length===0){html+='<div class="sig">'+(fr?"Aucune tactique de fraude connue n'a été trouvée. Cela ne prouve pas que c'est sûr : le message n'a simplement déclenché aucune de nos règles.":"No known scam patterns matched. That is not proof of safety — it only means nothing tripped our rules.")+'</div>';}
+ for(var k=0;k<r.signals.length;k++){html+='<div class="sig">'+esc(r.signals[k].replace(/ -- /g," — "))+'</div>';}
+  if(r.note){html+='<div class="sig">'+esc(r.note)+'</div>';}
+ html+='<p class="privacy" style="margin-top:10px">'+(fr?"Un avertissement n'est pas une preuve, et l'absence d'avertissement n'est pas une garantie.":"A warning is not proof, and no warning is not a guarantee.")+'</p>';
  if(r.score>0){
   if(lastReport.ids.length){html+='<div class="sig"><b>What the scammer gave away</b><br>'+esc(lastReport.ids.join(" · "))+'</div>';}
   html+='<button id="reportBtn" type="button" style="background:#8b1a1a">📮 Report this scam to authorities</button><p class="privacy" id="repNote" style="display:none"></p>';
@@ -186,10 +165,10 @@ function shared(msg,r,el){
    el.appendChild(w);
    var n=document.createElement("p");n.className="privacy";n.textContent="Sends only the number/link/handle above, not your message.";el.appendChild(n);
   }
-  if(lvl>=3)WPScam.alertFamily({lvl:lvl,score:r.score,signals:r.signals},msg).then(function(d){if(d){var a=document.createElement("p");a.className="privacy";a.textContent="Your family was alerted, as you chose. Call them and use your safe word.";el.appendChild(a);}});
+  if(lvl>=3)WPScam.alertFamily({lvl:lvl,score:r.score,signals:r.signals},msg).then(function(d){if(d){var a=document.createElement("p");a.className="privacy";a.textContent=(d.ok&&d.delivered&&d.delivered.length)?"Your family was alerted, as you chose. Call them and use your safe word.":"We could not reach your family just now. Please phone them yourself.";el.appendChild(a);}});
  });
 }
-function buildDossier(){var d=lastReport||{msg:"",r:{lvl:0,score:0,signals:[]},ids:[]};var L=[];L.push("SCAM REPORT — prepared with Calas ScamCatch");L.push("Date: "+new Date().toLocaleString("en-CA"));L.push("Risk level: "+LABEL[d.r.lvl]+" ("+d.r.score+" points)");L.push("");L.push("Scam tactics detected:");(d.r.signals.length?d.r.signals:["(none matched automatically)"]).forEach(function(s){L.push(" - "+s);});L.push("");if(d.ids.length){L.push("Identifiers the sender provided:");d.ids.forEach(function(x){L.push(" - "+x);});L.push("");}L.push("The message(s) received:");L.push(d.msg);L.push("");L.push("Reporter: (add your name and contact so the authorities can follow up)");return L.join("\n");}
+function buildDossier(){var d=lastReport||{msg:"",r:{lvl:0,score:0,signals:[]},ids:[]};var L=[];L.push("SCAM REPORT — prepared with Calas ScamCatch");L.push("Date: "+new Date().toLocaleString("en-CA"));L.push("Risk level: "+LABEL[d.r.lvl]+" ("+d.r.score+" points)");L.push("Checked with: Calas ScamCatch rules (a warning is not proof)");L.push("");L.push("Scam tactics detected:");(d.r.signals.length?d.r.signals:["(none matched automatically)"]).forEach(function(s){L.push(" - "+s);});L.push("");if(d.ids.length){L.push("Identifiers the sender provided:");d.ids.forEach(function(x){L.push(" - "+x);});L.push("");}L.push("The message(s) received:");L.push(d.msg);L.push("");L.push("Reporter: (add your name and contact so the authorities can follow up)");return L.join("\n");}
 function reportScam(){var text=buildDossier();function done(){var n=document.getElementById("repNote");if(n){n.style.display="block";n.textContent="Your report is copied. Paste it into the official form that just opened, add your contact details, and submit — you choose what to send.";}try{window.open("https://reportcyberandfraud.canada.ca/","_blank","noopener");}catch(e){}}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done,done);}else{try{var ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);}catch(e){}done();}}
 document.getElementById("check").addEventListener("click",render);
 document.getElementById("pasteBtn").addEventListener("click",function(){var b=document.getElementById("pasteBox");b.hidden=!b.hidden;if(!b.hidden)document.getElementById("msg").focus();});

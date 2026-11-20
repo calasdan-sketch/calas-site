@@ -1,7 +1,7 @@
 // Guardian offline support. Network first (so updates always arrive), saved copy when offline.
 // Only Guardian's own files are handled; scam-database lookups go straight to the network.
-const CACHE = 'guardian-v8';
-const ASSETS = ['/guardian/', '/guardian/index.html', '/guardian/manifest.json', '/guardian/scamcheck.js'];
+const CACHE = 'guardian-v9';
+const ASSETS = ['/guardian/', '/guardian/index.html', '/guardian/manifest.json', '/guardian/scamcheck.js', '/guardian/scamrules.js'];
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(ASSETS); }));
   self.skipWaiting();
