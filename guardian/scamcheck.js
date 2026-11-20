@@ -129,7 +129,7 @@
         if (f.share_text) body.excerpt = String(text || '').slice(0, 140);
         return post('/api/family/alert', body);
       });
-    }).then(function (d) { return d && d.ok && !d.duplicate ? d : null; }).catch(function () { return null; });
+    }).then(function (d) { return d && !d.duplicate && (d.ok || d.error === 'not_delivered') ? d : null; }).catch(function () { return null; });
   }
 
   window.WPScam = { normalize: normalize, extract: extract, check: check, report: report, alertFamily: alertFamily };
