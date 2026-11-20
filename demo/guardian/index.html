@@ -514,7 +514,7 @@ var lines=[
 "Know someone who might click the wrong link? Send ScamCatch to them. It's free, and they can add it to their home screen.",
 "That's the tour. Pick a message, or paste one of your own, and see what ScamCatch finds."
 ];
-var durs=[9.61, 5.29, 9.2, 7.06, 7.52, 8.41, 4.64, 6.27, 4.97, 6.22, 4.32];
+var durs=[10.92, 6.22, 9.48, 7.06, 8.04, 8.9, 4.9, 7.03, 5.88, 6.67, 4.85];
 function open(t,id){
  t.tap("#threadBack");
  return t.sleep(450).then(function(){t.tap("#m-"+id);return t.sleep(800);})
@@ -523,13 +523,19 @@ function open(t,id){
 CalasTour.start({
  lines:lines,durs:durs,audioBase:"narration/step-",
  onReplay:function(){GuardianDemo.reset();},
+ end:{
+  name:"Calas ScamCatch",
+  does:"Paste a suspicious text, or screenshot it \u2014 ScamCatch flags the scam signs, right on your phone.",
+  offer:"ScamCatch is free. ScamCatch Family is C$9.99 a month or C$99 a year, plus tax.",
+  cta:{label:"Open ScamCatch \u2014 free",href:"/guardian/"}
+ },
  script:function(t){
   GuardianDemo.reset();
   return t.point("#phoneMsgs",0,{py:.35})
    .then(function(){return t.point("#m-parcel",1);})
    .then(function(){t.tap("#m-parcel");return t.sleep(900);})
    .then(function(){t.tap("#threadCheck");return t.sleep(1300);})
-   .then(function(){return t.point("#gMarks",2,{py:0});})
+   .then(function(){return t.point("#gMarks",2,{py:0,avoid:"#gVerdict"});})
    .then(function(){return t.point("#gFlags",3,{py:0});})
    .then(function(){return open(t,"bank");})
    .then(function(){return t.point("#gVerdict",4,{py:0});})

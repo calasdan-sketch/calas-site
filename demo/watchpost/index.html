@@ -347,7 +347,7 @@ button{font-family:inherit;cursor:pointer}
         <a href="/guardian/#family">About ScamCatch Family &rarr;</a>
       </div>
     </div>
-    <p class="fine">Detection and reporting only. No 24/7 monitoring, no antivirus, no blocking or clean-up: it's the alarm, not the locks. We never hack back. Cancel with one email. If a month goes by and we can't show you the decoys were up and answering, that month is free.</p>
+    <p class="fine">Detection and reporting only. No 24/7 monitoring, no antivirus, no blocking or clean-up: it's the alarm, not the locks. We never hack back. First month free. If you tell us a month's decoys were not up, we check by hand and refund that month. Cancel any time.</p>
   </section>
 
   <p class="foot">Made-up business, made-up times, made-up address from the range set aside for examples. The break-in attempt on this page is simulated in your browser; nothing is sent anywhere.</p>
@@ -551,13 +551,20 @@ CalasTour.start({
     "The details are laid out simply: what was touched, when it happened, where it came from, and what to do next.",
     "Watchpost only watches and reports. It never hacks back, and it never touches your real computers.",
     "Once a month, you get a one-page report you can hand to your accountant, or your insurer.",
-    "The Watch plan is seventy-nine dollars a month for one location, and your first month is free.",
+    "Watchpost is seventy-nine dollars a month for one location, and your first month is free.",
     "That's the tour. Press the break-in button yourself, and click around."
   ],
-  durs: [10.03, 7.52, 5.74, 5.25, 5.11, 6.91, 6.13, 6.59, 5.99, 4.55, 4.78, 3.67],
+  durs: [10.37, 8.18, 5.74, 6.22, 5.5, 6.91, 6.58, 5.93, 6.1, 5.04, 5.35, 3.77],
   audioBase: "narration/step-",
   onStart: function () { window.WatchpostDemo.reset(); },
   onReplay: function () { window.WatchpostDemo.reset(); window.scrollTo(0, 0); },
+  end: {
+    name: "Watchpost",
+    does: "Decoy doors in your business. When someone touches one, you get an alert, and every month a one-page report.",
+    offer: "C$79 a month for one location, or C$790 a year.",
+    terms: "First month free. If you tell us a month\u2019s decoys were not up, we check by hand and refund that month. Cancel any time.",
+    cta: { label: "Start with a free month", href: "/pay/#watchpost" }
+  },
   script: function (t) {
     return t.point("#doors", 0, { py: 0.3 })
       .then(function () { return t.point("#status", 1); })

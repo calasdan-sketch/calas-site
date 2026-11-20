@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Guided demos — see every Calas tool in action</title>
-<meta name="description" content="Short guided walkthroughs of each Calas Automations tool — On File, Lead Me, Quote Me, Haul Me, Watchpost, Dispatch Me, Calas ScamCatch and more. No signup.">
+<title>Narrated demos — watch every Calas tool work</title>
+<meta name="description" content="Short narrated tours of each Calas Automations tool — On File, Lead Me, Quote Me, Haul Me, Watchpost, Dispatch Me, Calas ScamCatch and more. They play by themselves, with made-up data. No signup.">
 <link rel="canonical" href="https://calasautomations.com/demo/">
 <meta name="theme-color" content="#0B2E45">
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -22,12 +22,17 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex San
 .dw h1{font-family:"Libre Baskerville",Georgia,serif;font-size:clamp(28px,4.4vw,44px);line-height:1.15;margin:0 0 10px;color:var(--navy)}
 @media(prefers-color-scheme:dark){.dw h1{color:#EAF2F8}}
 .dw .lede{font-size:18px;color:var(--ink-2);max-width:60ch;margin:0 0 34px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.dcard{display:block;text-decoration:none;color:inherit;background:var(--sunk);border:1px solid var(--rule);border-left:3px solid var(--gold);border-radius:10px;padding:18px 20px;transition:transform .15s ease,border-color .15s ease}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.dcard{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:var(--sunk);border:1px solid var(--rule);border-left:3px solid var(--gold);border-radius:10px;overflow:hidden;transition:transform .15s ease,border-color .15s ease}
+.dcard .thumb{position:relative;display:block;aspect-ratio:16/10;background:#DCE6ED;border-bottom:1px solid var(--rule)}
+.dcard .thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.dcard .play{position:absolute;left:12px;bottom:12px;display:inline-flex;align-items:center;gap:7px;background:#0B2E45;color:#fff;border-radius:16px;padding:5px 12px 5px 10px;font-size:13px;font-weight:600;line-height:1.3}
+.dcard .play svg{width:11px;height:11px;fill:currentColor}
+.dcard .txt{display:block;padding:16px 20px 18px}
 .dcard:hover{transform:translateY(-2px);border-left-color:var(--accent)}
 .dcard:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .dcard h2{font-size:18px;margin:0 0 5px;color:var(--navy)}
-@media(prefers-color-scheme:dark){.dcard h2{color:#EAF2F8}}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .dcard h2{color:#EAF2F8}}
 .dcard p{font-size:14px;margin:0;color:var(--ink-2)}
 @media(prefers-reduced-motion:reduce){.dcard{transition:none}}
 </style>
@@ -36,19 +41,19 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex San
 <main class="dw" id="main">
   <p class="eyebrow">Guided demos</p>
   <h1>See each tool in action</h1>
-  <p class="lede">Short, click-through walkthroughs of what every Calas tool does &mdash; no signup, no credit card, nothing to install. Pick one to watch it work.</p>
+  <p class="lede">Short narrated tours that play by themselves &mdash; no signup, no credit card, nothing to install. Pick one and watch it work; tap once to turn the voice on, and click around the demo yourself afterwards. Every demo uses made-up data.</p>
   <div class="grid">
-    <a class="dcard" href="/demo/leadme/"><h2>Lead Me</h2><p>Finds and scores local businesses that fit what you sell, then writes the emails.</p></a>
-    <a class="dcard" href="/demo/quote-me/"><h2>Quote Me</h2><p>Turn a quick job description into a clean, branded quote your customer can accept.</p></a>
-    <a class="dcard" href="/demo/haul-me/"><h2>Haul Me</h2><p>Price a load properly &mdash; fuel, distance, deadhead and margin, once your costs are in.</p></a>
-    <a class="dcard" href="/demo/watchpost/"><h2>Watchpost</h2><p>Decoys that raise an alert when someone touches them. Detection and reporting only.</p></a>
-    <a class="dcard" href="/demo/dispatchme/"><h2>Dispatch Me</h2><p>We are signing up our first crews. See how a snow contract request moves through.</p></a>
-    <a class="dcard" href="/demo/accounting/"><h2>On File</h2><p>Keeps track of the documents and receipts you are waiting on and sends the reminders when you press the button.</p></a>
-    <a class="dcard" href="/demo/receiptsort/"><h2>ReceiptSort</h2><p>Reads a pile of receipts and sorts them into tidy, usable records.</p></a>
-    <a class="dcard" href="/demo/guardian/"><h2>ScamCatch</h2><p>Checks a message or offer for the signs of a scam before you act on it.</p></a>
-    <a class="dcard" href="/demo/it-msp/"><h2>IT / MSP</h2><p>Resell Calas document-chasing under your own brand to your own clients.</p></a>
-    <a class="dcard" href="/demo/trades/"><h2>Trades</h2><p>On File for contractors: keeps a list of each sub&rsquo;s insurance and WCB papers, with expiry dates, and sends the chase emails when you press the button.</p></a>
-    <a class="dcard" href="/demo/video/"><h2>Video walkthrough</h2><p>A short narrated overview of On File, using a made-up firm.</p></a>
+    <a class="dcard" href="/demo/leadme/"><span class="thumb"><img src="/demo/_thumbs/leadme.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><span class="play"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>Narrated tour &middot; about 2 min</span></span><div class="txt"><h2>Lead Me</h2><p>Finds and scores local businesses that fit what you sell, then drafts the first email for you to approve.</p></div></a>
+    <a class="dcard" href="/demo/quote-me/"><span class="thumb"><img src="/demo/_thumbs/quote-me.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><span class="play"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>Narrated tour &middot; about 2 min</span></span><div class="txt"><h2>Quote Me</h2><p>A voice note on site becomes a priced quote from your own rate card. The customer accepts and pays the deposit from one link.</p></div></a>
+    <a class="dcard" href="/demo/haul-me/"><span class="thumb"><img src="/demo/_thumbs/haul-me.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><span class="play"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>Narrated tour &middot; about 1&frac12; min</span></span><div class="txt"><h2>Haul Me</h2><p>A green, yellow or red call on any load &mdash; fuel, distance, deadhead and margin, once your costs are in.</p></div></a>
+    <a class="dcard" href="/demo/watchpost/"><span class="thumb"><img src="/demo/_thumbs/watchpost.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><span class="play"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>Narrated tour &middot; about 1&frac12; min</span></span><div class="txt"><h2>Watchpost</h2><p>Decoys that raise an alert when someone touches them. Detection and reporting only.</p></div></a>
+    <a class="dcard" href="/demo/dispatchme/"><span class="thumb"><img src="/demo/_thumbs/dispatchme.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><span class="play"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>Narrated tour &middot; about 1&frac12; min</span></span><div class="txt"><h2>Dispatch Me</h2><p>We are signing up our first crews. See how a snow contract request moves through.</p></div></a>
+    <a class="dcard" href="/demo/accounting/"><span class="thumb"><img src="/demo/_thumbs/accounting.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><span class="play"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>Narrated tour &middot; about 1 min</span></span><div class="txt"><h2>On File</h2><p>Keeps track of the documents and receipts you are waiting on and sends the reminders when you press the button.</p></div></a>
+    <a class="dcard" href="/demo/receiptsort/"><span class="thumb"><img src="/demo/_thumbs/receiptsort.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><span class="play"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>Narrated tour &middot; about 1&frac12; min</span></span><div class="txt"><h2>ReceiptSort</h2><p>Reads a pile of receipts and writes one spreadsheet row for each. Free.</p></div></a>
+    <a class="dcard" href="/demo/guardian/"><span class="thumb"><img src="/demo/_thumbs/guardian.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><span class="play"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>Narrated tour &middot; about 1&frac12; min</span></span><div class="txt"><h2>ScamCatch</h2><p>Checks a suspicious text for the signs of a scam before you act on it. Free.</p></div></a>
+    <a class="dcard" href="/demo/it-msp/"><span class="thumb"><img src="/demo/_thumbs/it-msp.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><span class="play"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>Narrated tour &middot; about 1 min</span></span><div class="txt"><h2>IT / MSP</h2><p>Resell On File document-chasing under your own brand to your own clients.</p></div></a>
+    <a class="dcard" href="/demo/trades/"><span class="thumb"><img src="/demo/_thumbs/trades.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><span class="play"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>Narrated tour &middot; about 1 min</span></span><div class="txt"><h2>Trades</h2><p>On File for contractors: keeps a list of each sub&rsquo;s insurance and WCB papers, with expiry dates, and sends the chase emails when you press the button.</p></div></a>
+    <a class="dcard" href="/demo/video/"><span class="thumb"><img src="/demo/_thumbs/video.webp" width="640" height="400" alt="" loading="lazy" decoding="async"><span class="play"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg>Video &middot; about 1 min</span></span><div class="txt"><h2>Video walkthrough</h2><p>A short narrated video of On File, using a made-up firm.</p></div></a>
   </div>
 </main>
 <script src="/calas-brandbar.js?v=20261105b" defer></script>
