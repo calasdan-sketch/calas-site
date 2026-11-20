@@ -63,7 +63,7 @@ test('r8 "Total Tax" is not the total; ambiguous 03/04/2026 date stays blank', (
 test('NO wrong-total case is ever ok (any receipt that fails its own arithmetic)', () => {
   const bad = [
     'SHELL\n2026-10-02\nRegular 41.21 L\nTotal 65.29',                       // no subtotal/tax to check
-    'PUB\n2026-10-02\nSubtotal 40.00\nGST 2.00\nTotal 42.00\nTip 8.00\nTotal charged 50.00', // total moved
+    'PUB\n2026-10-02\nSubtotal 40.00\nGST 2.00\nTotal 42.00\nTip 8.00\nTotal charged 51.00', // total does not add up even with the tip (2026-11 expert pass: a tip that does add up is now accepted, see expert.test.cjs)
     'STORE\n2026-10-02\nSubtotal 50.00\nGST 2.50\nTotal 20.00',              // subtotal bigger than total
     'STORE\n2026-10-02\n5.00\n9.99\n',                                       // no total line: must not use biggest
     'Corner Store\n2026-09-14\n5.00\n5.00\n',
@@ -76,9 +76,9 @@ test('NO wrong-total case is ever ok (any receipt that fails its own arithmetic)
 test('needs_review when subtotal and tax are both missing, even with a total line', () => {
   const r = P.extract('Tim Hortons\n2026-09-15\nCoffee 2.00\nTotal 2.00\n');
   assert.equal(r.total, 2.00); assert.ok(review(r)); assert.match(r.reason, /no subtotal or tax/);
-  // 2026-11-13: GST that is exactly 5% of (total - GST) proves the subtotal, so this one is OK now.
+  // 2026-11-19 (same change as the live site's 2026-11-13 fix): GST that is exactly 5% of (total - GST) proves the subtotal of a
+  // tax-included receipt, so this one is OK now. A tax that is not a real rate still can't be checked.
   assert.equal(P.extract('Shop\n2026-10-02\nGST 0.50\nTotal 10.50').subtotal, 10.00);
-  // A tax that is not a real rate still can't be checked.
   assert.ok(review(P.extract('Shop\n2026-10-02\nGST 0.70\nTotal 10.50')));
   assert.match(P.extract('Shop\n2026-10-02\nGST 0.70\nTotal 10.50').reason, /no subtotal line/);
 });
@@ -141,7 +141,7 @@ test('per-currency totals: foreign receipts never added to CAD totals', () => {
   assert.equal(s.byCurrency.CAD.total, 10.50);
   assert.equal(s.byCategory['Office & Supplies'], undefined);
   const acct = P.toAccountingCSV(rows);
-  assert.match(acct, /2026-09-14,Tim Hortons,Meals & Entertainment,10\.50,CAD/);
+  assert.match(acct, /2026-09-14,Tim Hortons,,10\.50,CAD/);   // no category guessed by default (2026-11-19)
   assert.doesNotMatch(acct, /,33\.82,USD/); // foreign amount is not in the Amount column
   assert.match(acct, /USD 33\.82 - convert to CAD/);
   const csv = P.toCSV(rows);
@@ -151,7 +151,14 @@ test('per-currency totals: foreign receipts never added to CAD totals', () => {
 test('privacy: receipt text is never sent anywhere (no network calls in the page code)', () => {
   const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
   const js = fs.readFileSync(path.join(__dirname, 'parse.js'), 'utf8');
-  [html, js].forEach((src) => {
+  // Only two fetches are allowed, both plain GETs with no receipt data: (1) the page asking its OWN site whether a self-hosted engine exists,
+  // (2) downloading an engine file (pdf.js) so it can be fingerprint-checked before it runs (round 5).
+  assert.equal((html.match(/\bfetch\s*\(/g) || []).length, 2);
+  assert.match(html, /fetch\(LOCAL \+ 'engine\.json', \{ cache: 'no-store' \}\)/);
+  assert.match(html, /fetch\(url, \{ credentials: 'omit' \}\)/);
+  const noProbe = html.replace(/fetch\(LOCAL \+ 'engine\.json', \{ cache: 'no-store' \}\)/, '').replace(/fetch\(url, \{ credentials: 'omit' \}\)/, '');
+  const xl = fs.readFileSync(path.join(__dirname, 'xlsx.js'), 'utf8'), pr = fs.readFileSync(path.join(__dirname, 'prep.js'), 'utf8');
+  [noProbe, js, xl, pr].forEach((src) => {
     assert.doesNotMatch(src, /\bfetch\s*\(/);
     assert.doesNotMatch(src, /XMLHttpRequest|sendBeacon|WebSocket|new FormData|\.upload\b/);
   });

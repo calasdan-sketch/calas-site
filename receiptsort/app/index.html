@@ -19,9 +19,10 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--sunk);color:var(--ink);font:16px/1.55 "IBM Plex Sans",system-ui,-apple-system,sans-serif}
 .top{background:linear-gradient(135deg,#0B2E45,#123C57);color:#fff;border-bottom:2px solid #B9812E}
-.top .in{max-width:980px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.top .in{max-width:980px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .top b{font:700 18px "Libre Baskerville",Georgia,serif}.top small{display:block;font:500 9px "IBM Plex Mono",monospace;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
-.top a{margin-left:auto;color:#CFE3EF;font-size:16px}
+.top .nav{margin-left:auto;display:flex;align-items:center;gap:16px}.top a{color:#CFE3EF;font-size:16px;white-space:nowrap}
+.langbtn{font:600 15px inherit;background:transparent;color:#fff;border:1px solid #5C86A0;border-radius:8px;padding:6px 12px;min-height:36px;cursor:pointer}.langbtn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 main{max-width:980px;margin:0 auto;padding:24px 16px 48px}
 h1{font:700 clamp(24px,4vw,34px)/1.2 "Libre Baskerville",Georgia,serif;margin:0 0 8px}
 .lede{color:var(--ink-2);margin:0 0 20px;max-width:62ch}
@@ -62,19 +63,13 @@ main{padding-bottom:110px} /* room under the fixed "Ask Cara" chat button so it 
 .cattbl{min-width:0;table-layout:auto}
 .cattbl td:first-child{overflow-wrap:anywhere}
 .swipe{display:none;font-size:14px;color:var(--ink-2);margin:6px 2px 0}
+/* Every column readable on a computer: no more "202" dates or "PETRO" vendors (ported from the live site, 2026-11-13). */
+main{max-width:1240px}.top .in{max-width:1240px}
+td input[data-k=date]{min-width:11ch}td input[data-k=vendor],td input[data-k=category]{min-width:16ch}
+td.num input{min-width:8ch}td input[data-k=currency]{min-width:5ch}
+td.fn{min-width:13ch;max-width:18ch;font-size:14px;overflow-wrap:anywhere}.rmbtn,.editbtn{white-space:nowrap}
 .why{display:block;font-size:13px;font-weight:400;color:var(--ink-2);margin-top:4px;white-space:normal;max-width:30ch}
 .cur{display:block;font-size:13px;color:var(--ink-2);margin-top:2px}
-/* Keep every column readable on computers: no more "202…" dates or "HOME I" vendors. */
-main{max-width:1240px}.top .in{max-width:1240px}
-td input[data-k=date]{min-width:11ch}td input[data-k=vendor],td input[data-k=category]{min-width:15ch}
-td.num input{min-width:8ch}td input[data-k=currency]{min-width:5ch}
-td.fn{max-width:14ch;font-size:14px}
-td.fn .fname{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.thumb{display:block;padding:0;margin:0 0 4px;border:1px solid var(--rule);border-radius:6px;background:none;cursor:zoom-in}
-.thumb img{display:block;width:56px;height:74px;object-fit:cover;object-position:top;border-radius:5px}
-.viewer{position:fixed;inset:0;z-index:2147483646;background:rgba(5,15,25,.9);display:flex;align-items:center;justify-content:center;padding:16px;cursor:zoom-out}
-.viewer[hidden]{display:none}
-.viewer img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px}
 @media (max-width:1240px) and (min-width:601px){.swipe{display:block}}
 @media (max-width:600px){
   main{padding-bottom:130px}
@@ -87,15 +82,26 @@ td.fn .fname{display:block;white-space:nowrap;overflow:hidden;text-overflow:elli
   table.rs td:last-child{border-bottom:0}
   table.rs td::before{content:attr(data-label);flex:0 0 36%;font:500 11px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
   table.rs td input{flex:1 1 auto;min-width:0;width:auto;border-color:var(--rule);text-align:right}
-  table.rs td.fn{font-weight:600;overflow-wrap:anywhere;max-width:none;gap:12px}
-  table.rs td.fn .fname{white-space:normal;flex:1 1 auto;text-align:right}
-  table.rs .thumb img{width:72px;height:96px}
+  table.rs td.fn{font-weight:600;overflow-wrap:anywhere}
   table.rs td.empty{display:block;text-align:center}
+  tr.okrow:not(.open) td:not(.keep){display:none}
+  table.rs .editbtn{display:inline-block}
   table.rs td.empty::before{content:none}
-  .tools .btn{flex:1 1 100%}
+  .tools .btn{flex:1 1 calc(50% - 10px);min-height:44px;padding:10px 8px}
+  .tools #dl,.tools #dlxlsx{flex:1 1 100%}
   .cattbl th,.cattbl td{padding:6px 4px;font-size:14px}
 }
-@media print{.top,.drop,.tools,.bar,#cta,#savednote,#cara{display:none!important}body{background:#fff}main{max-width:100%;padding:0}.wrap{overflow:visible;border:none}table{min-width:0}td input{border:none!important;background:none!important}}
+@media print{.rmbtn,.top,.drop,.tools,.bar,#cta,#savednote,#cara,.camrow,.viewer,.thumbbtn{display:none!important}body{background:#fff}main{max-width:100%;padding:0}.wrap{overflow:visible;border:none}table{min-width:0}td input{border:none!important;background:none!important}}
+.camrow{margin:12px 0 0;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.camlbl{display:inline-block;position:relative;cursor:pointer}.camlbl input{position:absolute;width:1px;height:1px;opacity:0}.camlbl:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+.editbtn{display:none;font:600 14px inherit;border:1px solid var(--rule);background:transparent;color:var(--accent);border-radius:8px;padding:6px 12px;min-height:36px;cursor:pointer;margin-top:4px}
+.thumbbtn{border:0;background:none;padding:0;cursor:zoom-in;display:block;margin-bottom:4px}
+.thumb{width:48px;height:64px;object-fit:cover;border-radius:6px;border:1px solid var(--rule);display:block}.thumb.none{display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--ink-2);text-align:center;background:var(--sunk)}
+.rmbtn{display:inline-block;font:500 13px inherit;border:1px solid var(--rule);background:transparent;color:var(--ink-2);border-radius:8px;padding:4px 10px;min-height:32px;cursor:pointer;margin:4px 6px 0 0}.rmbtn:hover{color:var(--warn);border-color:var(--warn)}
+.why.itc{color:var(--accent-2)}.why.dup{color:var(--warn)}
+.fx{margin-top:14px;padding:12px 14px;background:var(--sunk);border-radius:10px;font-size:15px}.fx label{display:block;margin-top:8px}.fx input.rate{width:110px;padding:6px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--paper);color:inherit;font:inherit}
+.viewer{position:fixed;inset:0;background:rgba(5,15,22,.92);z-index:2147483000;display:flex;flex-direction:column;align-items:center;gap:12px;padding:16px;overflow:auto}.viewer[hidden]{display:none}.viewer img{max-width:100%;height:auto;border-radius:8px;background:#fff}
+@media (max-width:600px){table.rs td.fn{display:block}.thumb{width:72px;height:96px}}
 </style>
 <style>/*calas-gold-hairline*/:root{--gold:#F0C171}body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style><link rel="stylesheet" href="/calas-ui.css?v=20261001a"><link rel="stylesheet" href="/calas-theme.css?v=20261002a"><style id="calas-readable">/* 2026-10-05 Owner: same readable text size + brand fonts as the main site */
 body{font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px}
@@ -121,367 +127,490 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
 <!-- og:end -->
 </head>
 <body>
-<header class="top"><div class="in"><div><b>ReceiptSort</b><small>Free &middot; by Calas Automations</small></div><a href="/receiptsort/">About</a></div></header>
+<header class="top"><div class="in"><div><b>ReceiptSort</b><small data-t="tagline">Free &middot; by Calas Automations</small></div><div class="nav"><button type="button" id="lang" class="langbtn" lang="fr" data-t="lang.btn" data-t-aria="lang.label" aria-label="Voir cette page en français">Français</button><a href="/receiptsort/" data-t="about">About</a></div></div></header>
 <main>
-  <h1>Receipts in. One spreadsheet out.</h1>
-  <p class="lede">Pick receipt photos or PDFs. ReceiptSort reads each one right here on your phone or computer and lists the date, vendor, subtotal, GST and total. Nothing is uploaded. Anything it isn't sure about is left blank and marked for you to check.</p>
+  <h1 data-t="h1">Receipts in. One spreadsheet out.</h1>
+  <p class="lede" data-t="lede">Pick receipt photos or PDFs. ReceiptSort reads each one right here on your phone or computer and lists the date, vendor, subtotal, GST and total. Nothing is uploaded. Anything it isn't sure about is left blank and marked for you to check.</p>
 
   <label class="drop" id="drop">
     <input type="file" id="files" accept="image/*,.pdf,application/pdf" multiple>
-    <b>&#128206; Choose receipts</b>
-    <span>Photos or PDFs &middot; pick as many as you like &middot; or drag them here</span>
+    <b data-t="drop.title">&#128206; Choose receipts</b>
+    <span data-t="drop.sub">Photos or PDFs &middot; pick as many as you like &middot; or drag them here</span>
   </label>
+  <p class="camrow"><label class="btn ghost camlbl"><span data-t="cam.btn">&#128247; Take a photo now</span><input type="file" id="cam" accept="image/*" capture="environment"></label>
+  <span class="note" data-t="cam.tip">Lay the receipt flat in good light, fill the picture, hold steady.</span></p>
   <p class="status" id="status" aria-live="polite"></p>
   <div class="bar" id="bar" aria-hidden="true"><i id="barFill"></i></div>
 
   <div class="tools">
-    <button class="btn" id="dl" type="button" disabled>Download CSV</button>
-    <button class="btn" id="dlacct" type="button" disabled>QuickBooks / Xero CSV</button>
-    <button class="btn ghost" id="print" type="button" disabled>Print report (PDF)</button>
-    <button class="btn ghost" id="clear" type="button" disabled>Start over</button>
-    <button class="btn ghost" type="button" onclick="rsShare(event)">Share this free tool</button>
+    <button class="btn" id="dl" type="button" disabled data-t="btn.csv">Download CSV</button>
+    <button class="btn" id="dlxlsx" type="button" disabled data-t="btn.xlsx">Excel file (.xlsx)</button>
+    <button class="btn ghost" id="dlqbo" type="button" disabled data-t="btn.qbo">QuickBooks CSV</button>
+    <button class="btn ghost" id="dlxero" type="button" disabled data-t="btn.xero">Xero CSV</button>
+    <button class="btn ghost" id="dlzip" type="button" disabled data-t="btn.zip">Photos, renamed (zip)</button>
+    <button class="btn ghost" id="print" type="button" disabled data-t="btn.print">Print report (PDF)</button>
+    <button class="btn ghost" id="clear" type="button" disabled data-t="btn.clear">Start over</button>
+    <button class="btn ghost" type="button" onclick="rsShare(event)" data-t="btn.share">Share this free tool</button>
     <span class="note" id="count"></span>
   </div>
   <p class="note" id="savednote" style="margin-top:2px"></p>
-  <p class="swipe" aria-hidden="true">&larr; Swipe the table sideways to see every column &rarr;</p>
+  <p class="note" style="margin-top:2px"><label><input type="checkbox" id="noremember"> <span data-t="noremember">Don't keep my rows on this device (a good idea on a shared computer)</span></label></p>
+  <p class="note" style="margin-top:2px"><label><input type="checkbox" id="suggestcats"> <span data-t="suggestcats">Suggest a category from the shop name (a keyword guess: check it). Off: the Category column stays empty for you or your bookkeeper.</span></label></p>
+  <p class="swipe" aria-hidden="true" data-t="swipe">&larr; Swipe the table sideways to see every column &rarr;</p>
   <div class="wrap"><table class="rs">
-    <thead><tr><th>File</th><th>Status</th><th>Date</th><th>Vendor</th><th>Subtotal</th><th>GST</th><th>PST / RST / QST</th><th>Sales tax</th><th>Total</th><th>Currency</th><th>Category</th><th></th></tr></thead>
-    <tbody id="rows"><tr><td colspan="12" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr></tbody>
+    <thead><tr><th data-t="col.file">Photo / file</th><th data-t="col.status">Status</th><th data-t="col.date">Date</th><th data-t="col.vendor">Vendor</th><th data-t="col.subtotal">Subtotal</th><th data-t="col.gst">GST / HST</th><th data-t="col.pst">PST / RST / QST</th><th data-t="col.sales_tax">Sales tax</th><th data-t="col.tip">Tip</th><th data-t="col.total">Total</th><th data-t="col.currency">Currency</th><th data-t="col.category">Category</th></tr></thead>
+    <tbody id="rows"><tr><td colspan="12" class="empty" data-t="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr></tbody>
   </table></div>
   <div id="summary" class="summary" hidden></div>
-  <div id="viewer" class="viewer" hidden tabindex="-1" role="dialog" aria-label="Receipt photo — tap to close"><img alt="Receipt photo"></div>
-  <p class="note">The CSV opens in Excel, Google Sheets, Numbers or your accounting software. Tip: add this page to your home screen to use it like an app, even offline after the first use.</p>
+  <p class="note" data-t="foot.note">The CSV opens in Excel, Google Sheets, Numbers or your accounting software. Tip: add this page to your home screen to use it like an app, even offline after the first use.</p>
+  <p class="note" data-t="foot.privacy">Privacy: your receipts stay on this device. This page loads its fonts from Google Fonts and has a chat helper that sends only what you type into it. Calas Automations Inc., Winnipeg, Manitoba.</p>
+  <p class="note" data-t="foot.copy">&copy; 2026 Calas Automations Inc.</p>
   <div class="cta" id="cta">Chasing clients for their receipts? <b>On File</b> by Calas Automations does the chasing for you. <a href="/accounting/">See On File &rarr;</a></div>
 </main>
+<div id="viewer" class="viewer" role="dialog" aria-modal="true" aria-label="Receipt photo" data-t-aria="viewer.label" hidden><button type="button" id="viewerClose" class="btn" data-t="btn.close">Close</button><img id="viewerImg" alt=""></div>
 <script>
-function rsShare(e){var url='https://calasautomations.com/receiptsort/app/';var msg='Free receipt-to-spreadsheet tool — drag in your receipt photos, get one CSV. Nothing leaves your device. '+url;if(navigator.share){navigator.share({title:'ReceiptSort — free',text:msg,url:url}).catch(function(){});}else{var b=e&&e.target;navigator.clipboard.writeText(msg).then(function(){if(b){b.textContent='Link copied';setTimeout(function(){b.textContent='Share this free tool';},1500);}}).catch(function(){});}}
+function rsShare(e){var L=window.RSI18N,url='https://calasautomations.com/receiptsort/app/',msg=L.t('share.msg')+' '+url;if(navigator.share){navigator.share({title:'ReceiptSort',text:msg,url:url}).catch(function(){});}else{var b=e&&e.target;navigator.clipboard.writeText(msg).then(function(){if(b){b.textContent=L.t('btn.copied');setTimeout(function(){b.textContent=L.t('btn.share');},1500);}}).catch(function(){});}}
 </script>
-<script src="/receiptsort/app/parse.js?v=20261113c"></script><!-- bump ?v= (and sw.js) whenever parse.js changes: browsers keep it 4h -->
+<script src="/receiptsort/app/i18n.js?v=20261119a"></script>
+<script src="/receiptsort/app/parse.js?v=20261119a"></script>
+<script src="/receiptsort/app/prep.js?v=20261119a"></script>
+<script src="/receiptsort/app/xlsx.js?v=20261119a"></script><!-- bump ?v= here and in sw.js whenever a script changes: the host lets browsers keep files for hours (live site fix 2026-11-13) -->
 <script>
 (function () {
   'use strict';
-  var TESS = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
-  var PDFJS = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js';
-  var PDFWORKER = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
-  var rows = [], busy = false, worker = null;
+  // Engine: if the site hosts its own copy (site/app/engine/, made by scripts/vendor-engine.sh) the page uses it and never
+  // contacts a CDN. If not, it falls back to the public CDN for the engine's CODE only (pinned version + integrity check).
+  var LOCAL = '/receiptsort/app/engine/';
+  var CDN = {
+    tess: ['https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js', 'sha384-GJqSu7vueQ9qN0E9yLPb3Wtpd7OrgK8KmYzC8T1IysG1bcvxvIO4qtYR/D3A991F'],
+    // pdf.js 4.10.38 "legacy" build (an ES module, so it cannot use a <script integrity> tag: the page downloads it, checks the
+    // fingerprint itself, and only then runs it from a local blob). 3.11.174 was in the range of CVE-2024-4367.
+    pdf: ['https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/legacy/build/pdf.min.mjs', 'sha384-z/XbAtvhBXJoK+yvYimnFuTCF6/2wTCDSIFD09/HtIfwFtvDKOMdAe5Z3wOChkmW'],
+    pdfWorker: ['https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/legacy/build/pdf.worker.min.mjs', 'sha384-vbNBYP03jHFPlgtK4qSXtazEmGfmpTWlSsfq9OiU20MroW/Q9TbaEXiM7PpeWg+6']
+  };
+  var lastSkipped = 0, rows = [], busy = false, worker = null, workerLangs = '', rates = {}, localEngine = null, queue = [], remember = true;
   var $ = function (id) { return document.getElementById(id); };
   var statusEl = $('status'), bar = $('bar'), fill = $('barFill'), tbody = $('rows');
+  var L = window.RSI18N, T = L.t, TN = L.tn, lastStatus = null;
+  function setStatus(key, vars, n) { lastStatus = key ? { key: key, vars: vars, n: n } : null; paintStatus(); }
+  function paintStatus() { statusEl.textContent = !lastStatus ? '' : lastStatus.n !== undefined ? TN(lastStatus.key, lastStatus.n, Object.assign({}, lastStatus.vars)) : T(lastStatus.key, lastStatus.vars); }
+  function applyStatic() {
+    document.documentElement.lang = L.getLang();
+    document.title = T('title');
+    [].forEach.call(document.querySelectorAll('[data-t]'), function (el) { el.innerHTML = T(el.getAttribute('data-t')); });
+    [].forEach.call(document.querySelectorAll('[data-t-aria]'), function (el) { el.setAttribute('aria-label', T(el.getAttribute('data-t-aria'))); });
+    var lb = $('lang'); lb.setAttribute('lang', L.getLang() === 'fr' ? 'en' : 'fr');
+  }
+  function initLang() {
+    var l = null; try { l = localStorage.getItem('rs_lang'); } catch (e) {}
+    L.setLang(l === 'fr' || l === 'en' ? l : L.detect(navigator.language || (navigator.languages && navigator.languages[0])));
+  }
+  initLang();
 
-  function load(src) {
-    return new Promise(function (ok, no) { var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
-  }
-  var reading = ''; // "Reading 2 of 5: IMG_0042.jpg", shown with live progress
-  function onProgress(m) {
-    if (!busy) return;
-    if (m.status === 'recognizing text') statusEl.textContent = reading + ' — ' + Math.round(m.progress * 100) + '%';
-    else if (/load|initializ/i.test(m.status)) statusEl.textContent = 'Getting the reader ready (first time only)… ' + Math.round((m.progress || 0) * 100) + '%';
-  }
-  var workerP = null;
-  function ocrWorker() {
-    if (!workerP) {
-      workerP = (window.Tesseract ? Promise.resolve() : load(TESS))
-        .then(function () { return Tesseract.createWorker('eng', 1, { logger: onProgress }); })
-        .then(function (w) { worker = w; return w; });
-      workerP.catch(function () { workerP = null; }); // let a later try download again
-    }
-    return workerP;
-  }
-  function pdfLib() {
-    return (window.pdfjsLib ? Promise.resolve() : load(PDFJS)).then(function () { pdfjsLib.GlobalWorkerOptions.workerSrc = PDFWORKER; return pdfjsLib; });
-  }
-  // Otsu: the brightness that best splits a picture into dark (ink, table) and light (paper).
-  function otsu(hist, tot) {
-    var sum = 0, sB = 0, wB = 0, best = 0, th = 128, t;
-    for (t = 0; t < 256; t++) sum += t * hist[t];
-    for (t = 0; t < 256; t++) {
-      wB += hist[t]; if (!wB) continue;
-      var wF = tot - wB; if (!wF) break;
-      sB += t * hist[t];
-      var mB = sB / wB, mF = (sum - sB) / wF, between = wB * wF * (mB - mF) * (mB - mF);
-      if (between > best) { best = between; th = t; }
-    }
-    return th;
-  }
-  // Find the receipt in the photo (the big bright area) using a tiny copy, so it's instant.
-  // Falls back to the whole photo when the paper can't be told apart from the background.
-  // PAPER_EDGE/PAPER_PAD are generous on purpose: a crop that trims the bottom (the totals) is worse than a loose one.
-  var FIND_SIZE = 300, MIN_PAPER = 0.08, PAPER_EDGE = 0.3, PAPER_PAD = 0.06;
-  function findPaper(bmp) {
-    var full = { x: 0, y: 0, w: bmp.width, h: bmp.height };
-    var k = Math.min(1, FIND_SIZE / Math.max(bmp.width, bmp.height));
-    var w = Math.max(1, Math.round(bmp.width * k)), h = Math.max(1, Math.round(bmp.height * k));
-    var c = document.createElement('canvas'); c.width = w; c.height = h;
-    var g = c.getContext('2d'); g.drawImage(bmp, 0, 0, w, h);
-    var p = g.getImageData(0, 0, w, h).data, lum = new Uint8Array(w * h), hist = new Array(256).fill(0), i, x, y;
-    for (i = 0; i < w * h; i++) { lum[i] = p[i * 4] * .299 + p[i * 4 + 1] * .587 + p[i * 4 + 2] * .114; hist[lum[i]]++; }
-    var th = otsu(hist, w * h), cols = new Array(w).fill(0), rows = new Array(h).fill(0);
-    for (y = 0; y < h; y++) for (x = 0; x < w; x++) if (lum[y * w + x] > th) { cols[x]++; rows[y]++; }
-    function span(a) {
-      var max = Math.max.apply(null, a), lo = -1, hi = -1;
-      for (var j = 0; j < a.length; j++) if (a[j] >= max * PAPER_EDGE) { if (lo < 0) lo = j; hi = j; }
-      return [lo, hi];
-    }
-    var sx = span(cols), sy = span(rows);
-    if (sx[0] < 0 || sy[0] < 0) return full;
-    var bw = sx[1] - sx[0] + 1, bh = sy[1] - sy[0] + 1;
-    if (bw * bh < MIN_PAPER * w * h) return full;
-    var pad = Math.round(Math.max(bw, bh) * PAPER_PAD);
-    var x0 = Math.max(0, sx[0] - pad), y0 = Math.max(0, sy[0] - pad);
-    var x1 = Math.min(w, sx[1] + 1 + pad), y1 = Math.min(h, sy[1] + 1 + pad);
-    return { x: Math.round(x0 / k), y: Math.round(y0 / k), w: Math.round((x1 - x0) / k), h: Math.round((y1 - y0) / k) };
-  }
-  // Photo -> canvas: fix phone rotation, zoom in on the receipt, greyscale, boost contrast.
-  // The receipt is drawn READ_WIDTH pixels wide: big enough for small print, small enough to be quick on phones.
-  // FULL_SIZE: the whole photo is also kept (long side 2000px) as a backup reading, in case the crop missed part.
-  var READ_WIDTH = 1200, MAX_HEIGHT = 4000, MAX_ZOOM = 4, FULL_SIZE = 2000, THUMB_W = 180;
-  function greyCanvas(bmp, box, s) {
-    var c = document.createElement('canvas'); c.width = Math.round(box.w * s); c.height = Math.round(box.h * s);
-    var g = c.getContext('2d'); g.imageSmoothingQuality = 'high';
-    g.drawImage(bmp, box.x, box.y, box.w, box.h, 0, 0, c.width, c.height);
-    var d = g.getImageData(0, 0, c.width, c.height), p = d.data, lo = 255, hi = 0, i, v;
-    for (i = 0; i < p.length; i += 4) { v = p[i] * .299 + p[i + 1] * .587 + p[i + 2] * .114; p[i] = v; if (v < lo) lo = v; if (v > hi) hi = v; }
-    var span = Math.max(1, hi - lo);
-    for (i = 0; i < p.length; i += 4) { v = (p[i] - lo) * 255 / span; p[i] = p[i + 1] = p[i + 2] = v; }
-    g.putImageData(d, 0, 0); return c;
-  }
-  // -> { crop: zoomed receipt, full: whole photo (or null if the crop IS the whole photo), thumb: small colour preview }
-  function prepImage(blob) {
-    return createImageBitmap(blob, { imageOrientation: 'from-image' }).then(function (bmp) {
-      var whole = { x: 0, y: 0, w: bmp.width, h: bmp.height }, box = findPaper(bmp);
-      var cropped = box.w < bmp.width * 0.95 || box.h < bmp.height * 0.95;
-      var out = {
-        crop: greyCanvas(bmp, box, Math.min(READ_WIDTH / box.w, MAX_HEIGHT / box.h, MAX_ZOOM)),
-        full: cropped ? greyCanvas(bmp, whole, Math.min(1, FULL_SIZE / Math.max(bmp.width, bmp.height))) : null
-      };
-      var t = document.createElement('canvas'), ts = THUMB_W / box.w; // preview = the receipt itself
-      t.width = THUMB_W; t.height = Math.round(box.h * ts);
-      t.getContext('2d').drawImage(bmp, box.x, box.y, box.w, box.h, 0, 0, t.width, t.height);
-      out.thumb = t.toDataURL('image/jpeg', 0.6);
-      if (bmp.close) bmp.close();
-      return out;
+  function load(src, integrity) {
+    return new Promise(function (ok, no) {
+      var s = document.createElement('script'); s.src = src;
+      if (integrity) { s.integrity = integrity; s.crossOrigin = 'anonymous'; }
+      s.onload = ok; s.onerror = no; document.head.appendChild(s);
     });
   }
-  // Black-and-white copy (Otsu threshold). Clears paper grain and shadows that make
-  // the reader garble numbers: in testing it read 12 of 12 totals vs 2 of 12 without it.
-  // Tested 2026-11-13 on 7 rough phone photos: smooth pass 6/7 at 0.23s each; with the sharp fallback 7/7.
-  // smooth=true first softens photo grain by 1px: about 8x faster to read, same accuracy.
-  function binarize(src, smooth) {
-    var c = document.createElement('canvas'); c.width = src.width; c.height = src.height;
-    var g = c.getContext('2d'); if (smooth) g.filter = 'blur(1px)'; g.drawImage(src, 0, 0); g.filter = 'none';
-    var d = g.getImageData(0, 0, c.width, c.height), p = d.data, hist = new Array(256).fill(0), i;
-    for (i = 0; i < p.length; i += 4) hist[p[i] | 0]++;
-    var th = otsu(hist, p.length / 4);
-    for (i = 0; i < p.length; i += 4) p[i] = p[i + 1] = p[i + 2] = p[i] > th ? 255 : 0;
+  function hasLocalEngine() {
+    if (localEngine !== null) return Promise.resolve(localEngine);
+    return fetch(LOCAL + 'engine.json', { cache: 'no-store' }).then(function (r) { return r.ok; }, function () { return false; })
+      .then(function (ok) { localEngine = ok; return ok; });
+  }
+  // French screens also read with the French model (accents in shop names and dates). If the French model cannot be loaded, English alone is used.
+  function ocrLangs() { return L.getLang() === 'fr' ? 'eng+fra' : 'eng'; }
+  function ocrWorker() {
+    var want = ocrLangs();
+    if (worker && workerLangs === want) return Promise.resolve(worker);
+    var old = worker; worker = null; if (old && old.terminate) { try { old.terminate(); } catch (e) {} }
+    return hasLocalEngine().then(function (local) {
+      var p = window.Tesseract ? Promise.resolve() : (local ? load(LOCAL + 'tesseract.min.js') : load(CDN.tess[0], CDN.tess[1]));
+      return p.then(function () {
+        var o = local ? { workerPath: location.origin + LOCAL + 'worker.min.js', corePath: location.origin + LOCAL, langPath: location.origin + LOCAL + 'lang', workerBlobURL: false } : {};
+        return Tesseract.createWorker(want, 1, o).catch(function (e) { if (want === 'eng') throw e; want = 'eng'; return Tesseract.createWorker('eng', 1, o); });
+      });
+    }).then(function (w) { worker = w; workerLangs = want; return w; }, function (e) { var x = new Error('engine'); x.engine = true; throw x; });
+  }
+  // Download a file, optionally check its SHA-384 fingerprint, and hand back a blob: address that always has the right type
+  // (some hosts serve .mjs files as plain downloads, which browsers refuse to run).
+  function verifiedBlobUrl(url, integrity) {
+    return fetch(url, { credentials: 'omit' }).then(function (r) { if (!r.ok) throw new Error('download failed'); return r.arrayBuffer(); }).then(function (buf) {
+      if (!integrity) return buf;
+      if (!(window.crypto && crypto.subtle)) throw new Error('cannot check the file');
+      return crypto.subtle.digest('SHA-384', buf).then(function (h) {
+        var b = ''; new Uint8Array(h).forEach(function (x) { b += String.fromCharCode(x); });
+        if ('sha384-' + btoa(b) !== integrity) throw new Error('fingerprint mismatch');
+        return buf;
+      });
+    }).then(function (buf) { return URL.createObjectURL(new Blob([buf], { type: 'text/javascript' })); });
+  }
+  var pdfPromise = null;
+  function pdfLib() {
+    if (pdfPromise) return pdfPromise;
+    pdfPromise = hasLocalEngine().then(function (local) {
+      var main = local ? [LOCAL + 'pdf.min.mjs', null] : CDN.pdf, wk = local ? [LOCAL + 'pdf.worker.min.mjs', null] : CDN.pdfWorker;
+      return Promise.all([verifiedBlobUrl(main[0], main[1]), verifiedBlobUrl(wk[0], wk[1])]).then(function (u) {
+        return import(u[0]).then(function (lib) { lib.GlobalWorkerOptions.workerSrc = u[1]; return lib; });
+      });
+    });
+    pdfPromise = pdfPromise.catch(function () { pdfPromise = null; var x = new Error('engine'); x.engine = true; throw x; });
+    return pdfPromise;
+  }
+
+  // ---- reading a photo -------------------------------------------------------------------------
+  // Photo -> grey pixels at a size that reads well, phone rotation fixed. 2026-11-19: the receipt is found in the photo first (the
+  // bright paper against a darker desk, RSPrep.findPaper) and read zoomed in on; the whole photo is kept as a backup read in case
+  // the crop missed part of it. Ported from the live site's 2026-11-13 change, which tested it on real phone photos.
+  function draw(bmp, sx, sy, sw, sh, s) {
+    var c = document.createElement('canvas'); c.width = Math.max(1, Math.round(sw * s)); c.height = Math.max(1, Math.round(sh * s));
+    var g = c.getContext('2d'); g.imageSmoothingQuality = 'high'; g.drawImage(bmp, sx, sy, sw, sh, 0, 0, c.width, c.height); return c;
+  }
+  function prepare(src) {
+    var W = src.width, H = src.height, big = Math.max(W, H);
+    var full = draw(src, 0, 0, W, H, big > 2400 ? 2400 / big : Math.max(1, 1600 / big));
+    var box = RSPrep.findPaper(grey(draw(src, 0, 0, W, H, Math.min(1, 300 / big)))), crop = null;
+    if (box) {
+      var bx = Math.round(box.x * W), by = Math.round(box.y * H), bw = Math.round(box.w * W), bh = Math.round(box.h * H);
+      crop = draw(src, bx, by, bw, bh, Math.min(1400 / bw, 4200 / bh, 3));
+    }
+    var qsrc = crop || full, qs = Math.min(1, 1000 / Math.max(qsrc.width, qsrc.height)), qc = document.createElement('canvas');
+    qc.width = Math.max(1, Math.round(qsrc.width * qs)); qc.height = Math.max(1, Math.round(qsrc.height * qs)); qc.getContext('2d').drawImage(qsrc, 0, 0, qc.width, qc.height);
+    return { canvas: crop || full, full: crop ? full : null, qcanvas: qc, w: W, h: H };
+  }
+  function decode(blob) {
+    return createImageBitmap(blob, { imageOrientation: 'from-image' }).then(function (bmp) { var d = prepare(bmp); if (bmp.close) bmp.close(); return d; });
+  }
+  function grey(canvas) {
+    var g = canvas.getContext('2d'), d = g.getImageData(0, 0, canvas.width, canvas.height), p = d.data, n = canvas.width * canvas.height, o = new Uint8ClampedArray(n);
+    for (var i = 0, j = 0; j < n; i += 4, j++) o[j] = p[i] * .299 + p[i + 1] * .587 + p[i + 2] * .114;
+    return { width: canvas.width, height: canvas.height, data: o };
+  }
+  function toCanvas(img) {
+    var c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+    var g = c.getContext('2d'), d = g.createImageData(img.width, img.height), p = d.data;
+    for (var j = 0, i = 0; j < img.data.length; j++, i += 4) { p[i] = p[i + 1] = p[i + 2] = img.data[j]; p[i + 3] = 255; }
     g.putImageData(d, 0, 0); return c;
   }
-  // psm 6 = read the picture as one block of text (how receipts are laid out); 3 = automatic layout.
-  function ocr(img, psm) {
-    return ocrWorker().then(function (w) { return w.setParameters({ tessedit_pageseg_mode: psm || '6' }).then(function () { return w.recognize(img); }); })
+  function recognize(canvas, psm) {
+    return ocrWorker().then(function (w) { return w.setParameters({ tessedit_pageseg_mode: String(psm) }).then(function () { return w.recognize(canvas); }); })
       .then(function (r) { return (r.data && r.data.text || '').trim(); });
   }
-  // Read a picture up to three ways and keep the reading whose numbers check out best.
-  // Each pass: [picture to read, layout]. Later passes only run if the earlier ones missed something.
-  // Each pass: [which picture, how to clean it]. Later passes only run if the earlier ones missed something.
-  var PASSES = [['crop', 'smooth'], ['full', 'smooth'], ['crop', 'sharp'], ['crop', 'grey']];
-  function score(r) {
-    return (r.status === 'ok' ? 100 : 0) + (r.total != null ? 10 : 0) +
-      ['date', 'vendor', 'subtotal', 'gst', 'pst', 'sales_tax'].filter(function (k) { return r[k] != null; }).length;
-  }
-  function goodEnough(r) {
-    // No subtotal = nothing to cross-check (e.g. gas receipts); numbers that don't add up = try again.
-    return r.status === 'ok' || (r.total != null && r.date && r.vendor && r.subtotal == null);
-  }
-  function readPicture(pics) {
-    var tries = [];
-    return PASSES.reduce(function (p, pass) {
-      return p.then(function () {
-        if (tries.some(function (t) { return goodEnough(t.row); })) return;
-        var src = pics[pass[0]]; if (!src) return;
-        var img = pass[1] === 'grey' ? src : binarize(src, pass[1] === 'smooth');
-        return ocr(img, '6').then(function (text) { tries.push({ text: text, row: RSParse.extract(text) }); });
+  // Up to four reads of the same picture, each cleaned or laid out differently. Stops at the first read whose numbers add up.
+  // If none does, RSParse.pickBest keeps the least doubtful one (or the amounts that add up across reads).
+  // 1 smoothed + stretched, as one block of text; 2 black-and-white (Otsu); 3 plain, column layout; 4 the whole photo (if the
+  // first three read a crop) or automatic layout.
+  function readCanvas(canvas, qcanvas, onStep, fullCanvas) {
+    var g = grey(canvas), enh = RSPrep.stretch(RSPrep.smooth(RSPrep.stretch(g))), plain = RSPrep.stretch(g);
+    var q = qcanvas ? RSPrep.quality(grey(qcanvas)) : null, texts = [];
+    var plan = [function () { return [enh, 6]; }, function () { return [RSPrep.binarize(enh), 6]; }, function () { return [plain, 4]; },
+      fullCanvas ? function () { var fg = grey(fullCanvas); return [RSPrep.stretch(RSPrep.smooth(RSPrep.stretch(fg))), 6]; } : function () { return [plain, 3]; }];
+    function step(i) {
+      if (onStep) onStep(i);
+      var p = plan[i]();
+      return recognize(toCanvas(p[0]), p[1]).then(function (t) {
+        texts.push(t);
+        if (i < plan.length - 1 && !(t && RSParse.pickBest(texts).status === 'ok')) return step(i + 1);
       });
-    }, Promise.resolve()).then(function () {
-      tries.sort(function (a, b) { return score(b.row) - score(a.row); });
-      var best = tries[0];
-      if (!best) return RSParse.extract('');
-      // Borrow a cleanly read date / vendor from another reading of the same photo (amounts are never mixed).
-      var hints = {};
-      tries.forEach(function (t) { if (!hints.date && t.row.date) hints.date = t.row.date; if (!hints.vendor && t.row.vendor) hints.vendor = t.row.vendor; });
-      return (!best.row.date || !best.row.vendor) ? RSParse.extract(best.text, hints) : best.row;
+    }
+    return step(0).then(function () {
+      var r = RSParse.pickBest(texts); r._texts = texts;
+      if (r.status !== 'ok' && q) { var tip = RSPrep.advice(q); if (tip) r.reason = (r.reason ? r.reason + '; ' : '') + 'photo tip: ' + tip; }
+      return r;
     });
   }
-  function readPdf(file) {
-    return pdfLib().then(function (lib) { return file.arrayBuffer().then(function (buf) { return lib.getDocument({ data: buf }).promise; }); })
+  // PDFs: the text layer is read when there is one; a scanned PDF (pictures only) is read page by page like a photo.
+  // 2026-11-19: a PDF holding several receipts (one per page, e.g. a scanned stack) gives one row per receipt (RSParse.splitPages);
+  // an invoice over two pages stays one row. Up to 20 pages of text, or 10 scanned pages, are read.
+  var PDF_TEXT_PAGES = 20, PDF_SCAN_PAGES = 10;
+  function pageText(pg) {
+    return pg.getTextContent().then(function (tc) {
+      var lines = {}, out = [];
+      tc.items.forEach(function (it) { var y = Math.round(it.transform[5]); (lines[y] = lines[y] || []).push(it); });
+      Object.keys(lines).map(Number).sort(function (a, b) { return b - a; }).forEach(function (y) {
+        out.push(lines[y].sort(function (a, b) { return a.transform[4] - b.transform[4]; }).map(function (i) { return i.str; }).join(' '));
+      });
+      return out.join('\n');
+    });
+  }
+  function readPdf(file, onStep) {
+    return pdfLib().then(function (lib) { return file.arrayBuffer().then(function (buf) { return lib.getDocument({ data: buf, isEvalSupported: false, enableXfa: false }).promise; }); })
       .then(function (doc) {
-        var pages = [], n = Math.min(doc.numPages, 3);
-        for (var i = 1; i <= n; i++) pages.push(doc.getPage(i));
+        var nText = Math.min(doc.numPages, PDF_TEXT_PAGES), pages = [];
+        for (var i = 1; i <= nText; i++) pages.push(doc.getPage(i));
         return Promise.all(pages).then(function (ps) {
-          return Promise.all(ps.map(function (pg) {
-            return pg.getTextContent().then(function (tc) {
-              var lines = {}, out = [];
-              tc.items.forEach(function (it) { var y = Math.round(it.transform[5]); (lines[y] = lines[y] || []).push(it); });
-              Object.keys(lines).map(Number).sort(function (a, b) { return b - a; }).forEach(function (y) {
-                out.push(lines[y].sort(function (a, b) { return a.transform[4] - b.transform[4]; }).map(function (i) { return i.str; }).join(' '));
+          return Promise.all(ps.map(pageText)).then(function (texts) {
+            var scanned = !texts.join('').trim(), n = scanned ? Math.min(doc.numPages, PDF_SCAN_PAGES) : nText;
+            var cut = doc.numPages > n ? 'this PDF has ' + doc.numPages + ' pages: only the first ' + n + ' were read' : '';
+            var got = scanned ? ps.slice(0, n).reduce(function (p, pg, k) {
+              return p.then(function (acc) {
+                var vp1 = pg.getViewport({ scale: 1 }), vp = pg.getViewport({ scale: Math.min(3, Math.max(1, 1600 / vp1.width)) });
+                var c = document.createElement('canvas'); c.width = vp.width; c.height = vp.height;
+                return pg.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise.then(function () {
+                  var d = prepare(c); return readCanvas(d.canvas, d.qcanvas, onStep, d.full);
+                }).then(function (r) { acc.push(r); return acc; });
               });
-              return out.join('\n');
+            }, Promise.resolve([])) : Promise.resolve(null);
+            return got.then(function (scans) {
+              // For scanned pages the text of the read that was kept stands in for the page's text.
+              var pageTexts = scans ? scans.map(function (r) { return r._text || (r._texts || [''])[0] || ''; }) : texts;
+              var groups = RSParse.splitPages(pageTexts), many = groups.length > 1;
+              return groups.map(function (g) {
+                var r = (scans && g.pages.length === 1) ? scans[g.pages[0] - 1] : RSParse.extract(g.text);
+                if (many) r.page = g.pages.length === 1 ? String(g.pages[0]) : g.pages[0] + '-' + g.pages[g.pages.length - 1];
+                var notes = [];
+                // Several pages read as ONE receipt (an invoice over two pages, or receipts whose totals could not be read): always checked by a person.
+                if (doc.numPages > 1 && !many) notes.push('this PDF has ' + doc.numPages + ' pages: all were read as one receipt');
+                if (cut) notes.push(cut);
+                if (notes.length) { r.reason = (r.reason ? r.reason + '; ' : '') + notes.join('; '); r.status = 'needs_review'; }
+                return r;
+              });
             });
-          })).then(function (texts) {
-            var text = texts.join('\n').trim();
-            if (text) return RSParse.extract(text);
-            // scanned PDF (no text layer): read page 1 as a picture
-            var vp = ps[0].getViewport({ scale: 2 }), c = document.createElement('canvas'); c.width = vp.width; c.height = vp.height;
-            return ps[0].render({ canvasContext: c.getContext('2d'), viewport: vp }).promise.then(function () { return readPicture({ crop: c }); });
           });
         });
       });
   }
-  function readFile(file) {
+  function readFile(file, onStep) {
     var isPdf = /pdf$/i.test(file.type) || /\.pdf$/i.test(file.name);
-    if (isPdf) return readPdf(file);
-    return prepImage(file).then(function (pics) { return readPicture(pics).then(function (r) { r.thumb = pics.thumb; return r; }); });
+    return isPdf ? readPdf(file, onStep) : decode(file).then(function (d) { return readCanvas(d.canvas, d.qcanvas, onStep, d.full); });
   }
-  // Full-size photos for "tap to enlarge", kept in memory only for this visit (never stored or sent).
-  var originals = {};
 
+  // ---- the table ---------------------------------------------------------------------------------
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function fmt(v) { return v === null || v === undefined || v === '' ? '' : Number(v).toFixed(2); }
-  function save() {
-    try { localStorage.setItem('rs_rows', JSON.stringify(rows)); } catch (e) {
-      // Device storage full: keep the numbers, drop the little preview pictures.
-      try { localStorage.setItem('rs_rows', JSON.stringify(rows.map(function (r) { var c = {}; for (var k in r) if (k !== 'thumb') c[k] = r[k]; return c; }))); } catch (e2) {}
-    }
+  function plain(rs) { return JSON.parse(JSON.stringify(rs, function (k, v) { return k.charAt(0) === '_' ? undefined : v; })); }
+  // If the device refuses to store the list (storage full or blocked), the person is told, instead of finding an empty list next visit.
+  var saveFailed = false;
+  function save() { if (!remember) return; try { localStorage.setItem('rs_rows', JSON.stringify(plain(rows))); localStorage.setItem('rs_rates', JSON.stringify(rates)); saveFailed = false; } catch (e) { saveFailed = true; } }
+  function restore() {
+    try { remember = localStorage.getItem('rs_noremember') !== '1'; } catch (e) {}
+    try { suggest = localStorage.getItem('rs_suggestcats') === '1'; } catch (e) {}
+    $('suggestcats').checked = suggest;
+    $('noremember').checked = !remember;
+    if (!remember) { try { localStorage.removeItem('rs_rows'); localStorage.removeItem('rs_rates'); } catch (e) {} return; }
+    try { var j = localStorage.getItem('rs_rows'); if (j) { var a = JSON.parse(j); if (Array.isArray(a)) rows = a.filter(function (r) { return r && typeof r === 'object' && !Array.isArray(r); }).map(function (r) { r.file = String(r.file == null ? '' : r.file); r.status = typeof r.status === 'string' ? r.status : 'needs_review'; r.reason = typeof r.reason === 'string' ? r.reason : ''; return r; }); } } catch (e) {}
+    try { var k = localStorage.getItem('rs_rates'); if (k) { var o = JSON.parse(k); if (o && typeof o === 'object' && !Array.isArray(o)) rates = o; } } catch (e) {}
   }
-  function restore() { try { var j = localStorage.getItem('rs_rows'); if (j) { var a = JSON.parse(j); if (Array.isArray(a)) rows = a; } } catch (e) {} }
+  function refresh() { RSParse.markDuplicates(rows); RSParse.applyRates(rows, rates); RSParse.assignPhotoNames(rows); }
+  var suggest = false;
+  // Guesses are marked (cat_guess) so switching suggestions off takes back only the guesses, never a category the person typed.
+  function suggestAll() {
+    rows.forEach(function (r) {
+      if (suggest && !r.category) { var c = RSParse.suggestCategory(r); if (c && c !== 'Uncategorized') { r.category = c; r.cat_guess = true; } }
+      if (!suggest && r.cat_guess) { r.category = ''; delete r.cat_guess; }
+    });
+  }
   function renderCTA(s) {
     var cta = $('cta'); if (!cta) return;
     var fuel = (s.byCategory['Fuel'] || { count: 0 }).count, veh = (s.byCategory['Vehicle & Repairs'] || { count: 0 }).count;
-    if (fuel + veh >= 3) { cta.innerHTML = 'Running vehicles or hauling? <b>Haul Me</b> tells you if a load or job actually pays before you take it. <a href="/haul-me/">See Haul Me &rarr;</a> &nbsp;&middot;&nbsp; <b>On File</b> chases the paperwork. <a href="/accounting/">See On File &rarr;</a>'; }
-    else if (s.count >= 15) { cta.innerHTML = 'Doing this for clients? <b>On File</b> chases every document your practice is still waiting on. <a href="/accounting/">See On File &rarr;</a>'; }
-    else { cta.innerHTML = 'Chasing clients for their receipts and paperwork? <b>On File</b> does the chasing for you. <a href="/accounting/">See On File &rarr;</a>'; }
+    cta.innerHTML = T(fuel + veh >= 3 ? 'cta.haul' : s.count >= 15 ? 'cta.many' : 'cta.default');
   }
   function renderSummary() {
     var box = $('summary'); if (!box) return;
     if (!rows.length) { box.hidden = true; return; }
     var s = RSParse.summarize(rows);
     var cats = Object.keys(s.byCategory).sort(function (a, b) { return s.byCategory[b].total - s.byCategory[a].total; });
-    var meals = s.byCategory['Meals & Entertainment'];
-    box.innerHTML = '<h2>Your totals</h2>' +
+    var meals = s.byCategory['Meals & Entertainment'], hasCats = rows.some(function (r) { return r.category; });
+    var foreign = Object.keys(s.byCurrency).filter(function (k) { return k !== 'CAD'; });
+    var noNo = rows.filter(function (r) { return r.itc_note && /No GST\/HST number/.test(r.itc_note); }).length;
+    var dups = rows.filter(function (r) { return r.possible_duplicate; }).length;
+    var M = L.money;
+    box.innerHTML = '<h2>' + T('sum.h') + '</h2>' +
       '<div class="sumgrid">' +
-        '<div><b>' + s.count + '</b><span>receipts</span></div>' +
-        '<div><b>$' + s.total.toFixed(2) + '</b><span>total spent (CAD only)</span></div>' +
-        '<div><b>$' + s.gst.toFixed(2) + '</b><span>GST / HST</span></div>' +
-        (s.pst ? '<div><b>$' + s.pst.toFixed(2) + '</b><span>PST / RST / QST</span></div>' : '') +
-        (s.salesTax ? '<div><b>$' + s.salesTax.toFixed(2) + '</b><span>other sales tax</span></div>' : '') +
-        Object.keys(s.byCurrency).filter(function (k) { return k !== 'CAD'; }).map(function (k) { return '<div><b>' + esc(k) + ' ' + s.byCurrency[k].total.toFixed(2) + '</b><span>' + s.byCurrency[k].count + ' receipt' + (s.byCurrency[k].count === 1 ? '' : 's') + ', not added to CAD</span></div>'; }).join('') +
-        (s.needsReview ? '<div><b>' + s.needsReview + '</b><span>to check</span></div>' : '') +
+        '<div><b>' + s.count + '</b><span>' + T('sum.receipts') + '</span></div>' +
+        '<div><b>' + M(s.total) + '</b><span>' + T('sum.total') + '</span></div>' +
+        '<div><b>' + M(s.gst) + '</b><span>' + T('sum.gst') + '</span></div>' +
+        (s.pst ? '<div><b>' + M(s.pst) + '</b><span>' + T('sum.pst') + '</span></div>' : '') +
+        (s.salesTax ? '<div><b>' + M(s.salesTax) + '</b><span>' + T('sum.other') + '</span></div>' : '') +
+        (s.tip ? '<div><b>' + M(s.tip) + '</b><span>' + T('sum.tips') + '</span></div>' : '') +
+        foreign.map(function (k) { return '<div><b>' + esc(k) + ' ' + s.byCurrency[k].total.toFixed(2) + '</b><span>' + TN('sum.fx', s.byCurrency[k].count) + (s.convertedCad ? '' : T('sum.notcad')) + '</span></div>'; }).join('') +
+        (s.convertedCad ? '<div><b>' + M(s.convertedCad) + '</b><span>' + T('sum.converted') + '</span></div>' : '') +
+        (s.needsReview ? '<div><b>' + s.needsReview + '</b><span>' + T('sum.check') + '</span></div>' : '') +
       '</div>' +
-      '<div class="catwrap"><table class="cattbl"><thead><tr><th>Category</th><th>Receipts</th><th>Total</th></tr></thead><tbody>' +
-        cats.map(function (c) { return '<tr><td>' + esc(c) + '</td><td>' + s.byCategory[c].count + '</td><td>$' + s.byCategory[c].total.toFixed(2) + '</td></tr>'; }).join('') +
-      '</tbody></table></div>' +
-      (s.foreignCount ? '<p class="note">' + s.foreignCount + ' receipt' + (s.foreignCount === 1 ? ' is' : 's are') + ' in another currency. They are listed above on their own and are not in the CAD totals or the category table. Convert them before filing.</p>' : '') +
-      (meals ? '<p class="note">Heads-up: meals &amp; entertainment are often only <b>50% deductible</b> in Canada — a starting point, not tax advice.</p>' : '') +
-      '<p class="note">A starting point for your taxes, not tax advice. Check anything marked "Check this" against the original receipt.</p>';
+      (!hasCats ? '' : '<div class="catwrap"><table class="cattbl"><thead><tr><th>' + T('col.cat') + '</th><th>' + T('col.rcpts') + '</th><th>' + T('col.total') + '</th></tr></thead><tbody>' +
+        cats.map(function (c) { return '<tr><td>' + esc(L.category(c)) + '</td><td>' + s.byCategory[c].count + '</td><td>' + M(s.byCategory[c].total) + '</td></tr>'; }).join('') +
+      '</tbody></table></div>') +
+      (foreign.length ? '<div class="fx">' + T('sum.fxbox') +
+        foreign.map(function (k) { return '<label>1 ' + esc(k) + ' = <input class="rate" data-cur="' + esc(k) + '" inputmode="decimal" value="' + esc(rates[k] || '') + '" aria-label="' + esc(T('sum.fxlabel', { cur: k })) + '" placeholder="' + esc(T('sum.fxph')) + '"> CAD</label>'; }).join('') + '</div>' : '') +
+      (noNo ? '<p class="note">' + TN('sum.nonum', noNo) + '</p>' : '') +
+      (dups ? '<p class="note">' + TN('sum.dup', dups) + '</p>' : '') +
+      (meals ? '<p class="note">' + T('sum.meals') + '</p>' : '') +
+      '<p class="note">' + T('sum.advice') + '</p>';
     box.hidden = false;
     renderCTA(s);
   }
+  function thumb(r, i) {
+    if (r._url) return '<button type="button" class="thumbbtn" data-zoom="' + i + '" aria-label="' + esc(T('row.photo_big', { file: r.file })) + '"><img class="thumb" src="' + r._url + '" alt="' + esc(T('row.photo_alt', { file: r.file })) + '"></button>';
+    return '<span class="thumb none" title="' + esc(T('row.nophoto_tip')) + '">' + T('row.nophoto') + '</span>';
+  }
   function render() {
-    if (!rows.length) { tbody.innerHTML = '<tr><td colspan="12" class="empty">Your receipts will appear here. You can fix any field before downloading.</td></tr>'; }
+    if (!rows.length) { tbody.innerHTML = '<tr><td colspan="12" class="empty">' + T('empty') + '</td></tr>'; }
     else tbody.innerHTML = rows.map(function (r, i) {
       var ok = r.status === 'ok', cur = r.currency || 'CAD';
-      function num(k, label) { return '<td class="num" data-label="' + label + '"><input data-i="' + i + '" data-k="' + k + '" inputmode="decimal" value="' + esc(fmt(r[k])) + '" aria-label="' + label + '"></td>'; }
-      var why = !ok && r.reason ? '<span class="why">' + esc(r.reason) + '</span>' : '';
-      var thumb = r.thumb ? '<button type="button" class="thumb" data-view="' + i + '" aria-label="Show the photo of ' + esc(r.file) + '"><img src="' + esc(r.thumb) + '" alt=""></button>' : '';
-      return '<tr><td class="fn" data-label="File" title="' + esc(r.file) + '">' + thumb + '<span class="fname">' + esc(r.file) + '</span></td>' +
-        '<td data-label="Status"><span class="pill ' + (ok ? 'ok' : 'rev') + '">' + (ok ? (cur === 'CAD' ? 'OK' : 'OK (' + esc(cur) + ')') : 'Check this') + '</span>' + why + '</td>' +
-        '<td data-label="Date"><input data-i="' + i + '" data-k="date" value="' + esc(r.date) + '" placeholder="YYYY-MM-DD" aria-label="Date"></td>' +
-        '<td data-label="Vendor"><input data-i="' + i + '" data-k="vendor" value="' + esc(r.vendor) + '" aria-label="Vendor"></td>' +
-        num('subtotal', 'Subtotal') + num('gst', 'GST') + num('pst', 'PST / RST / QST') + num('sales_tax', 'Sales tax') + num('total', 'Total') +
-        '<td data-label="Currency"><input data-i="' + i + '" data-k="currency" value="' + esc(cur) + '" aria-label="Currency"></td>' +
-        '<td data-label="Category"><input data-i="' + i + '" data-k="category" value="' + esc(r.category) + '" aria-label="Category"></td>' +
-        '<td data-label="Remove"><button type="button" class="btn ghost" data-rm="' + i + '" aria-label="Remove ' + esc(r.file) + ' from the list" style="padding:6px 10px;white-space:nowrap">Remove</button></td></tr>';
+      function lab(k) { return T('col.' + k); }
+      function aria(k) { return esc(T('row.for', { label: lab(k), file: r.file })); }
+      function num(k) { return '<td class="num' + (k === 'total' ? ' keep' : '') + '" data-label="' + esc(lab(k)) + '"><input data-i="' + i + '" data-k="' + k + '" inputmode="decimal" value="' + esc(fmt(r[k])) + '" aria-label="' + aria(k) + '"></td>'; }
+      var why = (!ok && r.reason ? '<span class="why">' + esc(L.reason(r.reason)) + '</span>' : '') + (r.itc_note ? '<span class="why itc">' + esc(L.reason(r.itc_note)) + '</span>' : '') + (r.possible_duplicate ? '<span class="why dup">' + esc(T('row.dup', { why: L.reason(r.possible_duplicate) })) + '</span>' : '');
+      return '<tr class="' + (ok ? 'okrow' : '') + (r._open ? ' open' : '') + '"><td class="fn keep" data-label="' + esc(lab('file')) + '">' + thumb(r, i) + '<span>' + esc(r.file) + (r.page ? ' · ' + esc(T('row.page', { p: r.page })) : '') + '</span>' +
+        '<button type="button" class="rmbtn" data-rm="' + i + '" aria-label="' + esc(T('row.remove_label', { file: r.file })) + '">' + T('row.remove') + '</button>' + (ok ? '<button type="button" class="editbtn" data-open="' + i + '" aria-expanded="' + (r._open ? 'true' : 'false') + '">' + T(r._open ? 'row.hide' : 'row.show') + '</button>' : '') + '</td>' +
+        '<td class="keep" data-label="' + esc(lab('status')) + '"><span class="pill ' + (ok ? 'ok' : 'rev') + '">' + (ok ? (cur === 'CAD' ? T('row.ok') : T('row.ok') + ' (' + esc(cur) + ')') : T('row.check')) + '</span>' + why + '</td>' +
+        '<td class="keep" data-label="' + esc(lab('date')) + '"><input data-i="' + i + '" data-k="date" value="' + esc(r.date) + '" placeholder="' + esc(T('ph.date')) + '" aria-label="' + aria('date') + '"></td>' +
+        '<td class="keep" data-label="' + esc(lab('vendor')) + '"><input data-i="' + i + '" data-k="vendor" value="' + esc(r.vendor) + '" aria-label="' + aria('vendor') + '"></td>' +
+        num('subtotal') + num('gst') + num('pst') + num('sales_tax') + num('tip') + num('total') +
+        '<td data-label="' + esc(lab('currency')) + '"><input data-i="' + i + '" data-k="currency" value="' + esc(cur) + '" aria-label="' + aria('currency') + '"></td>' +
+        '<td data-label="' + esc(lab('category')) + '"><input data-i="' + i + '" data-k="category" value="' + esc(r.category) + '" aria-label="' + aria('category') + '"></td>' +
+        '</tr>';
     }).join('');
     var review = rows.filter(function (r) { return r.status !== 'ok'; }).length;
-    $('count').textContent = rows.length ? rows.length + ' receipt' + (rows.length === 1 ? '' : 's') + (review ? ' · ' + review + ' to check' : '') : '';
-    $('dl').disabled = $('dlacct').disabled = $('print').disabled = $('clear').disabled = !rows.length || busy;
-    $('savednote').textContent = rows.length ? rows.length + ' receipt' + (rows.length === 1 ? '' : 's') + ' saved on this device — "Start over" clears them.' : '';
+    $('count').textContent = rows.length ? TN('count', rows.length) + (review ? T('count.check', { n: review }) : '') : '';
+    ['dl', 'dlxlsx', 'dlqbo', 'dlxero', 'dlzip', 'print', 'clear'].forEach(function (id) { $(id).disabled = !rows.length || busy; });
+    $('dlzip').disabled = busy || !rows.some(function (r) { return r._file; });
+    $('savednote').textContent = rows.length ? TN(remember ? 'saved.keep' : 'saved.temp', rows.length) : '';
     renderSummary();
     save();
+    if (saveFailed && rows.length) $('savednote').textContent = T('saved.fail');
   }
-  // Tap a preview: show the photo big (the original if it was added this visit, else the saved preview).
-  var viewer = $('viewer');
-  tbody.addEventListener('click', function (e) {
-    var rm = e.target.closest && e.target.closest('[data-rm]');
-    if (rm) {
-      var idx = +rm.dataset.rm, r2 = rows[idx];
-      if (r2 && r2.id && originals[r2.id]) { URL.revokeObjectURL(originals[r2.id]); delete originals[r2.id]; }
-      rows.splice(idx, 1); render(); return;
-    }
-    var b = e.target.closest && e.target.closest('[data-view]'); if (!b) return;
-    var r = rows[+b.dataset.view]; if (!r) return;
-    viewer.querySelector('img').src = originals[r.id] || r.thumb;
-    viewer.hidden = false; viewer.focus();
-  });
-  function closeViewer() { viewer.hidden = true; viewer.querySelector('img').removeAttribute('src'); }
-  viewer.addEventListener('click', closeViewer);
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !viewer.hidden) closeViewer(); });
   tbody.addEventListener('change', function (e) {
     var el = e.target; if (!el.dataset || el.dataset.i === undefined) return;
     var r = rows[+el.dataset.i], k = el.dataset.k, v = el.value.trim();
-    r[k] = (k === 'currency') ? ((v || 'CAD').toUpperCase().slice(0, 3)) : (k === 'date' || k === 'vendor' || k === 'category') ? (v || null) : (v === '' ? null : (isNaN(parseFloat(v.replace(/[$,]/g, ''))) ? null : parseFloat(v.replace(/[$,]/g, ''))));
-    if (r.date && r.vendor && r.total !== null && r.total !== undefined) { r.status = 'ok'; r.reason = 'checked by you'; }
-    render();
+    if (k === 'category') delete r.cat_guess;
+    r[k] = (k === 'currency') ? ((v || 'CAD').toUpperCase().slice(0, 3)) : (k === 'date' || k === 'vendor' || k === 'category') ? (v || null) : RSParse.parseTyped(v);
+    if (k === 'date' && r.date && !RSParse.parseDate(r.date)) { r.date = null; }
+    if (k !== 'category' && k !== 'currency') { var rc = RSParse.recheck(r); r.status = rc.ok ? 'ok' : 'needs_review'; r.reason = rc.reason; }
+    r.itc_note = RSParse.itcNote(r, r.gst !== null && r.gst !== undefined);
+    refresh(); render();
+  });
+  $('summary').addEventListener('change', function (e) {
+    var el = e.target; if (!el.classList || !el.classList.contains('rate')) return;
+    var v = RSParse.parseTyped(el.value);
+    if (v > 0) rates[el.dataset.cur] = v; else delete rates[el.dataset.cur];
+    refresh(); render();
   });
 
+  // ---- photo viewer (lets you check a row against its picture) ------------------------------------
+  var viewer = $('viewer'), viewerImg = $('viewerImg'), lastFocus = null;
+  function closeViewer() { viewer.hidden = true; viewerImg.removeAttribute('src'); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  tbody.addEventListener('click', function (e) {
+    // Remove one row (a photo picked by mistake, a duplicate). Asks first; nothing else changes.
+    var rm = e.target.closest && e.target.closest('[data-rm]');
+    if (rm) {
+      var k = +rm.dataset.rm, gone = rows[k]; if (!gone || busy) return;
+      if (!window.confirm(T('confirm.remove', { file: gone.file + (gone.page ? ' (' + T('row.page', { p: gone.page }) + ')' : '') }))) return;
+      rows.splice(k, 1);
+      if (gone._url && !rows.some(function (r) { return r._url === gone._url; })) { try { URL.revokeObjectURL(gone._url); } catch (e2) {} }
+      refresh(); render(); setStatus('st.removed', { file: gone.file }); return;
+    }
+    var o = e.target.closest && e.target.closest('[data-open]');
+    if (o) { var rr = rows[+o.dataset.open]; if (rr) { rr._open = !rr._open; render(); var again = tbody.querySelector('[data-open="' + o.dataset.open + '"]'); if (again) again.focus(); } return; }
+    var b = e.target.closest && e.target.closest('[data-zoom]'); if (!b) return;
+    var r = rows[+b.dataset.zoom]; if (!r || !r._url) return;
+    lastFocus = b; viewerImg.src = r._url; viewerImg.alt = T('row.photo_alt', { file: r.file }); viewer.hidden = false; $('viewerClose').focus();
+  });
+  $('viewerClose').addEventListener('click', closeViewer);
+  viewer.addEventListener('click', function (e) { if (e.target === viewer) closeViewer(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !viewer.hidden) closeViewer(); });
+
+  // ---- running a batch -------------------------------------------------------------------------------
+  // Same name + size + last-changed time as a file already in the list = the same photo picked twice (re-selected, dropped twice,
+  // or still listed from an earlier visit). It is skipped, because one receipt must never become two rows in the books.
   function fileKey(f) { return f.name + '|' + f.size + '|' + f.lastModified; }
   function run(list) {
-    var files = [].slice.call(list || []).filter(function (f) { return /^image\//.test(f.type) || /pdf$/i.test(f.type) || /\.(pdf|jpe?g|png|heic|webp)$/i.test(f.name); });
-    if (!files.length || busy) return;
-    // Same name + size + modified time as a row already in the list = the same photo picked again
-    // (re-selected, dropped twice, restored from a past visit). Skip it instead of adding a second row -
-    // this list feeds accounting, so one receipt must never become two.
-    var seen = {}; rows.forEach(function (r) { if (r.size != null && r.lastModified != null) seen[r.file + '|' + r.size + '|' + r.lastModified] = true; });
-    var dupes = 0;
-    files = files.filter(function (f) { var k = fileKey(f); if (seen[k]) { dupes++; return false; } seen[k] = true; return true; });
-    if (!files.length) { statusEl.textContent = dupes + ' file' + (dupes === 1 ? '' : 's') + ' already in the list — skipped as duplicate' + (dupes === 1 ? '' : 's') + '.'; return; }
+    var files = [].slice.call(list || []).filter(function (f) { return /^image\//.test(f.type) || /pdf$/i.test(f.type) || /\.(pdf|jpe?g|png|heic|heif|webp)$/i.test(f.name); });
+    var seen = {}, skipped = 0;
+    rows.forEach(function (r) { if (r.src_key) seen[r.src_key] = 1; }); queue.forEach(function (f) { seen[fileKey(f)] = 1; });
+    files = files.filter(function (f) { var k = fileKey(f); if (seen[k]) { skipped++; return false; } seen[k] = 1; return true; });
+    if (skipped) lastSkipped += skipped;
+    if (!files.length) { if (skipped && !busy) { setStatus('st.skipped', {}, skipped); lastSkipped = 0; } return; }
+    if (busy) { queue = queue.concat(files); setStatus('st.queue', {}, files.length); return; }
     busy = true; bar.style.display = 'block'; render();
     var done = 0;
-    statusEl.textContent = 'Getting ready… the first time takes a few seconds while the reader downloads.';
+    setStatus('st.ready');
     files.reduce(function (p, f) {
       return p.then(function () {
-        reading = 'Reading ' + (done + 1) + ' of ' + files.length + ': ' + f.name;
-        statusEl.textContent = reading;
-        return readFile(f).then(function (r) {
-          r.file = f.name; r.size = f.size; r.lastModified = f.lastModified; r.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-          if (!/pdf$/i.test(f.type)) originals[r.id] = URL.createObjectURL(f);
-          rows.push(r);
-        }, function () { rows.push({ file: f.name, size: f.size, lastModified: f.lastModified, date: null, vendor: null, subtotal: null, gst: null, pst: null, sales_tax: null, total: null, currency: 'CAD', category: 'Uncategorized', status: 'needs_review (could not read)', reason: 'could not open this file — try a clearer photo or a JPG/PNG' }); })
-          .then(function () { done++; fill.style.width = (done / files.length * 100) + '%'; render(); });
+        setStatus('st.reading', { i: done + 1, n: files.length, file: f.name });
+        return readFile(f, function (i) { if (i > 0) setStatus('st.second', { i: done + 1, n: files.length, file: f.name }); }).then(function (res) {
+          var isPdf = /pdf$/i.test(f.type) || /\.pdf$/i.test(f.name), url = null;
+          if (!isPdf) { try { url = URL.createObjectURL(f); } catch (e) {} }
+          rows = rows.filter(function (x) { return x.failed_key !== fileKey(f); });   // a retry replaces the failed row
+          (Array.isArray(res) ? res : [res]).forEach(function (r) { r.file = f.name; r.src_key = fileKey(f); r._file = f; if (url) r._url = url; rows.push(r); });
+        }, function (err) {
+          // 2026-11-19: say WHY. A reader that could not be downloaded (first use without internet, a blocked or changed file) used to
+          // look like a bad photo. These rows carry no src_key, so adding the same file again is allowed and replaces them.
+          rows.push({ file: f.name, failed_key: fileKey(f), _file: f, date: null, vendor: null, subtotal: null, gst: null, total: null, currency: 'CAD', status: 'needs_review (could not read)', reason: /heic|heif/i.test(f.name + f.type) ? 'this browser cannot open HEIC photos: on an iPhone choose Settings > Camera > Formats > Most Compatible, or open this page in Safari' : (err && err.engine) ? 'the file could not be read: the reader did not load (it downloads the first time, so check the internet connection), then add the file again' : 'the file could not be read: try another photo or a PDF' });
+        }).then(function () { done++; fill.style.width = (done / files.length * 100) + '%'; suggestAll(); refresh(); render(); });
       });
     }, Promise.resolve()).then(function () {
       busy = false; bar.style.display = 'none'; fill.style.width = '0';
-      statusEl.textContent = (dupes ? dupes + ' duplicate file' + (dupes === 1 ? '' : 's') + ' skipped. ' : '') + 'Done. Check anything marked "Check this", then download.'; render();
+      if (queue.length) { var next = queue; queue = []; refresh(); render(); return run(next); }
+      if (lastSkipped) { setStatus('st.done_skipped', {}, lastSkipped); lastSkipped = 0; } else setStatus('st.done'); refresh(); render();
     });
   }
   $('files').addEventListener('change', function (e) { run(e.target.files); e.target.value = ''; });
+  $('cam').addEventListener('change', function (e) { run(e.target.files); e.target.value = ''; });
   var drop = $('drop');
-  // Start downloading the reader as soon as someone reaches for the button, so it's ready by the time they've picked photos.
-  ['pointerdown', 'focusin'].forEach(function (t) { drop.addEventListener(t, function () { ocrWorker().catch(function () {}); }, { once: true }); });
   ['dragenter', 'dragover'].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.add('over'); }); });
   ['dragleave', 'drop'].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.remove('over'); }); });
   drop.addEventListener('drop', function (e) { run(e.dataTransfer && e.dataTransfer.files); });
-  $('dl').addEventListener('click', function () {
-    var blob = new Blob(['﻿' + RSParse.toCSV(rows)], { type: 'text/csv;charset=utf-8' });
-    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = 'receipts-' + new Date().toISOString().slice(0, 10) + '.csv';
-    document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
-  });
-  function rsDownload(name, text) { var blob = new Blob(['﻿' + text], { type: 'text/csv;charset=utf-8' }); var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+
+  // ---- downloads -----------------------------------------------------------------------------------------
+  function saveBlob(name, blob) { var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000); }
+  function warnOpen() { var n = rows.filter(function (r) { return r.status !== 'ok'; }).length; if (n) setStatus('st.warn', {}, n); }
+  function rsDownload(name, text) { saveBlob(name, new Blob(['﻿' + text], { type: 'text/csv;charset=utf-8' })); }
   function rsToday() { return new Date().toISOString().slice(0, 10); }
-  $('dlacct').addEventListener('click', function () { rsDownload('receipts-accounting-' + rsToday() + '.csv', RSParse.toAccountingCSV(rows)); });
+  // French screens: ";" between columns and "," for cents, which is what Excel set to French (Canada) opens in columns. English: "," and ".".
+  // The QuickBooks and Xero files always use "," and "." (their importers expect it).
+  function csvOpts() { return L.getLang() === 'fr' ? { sep: ';', decimal: ',' } : null; }
+  $('dl').addEventListener('click', function () { rsDownload('receipts-' + rsToday() + '.csv', RSParse.toCSV(rows, csvOpts())); warnOpen(); });
+  $('dlxlsx').addEventListener('click', function () { saveBlob('receipts-' + rsToday() + '.xlsx', new Blob([RSXlsx.receiptsWorkbook(rows, RSParse)], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })); warnOpen(); });
+  function bank(kind) {
+    var o = RSParse.toBankCSV(rows, kind);
+    rsDownload('receipts-' + kind + '-' + rsToday() + '.csv', o.csv);
+    setStatus(null); statusEl.textContent = T('st.bank', { n: o.count, app: kind === 'xero' ? 'Xero' : 'QuickBooks' }) + (o.skipped ? T('st.bank_skip', { n: o.skipped }) : '') + T('st.bank_end');
+  }
+  $('dlqbo').addEventListener('click', function () { bank('quickbooks'); });
+  $('dlxero').addEventListener('click', function () { bank('xero'); });
+  // A zip a bookkeeper can file as is: receipts.csv and receipts.xlsx beside a photos/ folder. Each row's "photo" column (and the Excel
+  // link) names its file in photos/, so every row leads back to its receipt. Photos are named date_shop_total.
+  $('dlzip').addEventListener('click', function () {
+    refresh();
+    var list = rows.filter(function (r) { return r._file && r.photo; }), size = list.reduce(function (a, r) { return a + r._file.size; }, 0);
+    if (size > 500 * 1024 * 1024) { setStatus('st.zip_big'); return; }
+    setStatus('st.zip_pack');
+    Promise.all(list.map(function (r) { return r._file.arrayBuffer().then(function (buf) { return { name: r.photo, data: new Uint8Array(buf) }; }); })).then(function (files) {
+      var enc = new TextEncoder();
+      files.unshift({ name: 'receipts.csv', data: enc.encode('\ufeff' + RSParse.toCSV(rows, csvOpts())) }, { name: 'receipts.xlsx', data: RSXlsx.receiptsWorkbook(rows, RSParse) });
+      saveBlob('receipts-' + rsToday() + '.zip', new Blob([RSXlsx.zip(files)], { type: 'application/zip' }));
+      var missing = rows.length - list.length;
+      setStatus('st.zip_done', { n: files.length - 2 }); warnOpen();
+      if (missing) statusEl.textContent += ' ' + TN('st.zip_missing', missing);
+    });
+  });
+  $('suggestcats').addEventListener('change', function () {
+    suggest = this.checked;
+    try { if (suggest) localStorage.setItem('rs_suggestcats', '1'); else localStorage.removeItem('rs_suggestcats'); } catch (e) {}
+    suggestAll(); render();
+  });
+  $('noremember').addEventListener('change', function () {
+    remember = !this.checked;
+    try { if (remember) { localStorage.removeItem('rs_noremember'); } else { localStorage.setItem('rs_noremember', '1'); localStorage.removeItem('rs_rows'); localStorage.removeItem('rs_rates'); } } catch (e) {}
+    render();
+  });
   $('print').addEventListener('click', function () { window.print(); });
-  $('clear').addEventListener('click', function () { if (!busy) { rows = []; statusEl.textContent = ''; Object.keys(originals).forEach(function (k) { URL.revokeObjectURL(originals[k]); }); originals = {}; try { localStorage.removeItem('rs_rows'); } catch (e) {} render(); } });
-  restore(); render();
+  $('clear').addEventListener('click', function () {
+    if (busy) return;
+    if (rows.length && !window.confirm(TN('confirm.clear', rows.length))) return;
+    rows.forEach(function (r) { if (r._url) { try { URL.revokeObjectURL(r._url); } catch (e) {} } });
+    rows = []; rates = {}; setStatus(null); try { localStorage.removeItem('rs_rows'); localStorage.removeItem('rs_rates'); } catch (e) {} render();
+  });
+  $('lang').addEventListener('click', function () {
+    L.setLang(L.getLang() === 'fr' ? 'en' : 'fr');
+    try { localStorage.setItem('rs_lang', L.getLang()); } catch (e) {}
+    applyStatic(); paintStatus(); render();
+  });
+  applyStatic(); restore(); refresh(); render();
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('/receiptsort/app/sw.js').catch(function () {});
+  window.__rs = { get rows() { return rows; }, run: run };   // for the automated browser test
 })();
 </script>
 <script src="/cara/cara.js" data-app="site" defer></script>
