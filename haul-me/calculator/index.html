@@ -109,15 +109,15 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
       <button type="button" id="btn-km" onclick="setUnit('km')">Kilometres</button>
     </div>
     <div class="row" style="margin-top:4px">
-      <div><label>Offered rate (total $, incl. fuel surcharge)</label><input id="offered_revenue" type="number" inputmode="decimal" placeholder="2000"></div>
-      <div><label id="lbl_loaded">Loaded miles</label><input id="loaded_miles" type="number" inputmode="decimal" placeholder="900"></div>
+      <div><label for="offered_revenue">Offered rate (total $, incl. fuel surcharge)</label><input id="offered_revenue" type="number" inputmode="decimal" placeholder="2000"></div>
+      <div><label id="lbl_loaded" for="loaded_miles">Loaded miles</label><input id="loaded_miles" type="number" inputmode="decimal" placeholder="900"></div>
     </div>
     <div class="row">
-      <div><label id="lbl_dead">Empty miles to pickup</label><input id="deadhead_miles" type="number" inputmode="decimal" placeholder="80" value="0"></div>
-      <div><label>Take-home you want / week ($)</label><input id="weekly_take_home" type="number" inputmode="decimal" placeholder="1500" value="1500"></div>
+      <div><label id="lbl_dead" for="deadhead_miles">Empty miles to pickup</label><input id="deadhead_miles" type="number" inputmode="decimal" placeholder="80" value="0"></div>
+      <div><label for="weekly_take_home">Take-home you want / week ($)</label><input id="weekly_take_home" type="number" inputmode="decimal" placeholder="1500" value="1500"></div>
     </div>
     <p class="hint" style="margin:14px 0 0">Just enter your <b>rate</b> and <b>distance</b> to start &mdash; we've filled in typical numbers below; tap to adjust.</p>
-    <label id="lbl_cpm">Your cost per mile (fuel, truck payment, insurance)</label>
+    <label id="lbl_cpm" for="cost_per_mile">Your cost per mile (fuel, truck payment, insurance, repairs)</label>
     <input id="cost_per_mile" type="number" inputmode="decimal" step="0.01" value="1.05">
     <div class="toggle">
       <button type="button" id="btn-financed" class="on" onclick="setCpm('financed')">Truck payment</button>
@@ -126,28 +126,30 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
     <p class="hint" id="hint_bench"></p>
     <button class="go" onclick="check()">Check this load</button>
     <div id="err" class="err" style="display:none"></div>
-    <p class="priv">Private: your load numbers stay on your phone. We only get an email if you choose to share one below.</p>
+    <p class="priv">Private: your load numbers stay on your phone. We only get your email address, and only if you choose to send it below.</p>
   </div>
 
   <div id="result">
-    <div class="verdict" id="verdict"><p class="light" id="light">&mdash;</p><p class="vmsg" id="vmsg"></p><button class="copy" onclick="shareResult()" style="margin-top:10px">Share this result</button></div>
+    <div class="verdict" id="verdict"><p class="light" id="light">&mdash;</p><p class="vmsg" id="vmsg"></p><button class="copy" onclick="shareResult(this)" style="margin-top:10px">Share this result</button></div>
     <div class="card">
       <div class="stat"><span>This load pays you</span><b id="r_take"></b></div>
       <div class="stat"><span id="r_floor_lbl">Your floor (cost + pay) per loaded mile</span><b id="r_floor"></b></div>
       <div class="stat"><span id="r_rate_lbl">Offered per loaded mile</span><b id="r_rate"></b></div>
-      <div class="stat"><span>Set aside from it</span><b id="r_aside"></b></div>
+      <div class="stat"><span id="r_tax_lbl">Put aside for tax (25% of what it pays you)</span><b id="r_aside"></b></div>
+      <div class="stat"><span>Repair fund (already counted in your cost per <span class="uw">mile</span>)</span><b id="r_maint"></b></div>
+      <p class="hint" id="r_assume"></p>
       <div class="counter" id="counter" style="display:none">
         <h3>Counter the broker</h3>
         <div class="script" id="script"></div>
-        <button class="copy" onclick="copyScript()">Copy text</button>
+        <button class="copy" onclick="copyScript(this)">Copy text</button>
       </div>
     </div>
 
     <div class="card capture" id="capture">
       <h3>Want Haul Me to remember every load?</h3>
-      <p class="hint" style="font-size:14px">Drop your email and we'll tell you about Haul Me early access, plus the occasional tip. No spam.</p>
+      <p class="hint" style="font-size:14px">Drop your email and we'll tell you about Haul Me, plus the occasional tip. No spam.</p>
       <input id="lead_email" type="email" inputmode="email" placeholder="you@email.com" autocomplete="email">
-      <label class="chk"><input type="checkbox" id="lead_consent"> Email me about Haul Me and other Calas Automations tools and news. Calas Automations Inc., 78 Claus Bay, Winnipeg MB R2G 2A1, 431-244-9026, office@calasautomations.com. You can unsubscribe at any time.</label>
+      <label class="chk" for="lead_consent"><input type="checkbox" id="lead_consent"> Email me about Haul Me and other Calas Automations tools and news. Calas Automations Inc., 78 Claus Bay, Winnipeg MB R2G 2A1, 431-244-9026, office@calasautomations.com. You can unsubscribe at any time.</label>
       <input type="text" id="lead_hp" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
       <button class="go" onclick="sendLead()">Send it</button>
       <p class="priv" id="lead_msg"></p>
@@ -172,11 +174,10 @@ var UNIT = 'mi';
 var CPM = {mi:{financed:1.05, paidoff:0.82}, km:{financed:0.65, paidoff:0.51}};
 var WEEKLY = {mi:2500, km:4000};
 var MAINT = {mi:0.15, km:0.09};
-var BENCH = {mi:'$2.26/mile', km:'$1.40/km'};
+var BENCH = {mi:'US$2.34 a mile', km:'US$1.45 a km'};   // ATRI 2026 report (2025 data), US$2.336/mi, the figure the Haul Me page cites
 var TAX_RATE = 0.25, COUNTER_CUSHION = 0.06;
 var LEAD_URL = 'https://calas-access.calasdan.workers.dev/api/haul-lead';
-var lastVerdict = '';
-function shareResult(){var t=document.getElementById('light').textContent;var m=document.getElementById('vmsg').textContent;var url='https://calasautomations.com/haul-me/calculator/';var msg='Haul Me load check — '+t+': '+m+' Try it free: '+url;if(navigator.share){navigator.share({title:'Haul Me load check',text:msg,url:url}).catch(function(){});}else{var b=event&&event.target;navigator.clipboard.writeText(msg).then(function(){if(b){b.textContent='Link copied';setTimeout(function(){b.textContent='Share this result';},1500);}}).catch(function(){});}}
+function shareResult(btn){var t=document.getElementById('light').textContent;var m=document.getElementById('vmsg').textContent;var url='https://calasautomations.com/haul-me/calculator/';var msg='Haul Me load check — '+t+': '+m+' Try it free: '+url;if(navigator.share){navigator.share({title:'Haul Me load check',text:msg,url:url}).catch(function(){});}else{var b=btn;navigator.clipboard.writeText(msg).then(function(){if(b){b.textContent='Link copied';setTimeout(function(){b.textContent='Share this result';},1500);}}).catch(function(){});}}
 function uword(){return UNIT==='km'?'km':'mile';}
 function uwords(){return UNIT==='km'?'km':'miles';}
 function applyUnit(){
@@ -184,10 +185,11 @@ function applyUnit(){
   document.getElementById('btn-km').classList.toggle('on',UNIT==='km');
   document.getElementById('lbl_loaded').textContent='Loaded '+uwords();
   document.getElementById('lbl_dead').textContent='Empty '+uwords()+' to pickup';
-  document.getElementById('lbl_cpm').textContent='Your cost per '+uword()+' (fuel, truck payment, insurance)';
-  document.getElementById('hint_bench').innerHTML="Not sure? These are typical owner-operator numbers &mdash; tune to your truck. The U.S. fleet average is about <b>"+BENCH[UNIT]+"</b>, but that includes a hired driver's wage. You're the driver, so your pay is the <b>take-home</b> above, not a cost &mdash; which is why your real cost per "+uword()+" is lower.";
+  document.getElementById('lbl_cpm').textContent='Your cost per '+uword()+' (fuel, truck payment, insurance, repairs)';
+  document.getElementById('hint_bench').innerHTML="Not sure? These are typical owner-operator numbers &mdash; tune to your truck. The U.S. fleet average is about <b>"+BENCH[UNIT]+"</b> in US dollars (ATRI, 2025 data), and it includes a hired driver's wage. You're the driver, so your pay is the <b>take-home</b> above, not a cost &mdash; which is why your real cost per "+uword()+" is lower.";
   document.getElementById('r_floor_lbl').textContent='Your floor (cost + pay) per loaded '+uword();
   document.getElementById('r_rate_lbl').textContent='Offered per loaded '+uword();
+  [].forEach.call(document.querySelectorAll('.uw'),function(el){el.textContent=uword();});
 }
 function setUnit(u){
   if(u===UNIT) return;
@@ -223,7 +225,6 @@ function check(){
     msg='Covers costs and pays you '+money(take)+', but that’s '+money(floor-revenue)+' under your take-home pace. Clear your '+money(weekly)+'/week goal at '+rate(thFloorLoaded)+'/loaded '+uword()+'.';}
   else {light='green';
     msg='Clears costs AND your pay: '+money(take)+' in your pocket, ahead of your '+money(weekly)+'/week pace.';}
-  lastVerdict=light;
   var v=document.getElementById('verdict');v.className='verdict '+light;
   document.getElementById('light').textContent=light==='green'?'TAKE IT':(light==='yellow'?'THIN':'PASS');
   document.getElementById('vmsg').textContent=msg;
@@ -231,7 +232,9 @@ function check(){
   document.getElementById('r_floor').textContent=rate(thFloorLoaded);
   document.getElementById('r_rate').textContent=rate(rateLoaded);
   var tax=Math.max(0,take)*TAX_RATE, maint=total*MAINT[UNIT];
-  document.getElementById('r_aside').textContent=money(tax)+' tax + '+money(maint)+' repairs';
+  document.getElementById('r_aside').textContent=money(tax);
+  document.getElementById('r_maint').textContent=money(maint);
+  document.getElementById('r_assume').textContent='Your take-home goal is spread over about '+wk.toLocaleString()+' '+uwords()+' a week, so this load carries '+money(share)+' of it. Tax and repair figures are rough guides, not advice.';
   var c=document.getElementById('counter');
   if(rateLoaded<thFloorLoaded){
     var counterRate=thFloorLoaded*(1+COUNTER_CUSHION), counterTotal=counterRate*loaded;
@@ -241,24 +244,29 @@ function check(){
   document.getElementById('result').style.display='block';
   document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
 }
-function copyScript(){var t=document.getElementById('script').textContent;var b=event.target;
+function copyScript(b){var t=document.getElementById('script').textContent;
   navigator.clipboard.writeText(t).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy text';},1500);}).catch(function(){});}
 function sendLead(){
   var em=document.getElementById('lead_email').value.trim();
   var msg=document.getElementById('lead_msg');
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){msg.style.color='var(--red)';msg.textContent='Enter a valid email address.';return;}
   var consent=document.getElementById('lead_consent').checked;
+  if(!consent){msg.style.color='var(--red)';msg.textContent='Tick the box first, so we are allowed to email you.';return;}
   var hp=document.getElementById('lead_hp').value;
   msg.style.color='var(--muted)';msg.textContent='Sending…';
   fetch(LEAD_URL,{method:'POST',headers:{'content-type':'application/json'},
-    body:JSON.stringify({email:em,consent:consent,context:'unit='+UNIT+' verdict='+(lastVerdict||'-'),website:hp})})
+    body:JSON.stringify({email:em,consent:consent,context:'haul-me-calculator',website:hp})})
    .then(function(r){return r.json();})
    .then(function(d){
-     if(d&&d.ok){document.getElementById('capture').innerHTML='<h3>You\'re on the list.</h3><p class="hint" style="font-size:14px">We\'ll be in touch about early access. Thanks for trying it!</p>';}
+     if(d&&d.ok){document.getElementById('capture').innerHTML='<h3>You\'re on the list.</h3><p class="hint" style="font-size:14px">We\'ll be in touch about Haul Me. Thanks for trying it!</p>';}
      else{msg.style.color='var(--red)';msg.textContent='Could not send just now — please try again in a moment.';}
    })
    .catch(function(){msg.style.color='var(--red)';msg.textContent='Could not send — check your connection and try again.';});
 }
+// The phone keyboard's Go / Enter key runs the check (or sends the email from the email box).
+['offered_revenue','loaded_miles','deadhead_miles','weekly_take_home','cost_per_mile'].forEach(function(id){
+  document.getElementById(id).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();check();}});});
+document.getElementById('lead_email').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();sendLead();}});
 applyUnit();
 </script>
 </body>

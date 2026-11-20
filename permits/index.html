@@ -42,6 +42,45 @@ textarea{min-height:90px;resize:vertical}
 .disc{font-size:13px;color:var(--ink-2);margin-top:16px;border-top:1px solid var(--rule);padding-top:12px}
 .cta{margin-top:24px;padding:16px 18px;background:var(--paper);border:1px solid var(--rule);border-left:4px solid var(--gold);border-radius:10px;font-size:16px}
 .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+.chip{font:500 14px "IBM Plex Sans",system-ui,sans-serif;background:var(--paper);color:var(--accent);border:1px solid var(--rule);border-radius:999px;padding:7px 12px;cursor:pointer;min-height:36px}
+.chip:hover,.chip:focus-visible{border-color:var(--accent)}
+.hint{font-size:14px;color:var(--ink-2);margin:6px 0 0}
+.read{margin:18px 0 6px;font-size:15px;color:var(--ink-2)}
+.read b{color:var(--ink)}
+.tag{display:inline-block;font:600 12px "IBM Plex Sans",sans-serif;letter-spacing:.02em;border-radius:6px;padding:2px 8px;margin-left:8px;vertical-align:middle}
+.tag.likely{background:var(--accent);color:#fff}
+.tag.if{background:var(--warnbg);color:var(--warn);border:1px solid #C8912F}
+.card ul{margin:6px 0 4px;padding-left:20px}
+.card li{margin:3px 0;font-size:15px}
+.card h4{margin:10px 0 2px;font:600 14px "IBM Plex Sans",sans-serif;color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em}
+.card a,.notes a,.src a{color:var(--accent)}
+.gather li{list-style:none;margin-left:-20px}
+.gather label{display:flex;gap:8px;align-items:flex-start;cursor:pointer}
+.gather input{margin-top:5px;width:16px;height:16px;flex:0 0 auto}
+.src{font-size:13px;color:var(--ink-2);margin:8px 0 0}
+.sec{font:700 20px "Libre Baskerville",Georgia,serif;margin:22px 0 8px}
+.nope{border-left:4px solid var(--ok);background:var(--okbg)}
+.chk{border-left:4px solid #C8912F}
+.q{margin:12px 0;padding:12px 16px;background:var(--paper);border:1px solid var(--accent);border-radius:10px}
+.q p{margin:0 0 8px;font-weight:600}
+.summary{margin:14px 0;padding:12px 16px;background:var(--paper);border:1px solid var(--rule);border-radius:10px;font-size:16px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.actions .btn{margin-top:0}
+.printhead{display:none}
+.gobox{flex:0 0 auto}
+@media (max-width:600px){.row>div,.row>.gobox{flex:1 1 100%}.btn{width:100%}.actions .btn{flex:1 1 45%;width:auto}}
+@media print{
+ body{background:#fff;color:#000;font-size:12pt}
+ body::before,.top,.form,.actions,.cta,.chips,.q,#site-nav,.cfoot,body>header:not(.top),body>nav,body>footer,.noprint{display:none!important}
+ .printhead{display:block;margin:0 0 10px}
+ main{padding:0;max-width:none}
+ .card,.notes,.summary{break-inside:avoid;border-color:#999;background:#fff}
+ .card.pro,.nope,.chk{background:#fff}
+ a{color:#000}
+ a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;word-break:break-all}
+ .tag.likely{background:#fff;color:#000;border:1px solid #000}
+}
 </style>
 <style>/*calas-gold-hairline*/body::before{content:"";position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);z-index:2147483647;pointer-events:none}</style>
 <link rel="stylesheet" href="/calas-ui.css?v=20261001a"><link rel="stylesheet" href="/calas-theme.css?v=20261002a"><style id="calas-readable">/* 2026-10-05 Owner: same readable text size + brand fonts as the main site */
@@ -67,156 +106,172 @@ h1,h2,h3{font-family:"Libre Baskerville",Georgia,serif}
 <meta name="twitter:image:alt" content="Winnipeg Permit Checker — free: What permits do I need?">
 <!-- og:end -->
 </head>
+
 <body>
 <header class="top"><div class="in"><div><b>Permit Checker</b><small>Free &middot; by Calas Automations</small></div><a href="/">Calas Automations</a></div></header>
 <main>
+  <div class="printhead"><b>Permit checklist</b> &middot; <span id="ph-job"></span><br><small id="ph-meta"></small></div>
+  <div class="form">
   <h1>What permits do I likely need?</h1>
-  <p class="lede">A free, plain-English way to sort out <em>your own</em> permits. Describe the job and we'll show the permits you likely need, who signs each, what to gather, and exactly where to apply. <b>You apply and sign &mdash; we just make it easy.</b> General guidance (deepest in Winnipeg, and growing) &mdash; not legal advice; your local authority has the final word.</p>
+  <p class="lede">Describe the job and we'll show the permits you likely need, who signs each, what to gather, and exactly where to apply. <b>You apply and sign &mdash; we just make it easy.</b> General guidance (deepest in Winnipeg) &mdash; not legal advice; your local authority has the final word.</p>
 
   <label class="fld" for="job">Describe the job</label>
-  <textarea id="job" placeholder="e.g. new warehouse build-out with electrical and plumbing; or: install a storefront sign; or: restaurant fit-out with commercial kitchen"></textarea>
+  <textarea id="job" placeholder="e.g. build a 12x16 deck about 4 ft off the ground in the backyard"></textarea>
+  <p class="hint">Sizes help: how high (a deck or fence) and how big (a shed or garage). Spelling doesn't need to be perfect.</p>
+  <div class="chips" aria-label="Examples">
+    <button class="chip" type="button" data-ex="Build a 12x16 deck in the backyard, about 4 ft off the ground">Deck</button>
+    <button class="chip" type="button" data-ex="10x12 shed with power">Shed</button>
+    <button class="chip" type="button" data-ex="Finish the basement: a bedroom and a bathroom">Basement</button>
+    <button class="chip" type="button" data-ex="6 ft wood fence in the backyard">Fence</button>
+    <button class="chip" type="button" data-ex="Detached garage 24x24 with lights and plugs">Garage</button>
+    <button class="chip" type="button" data-ex="Kitchen reno, moving the sink and adding pot lights">Kitchen reno</button>
+    <button class="chip" type="button" data-ex="Replace the furnace">Furnace</button>
+    <button class="chip" type="button" data-ex="Inground swimming pool">Pool</button>
+  </div>
   <div class="row">
     <div>
       <label class="fld" for="city">City</label>
       <select id="city">
-        <option>Winnipeg</option><option>Calgary</option><option>Edmonton</option><option value="">Other / not listed</option>
+        <option value="Winnipeg">Winnipeg</option><option value="Calgary">Calgary</option><option value="Edmonton">Edmonton</option><option value="Other">Other / not listed</option>
       </select>
     </div>
-    <div style="flex:0 0 auto"><button class="btn" id="go" type="button">Check permits</button></div>
+    <div class="gobox"><button class="btn" id="go" type="button">Check permits</button></div>
+  </div>
   </div>
 
   <div id="out" aria-live="polite"></div>
+  <noscript><p class="banner">This tool needs JavaScript to run. Everything happens in your browser.</p></noscript>
 </main>
+<script src="/permits/engine.js?v=20261119a"></script>
 <script>
 (function(){
 "use strict";
-var DISCLAIMER="General information only — NOT legal advice, and not a permit determination. We're not your lawyer or agent; we don't file or sign anything. Your local authority decides what's required and approves or denies — always confirm with them before you act, pay, or start work. Rules change, and our guidance is deeper in some cities than others. Provided “as is,” at your own risk.";
-var INCOMPLETE="This is a STARTING checklist and is likely NOT complete — other permits or approvals may apply to your job. Your municipality / authority has the final list.";
-
-var PERMITS={
- building:{name:"Building permit",when:"New buildings, additions, structural changes, major renovations, and most commercial construction.",who:"Property owner or an authorized agent; larger/commercial work often needs drawings stamped by a licensed architect or professional engineer.",authority:"City/municipal building department"},
- development:{name:"Development / zoning permit",when:"Change of use, a new business occupying a space, some signage, variances — anything affecting how the land is used.",who:"Property owner or authorized agent.",authority:"City/municipal planning/zoning department"},
- electrical:{name:"Electrical permit",when:"Most electrical work beyond minor like-for-like repairs.",who:"Usually a licensed electrical contractor; in Winnipeg trade permits run through the City and eligible homeowners may pull their own. Not something a software service signs.",authority:"City/municipal electrical permits (or your provincial electrical authority)"},
- plumbing:{name:"Plumbing permit",when:"New plumbing, relocations, water/sewer connections beyond minor repairs.",who:"A licensed plumbing contractor.",authority:"City/municipal plumbing inspection or licensed contractor"},
- mechanical:{name:"Mechanical / HVAC / gas permit",when:"Heating, cooling, ventilation, and gas-fired equipment work.",who:"A licensed HVAC/gas contractor.",authority:"City/municipal mechanical inspection or licensed contractor"},
- demolition:{name:"Demolition permit",when:"Demolishing or removing a structure in whole or part.",who:"Owner or authorized agent; utility disconnects may be needed first.",authority:"City/municipal building department"},
- occupancy:{name:"Occupancy permit",when:"Before occupying a new or substantially changed building/space.",who:"Owner/tenant after inspections pass.",authority:"City/municipal building department"},
- sign:{name:"Sign permit",when:"Most permanent exterior signage; size/zoning rules apply.",who:"Property owner or authorized sign contractor.",authority:"City/municipal planning department"},
- fire:{name:"Fire / sprinkler / suppression permit",when:"Sprinkler, standpipe, fire-alarm or suppression systems, and many commercial occupancies.",who:"Typically a licensed fire-protection contractor; engineered systems may need sealed drawings.",authority:"Fire prevention / building department"},
- food_health:{name:"Food-service / health approval",when:"Restaurants, commercial kitchens, cafes, catering, and food-handling fit-outs.",who:"Owner/operator; reviewed and approved by the public health authority.",authority:"Regional public health authority (plus building/occupancy)"},
- roofing:{name:"Roofing permit",when:"Structural roof work or re-roofing where the city requires it (rules vary; like-for-like may be exempt).",who:"Owner or roofing contractor.",authority:"City/municipal building department"},
- excavation:{name:"Excavation / shoring / grading permit",when:"Excavation, shoring, significant grading, or site servicing.",who:"Owner/contractor; shoring design often needs a professional engineer.",authority:"City/municipal building/engineering department"},
- fence:{name:"Fence / retaining wall permit",when:"Fences above a height threshold and retaining walls above a height threshold.",who:"Owner; taller retaining walls often need a professional engineer.",authority:"City/municipal building/planning department"},
- pool:{name:"Pool / hot tub permit",when:"In-ground and many above-ground pools and hot tubs; enclosure/fencing rules apply.",who:"Owner.",authority:"City/municipal building department"},
- secondary_suite:{name:"Secondary / basement suite approval",when:"Adding a secondary dwelling unit (basement, garage, or additional suite).",who:"Owner or authorized agent; building + trade permits apply, plus zoning rules.",authority:"City/municipal building & zoning department"},
- basement_dev:{name:"Basement development permit",when:"Finishing or developing a basement (new rooms, bathrooms, or a suite).",who:"Owner or contractor; trade permits apply for new electrical/plumbing/HVAC.",authority:"City/municipal building department"},
- garage:{name:"Garage / detached structure permit",when:"Building an attached or detached garage above the exempt size.",who:"Owner or contractor.",authority:"City/municipal building department"},
- street_use:{name:"Street / boulevard use permit",when:"Placing a dumpster, scaffolding, hoarding, or a crane on the street or boulevard.",who:"Owner or contractor.",authority:"City/municipal public works / streets authority"},
- environmental:{name:"Environmental / contaminated-site / remediation permit or approval",when:"Contaminated land, spills, remediation, certain industrial processes, or works affecting water/wetlands.",who:"LEGALLY requires a qualified environmental professional or engineer (e.g. Phase I/II ESA) and the provincial regulator. Calas does NOT handle these — we point you to a licensed professional.",authority:"Provincial environment/regulatory body + qualified professional",pro:true}
-};
-
-var RULES=[
- [["new build","new building","new construction","addition","warehouse","industrial","commercial build","build out","build-out","fit out","fit-out","tenant improvement","structural","new facility"],["building","development","occupancy"]],
- [["renovation","reno","remodel","alteration","interior alteration"],["building"]],
- [["change of use","new location","new business","occupy","rezone","zoning","variance"],["development","occupancy"]],
- [["electrical","wiring","rewire","electrical panel","lighting","ev charger"],["electrical"]],
- [["plumbing","sewer","water line","water service","drain","re-pipe","backflow"],["plumbing"]],
- [["hvac","furnace","heating","cooling","air conditioning","a/c","gas line","boiler","ventilation","rooftop unit","make-up air"],["mechanical"]],
- [["demolish","demolition","tear down","teardown"],["demolition"]],
- [["sign","signage","billboard","storefront sign","pylon sign"],["sign"]],
- [["fire alarm","sprinkler","fire suppression","standpipe","fire protection"],["fire"]],
- [["restaurant","commercial kitchen","food service","cafe","food handling","food premises","catering"],["food_health"]],
- [["roof","roofing","re-roof","reroof"],["roofing"]],
- [["excavation","shoring","grading","site servicing"],["excavation"]],
- [["fence","retaining wall"],["fence"]],
- [["pool","hot tub","swimming pool"],["pool"]],
- [["secondary suite","basement suite","garden suite","garage suite","additional dwelling","in-law suite","second suite"],["secondary_suite"]],
- [["basement development","finish basement","finished basement","develop basement","basement renovation"],["basement_dev"]],
- [["garage","carport"],["garage"]],
- [["dumpster","scaffold","scaffolding","hoarding","crane","road closure","sidewalk closure","boulevard"],["street_use"]],
- [["environmental","contaminated","contamination","remediation","cleanup","clean-up","clean up","spill","wetland","hazardous","asbestos"],["environmental"]]
-];
-var NEWBUILD=["new build","new building","new construction","commercial build","build out","build-out","fit out","fit-out","tenant improvement","new facility","warehouse","addition"];
-
-function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
-function rx(p){return p.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");}
-function has(text,phrase){try{return new RegExp("(?<![a-z])"+rx(phrase)+"(?![a-z])").test(text);}catch(e){return text.indexOf(phrase)>=0;}}
-
-function officialLookup(city){
- var m={winnipeg:"City of Winnipeg permits — winnipeg.ca (or call 311).",calgary:"City of Calgary planning & permits — calgary.ca.",edmonton:"City of Edmonton permits — edmonton.ca."};
- return m[(city||"").toLowerCase()]||"Your municipality's permit office (building/planning dept) or 311.";
+var E=window.PermitEngine;
+if(!E){ document.getElementById("out").innerHTML='<div class="banner">The permit rules didn\u2019t load. Please refresh the page. If it keeps happening, call 311.</div>'; return; }
+var $=function(id){return document.getElementById(id);};
+var DISCLAIMER="General information only — NOT legal advice, and not a permit determination. We don't file, submit, sign or certify anything. Your local authority decides what's required — confirm with them before you act, pay, or start work. Rules change. Provided “as is,” at your own risk.";
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function link(label,url){ if(!url) return esc(label); return '<a href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(label)+'</a>'; }
+function srcLine(keys){
+  var seen={},parts=[];
+  (keys||[]).forEach(function(k){ var s=E.SOURCES[k]; if(s&&!seen[k]){seen[k]=1;parts.push(link(s.t,s.u));} });
+  return parts.length?'<p class="src">Source: '+parts.join(" · ")+' — checked '+esc(E.CHECKED)+'</p>':'<p class="src">No city-specific source for this line &mdash; confirm with your authority.</p>';
 }
+var last=null;
 
-// Verified official "where to apply" links (confirmed 2026-10-04). We send people
-// straight to the real forms/portal -- we never file or sign on their behalf.
-var APPLY={winnipeg:[
- ["Apply online &mdash; Winnipeg Permits Online","https://www.winnipeg.ca/permitsonline"],
- ["How the two-step (development + building) process works","https://legacy.winnipeg.ca/ppd/permits/DevelopmentandBuildingPermits.stm"],
- ["Development Permit application form (PDF)","https://legacy.winnipeg.ca/ppd/Documents/Permits/Development-Permit-Application-Form-Residential-Commercial.pdf"],
- ["Owner authorization — residential/housing form, if you apply for an owner (PDF). For COMMERCIAL, ask the City for the Letter of Authorization.","https://legacy.winnipeg.ca/ppd/Documents/permits/Owner-Statement-Housing.pdf"],
- ["Questions: call 311, or Zoning &amp; Permits at 204-986-5140",""]
-]};
-var GATHER=[
- "The site address",
- "A clear description of the work / scope",
- "Drawings or plans for the work (sealed by an architect or engineer where that's required)",
- "Proof of ownership &mdash; or a written owner authorization if you're applying on an owner's behalf",
- "Contractor / licensed-trade details where the work needs them",
- "Budget for the permit fees and lead time (confirm the current amounts with the city)"
-];
-// Some work needs NO permit — telling people that (and saving them a wasted trip) builds trust.
-// Thresholds are approximate; always confirm the exact rule with the city.
-var EXEMPT={winnipeg:[
- "Re-shingling a roof like-for-like, with no structural change",
- "A small detached accessory building under about 10 m² (~108 sq ft)",
- "An open deck under about 0.6 m (~2 ft) high",
- "Most minor like-for-like repairs"
-]};
-
-function needed(desc,city){
- var text=(desc||"").toLowerCase(),keys=[];
- RULES.forEach(function(r){ if(r[0].some(function(w){return has(text,w);})) r[1].forEach(function(p){ if(keys.indexOf(p)<0)keys.push(p); }); });
- var scope=NEWBUILD.some(function(w){return has(text,w);});
- if(scope)["electrical","plumbing","mechanical"].forEach(function(t){ if(keys.indexOf(t)<0)keys.push(t); });
- var items=keys.map(function(k){var o={};for(var x in PERMITS[k])o[x]=PERMITS[k][x];o.key=k;return o;});
- var notes=[];
- if(scope){
-  notes.push("Winnipeg OFTEN needs BOTH a development (zoning) permit and a building permit — but not always; some projects instead file a declaration form with just the building permit. Confirm which applies to your job.");
-  notes.push("The applicant usually must prove ownership (e.g. status of title); an agent files on the owner's behalf only with written authorization.");
-  notes.push("Commercial or larger work usually needs drawings SEALED by a licensed architect or professional engineer — route that to a licensed pro.");
- }
- return {items:items,pro:items.filter(function(i){return i.pro;}),notes:notes,confirm:officialLookup(city)};
+function render(push){
+  var desc=$("job").value.trim(),city=$("city").value,out=$("out");
+  if(!desc){out.innerHTML='<p class="confirm">Type a short description of the job above (or tap an example), then press <b>Check permits</b>.</p>';$("job").focus();return;}
+  var r=E.check(desc,city); last={r:r,desc:desc,city:city};
+  if(push!==false) saveHash(desc,city);
+  var where=city==="Other"?"your area":city;
+  var h='';
+  if(r.projects.length) h+='<p class="read">We read your job as: <b>'+r.projects.map(esc).join("</b> · <b>")+'</b>. Not right? Add a few words above and check again.</p>';
+  // follow-up questions
+  r.questions.forEach(function(q){
+    h+='<div class="q"><p>'+esc(q.q)+'</p><div class="chips" style="margin:0">'+q.answers.map(function(a){return '<button class="chip" type="button" data-add="'+esc(a[1])+'">'+esc(a[0])+'</button>';}).join("")+'</div></div>';
+  });
+  if(!r.matched){
+    h+='<div class="banner">We couldn’t match that to a type of job yet. That does NOT mean no permit is needed.</div>';
+    h+='<p class="confirm">Try naming the thing you’re building or changing, e.g. <i>deck, shed, garage, fence, basement, bathroom, kitchen, windows, roof, furnace, pool, hot tub, solar, addition, demolition, sign</i>. Or ask: '+esc(r.office)+'</p>';
+    if(r.projectsSrc) h+='<p class="confirm">'+link("See the City’s list of home projects and permits",r.projectsSrc.u)+'</p>';
+    h+=footer(); out.innerHTML=h; wire(); return;
+  }
+  var likely=r.list.filter(function(p){return p.status==="likely";}).length, maybe=r.list.length-likely;
+  var s=[];
+  if(likely) s.push('<b>'+likely+'</b> permit'+(likely>1?'s':'')+' likely needed');
+  if(maybe) s.push('<b>'+maybe+'</b> only in some cases');
+  if(r.check.length) s.push('<b>'+r.check.length+'</b> thing'+(r.check.length>1?'s':'')+' to check with the City');
+  if(r.none.length) s.push('<b>'+r.none.length+'</b> thing'+(r.none.length>1?'s':'')+' that need no permit');
+  h+='<div class="summary">'+(r.needNothing?'<b>Good news:</b> from what you described, this work is on the list that needs <b>no permit</b> in '+esc(where)+'. ':'')+s.join(' · ')+'.</div>';
+  h+='<div class="actions noprint"><button class="btn" type="button" data-act="print">Print / save as PDF</button><button class="btn ghost" type="button" data-act="copy">Copy checklist</button><button class="btn ghost" type="button" data-act="link">Copy link to this result</button><button class="btn ghost" type="button" data-act="mail">Email it to me</button></div>';
+  if(r.list.length){
+    h+='<h2 class="sec">Permits you likely need</h2>';
+    r.list.forEach(function(p){
+      h+='<div class="card"><h3>'+esc(p.name)+(p.status==="likely"?'<span class="tag likely">Likely</span>':'<span class="tag if">Only if &mdash; see why</span>')+'</h3>';
+      h+='<p class="meta">Issued by: '+esc(p.issuer)+'</p>';
+      h+='<h4>Why</h4><ul>'+p.why.map(function(w){return '<li>'+esc(w)+'</li>';}).join("")+'</ul>';
+      h+='<h4>Who applies &amp; signs</h4><p class="meta who">'+esc(p.who)+'</p>';
+      p.extra.forEach(function(x){h+='<p class="meta who" style="color:var(--red)">'+esc(x)+'</p>';});
+      if(p.gather.length) h+='<h4>What to gather</h4><ul class="gather">'+p.gather.map(function(g){return '<li><label><input type="checkbox"> <span>'+esc(g)+'</span></label></li>';}).join("")+'</ul>';
+      if(p.apply.length) h+='<h4>Where to apply</h4><ul>'+p.apply.map(function(a){return '<li>'+link(a[0],a[1])+'</li>';}).join("")+'</ul>';
+      h+=srcLine(p.srcs)+'</div>';
+    });
+  }
+  if(r.check.length){
+    h+='<h2 class="sec">Check with the City</h2>';
+    r.check.forEach(function(c){ h+='<div class="card chk"><p class="meta" style="color:var(--ink)">'+esc(c.text)+'</p>'+srcLine([c.src])+'</div>'; });
+  }
+  if(r.none.length){
+    h+='<h2 class="sec">No permit needed for</h2>';
+    r.none.forEach(function(c){ h+='<div class="card nope"><p class="meta" style="color:var(--ink)">'+esc(c.text)+'</p>'+srcLine([c.src])+'</div>'; });
+    h+='<p class="confirm">No permit doesn’t mean no rules: the building code and zoning still apply.</p>';
+  }
+  if(r.notes.length){
+    h+='<div class="notes"><b>Good to know</b><ul>'+r.notes.map(function(n){var s=n.src&&E.SOURCES[n.src];return '<li>'+esc(n.text)+(s?' <span class="src">('+link("source",s.u)+')</span>':'')+'</li>';}).join("")+'</ul></div>';
+  }
+  h+='<div class="notes"><b>Before you apply &mdash; '+esc(where)+'</b><ul>';
+  if(r.applyMain) h+='<li>'+link(r.applyMain[0],r.applyMain[1])+'</li>';
+  h+='<li>Questions: '+esc(r.office)+'</li>';
+  if(r.city==="winnipeg") h+='<li>'+link("Permit fees (City of Winnipeg)","https://www.winnipeg.ca/building-development/fees-charges")+' &mdash; the declared construction value on the form does not change the fee.</li>';
+  h+='</ul></div>';
+  h+=footer();
+  out.innerHTML=h; wire();
+  $("ph-job").textContent=desc; $("ph-meta").textContent=where+" · printed "+new Date().toLocaleDateString("en-CA")+" · calasautomations.com/permits · guidance checked "+E.CHECKED+" · not legal advice";
 }
-
-function render(){
- var desc=document.getElementById("job").value.trim(),city=document.getElementById("city").value,out=document.getElementById("out");
- if(!desc){out.innerHTML='<p class="confirm">Type a short description of the job above, then press Check permits.</p>';return;}
- var r=needed(desc,city);
- var h='<div class="banner">⚠ '+esc(INCOMPLETE)+'</div>';
- var ex=EXEMPT[(city||"").toLowerCase()];
- if(ex){ h+='<div class="notes"><b>Good to know &mdash; some work needs NO permit in '+esc(city)+':</b><ul>'+ex.map(function(e){return '<li>'+e+'</li>';}).join("")+'</ul>Thresholds are approximate &mdash; confirm the exact rule with the city.</div>'; }
- if(!r.items.length){ h+='<p class="confirm">Nothing specific matched — that doesn’t mean no permit is needed. Try words like: <i>new build, renovation, electrical, plumbing, HVAC, sign, demolition, roof, fence, deck, basement suite, garage, restaurant</i>. And always confirm with '+esc(r.confirm)+'</p>'; out.innerHTML=h; return; }
- h+='<h2 style="font:700 20px \'Libre Baskerville\',Georgia,serif;margin:6px 0 8px">Permits you likely need</h2>';
- r.items.forEach(function(p){
-  h+='<div class="card'+(p.pro?' pro':'')+'"><h3>'+esc(p.name)+'</h3>'+
-     '<p class="meta">'+esc(p.when)+'</p>'+
-     '<p class="meta who">Who signs: '+esc(p.who)+'</p>'+
-     '<p class="meta">Where: '+esc(p.authority)+'</p></div>';
- });
- if(r.notes.length){ h+='<div class="notes"><b>For a full build, also note:</b><ul>'+r.notes.map(function(n){return '<li>'+esc(n)+'</li>';}).join("")+'</ul></div>'; }
- var ap=APPLY[(city||"").toLowerCase()];
- if(ap){ h+='<div class="notes"><b>Where to apply ('+esc(city)+'):</b><ul>'+ap.map(function(a){return '<li>'+(a[1]?'<a href="'+a[1]+'" target="_blank" rel="noopener">'+a[0]+'</a>':a[0])+'</li>';}).join("")+'</ul></div>'; }
- h+='<div class="notes"><b>What to gather before you apply:</b><ul>'+GATHER.map(function(g){return '<li>'+g+'</li>';}).join("")+'</ul></div>';
- h+='<p class="confirm"><b>Confirm at:</b> '+esc(r.confirm)+'</p>';
- h+='<p class="confirm">Bigger or trickier job &mdash; large commercial, structural, or anything environmental? That’s when to bring in an architect, engineer, or permit expediter. We’ll tell you plainly when you’re past a self-serve checklist, rather than pretend otherwise.</p>';
- h+='<div class="tools"><button class="btn ghost" type="button" onclick="pcShare(event)">Share this free tool</button></div>';
- h+='<div class="cta">Run a trades business? We can put this right inside your workflow: <b>Quote Me</b> flags the permits (and their cost + lead time) in every quote, and <b>Dispatch Me</b> attaches the permit checklist to each job so crews never arrive without one. <a href="/pay/">See the tools &rarr;</a></div>';
- h+='<p class="disc">'+esc(DISCLAIMER)+' Calas does not file, sign, or certify permits, and provides no engineering, architecture, environmental, or legal services. This tool runs in your browser &mdash; we don’t collect or store what you type. Guidance last reviewed Oct 2026 &mdash; rules change; confirm current requirements with your authority. <a href="/permits/terms/">Terms of Use</a>.</p>';
- out.innerHTML=h;
+function footer(){
+  return '<div class="cta noprint">Pricing jobs that need permits? <a href="/quote-me/">Quote Me</a> lets you put the permit fee on a quote as its own line.</div>'+
+   '<p class="disc">'+esc(DISCLAIMER)+' Calas does not file, sign or certify permits, and provides no engineering, architecture, environmental or legal services. This tool runs in your browser &mdash; we don’t collect or store what you type (a shared link carries your description after the # sign, which browsers don’t send to our server). Rules checked against official City and Province pages on '+esc(E.CHECKED)+'. <a href="/permits/terms/">Terms of Use</a>.</p>';
 }
-document.getElementById("go").addEventListener("click",render);
-document.getElementById("job").addEventListener("keydown",function(e){ if((e.ctrlKey||e.metaKey)&&e.key==="Enter")render(); });
-window.pcShare=function(e){var url="https://calasautomations.com/permits/",msg="Free Winnipeg Permit Checker — describe your job, see the permits you likely need and who must sign. "+url;if(navigator.share){navigator.share({title:"Winnipeg Permit Checker",text:msg,url:url}).catch(function(){});}else{var b=e&&e.target;navigator.clipboard.writeText(msg).then(function(){if(b){b.textContent="Link copied";setTimeout(function(){b.textContent="Share this free tool";},1500);}}).catch(function(){});}};
+function asText(){
+  if(!last) return "";
+  var r=last.r,L=[];
+  L.push("PERMIT CHECKLIST — "+last.desc);
+  L.push((last.city==="Other"?"Your area":last.city)+" · from calasautomations.com/permits · checked "+E.CHECKED+" · general guidance, not legal advice; your local authority has the final word.");
+  L.push("");
+  r.list.forEach(function(p){
+    L.push("■ "+p.name+(p.status==="likely"?" (likely)":" (only if — see why)"));
+    p.why.forEach(function(w){L.push("   Why: "+w);});
+    L.push("   Who applies & signs: "+p.who);
+    p.extra.forEach(function(x){L.push("   ! "+x);});
+    p.gather.forEach(function(g){L.push("   [ ] "+g);});
+    p.apply.forEach(function(a){L.push("   Apply: "+a[0]+(a[1]?" — "+a[1]:""));});
+    L.push("");
+  });
+  if(r.check.length){L.push("CHECK WITH THE CITY:");r.check.forEach(function(c){L.push(" - "+c.text);});L.push("");}
+  if(r.none.length){L.push("NO PERMIT NEEDED FOR:");r.none.forEach(function(c){L.push(" - "+c.text);});L.push("");}
+  if(r.notes.length){L.push("GOOD TO KNOW:");r.notes.forEach(function(n){L.push(" - "+n.text);});L.push("");}
+  L.push("Questions: "+r.office);
+  return L.join("\n");
+}
+function shareUrl(){ return location.origin+location.pathname+"#job="+encodeURIComponent(last.desc)+"&city="+encodeURIComponent(last.city); }
+function saveHash(desc,city){ try{ history.replaceState(null,"","#job="+encodeURIComponent(desc)+"&city="+encodeURIComponent(city)); }catch(e){} }
+function flash(btn,msg){ var t=btn.textContent; btn.textContent=msg; setTimeout(function(){btn.textContent=t;},1800); }
+function copy(text,btn,ok){
+  function fallback(){ var ta=document.createElement("textarea"); ta.value=text; ta.setAttribute("readonly",""); ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); var good=false; try{good=document.execCommand("copy");}catch(e){} document.body.removeChild(ta); flash(btn,good?ok:"Couldn’t copy — select and copy by hand"); }
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function(){flash(btn,ok);},fallback); else fallback();
+}
+function wire(){
+  Array.prototype.forEach.call(document.querySelectorAll("#out [data-add]"),function(b){ b.addEventListener("click",function(){ var j=$("job"); j.value=j.value.replace(/\s+$/,"")+" — "+b.getAttribute("data-add"); render(); }); });
+  Array.prototype.forEach.call(document.querySelectorAll("#out [data-act]"),function(b){ b.addEventListener("click",function(){
+    var a=b.getAttribute("data-act");
+    if(a==="print") window.print();
+    else if(a==="copy") copy(asText(),b,"Checklist copied");
+    else if(a==="link") copy(shareUrl(),b,"Link copied");
+    else if(a==="mail"){ var body=asText()+"\n\nOpen again: "+shareUrl(); if(body.length>1800) body=body.slice(0,1700)+"\n…(cut short — open the link for the full list)\n\nOpen again: "+shareUrl(); location.href="mailto:?subject="+encodeURIComponent("Permit checklist: "+last.desc.slice(0,60))+"&body="+encodeURIComponent(body); }
+  }); });
+}
+Array.prototype.forEach.call(document.querySelectorAll("[data-ex]"),function(b){ b.addEventListener("click",function(){ $("job").value=b.getAttribute("data-ex"); render(); }); });
+$("go").addEventListener("click",function(){render();});
+$("job").addEventListener("keydown",function(e){ if((e.ctrlKey||e.metaKey)&&e.key==="Enter")render(); });
+$("city").addEventListener("change",function(){ if($("job").value.trim()) render(); });
+// Restore a shared result: #job=...&city=...
+(function(){
+  var m=location.hash.replace(/^#/,""); if(!m) return;
+  var p={}; m.split("&").forEach(function(kv){ var i=kv.indexOf("="); if(i>0){ try{p[kv.slice(0,i)]=decodeURIComponent(kv.slice(i+1));}catch(e){} } });
+  if(p.city&&/^(Winnipeg|Calgary|Edmonton|Other)$/.test(p.city)) $("city").value=p.city;
+  if(p.job){ $("job").value=p.job.slice(0,1000); render(false); }
+})();
 })();
 </script>
 <script src="/calas-brandbar.js?v=20261105b" defer></script>

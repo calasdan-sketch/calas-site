@@ -685,7 +685,10 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
     $('t-rep').textContent = S.replyIn ? 1 : 0;
     $('t-rep-l').innerHTML = S.booked ? 'Replies / booked &middot; <strong>1 booked</strong>' : S.replyNew ? 'Replies / booked &middot; <strong>1 new</strong>' : 'Replies / booked';
     var warmReady = S.leads.filter(function (l) { return heat(l) !== 'cold' && (l.state === 'new' || l.state === 'approved'); }).length;
-    $('heroLine').innerHTML = warmReady ? '<strong>' + warmReady + ' good-fit</strong> leads ready for you today.' : '<strong>All caught up.</strong> Every good-fit lead has been handled today.';
+    // The headline counts the same thing as the "To review" tile, so the two always agree.
+    $('heroLine').innerHTML = review ? '<strong>' + review + ' good-fit</strong> ' + (review === 1 ? 'lead' : 'leads') + ' to review today.'
+      : warmReady ? '<strong>' + warmReady + ' good-fit</strong> ' + (warmReady === 1 ? 'lead' : 'leads') + ' approved and ready to send.'
+      : '<strong>All caught up.</strong> Every good-fit lead has been handled today.';
     $('batch-count').textContent = approved + ' approved · ' + review + ' waiting on your approval · ' + sent + ' sent today';
     $('batch-btn').disabled = S.batching || approved === 0;
     $('batch-btn').textContent = approved ? 'Send approved batch (' + approved + ')' : 'Send approved batch';
@@ -867,7 +870,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
       "Or approve every good-fit lead with a verified contact at once, and send them as one batch, within your daily limit.",
       "When someone writes back, it lands in Replied and the follow-ups stop. This vet hospital wants to talk next week.",
       "Getting started takes three boxes: your name, your company and your email. Press Find my leads, and Lead Me works out who buys from you and starts finding them. No passwords, nothing else to set up.",
-      "Lead Me starts at a hundred and ninety-nine dollars a month, with no setup fee. Forty fitting businesses in fourteen days, or your money back, handled by hand.",
+      "Lead Me starts at a hundred and ninety-nine dollars a month, with no setup fee. We find them, you get the conversation started. We can't guarantee results or replies, and you can cancel any time.",
       "That's the tour. Now click around: find leads, open a card, send a few. It's all made up, so nothing leaves this page."
     ],
     reset: reset,
@@ -884,9 +887,16 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
   function first(sel) { return document.querySelector('#cards .row-card:not([hidden]) ' + (sel || '')); }
   CalasTour.start({
     lines: T.lines,
-    durs: [7.58, 7.13, 6.96, 7.78, 5.11, 5.35, 10.22, 7.37, 7.1, 12.17, 10.01, 7.37],
+    durs: [7.58, 7.13, 6.96, 7.78, 5.11, 5.35, 10.22, 7.37, 7.1, 12.19, 12.14, 7.37],
     audioBase: 'narration/step-',
     onReplay: function () { T.reset(); window.scrollTo(0, 0); },
+    end: {
+      name: 'Lead Me',
+      does: 'Searches your territory for local businesses that fit what you sell, scores each one out of 100, and drafts an honest first email. You approve every message.',
+      offer: 'Starter C$199 a month (you send, one click each). Lead Me C$599 a month (sends when you press Send). Team C$1,200 a month (up to 4 people). No setup fee.',
+      terms: 'Cancel any time on every plan. We can\u2019t guarantee results; refunds are handled by hand: email us.',
+      cta: { label: 'Get started \u2014 from C$199/mo', href: '/leadme/#pricing' }
+    },
     script: function (t) {
       return t.point('#heroTitle', 0)
         .then(function () { return t.point('#tiles', 1); })
@@ -905,7 +915,7 @@ Ontario: Thunder Bay, Kenora, Dryden</textarea></div>
         .then(function () { t.tap('#tab-replied'); return t.sleep(600); })
         .then(function () { return t.point('#replyCard blockquote', 8); })
         .then(function () { t.tap('#nav-settings'); return t.sleep(500); })
-        .then(function () { return t.point('#s-you', 9, { py: 0.9 }); })
+        .then(function () { return t.point('#quickFind', 9); })
         .then(function () { return t.point('#getlink', 10); })
         .then(function () { t.tap('#nav-leads'); T.setTab('all'); return t.sleep(300); })
         .then(function () { return t.point('#heroTitle', 11); });

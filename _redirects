@@ -2,3 +2,6 @@
 /snow /dispatchme/ 301
 /green-mile/ /haul-me/ 301
 /green-mile /haul-me/ 301
+
+# Test files for /permits/ live in the repo but are not part of the site
+/tests/* /404.html 404

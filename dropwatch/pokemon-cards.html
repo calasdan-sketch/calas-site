@@ -3,14 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://tcgplayer-cdn.tcgplayer.com; connect-src 'self' https://www.bankofcanada.ca https://api.frankfurter.dev; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Pokémon Card Prices in CAD - Dropwatch</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<meta name="description" content="Pokémon card and sealed product prices in Canadian dollars: TCGplayer market prices via tcgcsv.com, refreshed daily, with the date on every price. Unofficial fan site.">
 <style>
+  /* fonts are served from this site (same files as the Dropwatch home page): nothing about a visit goes to Google */
+  @font-face{font-family:'Outfit';font-style:normal;font-weight:400;font-display:swap;src:url(font-outfit-400.woff2) format('woff2')}
+  @font-face{font-family:'Outfit';font-style:normal;font-weight:500;font-display:swap;src:url(font-outfit-500.woff2) format('woff2')}
+  @font-face{font-family:'Outfit';font-style:normal;font-weight:600;font-display:swap;src:url(font-outfit-600.woff2) format('woff2')}
+  @font-face{font-family:'Outfit';font-style:normal;font-weight:800;font-display:swap;src:url(font-outfit-800.woff2) format('woff2')}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url(font-plexmono-400.woff2) format('woff2')}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(font-plexmono-500.woff2) format('woff2')}
+  @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url(font-plexmono-600.woff2) format('woff2')}
   /* Same tokens as the Dropwatch home page. */
-  :root{--bg:#0b0d12;--surface:#141824;--border:#232838;--text:#eef1f8;--dim:#9aa3bd;--accent:#38e0d4;--accent-ink:#06211f;--volt:#ffd84a;--green:#4fd69c;--red:#e8716b;
+  :root{--bg:#0b0d12;--surface:#141824;--border:#232838;--text:#eef1f8;--dim:#9aa3bd;--ink-2:#c4cadb;--accent:#38e0d4;--accent-ink:#06211f;--volt:#ffd84a;--green:#4fd69c;--red:#e8716b;
     --display:'Outfit',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace}
   *{box-sizing:border-box}
   body{margin:0;background-color:var(--bg);color:var(--text);font-family:var(--display);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;
@@ -42,7 +50,14 @@
   .tabs button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
   .bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
   .bar input,.bar select{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-family:inherit;font-size:inherit;min-height:40px}
-  .bar input{flex:1 1 240px}
+  .bar input{flex:1 1 240px;min-width:0}
+  .bar select{max-width:100%;min-width:0}
+  .bar #set{flex:1 1 200px}
+  .stale{border:1px solid var(--red);color:var(--red);background:rgba(232,113,107,.08);border-radius:10px;padding:10px 14px;margin:10px 0;font-size:14px}
+  .asof{font-family:var(--mono);font-size:11px;color:var(--dim)}
+  .hist{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--dim);margin:8px 0}
+  .hist svg{color:var(--accent)}
+  .calcl{display:inline-block;margin-top:6px;background:var(--accent);color:var(--accent-ink);border-radius:8px;padding:8px 12px;font-weight:600;text-decoration:none}
   .bar button{background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:9px 18px;font-weight:600;font-size:14px;cursor:pointer;min-height:40px}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
   .card{background:rgba(20,24,36,.88);border:1px solid var(--border);border-radius:16px;padding:12px;cursor:pointer;display:flex;flex-direction:column;gap:6px;text-align:left;color:inherit;font-family:inherit;font-size:inherit}
@@ -85,7 +100,8 @@
   <nav><a href="./#drops">Drops</a><a href="./#trade">Want / Have</a><a href="./#calc">Flip calculator</a><a href="./#news">News</a><a class="here" href="pokemon-cards.html">Pokémon prices</a></nav></div></header>
 <div class="wrap">
   <div class="page-h"><h1>Pokémon <em>card prices</em> in CAD</h1>
-  <p class="sub" id="fxline">Loading exchange rates…</p></div>
+  <p class="sub" id="fxline">Loading exchange rates…</p>
+  <div class="stale" id="stale" role="status" hidden></div></div>
 
   <div class="tabs" role="tablist">
     <button class="on" data-m="dir">Card directory</button>
@@ -116,7 +132,7 @@
   <footer>
     <div class="fb"><div><b>DROPWATCH</b> &middot; by Calas Automations Inc., Winnipeg<br>Know the real odds before you buy.</div>
     <div style="text-align:right"><a href="https://calasautomations.com">calasautomations.com</a> &middot; <a href="https://calasautomations.com/terms/">Terms</a> &middot; <a href="https://calasautomations.com/privacy/">Privacy</a><br>Not financial advice. Collectibles can lose value.</div></div>
-    <p style="margin:14px 0 0">Prices are TCGplayer (US dollars) market figures for raw (ungraded) cards, collected from TCGplayer through tcgcsv.com, refreshed daily, and converted to Canadian dollars with the exchange rate shown at the top. Market price is TCGplayer's recent-sales average; where a card has no recent sales we show the lowest asking price and say so. Prices can be thin or out of date for very rare cards. They are not offers to buy or sell. Unofficial fan site, not affiliated with or endorsed by The Pok&eacute;mon Company, Nintendo or TCGplayer. Product names and images belong to their owners.</p>
+    <p style="margin:14px 0 0">Prices are TCGplayer (US dollars) market figures for raw (ungraded) cards, collected from TCGplayer through tcgcsv.com, refreshed daily, and converted to Canadian dollars with the exchange rate shown at the top. Market price is TCGplayer's recent-sales average; where a card has no recent sales we show the lowest asking price and say so. Prices can be thin or out of date for very rare cards. They are not offers to buy or sell. Unofficial fan site, not affiliated with or endorsed by The Pok&eacute;mon Company, Nintendo, Creatures, GAME FREAK, Nike, TCGplayer, eBay, StockX, GOAT or any retailer or marketplace named here. Pok&eacute;mon and Pok&eacute;mon character names are trademarks of Nintendo, Creatures and GAME FREAK; other product names, brands and images belong to their owners and are used only to identify the products.</p>
   </footer>
 </div>
 
@@ -146,14 +162,39 @@
   /* ---------- money ---------- */
   function cad(n) { return n == null || !isFinite(n) ? '' : new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: n >= 1000 ? 0 : 2 }).format(n); }
   function toCad(v) { return v != null && FX.usd ? v * FX.usd : null; }
+  /* Exchange rate: the Bank of Canada's published daily rate (same as the Dropwatch home page); if that fails, the
+     European Central Bank rate via frankfurter.dev; if both fail, a dated fallback that is labelled as not live, so the
+     page still shows CAD instead of nothing. */
+  var FX_FALLBACK = { usd: 1.3978, date: '2026-11-02' };
   async function loadFx() {
+    var src = '';
     try {
-      var u = await getJSON('https://api.frankfurter.dev/v1/latest?base=USD&symbols=CAD', 3);
-      FX.usd = u.rates.CAD; FX.date = u.date;
-      $('fxline').textContent = 'All values in Canadian dollars (CAD). Rate on ' + FX.date + ': 1 USD = ' + FX.usd.toFixed(4) + ' CAD.' + (st.built ? ' TCGplayer prices updated ' + st.built + '.' : '');
-    } catch (e) {
-      $('fxline').innerHTML = '<span style="color:var(--red)">Could not load the exchange rate, so prices cannot be shown in CAD right now. Reload to try again.</span>';
+      var b = await getJSON('https://www.bankofcanada.ca/valet/observations/FXUSDCAD/json?recent=1', 2);
+      var o = b && b.observations && b.observations[0], v = o && o.FXUSDCAD && parseFloat(o.FXUSDCAD.v);
+      if (!(v > 0.5 && v < 3)) throw new Error('bad rate');
+      FX.usd = v; FX.date = o.d; src = 'Bank of Canada rate';
+    } catch (e1) {
+      try {
+        var u = await getJSON('https://api.frankfurter.dev/v1/latest?base=USD&symbols=CAD', 2);
+        if (!(u.rates.CAD > 0.5 && u.rates.CAD < 3)) throw new Error('bad rate');
+        FX.usd = u.rates.CAD; FX.date = u.date; src = 'European Central Bank rate (Bank of Canada unavailable)';
+      } catch (e2) {
+        FX.usd = FX_FALLBACK.usd; FX.date = FX_FALLBACK.date; src = 'fallback rate, NOT live (could not reach the Bank of Canada)';
+      }
     }
+    FX.src = src;
+    $('fxline').textContent = 'All values in Canadian dollars (CAD), converted from TCGplayer\'s US-dollar prices. ' + src + ' on ' + FX.date + ': 1 USD = ' + FX.usd.toFixed(4) + ' CAD.' + (st.built ? ' Prices as of ' + st.built + '.' : '');
+  }
+  /* "Refreshed daily" is a promise: if the newest price file is older than that, say so on screen. */
+  function winnipegToday() {
+    try { return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Winnipeg', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()); }
+    catch (e) { return new Date().toISOString().slice(0, 10); }
+  }
+  function ageDays(iso) { var a = Date.parse(iso + 'T00:00:00Z'), b = Date.parse(winnipegToday() + 'T00:00:00Z'); return isFinite(a) && isFinite(b) ? Math.round((b - a) / 864e5) : null; }
+  function showStale() {
+    var el = $('stale'), d = st.built ? ageDays(st.built) : null;
+    if (d == null) { el.hidden = false; el.textContent = 'We could not tell when these prices were collected. Treat them as old.'; return; }
+    if (d >= 2) { el.hidden = false; el.textContent = 'These prices are ' + d + ' days old (last update ' + st.built + '). The daily update has missed a run: treat every number on this page as old.'; }
   }
 
   /* ---------- data: one small file per set (TCGplayer prices via tcgcsv.com, rebuilt daily) ---------- */
@@ -208,11 +249,44 @@
       '<div class="tiltwrap"><img src="' + imgLarge(c) + '" onerror="this.onerror=null;this.src=\'' + imgSmall(c) + '\'" alt="' + esc(c.name) + '"></div>' +
       '<div><h2 style="margin:0 0 2px">' + esc(c.name) + '</h2><p class="sub">' + esc(c.set.name) + (c.number ? ' · #' + esc(c.number) : '') + (c.rarity ? ' · ' + esc(c.rarity) : '') + (c.sealed ? ' · Sealed product' : '') + '</p>' +
       (rows ? '<h3 style="margin:14px 0 6px;font-size:13px">TCGplayer (US market), in CAD</h3><div class="tw"><table><tr><th>Printing</th><th class="num">Lowest listing</th><th class="num">Market</th></tr>' + rows + '</table></div><p class="note">Market = recent sale average. Lowest listing = cheapest current asking price, which is not a sale. <a target="_blank" rel="noopener" href="' + tcgUrl(c) + '">View on TCGplayer</a></p>' : '<p class="note">No price listed for this item. <a target="_blank" rel="noopener" href="' + tcgUrl(c) + '">View on TCGplayer</a></p>') +
+      '<p class="asof">Prices as of ' + esc(st.built || 'unknown date') + ' · ' + esc(FX.src || '') + ' ' + esc(FX.date || '') + '</p>' +
+      histHtml(c) +
+      (c.sealed ? '<p class="note"><b>No &ldquo;expected value&rdquo; here on purpose.</b> The Pok&eacute;mon Company does not publish pull rates, so any &ldquo;open it and you will pull C$X on average&rdquo; figure is built on guessed odds. The price above is what the sealed product itself trades for.</p>' : '') +
+      calcLink(c) +
       '<p class="note">Very rare cards trade rarely, so treat these as a guide.</p></div>';
+  }
+  /* Dropwatch's own daily price snapshots (history.js, loaded on first use). No invented points: under two real days, no line. */
+  var HIST = null;
+  function loadHistory() {
+    if (HIST) return HIST;
+    HIST = new Promise(function (res) { var sc = document.createElement('script'); sc.src = 'history.js'; sc.onload = function () { res(window.DW_HISTORY || null); }; sc.onerror = function () { res(null); }; document.head.appendChild(sc); });
+    return HIST;
+  }
+  function series(h, key) { var out = []; if (!h || !h.s || !h.s[key]) return out; for (var i = 0; i < h.days.length; i++) if (h.s[key][i] != null) out.push([h.days[i], h.s[key][i]]); return out; }
+  function spark(pts) {
+    var v = pts.map(function (p) { return p[1]; }), mn = Math.min.apply(null, v), mx = Math.max.apply(null, v), sp = (mx - mn) || 1, W = 120, H = 28;
+    var d = pts.map(function (p, i) { return (i ? 'L' : 'M') + (i / (pts.length - 1) * W).toFixed(1) + ' ' + (H - 2 - (p[1] - mn) / sp * (H - 4)).toFixed(1); }).join(' ');
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" role="img" aria-label="Market price over ' + pts.length + ' days"><path d="' + d + '" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
+  }
+  function histHtml(c) {
+    var h = window.DW_HISTORY, rows = [];
+    c.variants.forEach(function (x) {
+      var pts = series(h, c.id + '|' + x.label); if (pts.length < 2) return;
+      var f = pts[0], l = pts[pts.length - 1], pct = f[1] > 0 ? Math.round((l[1] - f[1]) / f[1] * 1000) / 10 : null;
+      rows.push('<div class="hist">' + spark(pts) + '<span>' + esc(x.label) + ': ' + (pct == null ? '' : (pct > 0 ? '+' : '') + pct + '% ') + 'from ' + esc(f[0]) + ' to ' + esc(l[0]) + ' (US$' + f[1].toFixed(2) + ' to US$' + l[1].toFixed(2) + ')</span></div>');
+    });
+    if (rows.length) return '<h3 style="margin:12px 0 2px;font-size:13px">Price history (our own daily snapshots, TCGplayer market)</h3>' + rows.join('');
+    return '<p class="note">' + (h && h.days && h.days.length ? 'Price history: we have tracked prices since ' + esc(h.days[0]) + ' for cards worth US$40 or more; no line for this one yet.' : 'Price history is not available yet.') + '</p>';
+  }
+  /* one tap from a price to "what would I actually keep?" on the flip calculator */
+  function calcLink(c) {
+    var h = headline(c); if (!h || h.cad == null || h.ask) return '';
+    return '<a class="calcl" href="./#calc=1&p=ebay_ca_cards&b=0&s=' + h.cad.toFixed(2) + '">What would I keep selling at ' + cad(h.cad) + '? &rarr;</a>';
   }
   function openCard(id) {
     var c = st.cards.filter(function (x) { return String(x.id) === id; })[0]; if (!c) return;
     $('box').innerHTML = detail(c); $('modal').classList.add('open');
+    if (!window.DW_HISTORY) loadHistory().then(function (h) { if (h && $('modal').classList.contains('open')) $('box').innerHTML = detail(c); });
   }
   $('modal').addEventListener('click', function (e) { if (e.target === $('modal') || (e.target.getAttribute && e.target.getAttribute('data-close'))) $('modal').classList.remove('open'); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') $('modal').classList.remove('open'); });
@@ -256,7 +330,7 @@
     var val = function (c) { var h = headline(c); return h && h.cad != null && !h.ask ? h.cad : -1; };
     if (sort === 'price') list.sort(function (a, b) { return val(b) - val(a); });
     else if (sort === 'priceasc') list.sort(function (a, b) { var x = val(a), y = val(b); return (x < 0 ? 1e12 : x) - (y < 0 ? 1e12 : y); });
-    else if (sort === 'new') list.sort(function (a, b) { return b.set.date.localeCompare(a.set.date) || a.name.localeCompare(b.set.name); });
+    else if (sort === 'new') list.sort(function (a, b) { return (b.set.id - a.set.id) || a.name.localeCompare(b.name); });
     else list.sort(function (a, b) { return a.name.localeCompare(b.name); });
     var total = list.length, pages = Math.max(1, Math.ceil(total / PAGE)); if (st.page > pages) st.page = pages;
     st.cards = list.slice((st.page - 1) * PAGE, st.page * PAGE);
@@ -316,10 +390,17 @@
   });
   (async function boot() {
     try {
-      var s = await getJSON(DATA + 'sets.json'); st.sets = s.sets; st.built = (s.built || '').slice(0, 10);
+      var s = await getJSON(DATA + 'sets.json'); st.sets = s.sets; st.built = (s.prices_as_of || s.built || '').slice(0, 10);   /* TCGCSV's own update time when we have it */
       st.sets.forEach(function (x) { st.byId[x.id] = x; });
       $('set').innerHTML = '<option value="">All sets</option>' + st.sets.map(function (x) { return '<option value="' + x.id + '">' + esc(x.name) + '</option>'; }).join('');
-    } catch (e) { $('dir-out').innerHTML = '<div class="msg err">Could not load the price data (' + esc(e.message) + '). Reload to try again.</div>'; return; }
+      /* first screen: the newest full expansion that is already out, most valuable first (one small file instead of all 220).
+         TCGplayer's "published" date is when a group was last re-listed (old promo groups show this month), so "newest" is
+         the most recently created group (highest id) with a full set's worth of cards. */
+      var today = winnipegToday(), first = st.sets.filter(function (x) { return x.date && x.date <= today && x.n >= 100 && !/misc/i.test(x.name); })
+        .sort(function (a, b) { return b.id - a.id; })[0];
+      if (first) { $('set').value = String(first.id); $('sort').value = 'price'; }
+    } catch (e) { $('dir-out').innerHTML = '<div class="msg err">Could not load the price data (' + esc(e.message) + '). Reload to try again.</div>'; showStale(); return; }
+    showStale();
     await loadFx(); loadDir();
   })();
 })();

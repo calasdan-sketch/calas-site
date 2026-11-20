@@ -1,0 +1,779 @@
+{
+ "about": "ScamCatch test corpus, Canada, 2026-11-19. Scam messages are written to follow the patterns and wording the Canadian Anti-Fraud Centre (CAFC) publishes; they are not real victims' messages. Phone numbers use the 555-01xx fiction range and links use reserved or made-up domains. 'legit' messages are ordinary messages people in Manitoba really get, written for this test. A scam counts as caught at level >= 2 (Moderate); a legit message counts as a false alarm at level >= 2.",
+ "sources": {
+  "cafc_emergency": "https://antifraudcentre-centreantifraude.ca/scams-fraudes/emergency-urgence-eng.htm",
+  "cafc_extortion": "https://antifraudcentre-centreantifraude.ca/scams-fraudes/extortion-extorsion-eng.htm",
+  "cafc_phishing": "https://antifraudcentre-centreantifraude.ca/scams-fraudes/phishing-hameconnage-eng.htm",
+  "cafc_job": "https://antifraudcentre-centreantifraude.ca/scams-fraudes/job-emploi-eng.htm",
+  "cafc_bank_investigator": "https://antifraudcentre-centreantifraude.ca/scams-fraudes/b-investigator-enqueteur-eng.htm",
+  "cafc_romance": "https://antifraudcentre-centreantifraude.ca/scams-fraudes/romance-rencontre-eng.htm",
+  "cafc_investment": "https://antifraudcentre-centreantifraude.ca/scams-fraudes/investment-investissement-eng.htm",
+  "cafc_prize": "https://antifraudcentre-centreantifraude.ca/scams-fraudes/prize-prix-eng.htm",
+  "cafc_top10_2025": "https://antifraudcentre-centreantifraude.ca/features-vedette/2026/02/top-fraud-2025-fraudes-plus-courantes-eng.htm"
+ },
+ "scam": [
+  {
+   "id": "cra-1",
+   "kind": "cra",
+   "src": "cafc_extortion",
+   "text": "CRA NOTICE: Our records show you owe $2,148.56 in back taxes. A warrant for your arrest will be issued today unless you call 204-555-0142 to settle the balance."
+  },
+  {
+   "id": "cra-2",
+   "kind": "cra",
+   "src": "cafc_extortion",
+   "text": "This is Service Canada. Your SIN number has been compromised and linked to illegal activity. Press 1 now or you will be arrested, fined or deported."
+  },
+  {
+   "id": "cra-3",
+   "kind": "cra",
+   "src": "cafc_phishing",
+   "text": "CRA: As promised, your return for the Anti-Inflation Benefit is here. Claim your $380.00 refund: https://cra-benefit-refund.top/claim"
+  },
+  {
+   "id": "cra-4",
+   "kind": "cra",
+   "src": "cafc_phishing",
+   "text": "Government of Canada sent you $540.00 (CAD) and the money is waiting to be deposited. Accept here: http://gc-deposit-ca.info/accept"
+  },
+  {
+   "id": "cra-5",
+   "kind": "cra",
+   "src": "cafc_extortion",
+   "text": "Canada Revenue Agency final notice. You must pay the outstanding amount today with Bitcoin or Google Play cards or the police will come to your home."
+  },
+  {
+   "id": "cra-6",
+   "kind": "cra",
+   "src": "cafc_phishing",
+   "text": "Revenu Canada: vous avez un remboursement d'impot de 412,00 $ en attente. Reclamez-le dans les 24 heures: https://arc-remboursement.xyz"
+  },
+  {
+   "id": "hydro-1",
+   "kind": "hydro",
+   "src": "cafc_extortion",
+   "text": "Manitoba Hydro: your account is past due $386.20. Your power will be disconnected in 2 hours unless you pay immediately. Call 204-555-0177."
+  },
+  {
+   "id": "post-1",
+   "kind": "parcel",
+   "src": "cafc_phishing",
+   "text": "Canada Post: your package could not be delivered due to an incomplete address. Update your address and pay the $1.99 redelivery fee: https://canadapost-redeliver.live/ca"
+  },
+  {
+   "id": "post-2",
+   "kind": "parcel",
+   "src": "cafc_phishing",
+   "text": "Purolator: Shipment 2024-PX17 is on hold at our depot. Confirm your address within 24 hours or it will be returned: www.purolator-track-ca.shop"
+  },
+  {
+   "id": "post-3",
+   "kind": "parcel",
+   "src": "cafc_phishing",
+   "text": "Your parcel is held at customs. A customs fee of $3.25 is required before delivery. Pay now: https://cpc-customs.icu/pay"
+  },
+  {
+   "id": "post-4",
+   "kind": "parcel",
+   "src": "cafc_phishing",
+   "text": "Postes Canada: votre colis n'a pas pu etre livre. Payez les frais de livraison de 2,99 $ ici: https://postescanada-colis.top"
+  },
+  {
+   "id": "toll-1",
+   "kind": "phishing",
+   "src": "cafc_phishing",
+   "text": "Your vehicle has an outstanding parking-Infraction that must be settled by 11/22. Avoid extra penalties: https://wpg-parking-pay.info/ticket"
+  },
+  {
+   "id": "toll-2",
+   "kind": "phishing",
+   "src": "cafc_phishing",
+   "text": "407 ETR: You have an unpaid toll balance of $7.85. Pay today to avoid a $50 late fee: https://407etr-billing.site"
+  },
+  {
+   "id": "bank-1",
+   "kind": "bank",
+   "src": "cafc_bank_investigator",
+   "text": "RBC Fraud Department: suspicious charges were detected on your card. An investigator will call you. Do not hang up and do not tell the branch staff, this is a confidential investigation."
+  },
+  {
+   "id": "bank-2",
+   "kind": "bank",
+   "src": "cafc_bank_investigator",
+   "text": "This is your bank's security team. To protect your savings, transfer your money to this secure account while we investigate. Read me the code we just texted you to verify your identity."
+  },
+  {
+   "id": "bank-3",
+   "kind": "bank",
+   "src": "cafc_bank_investigator",
+   "text": "Scotiabank: your card has been locked due to unusual activity. A courier will pick up your card today so we can examine it. Please put it in an envelope."
+  },
+  {
+   "id": "bank-4",
+   "kind": "bank",
+   "src": "cafc_phishing",
+   "text": "TD Alert: Your online banking access is suspended. Verify your account details now at https://td-secure-verify.online to restore access."
+  },
+  {
+   "id": "bank-5",
+   "kind": "bank",
+   "src": "cafc_bank_investigator",
+   "text": "Hello, this is Equifax. There is a problem with your credit file. Install AnyDesk and give me the code so I can show you the fraudulent transaction."
+  },
+  {
+   "id": "etr-1",
+   "kind": "interac",
+   "src": "cafc_phishing",
+   "text": "INTERAC e-Transfer: You received $250.00 from CANADA REVENUE AGENCY. Provide your account information to deposit: https://etransfer-deposit.click/claim"
+  },
+  {
+   "id": "etr-2",
+   "kind": "interac",
+   "src": "cafc_job",
+   "text": "Sorry I sent you $900 by mistake instead of $90 for the couch! Can you send the difference back by e-transfer right away? I need it today."
+  },
+  {
+   "id": "etr-3",
+   "kind": "interac",
+   "src": "cafc_phishing",
+   "text": "Interac: a payment of $1,200.00 is pending. To accept, log in with your bank card number and password here: https://interac-accept.vip"
+  },
+  {
+   "id": "gp-1",
+   "kind": "grandparent",
+   "src": "cafc_emergency",
+   "text": "Grandma it's me, I'm in jail after a car accident. Please don't tell mom and dad. The lawyer says I need $5,000 for bail today. He can send someone to pick up the cash."
+  },
+  {
+   "id": "gp-2",
+   "kind": "grandparent",
+   "src": "cafc_emergency",
+   "text": "Hi Mom, this is my new number, I dropped my phone in the water. Can you do me a favour and send $850 by e-transfer to pay a bill? I'll pay you back tomorrow, it's urgent."
+  },
+  {
+   "id": "gp-3",
+   "kind": "grandparent",
+   "src": "cafc_emergency",
+   "text": "This is Officer Daniels. Your grandson was arrested. There is a gag order so you can't talk to anyone about it. Bail is $8,000 and must be paid in cash today."
+  },
+  {
+   "id": "gp-4",
+   "kind": "grandparent",
+   "src": "cafc_emergency",
+   "text": "Hey Dad, my phone broke so I'm texting from a friend's. I'm stuck at the airport in Mexico and need money to get home. Can you buy two $500 Apple gift cards and send me photos of the back?"
+  },
+  {
+   "id": "gp-5",
+   "kind": "grandparent",
+   "src": "cafc_emergency",
+   "text": "Maman c'est moi, j'ai un nouveau numero, j'ai brise mon telephone. Peux-tu m'envoyer 700 $ par virement Interac maintenant? C'est urgent."
+  },
+  {
+   "id": "rom-1",
+   "kind": "romance",
+   "src": "cafc_romance",
+   "text": "My love, I am an engineer on an oil rig and my camera is broken so I can't video call. I need $3,000 for a customs fee to release my equipment, can you wire it through Western Union?"
+  },
+  {
+   "id": "rom-2",
+   "kind": "romance",
+   "src": "cafc_romance",
+   "text": "I've never felt this way about anyone. You are my soulmate. Let's move to WhatsApp, this app is not good. Please don't tell your family about us yet, they wouldn't understand."
+  },
+  {
+   "id": "rom-3",
+   "kind": "romance",
+   "src": "cafc_romance",
+   "text": "Darling I am stationed overseas with the military and my account is frozen. Please send Steam cards so I can pay for my leave flight to see you."
+  },
+  {
+   "id": "inv-1",
+   "kind": "crypto",
+   "src": "cafc_investment",
+   "text": "My uncle taught me crypto trading. I use a platform with guaranteed returns of 30% a week. Let me help you open an account, you can double your money in a month."
+  },
+  {
+   "id": "inv-2",
+   "kind": "crypto",
+   "src": "cafc_investment",
+   "text": "Your withdrawal of 18,400 USDT is approved but a 15% tax must be paid first to unlock your funds. Send it to my wallet address 0x52908400098527886E0F7030069857D2E4169EE7"
+  },
+  {
+   "id": "inv-3",
+   "kind": "crypto",
+   "src": "cafc_investment",
+   "text": "Elon Musk-backed AI trading bot. Invest $250 today and earn $8,000 a month. Limited spots, act now: https://quantum-ai-ca.online"
+  },
+  {
+   "id": "job-1",
+   "kind": "job",
+   "src": "cafc_job",
+   "text": "Hi! Our company is hiring part-time remote workers. Earn $300-$800 a day boosting apps and videos from your phone, no experience needed. Add our recruiter on WhatsApp to start."
+  },
+  {
+   "id": "job-2",
+   "kind": "job",
+   "src": "cafc_job",
+   "text": "Congratulations, you've been selected as a mystery shopper. Deposit the enclosed cheque of $2,950, keep $300 as your pay and send the rest by e-transfer to our agent."
+  },
+  {
+   "id": "job-3",
+   "kind": "job",
+   "src": "cafc_job",
+   "text": "To unlock your commission you must complete this combination task. Recharge your account with $480 in USDT first, then your balance of $1,240 can be withdrawn."
+  },
+  {
+   "id": "job-4",
+   "kind": "job",
+   "src": "cafc_job",
+   "text": "Data entry job, work from home, $45/hour. We will send you a cheque to buy your equipment from our approved vendor; send the vendor the money by e-transfer once the cheque is deposited."
+  },
+  {
+   "id": "prize-1",
+   "kind": "prize",
+   "src": "cafc_prize",
+   "text": "Congratulations! You have won $1,500,000 in the international lottery. To release your winnings, pay the processing fee of $1,200 by MoneyGram. Keep this confidential."
+  },
+  {
+   "id": "prize-2",
+   "kind": "prize",
+   "src": "cafc_phishing",
+   "text": "Province of Manitoba: we are giving you back $120.00 CAD carbon rebate. Get hold of it here: https://mb-rebate.click. Reply Y to obtain."
+  },
+  {
+   "id": "tech-1",
+   "kind": "tech",
+   "src": "cafc_bank_investigator",
+   "text": "Microsoft Security Alert: your computer has been infected with a virus and your banking information is at risk. Call Microsoft support at 1-844-555-0150 immediately. Do not turn off your computer."
+  },
+  {
+   "id": "tech-2",
+   "kind": "tech",
+   "src": "cafc_phishing",
+   "text": "Your Netflix account is on hold. We were unable to process your latest payment. Update your billing details within 24 hours: https://netflix-billing-ca.site"
+  },
+  {
+   "id": "acct-1",
+   "kind": "phishing",
+   "src": "cafc_phishing",
+   "text": "Amazon: an order of an iPhone 16 Pro for $1,849.99 was placed on your account. If you did not make this purchase, call our fraud line at 1-888-555-0139 right away."
+  },
+  {
+   "id": "ext-1",
+   "kind": "extortion",
+   "src": "cafc_extortion",
+   "text": "I hacked your computer and recorded you through your webcam. I know your password. Send $1,500 in Bitcoin within 48 hours or I will send the video to all your contacts."
+  },
+  {
+   "id": "mkt-1",
+   "kind": "merchandise",
+   "src": "cafc_top10_2025",
+   "text": "Hi, is the truck still for sale? I'm out of town working on a ship so I'll send a certified cheque for more than the price; just e-transfer the extra to my mover. Send me the verification code Facebook sends you so I know you're real."
+  },
+  {
+   "id": "rent-1",
+   "kind": "merchandise",
+   "src": "cafc_top10_2025",
+   "text": "The apartment is still available. I am out of the country so I can't show it, but send the first month and the deposit by e-transfer today and I'll mail you the keys. Many people want it."
+  },
+  {
+   "id": "h1",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "URGENT: Canada Revenue Agency. Unpaid taxes detected under your name. Officers have been dispatched. Call back at 1-866-555-0199 to avoid arrest."
+  },
+  {
+   "id": "h2",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "CanadaPost: We tried to deliver your item today. Schedule a new delivery here: https://cpost-ca-delivery.com/r/88 (fee $2.49)"
+  },
+  {
+   "id": "h3",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Grandpa, please don't be mad. I got in trouble and I'm at the police station. I need $3,000 for bail, my lawyer will call you. Please don't tell mom."
+  },
+  {
+   "id": "h4",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "BMO: We detected an unauthorized login. Your account will be closed today. Confirm your identity at bmo-verify-login.net"
+  },
+  {
+   "id": "h5",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Hello dear, I am a widowed surgeon working with the UN in Syria. I feel a deep connection with you. Can we talk on Telegram? I can't do video because of security rules here."
+  },
+  {
+   "id": "h6",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "You have received an Interac e-Transfer of $375.00 from Service Canada (GST credit). Click to select your bank and deposit: http://gst-credit-deposit.com"
+  },
+  {
+   "id": "h7",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Hiring now! Amazon partner needs online assistants. Earn $200 daily, flexible hours, just 30 min a day on your phone. Contact HR on Telegram @hr_jenny22"
+  },
+  {
+   "id": "h8",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Your Bitcoin wallet has a balance of 0.82 BTC ready to withdraw. Pay the 0.05 BTC network fee to release your funds."
+  },
+  {
+   "id": "h9",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "This is Constable Roy from the RCMP. Your bank card was used in a money laundering case. To protect your money, withdraw cash and we will send an officer to collect it."
+  },
+  {
+   "id": "h10",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Manitoba Hydro final disconnection notice: pay $412.90 within 30 minutes to avoid service interruption. Payment accepted at Bitcoin ATM only."
+  },
+  {
+   "id": "h11",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Mom I'm texting from a new number, my old one stopped working. Save this one. Can you help me pay an urgent invoice today? I'll explain later."
+  },
+  {
+   "id": "h12",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Dear customer, your Apple ID has been locked for security reasons. Verify your information within 24 hours: https://appleid-unlock-support.xyz"
+  },
+  {
+   "id": "h13",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Congratulations, your number was selected in the Tim Hortons anniversary draw! You won a $1,000 gift card. Claim your prize: https://timmies-win.top"
+  },
+  {
+   "id": "h14",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Hi, I'm interested in your bike. I'll pay with a cashier's cheque for $1,500, which is $600 over your price; please e-transfer the extra to my shipping agent."
+  },
+  {
+   "id": "h15",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Bell: your bill payment failed. To avoid service suspension, update your payment method at bell-billing-ca.info"
+  },
+  {
+   "id": "h16",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Hi it's Sarah from the dating app :) my cousin made $40k last month on a crypto exchange called CoinVest. I can show you how to start with $500."
+  },
+  {
+   "id": "h17",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "WestJet: you have been selected for a free round-trip flight! Just pay $9.99 shipping and handling to claim your tickets."
+  },
+  {
+   "id": "h18",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Your Costco membership has expired. Renew now and get a $100 bonus: http://costco-renew.club"
+  },
+  {
+   "id": "h19",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Bonjour, ici l'Agence du revenu du Canada. Vous devez de l'impot impaye. Un mandat d'arrestation sera emis aujourd'hui si vous ne payez pas."
+  },
+  {
+   "id": "h20",
+   "kind": "unseen-1",
+   "src": "cafc_top10_2025",
+   "text": "Winnipeg Parking Authority: Final notice, an unpaid parking ticket is linked to your plate. Pay $35 now to avoid the $90 late charge: wpa-pay.click"
+  },
+  {
+   "id": "k1",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "ALERT: Your SIN has been suspended due to suspicious activity. Press 9 to speak with an officer immediately."
+  },
+  {
+   "id": "k2",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "Hey grandma, it's Josh. I was in a fender bender and the other driver wants cash or he'll call the cops. Can you send $1,200? Please keep this between us."
+  },
+  {
+   "id": "k3",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "FedEx: your package #88213 has a pending duty of $4.12. Pay within 48h or it will be returned to sender: fedex-ca-duty.com"
+  },
+  {
+   "id": "k4",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "Interac: You have a pending deposit of $480.00. Select your financial institution to complete: interac-deposit-secure.net"
+  },
+  {
+   "id": "k5",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "I'm a recruiter from Indeed. Your profile matches a remote job: $350/day for rating products online. Reply YES to receive details on WhatsApp."
+  },
+  {
+   "id": "k6",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "Your PayPal account has been limited. Please log in to restore full access: paypal-resolution-center.online"
+  },
+  {
+   "id": "k7",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "We have your nude photos. Pay $800 in BTC to this address within 24 hours or everyone on your friends list sees them."
+  },
+  {
+   "id": "k8",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "CRA: You are eligible for a tax refund of $612.40. Complete the form to receive it by Interac e-Transfer: cra-arc-refund.ca"
+  },
+  {
+   "id": "k9",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "Visa Security: a charge of $2,399.00 at BEST BUY was attempted. Reply 1 to block or call 1-855-555-0188 if this wasn't you."
+  },
+  {
+   "id": "k10",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "Babe I really want to see you but I need $600 for the plane ticket. Can you buy Google Play cards and send me the codes? I promise I'll pay you back."
+  },
+  {
+   "id": "k11",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "Our records indicate your Manitoba Public Insurance refund of $186 has not been claimed. Claim it here before Friday: mpi-refunds.info"
+  },
+  {
+   "id": "k12",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "Hello, your computer has been reported for illegal downloading. To avoid legal action pay the $500 fine with gift cards today."
+  },
+  {
+   "id": "k13",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "Investing with our AI platform turned my $1,000 into $14,000 in 3 weeks. Spots are limited, DM me to join our private signals group."
+  },
+  {
+   "id": "k14",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "Hi Dad, new number. My bank app is locked and I need to pay my rent before 5. Can you e-transfer $1,450 to my landlord? I'll pay you back next week."
+  },
+  {
+   "id": "k15",
+   "kind": "unseen-2",
+   "src": "cafc_top10_2025",
+   "text": "Final notice: your car warranty is about to expire. Call 1-877-555-0163 now to avoid losing coverage."
+  }
+ ],
+ "legit": [
+  {
+   "id": "ok-post-1",
+   "text": "Canada Post: Your parcel 7023 4410 was delivered to your community mailbox at 2:14 PM. Track at canadapost.ca."
+  },
+  {
+   "id": "ok-post-2",
+   "text": "Your Purolator shipment will arrive today between 9 AM and 5 PM. No signature is required."
+  },
+  {
+   "id": "ok-bank-1",
+   "text": "RBC: Your verification code is 482913. Never share this code with anyone, RBC will never ask you for it."
+  },
+  {
+   "id": "ok-bank-2",
+   "text": "TD Alert: A purchase of $54.20 at SAFEWAY #4821 was made on your credit card ending 1234. If you don't recognize it, call the number on the back of your card."
+  },
+  {
+   "id": "ok-bank-3",
+   "text": "Your Scotiabank statement for October is ready. Sign in to the Scotia app to view it."
+  },
+  {
+   "id": "ok-etr-1",
+   "text": "INTERAC e-Transfer: JOHN SMITH sent you $40.00 (CAD) and the money has been automatically deposited into your bank account at Assiniboine Credit Union."
+  },
+  {
+   "id": "ok-etr-2",
+   "text": "Hey can you e-transfer me $20 for the pizza tonight? No rush."
+  },
+  {
+   "id": "ok-cra-1",
+   "text": "You have a new message from the Canada Revenue Agency in My Account. To view it, sign in at canada.ca/my-cra-account. Do not reply to this email."
+  },
+  {
+   "id": "ok-cra-2",
+   "text": "Reminder: the deadline to file your 2025 income tax return is April 30. Your accountant has your T4s."
+  },
+  {
+   "id": "ok-fam-1",
+   "text": "Hi Mom, my phone died so I'm using Dad's. Running 20 min late for dinner, save me some perogies!"
+  },
+  {
+   "id": "ok-fam-2",
+   "text": "Grandma, thank you for the birthday card and the Tim Hortons gift card! Love you, see you Sunday."
+  },
+  {
+   "id": "ok-fam-3",
+   "text": "I love you, drive safe. Text me when you get to Brandon."
+  },
+  {
+   "id": "ok-fam-4",
+   "text": "Don't tell Dad about the surprise party on Saturday! Keep it between us."
+  },
+  {
+   "id": "ok-fam-5",
+   "text": "Can you pick up milk on the way home? Also the furnace guy is coming tomorrow at 10."
+  },
+  {
+   "id": "ok-work-1",
+   "text": "Urgent: the 3 pm staff meeting has moved to 2 pm in the boardroom. Please let your team know."
+  },
+  {
+   "id": "ok-work-2",
+   "text": "Hi team, payroll will go out on Thursday this week because of the Remembrance Day holiday."
+  },
+  {
+   "id": "ok-work-3",
+   "text": "Please add me on WhatsApp for the hockey team group chat, it's easier than texting everyone."
+  },
+  {
+   "id": "ok-work-4",
+   "text": "Your interview with Red River College is confirmed for Tuesday at 1:30 PM. Please bring two pieces of ID."
+  },
+  {
+   "id": "ok-dent-1",
+   "text": "Reminder from Corydon Dental: your cleaning is booked for Nov 24 at 9:00 AM. Reply C to confirm or call 204-555-0123 to reschedule."
+  },
+  {
+   "id": "ok-pharm-1",
+   "text": "Shoppers Drug Mart: your prescription is ready for pickup at the Polo Park location."
+  },
+  {
+   "id": "ok-hydro-1",
+   "text": "Manitoba Hydro: a planned outage will affect your area on Nov 26 from 1 AM to 4 AM for equipment upgrades. We apologize for the inconvenience."
+  },
+  {
+   "id": "ok-hydro-2",
+   "text": "Your Manitoba Hydro bill of $142.37 is ready. It is due on December 12. View it at hydro.mb.ca."
+  },
+  {
+   "id": "ok-school-1",
+   "text": "Winnipeg School Division: school is closed today due to the weather. Stay safe and warm."
+  },
+  {
+   "id": "ok-amazon-1",
+   "text": "Amazon: your package with 2 items has been delivered. It was left at the front door."
+  },
+  {
+   "id": "ok-netflix-1",
+   "text": "Netflix: we've updated our terms of use. No action is needed from you."
+  },
+  {
+   "id": "ok-scamalert-1",
+   "text": "Scam alert from your credit union: we will never ask you to move money to a safe account or read us a one-time code. If someone does, hang up."
+  },
+  {
+   "id": "ok-crypto-1",
+   "text": "I finally sold my Bitcoin at a loss lol. Never again. Want to get coffee Saturday?"
+  },
+  {
+   "id": "ok-market-1",
+   "text": "Hi, is the couch still available? I can pick it up tonight and pay cash or e-transfer on pickup."
+  },
+  {
+   "id": "ok-friend-1",
+   "text": "Just landed in Toronto! The flight was delayed but I'm fine. Call you tomorrow."
+  },
+  {
+   "id": "ok-doctor-1",
+   "text": "Your test results are available. Please call the clinic during office hours to book a follow-up appointment."
+  },
+  {
+   "id": "ok-fr-1",
+   "text": "Salut maman, je serai en retard pour le souper ce soir. Je t'aime!"
+  },
+  {
+   "id": "ok-fr-2",
+   "text": "Postes Canada: votre colis a ete livre a votre boite postale communautaire."
+  },
+  {
+   "id": "ok-church-1",
+   "text": "Reminder: the church bake sale is this Saturday. Please drop off your baking by 9 AM. Thank you!"
+  },
+  {
+   "id": "ok-rent-1",
+   "text": "Hi, rent for December is due on the 1st. You can e-transfer it to me as usual. Thanks!"
+  },
+  {
+   "id": "ok-insurance-1",
+   "text": "MPI: your vehicle registration renews on December 31. You can renew online or at any Autopac agent."
+  },
+  {
+   "id": "g1",
+   "text": "Hi Grandma! Just wanted to say we got home safe from the lake. Love you!"
+  },
+  {
+   "id": "g2",
+   "text": "CIBC: You've received an Interac e-Transfer from MARY LEE for $25.00. It was deposited to your account."
+  },
+  {
+   "id": "g3",
+   "text": "Your Canada Post parcel is ready for pickup at Shoppers Drug Mart, 1485 Portage Ave. Bring photo ID and your card."
+  },
+  {
+   "id": "g4",
+   "text": "Reminder: your Netflix plan renews on Dec 3 for $16.49."
+  },
+  {
+   "id": "g5",
+   "text": "Hey, I lost my phone at the rink yesterday, if anyone finds a black iPhone please let me know!"
+  },
+  {
+   "id": "g6",
+   "text": "Can you send me the photos from Sunday? The kids look so cute in them."
+  },
+  {
+   "id": "g7",
+   "text": "Our office will be closed Monday for the holiday. For urgent matters call 204-555-0110."
+  },
+  {
+   "id": "g8",
+   "text": "Hi it's Dr. Patel's office. We need to reschedule your appointment on Friday. Please call us back."
+  },
+  {
+   "id": "g9",
+   "text": "Your Uber is arriving now. Look for a grey Toyota Camry."
+  },
+  {
+   "id": "g10",
+   "text": "The CRA has received your 2025 tax return. Your notice of assessment will be available in My Account soon."
+  },
+  {
+   "id": "g11",
+   "text": "Hey, the hydro guy says the power will be off from 9 to noon tomorrow for the new meter."
+  },
+  {
+   "id": "g12",
+   "text": "I won the hockey pool this year! Drinks are on me Friday."
+  },
+  {
+   "id": "g13",
+   "text": "Mom can you e-transfer me $50 for the school trip? It's due Friday. Thanks love you"
+  },
+  {
+   "id": "g14",
+   "text": "Your Amazon order #114-2234 has shipped and will arrive Tuesday."
+  },
+  {
+   "id": "g15",
+   "text": "Hi! We're hiring cashiers at our Osborne Village store. Apply in person with your resume."
+  },
+  {
+   "id": "g16",
+   "text": "Your Telus bill of $85.40 is ready. Pay through the My Telus app or your bank."
+  },
+  {
+   "id": "g17",
+   "text": "Grandpa, I got the job at the bank! Starting Monday. Thanks for helping with the resume."
+  },
+  {
+   "id": "g18",
+   "text": "Security alert: a new sign-in to your Google Account on a Windows device. If this was you, you don't need to do anything."
+  },
+  {
+   "id": "g19",
+   "text": "Bonjour mamie, merci pour les biscuits! On se voit dimanche."
+  },
+  {
+   "id": "g20",
+   "text": "Please don't share your banking password with anyone, including people who say they work for us."
+  },
+  {
+   "id": "m1",
+   "text": "Hi Grandma, Josh here. Thanks for the $50 for my birthday! I bought a new hockey stick."
+  },
+  {
+   "id": "m2",
+   "text": "Your FedEx package was delivered at 11:02 AM and left at the front door."
+  },
+  {
+   "id": "m3",
+   "text": "Interac e-Transfer: KEVIN NGUYEN has sent you $60.00 (CAD). The money has been deposited into your account."
+  },
+  {
+   "id": "m4",
+   "text": "Reminder: your property taxes are due June 30. Pay online through your bank or at City Hall."
+  },
+  {
+   "id": "m5",
+   "text": "Dad, my phone is almost dead. I'll call you when I'm back at the dorm."
+  },
+  {
+   "id": "m6",
+   "text": "Your PayPal payment of $12.99 to Spotify was sent."
+  },
+  {
+   "id": "m7",
+   "text": "Visa: a purchase of $23.10 at PEMBINA SAFEWAY was approved on your card ending 4412."
+  },
+  {
+   "id": "m8",
+   "text": "Hey, are you coming to the potluck Saturday? Bring your famous bannock!"
+  },
+  {
+   "id": "m9",
+   "text": "We miss you at the gym! Your membership is still active. See you soon."
+  },
+  {
+   "id": "m10",
+   "text": "Your MPI driver's licence renewal is coming up. Renew at any Autopac agent or online at mpi.mb.ca."
+  },
+  {
+   "id": "m11",
+   "text": "Can you send me $30 by e-transfer for the concert ticket I bought you? No rush."
+  },
+  {
+   "id": "m12",
+   "text": "I just won $20 on a scratch ticket haha. Lunch is on me."
+  },
+  {
+   "id": "m13",
+   "text": "Hey love, the plane lands at 6. Can you pick me up at the airport?"
+  },
+  {
+   "id": "m14",
+   "text": "Your Canada Post shipment has been dropped off and will be delivered on Thursday."
+  },
+  {
+   "id": "m15",
+   "text": "Fraud alert from Assiniboine Credit Union: never give your one-time passcode to anyone who calls you."
+  }
+ ],
+ "first_sight": "Honest check, 2026-11-19: sets 'unseen-1' (20 scams, 20 ordinary) and 'unseen-2' (15 scams, 15 ordinary) were written AFTER the rules were tuned on the first 44 scams, then scored before any further change. First sight, scams caught at Moderate or above: unseen-1 10/20 (old site rules 3/20, old app rules 4/20); unseen-2 6/15 (old site 3/15, old app 2/15). False alarms on ordinary messages: 0 in both. The rules were then widened and both sets added here as regression cases, so today's 100% on this file is NOT an accuracy figure. Expect roughly half of new, unseen scam wording to be caught; a warning is not proof and no warning is not a guarantee.",
+ "known_misses": [
+  {
+   "id": "k15",
+   "why": "car-warranty robocall wording is not a pattern we flag"
+  }
+ ]
+}
