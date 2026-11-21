@@ -1668,4 +1668,55 @@ build();renderPlan();setDay(0);render();
 
 
 
+<script src="/demo/_tour/tour.js"></script>
+<script>
+/* Guided tour (rewritten 2026-11-21 to match what the product really does). */
+(function(){
+  'use strict';
+  var LINES=["Welcome to On File. This demo uses a made-up IT firm and made-up clients. On File keeps track of which papers each client still owes.", "Press Send Requests. On File shows you a preview first, and nothing goes out until you press Confirm and send.", "Here is the confirm step. Each round, you see what is about to go out, and then you decide.", "Open any client to see what is in, what is missing, and when it is due.", "You can read the exact email before it goes. Nothing is hidden from you or your staff.", "In the product, Cara drafts replies to emailed questions. Your staff read each draft and press Send.", "Anyone who stays quiet ends up on your Needs you list. A person phones them. On File does not make the call.", "The hours shown here are an illustration with made-up numbers. They are not a promise.", "That is the tour. There is a free two-week pilot, and you can click around freely now."];
+  var DURS=[8.82, 6.5, 5.11, 3.9, 4.83, 5.71, 6.55, 4.78, 5.02];
+  function q(sel){return document.querySelector(sel)}
+  function whenOutcome(t){
+    var n=0;
+    return (function poll(){
+      var o=q('#outcome');
+      if((o&&!o.hidden)||++n>80||!CalasTour.running())return Promise.resolve();
+      var box=q('#approveBox');
+      if(box&&box.classList.contains('on')){t.tap('#approveBtn');return t.sleep(700).then(poll);}
+      return t.sleep(400).then(poll);
+    })();
+  }
+  CalasTour.start({
+    lines:LINES, durs:DURS, audioBase:'narration/step-',
+    onReplay:function(){
+      var r=q('#reset');if(r)r.click();
+      q('#startCard').hidden=false;q('#liveRow').hidden=true;document.body.classList.add('pre');
+      window.scrollTo(0,0);
+    },
+    end:{
+      name:'On File',
+      does:'Keeps a list of what each client still owes and which documents are missing, and sends the request and reminder emails.',
+      offer:'C$500 a month plus tax, no setup fee.',
+      terms:'Free two-week pilot. Nothing is charged before day 15.',
+      cta:{label:'Ask about the free two-week pilot: (431) 244-9026', href:'tel:+14312449026'}
+    },
+    script:function(t){
+      return t.point('#setSum',0)
+        .then(function(){return t.point('#run2',1)})
+        .then(function(){t.tap('#run2');return t.sleep(1800)})
+        .then(function(){var b=q('#approveBtn');return t.point(b||'#run2',2)})
+        .then(function(){return whenOutcome(t)})
+        .then(function(){return t.point(q('#w0 .row')||q('.row'),3)})
+        .then(function(){t.tap(q('#w0 .row')||q('.row'));return t.sleep(500)})
+        .then(function(){return t.point('#tm1',4)})
+        .then(function(){t.tap('#tm1');return t.sleep(500)})
+        .then(function(){return t.point('#hbtn',5)})
+        .then(function(){return t.point('#outcome .side.after .big',6)})
+        .then(function(){return t.point('#outcome .side.after .big',7)})
+        .then(function(){return t.point('#outcome .cmp',8)});
+    }
+  });
+})();
+</script>
+
 <script src="/calas-brandbar.js?v=20261105b" defer></script></body></html>
